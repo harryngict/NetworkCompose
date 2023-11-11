@@ -1,0 +1,21 @@
+source 'https://cdn.cocoapods.org/'
+install! 'cocoapods', :generate_multiple_pod_projects => true, :warn_for_unused_master_specs_repo => false
+platform :ios, '12.0'
+
+use_frameworks!
+
+target 'Example' do
+  pod 'Firebase/Core'
+  pod 'Firebase/RemoteConfig'
+  
+  pod 'NetworkKit/Core',  :path => '../'
+  pod 'NetworkKit/CoreMocks', :path => '../'
+  
+  pod 'NetworkKit/NetworkQueue',  :path => '../'
+  pod 'NetworkKit/NetworkQueueMocks',  :path => '../'
+end
+
+target 'ExampleTests' do
+  inherit! :search_paths
+end
+

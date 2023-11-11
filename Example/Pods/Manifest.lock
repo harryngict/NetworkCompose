@@ -1,0 +1,143 @@
+PODS:
+  - Firebase/Core (10.12.0):
+    - Firebase/CoreOnly
+    - FirebaseAnalytics (~> 10.12.0)
+  - Firebase/CoreOnly (10.12.0):
+    - FirebaseCore (= 10.12.0)
+  - Firebase/RemoteConfig (10.12.0):
+    - Firebase/CoreOnly
+    - FirebaseRemoteConfig (~> 10.12.0)
+  - FirebaseABTesting (10.17.0):
+    - FirebaseCore (~> 10.0)
+  - FirebaseAnalytics (10.12.0):
+    - FirebaseAnalytics/AdIdSupport (= 10.12.0)
+    - FirebaseCore (~> 10.0)
+    - FirebaseInstallations (~> 10.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - FirebaseAnalytics/AdIdSupport (10.12.0):
+    - FirebaseCore (~> 10.0)
+    - FirebaseInstallations (~> 10.0)
+    - GoogleAppMeasurement (= 10.12.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - FirebaseCore (10.12.0):
+    - FirebaseCoreInternal (~> 10.0)
+    - GoogleUtilities/Environment (~> 7.8)
+    - GoogleUtilities/Logger (~> 7.8)
+  - FirebaseCoreInternal (10.12.0):
+    - "GoogleUtilities/NSData+zlib (~> 7.8)"
+  - FirebaseInstallations (10.17.0):
+    - FirebaseCore (~> 10.0)
+    - GoogleUtilities/Environment (~> 7.8)
+    - GoogleUtilities/UserDefaults (~> 7.8)
+    - PromisesObjC (~> 2.1)
+  - FirebaseRemoteConfig (10.12.0):
+    - FirebaseABTesting (~> 10.0)
+    - FirebaseCore (~> 10.0)
+    - FirebaseInstallations (~> 10.0)
+    - GoogleUtilities/Environment (~> 7.8)
+    - "GoogleUtilities/NSData+zlib (~> 7.8)"
+  - GoogleAppMeasurement (10.12.0):
+    - GoogleAppMeasurement/AdIdSupport (= 10.12.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleAppMeasurement/AdIdSupport (10.12.0):
+    - GoogleAppMeasurement/WithoutAdIdSupport (= 10.12.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleAppMeasurement/WithoutAdIdSupport (10.12.0):
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleUtilities/AppDelegateSwizzler (7.11.4):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+  - GoogleUtilities/Environment (7.11.4):
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/Logger (7.11.4):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/MethodSwizzler (7.11.4):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/Network (7.11.4):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (7.11.4)"
+  - GoogleUtilities/Reachability (7.11.4):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/UserDefaults (7.11.4):
+    - GoogleUtilities/Logger
+  - nanopb (2.30909.1):
+    - nanopb/decode (= 2.30909.1)
+    - nanopb/encode (= 2.30909.1)
+  - nanopb/decode (2.30909.1)
+  - nanopb/encode (2.30909.1)
+  - NetworkKit/Core (0.0.1)
+  - NetworkKit/CoreMocks (0.0.1):
+    - NetworkKit/Core
+  - NetworkKit/NetworkQueue (0.0.1):
+    - NetworkKit/Core
+  - NetworkKit/NetworkQueueMocks (0.0.1):
+    - NetworkKit/Core
+    - NetworkKit/NetworkQueue
+  - PromisesObjC (2.3.1)
+
+DEPENDENCIES:
+  - Firebase/Core
+  - Firebase/RemoteConfig
+  - NetworkKit/Core (from `../`)
+  - NetworkKit/CoreMocks (from `../`)
+  - NetworkKit/NetworkQueue (from `../`)
+  - NetworkKit/NetworkQueueMocks (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - Firebase
+    - FirebaseABTesting
+    - FirebaseAnalytics
+    - FirebaseCore
+    - FirebaseCoreInternal
+    - FirebaseInstallations
+    - FirebaseRemoteConfig
+    - GoogleAppMeasurement
+    - GoogleUtilities
+    - nanopb
+    - PromisesObjC
+
+EXTERNAL SOURCES:
+  NetworkKit:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Firebase: 07150e75d142fb9399f6777fa56a187b17f833a0
+  FirebaseABTesting: 609e15b57b5f1096c8feb984e8995d9e769858fe
+  FirebaseAnalytics: 0270389efbe3022b54ec4588862dabec3477ee98
+  FirebaseCore: f86a1394906b97ac445ae49c92552a9425831bed
+  FirebaseCoreInternal: 950500ad8a08963657f6d8c67b579740c06d6aa1
+  FirebaseInstallations: 9387bf15abfc69a714f54e54f74a251264fdb79b
+  FirebaseRemoteConfig: bc7f260e6596956fafbb532443c19bd3c30f5258
+  GoogleAppMeasurement: 2d800fab85e7848b1e66a6f8ce5bca06c5aad892
+  GoogleUtilities: c63691989bf362ba0505507da00eeb326192e83e
+  nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
+  NetworkKit: 37663a335c99d0ba38d851d8e524e171c310216d
+  PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
+
+PODFILE CHECKSUM: 8435bc575f9825a4507857d9ab08c8c7a5ab31cf
+
+COCOAPODS: 1.10.2

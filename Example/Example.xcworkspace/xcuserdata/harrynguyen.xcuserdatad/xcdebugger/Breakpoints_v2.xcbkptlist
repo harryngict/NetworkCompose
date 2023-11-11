@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "14957E63-41A7-4A0A-A711-0210BED9D699"
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "59280A47-0CD5-42F1-BB2D-FD89922B4884"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Example/App/ReAuthenticationServiceImp.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "execute(completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "59280A47-0CD5-42F1-BB2D-FD89922B4884 - a76f619a4a124f22"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Example.ReAuthenticationServiceImp.execute(completion: (Swift.Result&lt;(), NetworkKit.NetworkError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkKit/Example/Example/App/ReAuthenticationServiceImp.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  uuid = "59280A47-0CD5-42F1-BB2D-FD89922B4884 - a76f619a4a124f43"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Example.ReAuthenticationServiceImp.execute(completion: (Swift.Result&lt;(), NetworkKit.NetworkError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkKit/Example/Example/App/ReAuthenticationServiceImp.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "128">
+               </Location>
+               <Location
+                  uuid = "59280A47-0CD5-42F1-BB2D-FD89922B4884 - a76f619a4a124ec7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Example.ReAuthenticationServiceImp.execute(completion: (Swift.Result&lt;(), NetworkKit.NetworkError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkKit/Example/Example/App/ReAuthenticationServiceImp.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "296">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
