@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "14957E63-41A7-4A0A-A711-0210BED9D699"
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "440DFE33-A22E-4AC6-807C-B0B81B464D72"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../NetworkSwift/Core/Implementation/Network/BaseBuilder/NetworkBuilderInterfaces.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "10"
+            endingLineNumber = "10"
+            landmarkName = "NetworkBuilderInterfaces"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "827D4826-F3F4-4365-B940-EC14999420D1"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../NetworkCompose/Core/Implementation/Metric/Analyzer/NetworkMetricsAnalyzer.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
+            landmarkName = "trackTaskDidUpdateProgress(_:didUpdateProgress:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "827D4826-F3F4-4365-B940-EC14999420D1 - 20d3a6ab8ced93c7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NetworkCompose.NetworkMetricsAnalyzer.trackTaskDidUpdateProgress(_: __C.NSURLSessionTask, didUpdateProgress: (completed: Swift.Int64, total: Swift.Int64)) -&gt; ()"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkCompose/NetworkCompose/Core/Implementation/Metric/Analyzer/NetworkMetricsAnalyzer.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "62"
+                  endingLineNumber = "62"
+                  offsetFromSymbolStart = "368">
+               </Location>
+               <Location
+                  uuid = "827D4826-F3F4-4365-B940-EC14999420D1 - 20d3a6ab8ced93c7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NetworkCompose.NetworkMetricsAnalyzer.trackTaskDidUpdateProgress(_: __C.NSURLSessionTask, didUpdateProgress: (completed: Swift.Int64, total: Swift.Int64)) -&gt; ()"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkCompose/NetworkCompose/Core/Implementation/Metric/Analyzer/NetworkMetricsAnalyzer.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "62"
+                  endingLineNumber = "62"
+                  offsetFromSymbolStart = "412">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

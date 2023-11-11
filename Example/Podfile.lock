@@ -1,0 +1,26 @@
+PODS:
+  - NetworkCompose/Core (0.0.1)
+  - NetworkCompose/CoreMocks (0.0.1):
+    - NetworkCompose/Core
+  - NetworkCompose/Queue (0.0.1):
+    - NetworkCompose/Core
+  - NetworkCompose/QueueMocks (0.0.1):
+    - NetworkCompose/Core
+    - NetworkCompose/Queue
+
+DEPENDENCIES:
+  - NetworkCompose/Core (from `../`)
+  - NetworkCompose/CoreMocks (from `../`)
+  - NetworkCompose/Queue (from `../`)
+  - NetworkCompose/QueueMocks (from `../`)
+
+EXTERNAL SOURCES:
+  NetworkCompose:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  NetworkCompose: 395b08eeee434b9c6cf2f82fe29634e39b5dc344
+
+PODFILE CHECKSUM: b61ea0f6dca625f3da6b87c77dfc57a2e71704f6
+
+COCOAPODS: 1.14.3
