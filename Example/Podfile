@@ -1,0 +1,27 @@
+source 'https://cdn.cocoapods.org/'
+install! 'cocoapods', :warn_for_unused_master_specs_repo => false
+platform :ios, '12.0'
+
+use_frameworks!
+
+target 'Example' do
+  pod 'NetworkSwift/Core',  :path => '../'
+  pod 'NetworkSwift/CoreMocks', :path => '../'
+  
+  pod 'NetworkSwift/Queue',  :path => '../'
+  pod 'NetworkSwift/QueueMocks',  :path => '../'
+end
+
+target 'ExampleTests' do
+  inherit! :search_paths
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    if target.respond_to?(:product_type) and target.product_type == "com.apple.product-type.bundle"
+      target.build_configurations.each do |config|
+          config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
+      end
+    end
+  end
+end

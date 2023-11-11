@@ -1,0 +1,26 @@
+PODS:
+  - NetworkSwift/Core (0.0.5)
+  - NetworkSwift/CoreMocks (0.0.5):
+    - NetworkSwift/Core
+  - NetworkSwift/Queue (0.0.5):
+    - NetworkSwift/Core
+  - NetworkSwift/QueueMocks (0.0.5):
+    - NetworkSwift/Core
+    - NetworkSwift/Queue
+
+DEPENDENCIES:
+  - NetworkSwift/Core (from `../`)
+  - NetworkSwift/CoreMocks (from `../`)
+  - NetworkSwift/Queue (from `../`)
+  - NetworkSwift/QueueMocks (from `../`)
+
+EXTERNAL SOURCES:
+  NetworkSwift:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  NetworkSwift: 1b2266424173d34efde7831ecc779ea035516830
+
+PODFILE CHECKSUM: 9967ee75eb2dfc83c34293716548f0df0ad83818
+
+COCOAPODS: 1.14.3
