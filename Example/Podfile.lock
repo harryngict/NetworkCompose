@@ -1,0 +1,26 @@
+PODS:
+  - NetworkKit/Core (0.0.1)
+  - NetworkKit/CoreMocks (0.0.1):
+    - NetworkKit/Core
+  - NetworkKit/NetworkQueue (0.0.1):
+    - NetworkKit/Core
+  - NetworkKit/NetworkQueueMocks (0.0.1):
+    - NetworkKit/Core
+    - NetworkKit/NetworkQueue
+
+DEPENDENCIES:
+  - NetworkKit/Core (from `../`)
+  - NetworkKit/CoreMocks (from `../`)
+  - NetworkKit/NetworkQueue (from `../`)
+  - NetworkKit/NetworkQueueMocks (from `../`)
+
+EXTERNAL SOURCES:
+  NetworkKit:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  NetworkKit: 8e2029164c1dfa5ae82324b228cf014ae9b2f119
+
+PODFILE CHECKSUM: 17d7ab2af62babf1385d5a11400418ae548322c9
+
+COCOAPODS: 1.10.2
