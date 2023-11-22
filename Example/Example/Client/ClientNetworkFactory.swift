@@ -118,12 +118,17 @@ final class ClientNetworkFactory {
             let sslPinningHosts = [NetworkSSLPinningHostImp(host: "jsonplaceholder.typicode.com",
                                                             pinningHash: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])]
             let securityTrust = NetworkSecurityTrustImp(sslPinningHosts: sslPinningHosts)
-            let service = try NetworkKitFacade<URLSession>(baseURL: baseURL, securityTrust: securityTrust)
+
             let request = NetworkRequestBuilder<User>(path: "/posts/1", method: .PUT)
                 .setQueryParameters(["title": "foo",
                                      "body": "bar",
                                      "userId": 1])
                 .build()
+
+            let service = try NetworkKitQueueBuilder(baseURL: baseURL)
+                .setSecurityTrust(securityTrust)
+                .build()
+
             service.request(request) { (result: Result<User, NetworkError>) in
                 switch result {
                 case let .failure(error): completion(error.localizedDescription)
@@ -140,11 +145,11 @@ final class ClientNetworkFactory {
             let sslPinningHosts = [NetworkSSLPinningHostImp(host: "jsonplaceholder.typicode.com",
                                                             pinningHash: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])]
             let securityTrust = NetworkSecurityTrustImp(sslPinningHosts: sslPinningHosts)
-            let reAuthService = ClientReAuthenticationService()
 
-            let service = try NetworkKitQueueImp<URLSession>(baseURL: baseURL,
-                                                             reAuthService: reAuthService,
-                                                             securityTrust: securityTrust)
+            let service = try NetworkKitQueueBuilder(baseURL: baseURL)
+                .setSecurityTrust(securityTrust)
+                .setReAuthService(ClientReAuthenticationService())
+                .build()
 
             let request = NetworkRequestBuilder<User>(path: "/posts/1", method: .PATCH)
                 .setQueryParameters(["title": "foo"])

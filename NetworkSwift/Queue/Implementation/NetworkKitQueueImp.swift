@@ -45,61 +45,6 @@ public final class NetworkKitQueueImp<SessionType: NetworkSession>: NetworkKitQu
         networkKit = NetworkKitImp(baseURL: baseURL, session: session)
     }
 
-    /// Convenience initializer for SSL pinning using a custom security trust.
-    ///
-    /// Use this initializer to create a `NetworkKitQueueImp` instance with SSL pinning configured using a custom security trust.
-    ///
-    /// - Parameters:
-    ///   - baseURL: The base URL for network requests.
-    ///   - reAuthService: The service responsible for re-authentication.
-    ///   - securityTrust: The security trust object for SSL pinning.
-    ///   - configuration: The session configuration for the URL session. The default is `NetworkSessionConfiguration.default`.
-    ///   - delegateQueue: The operation queue on which the delegate will receive URLSessionDelegate callbacks.
-    ///                    The default value is the main operation queue.
-    /// - Throws: A `NetworkError` if the session cannot be created.
-    public convenience init(baseURL: URL,
-                            reAuthService: ReAuthenticationService? = nil,
-                            securityTrust: NetworkSecurityTrust,
-                            configuration: URLSessionConfiguration = NetworkSessionConfiguration.default,
-                            delegateQueue: OperationQueue? = OperationQueue.main) throws
-    {
-        let delegate = NetworkSessionTaskDelegate(securityTrust: securityTrust)
-        guard let session = URLSession(configuration: configuration,
-                                       delegate: delegate,
-                                       delegateQueue: delegateQueue) as? SessionType
-        else {
-            throw NetworkError.invalidSession
-        }
-        self.init(baseURL: baseURL, session: session, reAuthService: reAuthService)
-    }
-
-    /// Convenience initializer for a custom session delegate.
-    ///
-    /// Use this initializer to create a `NetworkKitQueueImp` instance with a custom session delegate.
-    ///
-    /// - Parameters:
-    ///   - baseURL: The base URL for network requests.
-    ///   - reAuthService: The service responsible for re-authentication.
-    ///   - sessionDelegate: The custom session delegate to handle various session events.
-    ///   - configuration: The session configuration for the URL session. The default is `NetworkSessionConfiguration.default`.
-    ///   - delegateQueue: The operation queue on which the delegate will receive URLSessionDelegate callbacks.
-    ///                    The default value is the main operation queue.
-    /// - Throws: A `NetworkError` if the session cannot be created.
-    public convenience init(baseURL: URL,
-                            reAuthService: ReAuthenticationService? = nil,
-                            sessionDelegate: URLSessionDelegate,
-                            configuration: URLSessionConfiguration = NetworkSessionConfiguration.default,
-                            delegateQueue: OperationQueue? = OperationQueue.main) throws
-    {
-        guard let session = URLSession(configuration: configuration,
-                                       delegate: sessionDelegate,
-                                       delegateQueue: delegateQueue) as? SessionType
-        else {
-            throw NetworkError.invalidSession
-        }
-        self.init(baseURL: baseURL, session: session, reAuthService: reAuthService)
-    }
-
     // MARK: Public Methods
 
     /// Initiates a network request and handles re-authentication if necessary.

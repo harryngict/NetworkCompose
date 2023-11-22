@@ -79,9 +79,9 @@ public class NetworkKitBuilder<SessionType: NetworkSession> {
     private func createSessionWithSSLTrust(_ securityTrust: NetworkSecurityTrust) throws -> SessionType {
         let delegate = NetworkSessionTaskDelegate(securityTrust: securityTrust)
         guard let session = URLSession(
-            configuration: .default,
+            configuration: NetworkSessionConfiguration.default,
             delegate: delegate,
-            delegateQueue: .main
+            delegateQueue: OperationQueue.main
         ) as? SessionType else {
             throw NetworkError.invalidSession
         }
@@ -90,9 +90,9 @@ public class NetworkKitBuilder<SessionType: NetworkSession> {
 
     private func createSessionWithDelegate(_ sessionDelegate: URLSessionDelegate) throws -> SessionType {
         guard let session = URLSession(
-            configuration: .default,
+            configuration: NetworkSessionConfiguration.default,
             delegate: sessionDelegate,
-            delegateQueue: .main
+            delegateQueue: OperationQueue.main
         ) as? SessionType else {
             throw NetworkError.invalidSession
         }
