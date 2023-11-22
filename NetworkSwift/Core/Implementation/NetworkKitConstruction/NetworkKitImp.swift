@@ -15,13 +15,8 @@ import Foundation
 /// let networkKit = NetworkKitImp(baseURL: baseURL)
 /// ```
 public final class NetworkKitImp<SessionType: NetworkSession>: NetworkKit {
-    /// The underlying network session responsible for handling requests.
     private let session: SessionType
-
-    /// The base URL for network requests.
     private let baseURL: URL
-
-    // MARK: Initializer
 
     /// Initializes the `NetworkKitImp` with the specified configuration.
     ///
@@ -33,89 +28,170 @@ public final class NetworkKitImp<SessionType: NetworkSession>: NetworkKit {
         self.session = session
     }
 
-    // MARK: Request Handling
-
-    /// Initiates a network request using the async/await pattern.
+    /// Asynchronously sends a network request and returns the result.
     ///
     /// - Parameters:
-    ///   - request: The network request to be executed.
-    ///   - headers: Additional headers to include in the request.
-    /// - Returns: The decoded success type from the response.
-    /// - Throws: A `NetworkError` if the request fails.
+    ///   - request: The network request to be performed.
+    ///   - headers: Additional headers to be included in the request.
+    ///   - retryPolicy: The retry policy for the network request.
+    /// - Returns: A task representing the asynchronous operation.
+    /// - Throws: An error if the network request fails.
     @available(iOS 15.0, *)
     public func request<RequestType>(
         _ request: RequestType,
-        andHeaders headers: [String: String] = [:]
+        andHeaders headers: [String: String] = [:],
+        retryPolicy: NetworkRetryPolicy = .none
     ) async throws -> RequestType.SuccessType where RequestType: NetworkRequest {
-        let networkRequest = try buildNetworkRequest(for: request, andHeaders: headers)
-        let response = try await session.beginRequest(networkRequest)
-        return try handleSuccessResponse(response, for: request)
+        var currentRetry = 0
+
+        /// Asynchronously performs the network request.
+        func performRequest() async throws -> RequestType.SuccessType {
+            do {
+                let networkRequest = try buildNetworkRequest(for: request, andHeaders: headers)
+                let response = try await session.beginRequest(networkRequest)
+                return try handleSuccessResponse(response, for: request)
+            } catch {
+                currentRetry += 1
+                let shouldRetry = retryPolicy.shouldRetry(currentRetry: currentRetry)
+                if shouldRetry {
+                    return try await performRequest()
+                } else {
+                    throw error
+                }
+            }
+        }
+
+        return try await performRequest()
     }
 
-    /// Initiates a network request with a completion handler.
+    /// Sends a network request and executes the completion handler with the result.
     ///
     /// - Parameters:
-    ///   - request: The network request to be executed.
-    ///   - headers: Additional headers to include in the request.
-    ///   - completion: The completion handler to be called when the request is complete.
+    ///   - request: The network request to be performed.
+    ///   - headers: Additional headers to be included in the request.
+    ///   - retryPolicy: The retry policy for the network request.
+    ///   - completion: The completion handler to be called with the result.
     public func request<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
+        retryPolicy: NetworkRetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: NetworkRequest {
-        do {
-            let networkRequest = try buildNetworkRequest(for: request, andHeaders: headers)
-            session.beginRequest(networkRequest) { result in
-                self.handleResult(result, for: request, completion: completion)
+        var currentRetry = 0
+
+        /// Performs the network request with a completion handler.
+        func performRequest() {
+            do {
+                let networkRequest = try buildNetworkRequest(for: request, andHeaders: headers)
+                session.beginRequest(networkRequest) { result in
+                    self.handleResult(result, for: request) { result in
+                        switch result {
+                        case let .success(model):
+                            completion(.success(model))
+                        case let .failure(error):
+                            currentRetry += 1
+                            let shouldRetry = retryPolicy.shouldRetry(currentRetry: currentRetry)
+                            if shouldRetry {
+                                performRequest()
+                            } else {
+                                completion(.failure(error))
+                            }
+                        }
+                    }
+                }
+            } catch {
+                completion(.failure(NetworkError.invalidSession))
             }
-        } catch {
-            completion(.failure(NetworkError.invalidSession))
         }
+
+        performRequest()
     }
 
-    /// Initiates a network request to upload a file.
+    /// Uploads a file using a network request and executes the completion handler with the result.
     ///
     /// - Parameters:
-    ///   - request: The network request to be executed.
-    ///   - headers: Additional headers to include in the request.
+    ///   - request: The network request to be performed.
+    ///   - headers: Additional headers to be included in the request.
     ///   - fileURL: The URL of the file to be uploaded.
-    ///   - completion: The completion handler to be called when the request is complete.
+    ///   - retryPolicy: The retry policy for the network request.
+    ///   - completion: The completion handler to be called with the result.
     public func uploadFile<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
         fromFile fileURL: URL,
+        retryPolicy: NetworkRetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: NetworkRequest {
-        do {
-            var networkRequest = try buildNetworkRequest(for: request, andHeaders: headers)
-            try session.beginUploadTask(&networkRequest, fromFile: fileURL) { result in
-                self.handleResult(result, for: request, completion: completion)
+        var currentRetry = 0
+
+        /// Performs the network request to upload a file.
+        func performRequest() {
+            do {
+                var networkRequest = try buildNetworkRequest(for: request, andHeaders: headers)
+                try session.beginUploadTask(&networkRequest, fromFile: fileURL) { result in
+                    self.handleResult(result, for: request) { result in
+                        switch result {
+                        case let .success(model):
+                            completion(.success(model))
+                        case let .failure(error):
+                            currentRetry += 1
+                            let shouldRetry = retryPolicy.shouldRetry(currentRetry: currentRetry)
+                            if shouldRetry {
+                                performRequest()
+                            } else {
+                                completion(.failure(error))
+                            }
+                        }
+                    }
+                }
+            } catch {
+                completion(.failure(NetworkError.invalidSession))
             }
-        } catch {
-            completion(.failure(NetworkError.invalidSession))
         }
+
+        performRequest()
     }
 
-    /// Initiates a network request to download a file.
+    /// Downloads a file using a network request and executes the completion handler with the result.
     ///
     /// - Parameters:
-    ///   - request: The network request to be executed.
-    ///   - headers: Additional headers to include in the request.
-    ///   - completion: The completion handler to be called when the request is complete.
+    ///   - request: The network request to be performed.
+    ///   - headers: Additional headers to be included in the request.
+    ///   - retryPolicy: The retry policy for the network request.
+    ///   - completion: The completion handler to be called with the result.
     public func downloadFile<RequestType: NetworkRequest>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
+        retryPolicy: NetworkRetryPolicy = .none,
         completion: @escaping (Result<URL, NetworkError>) -> Void
     ) {
-        do {
-            let networkRequest = try buildNetworkRequest(for: request, andHeaders: headers)
-            session.beginDownloadTask(networkRequest, completion: completion)
-        } catch {
-            completion(.failure(NetworkError.invalidSession))
-        }
-    }
+        var currentRetry = 0
 
-    // MARK: - Helper Methods
+        /// Performs the network request to download a file.
+        func performRequest() {
+            do {
+                let networkRequest = try buildNetworkRequest(for: request, andHeaders: headers)
+                session.beginDownloadTask(networkRequest) { result in
+                    switch result {
+                    case let .success(url):
+                        completion(.success(url))
+                    case let .failure(error):
+                        currentRetry += 1
+                        let shouldRetry = retryPolicy.shouldRetry(currentRetry: currentRetry)
+                        if shouldRetry {
+                            performRequest()
+                        } else {
+                            completion(.failure(error))
+                        }
+                    }
+                }
+            } catch {
+                completion(.failure(NetworkError.invalidSession))
+            }
+        }
+
+        performRequest()
+    }
 
     private func buildNetworkRequest<RequestType: NetworkRequest>(
         for request: RequestType,

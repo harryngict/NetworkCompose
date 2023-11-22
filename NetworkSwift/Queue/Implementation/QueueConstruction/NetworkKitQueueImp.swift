@@ -14,7 +14,6 @@ import Foundation
 /// let baseURL = URL(string: "https://api.example.com")!
 /// let networkKitQueue = NetworkKitQueueImp(baseURL: baseURL)
 /// ```
-
 public final class NetworkKitQueueImp<SessionType: NetworkSession>: NetworkKitQueue {
     /// The underlying network kit responsible for handling network requests.
     private let networkKit: NetworkKit
@@ -52,17 +51,24 @@ public final class NetworkKitQueueImp<SessionType: NetworkSession>: NetworkKitQu
     /// - Parameters:
     ///   - request: The network request to be executed.
     ///   - headers: Additional headers to include in the request.
+    ///   - retryPolicy: The retry policy for the network request.
     ///   - completion: The completion handler to be called when the request is complete.
     public func request<RequestType: NetworkRequest>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
+        retryPolicy: NetworkRetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) {
         if request.requiresReAuthentication {
-            let operation = createReAuthenticationOperation(request, andHeaders: headers, completion: completion)
+            let operation = createReAuthenticationOperation(request, andHeaders: headers,
+                                                            retryPolicy: retryPolicy,
+                                                            completion: completion)
             serialOperationQueue.enqueue(operation)
         } else {
-            sendRequest(request, andHeaders: headers, allowReAuth: false, completion: completion)
+            sendRequest(request, andHeaders: headers,
+                        allowReAuth: false,
+                        retryPolicy: retryPolicy,
+                        completion: completion)
         }
     }
 
@@ -73,16 +79,21 @@ public final class NetworkKitQueueImp<SessionType: NetworkSession>: NetworkKitQu
     /// - Parameters:
     ///   - request: The network request to be executed.
     ///   - headers: Additional headers to include in the request.
+    ///   - retryPolicy: The retry policy for the network request.
     ///   - completion: The completion handler to be called when the request is complete.
     /// - Returns: The created operation.
     private func createReAuthenticationOperation<RequestType: NetworkRequest>(
         _ request: RequestType,
         andHeaders headers: [String: String],
+        retryPolicy: NetworkRetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) -> CustomOperation {
         let asyncOperation = ClosureCustomOperation { operation in
             operation.state = .executing
-            self.sendRequest(request, andHeaders: headers, allowReAuth: request.requiresReAuthentication) { result in
+            self.sendRequest(request, andHeaders: headers,
+                             allowReAuth: request.requiresReAuthentication,
+                             retryPolicy: retryPolicy)
+            { result in
                 switch result {
                 case let .success(model): completion(.success(model))
                 case let .failure(error): completion(.failure(error))
@@ -102,15 +113,17 @@ public final class NetworkKitQueueImp<SessionType: NetworkSession>: NetworkKitQu
     ///   - request: The network request to be executed.
     ///   - headers: Additional headers to include in the request.
     ///   - allowReAuth: A flag indicating whether re-authentication is allowed.
+    ///   - retryPolicy: The retry policy for the network request.
     ///   - completion: The completion handler to be called when the request is complete.
     private func sendRequest<RequestType: NetworkRequest>(
         _ request: RequestType,
         andHeaders headers: [String: String],
         allowReAuth: Bool,
+        retryPolicy: NetworkRetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) {
         debugPrint(request.debugDescription)
-        networkKit.request(request, andHeaders: headers) { result in
+        networkKit.request(request, andHeaders: headers, retryPolicy: retryPolicy) { result in
             switch result {
             case let .success(model):
                 completion(.success(model))
@@ -119,7 +132,9 @@ public final class NetworkKitQueueImp<SessionType: NetworkSession>: NetworkKitQu
                     reAuthService.reAuthen { reAuthResult in
                         switch reAuthResult {
                         case let .success(newHeaders):
-                            self.sendRequest(request, andHeaders: newHeaders, allowReAuth: false, completion: completion)
+                            self.sendRequest(request, andHeaders: newHeaders, allowReAuth: false,
+                                             retryPolicy: retryPolicy,
+                                             completion: completion)
                         case let .failure(error):
                             self.cancelAllOperations()
                             completion(.failure(error))

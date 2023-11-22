@@ -21,10 +21,12 @@ public protocol NetworkKitQueue: AnyObject {
     /// - Parameters:
     ///   - request: The network request to be executed.
     ///   - headers: Additional headers to be included in the request.
+    ///   - retryPolicy: The retry policy for the network request.
     ///   - completion: A closure to be executed upon completion of the request.
     func request<RequestType: NetworkRequest>(
         _ request: RequestType,
         andHeaders headers: [String: String],
+        retryPolicy: NetworkRetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     )
 }

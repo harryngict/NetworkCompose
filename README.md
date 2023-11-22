@@ -235,7 +235,7 @@ Remember to replace "api.example.com", "hash1", and "hash2" with your actual hos
 
 Choose the SSL pinning hosts and hashes that match the servers you intend to communicate with securely.
 
-## VIII. Creating a ReAuthenticationService for Auto Re-authentication
+## VIII. How to create ReAuthenticationService for Auto Re-authentication
 
 To implement auto re-authentication, you need to create a class or object conforming to the `ReAuthenticationService` protocol. This service will handle the automatic re-authentication process.
 
@@ -264,7 +264,7 @@ class YourAutoReAuthenticationService: ReAuthenticationService {
 }
 ```
 
-## IX. How to Use NetworkKit and NetworkKit with queue
+## IX. How to use NetworkKit and NetworkKitQueue
 
 ```swift
 enum Constant {
@@ -385,10 +385,61 @@ service.request(request) { (result: Result<[User], NetworkError>) in
 }
 ```
 
+## X. How to use NetworkRetryPolicy to send a request
+
+### 1. Create a NetworkRetryPolicy instance
+You can create an instance of NetworkRetryPolicy to control the behavior of request retries. Choose between .none for no retries or .retry(count: Int) to specify the number of retry attempts.
+
+```swift
+// Example: Create a retry policy allowing 3 retries
+let retryPolicy = NetworkRetryPolicy.retry(count: 3)
+```
+### 2. Use NetworkRetryPolicy when sending a request
+
+#### 2.1. Using `NetworkKit`
+
+```swift
+// Example: Make a request with retry policy using NetworkKit
+networkKit.request(yourRequest, andHeaders: yourHeaders, retryPolicy: retryPolicy) { result in
+    switch result {
+    case let .success(data):
+        // Handle successful response
+    case let .failure(error):
+        // Handle error, which may include errors after retries
+    }
+}
+```swift
+
+#### 2.2. Using NetworkKitQueue
+
+```swift
+// Example: Make a request with retry policy using NetworkKitQueue
+networkKitQueue.request(yourRequest, andHeaders: yourHeaders, retryPolicy: retryPolicy) { result in
+    switch result {
+    case let .success(data):
+        // Handle successful response
+    case let .failure(error):
+        // Handle error, which may include errors after retries
+    }
+}
+```
+
 Thats it!! NetworkSwift is successfully integrated and initialized in the project, and ready to use. 
 
 For more detail please go to [Example project](https://github.com/harryngict/NetworkSwift/blob/master/Example/Example/Client/ClientNetworkFactory.swift).
 
-## X. Support
+## XI. Support
 Feel free to utilize [JSONPlaceholder](https://jsonplaceholder.typicode.com/guide/) for testing API in Networkit examples. If you encounter any issues with NetworkSwift or need assistance with
 integration, please reach out to me at harryngict@gmail.com. I'm here to support you.
+
+## XII. Contributing
+If you want to contribute to NetworkSwift, please follow these steps:
+
+1. Fork the repository.
+
+2. Create a new branch for your feature or bug fix.
+
+3. Make your changes and submit a pull request.
+
+## XIII. License
+NetworkSwift is available under the MIT license. See the [LICENSE](https://github.com/harryngict/NetworkSwift/blob/master/LICENSE) file for more information.

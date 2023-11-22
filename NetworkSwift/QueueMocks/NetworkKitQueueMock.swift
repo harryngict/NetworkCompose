@@ -17,11 +17,11 @@ public class NetworkKitQueueMock: NetworkKitQueue {
     public var reAuthService: ReAuthenticationService? = nil { didSet { reAuthServiceSetCallCount += 1 } }
 
     public private(set) var requestCallCount = 0
-    public var requestHandler: ((Any, [String: String], Any) -> Void)?
-    public func request<RequestType: NetworkRequest>(_ request: RequestType, andHeaders headers: [String: String], completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void) {
+    public var requestHandler: ((Any, [String: String], NetworkRetryPolicy, Any) -> Void)?
+    public func request<RequestType: NetworkRequest>(_ request: RequestType, andHeaders headers: [String: String], retryPolicy: NetworkRetryPolicy, completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void) {
         requestCallCount += 1
         if let requestHandler = requestHandler {
-            requestHandler(request, headers, completion)
+            requestHandler(request, headers, retryPolicy, completion)
         }
     }
 }

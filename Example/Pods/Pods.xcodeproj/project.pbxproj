@@ -8,70 +8,71 @@
 
 /* Begin PBXBuildFile section */
 		015493E361617386AC1D8FE8C25916EF /* Pods-ExampleTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DCF22AD6CA93D3E57ECEE7D26CFD14 /* Pods-ExampleTests-dummy.m */; };
-		01B52DF01F822BA372E4F1C189A149AC /* Dictionary+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1B8DDDEE24051F34FAE9DD1A8B68DB /* Dictionary+Extensions.swift */; };
-		045DEE011CE700CFE2A7FC79C168D199 /* NetworkSwift-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 250D5F319184BD284241501EAD89D470 /* NetworkSwift-dummy.m */; };
-		06E9BC047409A5B70878E6801AD55938 /* NetworkKitImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B22071B87CA98991B7BF724F7F7E4AE /* NetworkKitImp.swift */; };
-		0E3EA0C04355B675C0640DB0F0C5CB8B /* NetworkKitMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220860BF6E314E57EEC7864C3DB8A384 /* NetworkKitMock.swift */; };
-		13FACFBE53C7CAE027EECC2FF288D99A /* NetworkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B736A703DA1DA7AF88D065355583FB /* NetworkSession.swift */; };
-		15F6E4E52A8437F655C74C9980F31E6F /* NetworkResponseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE36F650F0BCB22B3C8E188246073854 /* NetworkResponseMock.swift */; };
-		1BD7C833EF4F9BC9CD69E20982275D2D /* NetworkTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28CF15D42F9722C4A0283D0167FDA00 /* NetworkTask.swift */; };
-		1E799B193A900046C2EBD386DE3F456E /* AuthChallengeDecision.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F3B480714470B55AEB2D58EB099BC4 /* AuthChallengeDecision.swift */; };
-		208D7CFFADD941BF4F4E62B2DD205F08 /* NetworkKitQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EA8764126338E03477DB1C1968B69B /* NetworkKitQueue.swift */; };
-		24842D558799F8B9ED96208C21A7563C /* NetworkSessionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF268F7FBD3C70B1ED17409A69CBB410 /* NetworkSessionMock.swift */; };
-		26CBD1E380968FDE390349026A06EE71 /* NetworkResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699CDE68C6BED164BAB7EF527047D129 /* NetworkResponse.swift */; };
-		27CC6C70818695B52C19AA28B1883A3E /* OperationQueueManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E0614FE8C5E2F630B95354471E6BC7 /* OperationQueueManager.swift */; };
-		2868C8DD88225D38E83CF0C5AA5C674A /* NetworkSwift-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A8AAE58E74D2D759816B151FDDA6E00 /* NetworkSwift-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3128F206220535BE1C6ADD1B9FE79195 /* NetworkKitQueueImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2BA700A7B035467A5EBC75A2B439FA /* NetworkKitQueueImp.swift */; };
-		348054D70DAC4217CA4136BE9AAB596E /* NetworkSecurityTrustImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C323FF1F7CF3451D93E1006F98EF00B5 /* NetworkSecurityTrustImp.swift */; };
-		364346B9864EA9AC06ADE2548853474D /* OperationQueueManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2256DBA11AE6CC7054D161B069A83426 /* OperationQueueManagerMock.swift */; };
-		387C6BF65F2F14C1EF7DD9E5F9205BAB /* NetworkTaskMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E4026BBB3344814549CD1358F1E9B2 /* NetworkTaskMock.swift */; };
-		3D76BB85ED20BC56B16C1202C6BE6E75 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		45B2A944AE40B1690159BA36810E1F4B /* NetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F184472031A4E4EA24EB8848E7CFDF6 /* NetworkRequest.swift */; };
+		01CAD8A40C71C3C0B1830A15AF49962E /* Data+RSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BCF0E38AB65C27A1DC08B9AAC39986 /* Data+RSA.swift */; };
+		03D0F72D68948CB6D28748CEA9D91D33 /* OperationQueueManagerImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F37F985C4FD91CB2157247C5D54499A /* OperationQueueManagerImp.swift */; };
+		07B57FD5B7554FF753FA30CA5D972E8F /* NetworkUploadTaskMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBCE9F9EBE9DF9C48D3A38C0738C540 /* NetworkUploadTaskMock.swift */; };
+		0B30FCE41705EF853889DEFD646A15E6 /* ResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E732C813C723438EDB15D60670E7EB1D /* ResponseDecoder.swift */; };
+		15D4C3DDBDC26C21B6BB85167B0E783F /* NetworkKitQueueBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDE65BA282335918B21DCD122D69F93 /* NetworkKitQueueBuilder.swift */; };
+		1CF345ACD5BC509C41D9499F588E4765 /* NetworkDownloadTaskMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBB1BF0DE5F53CA59F27CE0BAB704DA /* NetworkDownloadTaskMock.swift */; };
+		1F48ACEED2FFC597CAC647C6A54B68AF /* Dictionary+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5BF1AB075A5E6289C1C16830D4CD4F /* Dictionary+Extensions.swift */; };
+		1F561C3EC018C3F912B8E01E8ED33935 /* NetworkReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B04ACE9F35E9D41EE49593432C674F1 /* NetworkReachability.swift */; };
+		21D5FD0602FC0E82AED1FDDD7246DFD8 /* NetworkSwift-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 250D5F319184BD284241501EAD89D470 /* NetworkSwift-dummy.m */; };
+		22324535834F7631F9ECD076DA070E8D /* URLSession+MulipartFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30E0D531C5587BCC1C5CB2DA542CFF0 /* URLSession+MulipartFile.swift */; };
+		2259C82BB1ED40EDE25F31F5531E88EC /* NetworkResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17743A58D6F77628B9310083FC54873F /* NetworkResponse.swift */; };
+		234E8370678B05586BED6BE826BFF7CD /* NetworkKitFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DF7E6DA2358668143C3D54A5674806 /* NetworkKitFacade.swift */; };
+		276E63EB9830FA5DA2F5A8CFC713511E /* NetworkRequestMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15B39135196A0EB2890688E9502BEF0 /* NetworkRequestMock.swift */; };
+		31633692346F4C1657BC6693298464A2 /* ReAuthenticationServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF412EEB3D08C6DFE5631F71DF2CAD21 /* ReAuthenticationServiceMock.swift */; };
+		3B4E8F43DD6C691F438F0B434B5EB694 /* NetworkKitBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991369412116354062521D57CE702CEA /* NetworkKitBuilder.swift */; };
+		3C6F120A9BFE0B49B1195CF8D36F2431 /* NetworkTaskMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E4026BBB3344814549CD1358F1E9B2 /* NetworkTaskMock.swift */; };
+		3FE0294AB28A00215989A32489C25B05 /* CustomOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A945247D199C1D3FDCF19C6D9C5D745 /* CustomOperation.swift */; };
+		40720CC980EC1AE6CBBE0458FB2C9E40 /* URLSession+Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC548BE2ADB63F0735443D9D836CD230 /* URLSession+Network.swift */; };
+		431B23C52BCDF087A00E5AC48EAFCC6B /* OperationQueueManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB7CAF3F4EABBDDE1816DE3DEB41C659 /* OperationQueueManager.swift */; };
+		47C29629A90A57AF3C347FC2A002D61C /* NetworkRetryPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467AB258A51A260D4F07FEA8351C2D0B /* NetworkRetryPolicy.swift */; };
+		47C708216888A29EE1D244016BD187FE /* NetworkSecurityTrustImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134237C17519D33021F9C480E7C0EAC3 /* NetworkSecurityTrustImp.swift */; };
 		480B1724DCAD63A187A124F438D8712F /* Pods-Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D8EF441374A5ADCA27D61E5983D4F67 /* Pods-Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		48FEE0F5530DD1BEBCC3E5B3803240C3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		50B30992669DC1E8B4C575ED55B031BC /* NetworkKitFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC61311305FD60B9417BBAA23270DD33 /* NetworkKitFacade.swift */; };
-		5DE500837DAD4FFD17745F3C7D1C02AE /* NetworkRequestMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15B39135196A0EB2890688E9502BEF0 /* NetworkRequestMock.swift */; };
-		616BDFABB80F81F909AB32DFF35140ED /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83019999A64CF5D2A6F5DE9FE643625 /* String+Extensions.swift */; };
-		642860A85FE14EE220665593EB8B21F7 /* NetworkReachabilityMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50F92498584E94F9A6D56BF0A41F61C /* NetworkReachabilityMock.swift */; };
-		651CFC97D46676ED11ABDA9AB1360595 /* ReAuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CE806B98BC29971EAA24A765F399B4 /* ReAuthenticationService.swift */; };
-		657EA2C200FFA9C28C7D0FDFA4D3C143 /* NetworkSessionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB125225058FE0791828880D711E70D /* NetworkSessionConfiguration.swift */; };
-		671F370154503C7FAE54E27943071C4F /* NetworkReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9776E36F5279779BCD7BFB93C3D820B5 /* NetworkReachability.swift */; };
-		6F08BCBDA0CEE4E433684EC8269B2DE5 /* NetworkKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78F45779C3F3BC15FD107823D6DB25B /* NetworkKit.swift */; };
-		717E1A38B0BF9254EB45BE185F4614D5 /* NetworkUploadTaskMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBCE9F9EBE9DF9C48D3A38C0738C540 /* NetworkUploadTaskMock.swift */; };
-		737A92633C340E15D977961A271E9E6D /* NetworkDownloadTaskMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBB1BF0DE5F53CA59F27CE0BAB704DA /* NetworkDownloadTaskMock.swift */; };
-		8273F70E2B178E574D4C81A1AA9061BD /* NetworkResponseImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9013A048655F1925D715FE71C6135301 /* NetworkResponseImp.swift */; };
+		55CC2E2B9164E95255EA2974B8F97946 /* NetworkResponseImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93D062A4F5A825FE94261653976773C /* NetworkResponseImp.swift */; };
+		57651F0280AD79DA47D3E08DB3AE3237 /* NetworkSSLPinningHostImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F298F52C7D59E059F3500FB4F2D47E77 /* NetworkSSLPinningHostImp.swift */; };
+		5775EC5F5F57EB7EB3C926C4E29CBBEA /* NetworkKitImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745D3E6655FBC00DD3F11A0D6FD9647A /* NetworkKitImp.swift */; };
+		5E57A03EC8030A9CF828A4FEBD966EEA /* SSLPinningProcessorImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD1680D837FDD147727669F87894E3F /* SSLPinningProcessorImp.swift */; };
+		64DAFD29AF71C032AA91F44F443E2838 /* OperationQueueManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2256DBA11AE6CC7054D161B069A83426 /* OperationQueueManagerMock.swift */; };
+		6BABEE001526D182CBB197E06D592729 /* NetworkKitQueueImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D4AF8D765A4001A6581A60780787ED /* NetworkKitQueueImp.swift */; };
+		6C8A523C391EE966D423530BA52E9EA1 /* NetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9B9C83DD2A68470694603E56A36DC8 /* NetworkRequest.swift */; };
+		6F87E0744D2BD8ACB67F4EB44E5CEC6B /* NetworkSecurityTrust.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4706A207C3525869D9C084AABEA98D8A /* NetworkSecurityTrust.swift */; };
+		7040FC521BD8DCEFDC6062AB64DA0940 /* ReAuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8365E3D7E1257AE1ABB4BB430869FB /* ReAuthenticationService.swift */; };
+		75C1837F372EBEF34B23A9F9374CB596 /* NetworkKitResultMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B382D4217C8DC21EDCC8E4EEE6FF1C /* NetworkKitResultMock.swift */; };
+		7C7C873B5B735013803DCA983D1FBD56 /* NetworkSessionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF268F7FBD3C70B1ED17409A69CBB410 /* NetworkSessionMock.swift */; };
+		7D1AEAD74791AE1A60EC2AB274C9BDFC /* AuthChallengeDecision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91BC4CE7A79BA0C8710E7A2E13241F32 /* AuthChallengeDecision.swift */; };
+		7DF1A0B8A22A94D6527C36A4F34C4F56 /* ResponseDecoderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF070BB8B835BA75ADB9CAA0DB81FE9 /* ResponseDecoderMock.swift */; };
+		8389AA9DA682C8817373A1D7848FF17E /* NetworkSessionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9B8C21A050D2948111AE52A90A05C7 /* NetworkSessionConfiguration.swift */; };
+		85C678AB2437F266EA8FF003BAAF652D /* NetworkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6405C5A290D30F3AA14A9EE0FC320F5 /* NetworkSession.swift */; };
 		8A36994B4CC18E98A9B301E5DA9FB4E7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		9BAFC7E79F3F76463D74304D2938D4F3 /* SSLPinningProcessorImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAD9E20EA7D2D35E1DB985A8A9C4083 /* SSLPinningProcessorImp.swift */; };
-		9EFEF62CB08DCB8FA270D70BEC7BDEE3 /* SSLPinningProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1386DD4FFB041C039AB0B4A8E658F5FA /* SSLPinningProcessor.swift */; };
+		999A95BD6D3F26ED37880DDE9A309392 /* NetworkKitQueueMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDB3C2FF99B3B8C072300F6AACAF5C8 /* NetworkKitQueueMock.swift */; };
 		9FC25AB6C8E95B161335FDC07CDCF15C /* Pods-Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C88809A0C1067F5AAE6740D18B88A4B4 /* Pods-Example-dummy.m */; };
-		A02ECD1806D70424C39BACCB3A3BD0CD /* NetworkKitResultMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B382D4217C8DC21EDCC8E4EEE6FF1C /* NetworkKitResultMock.swift */; };
-		A266F76F462A9F8EE723610ED8F51EED /* ResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C16809912471E5E64BDACB536E0C94A /* ResponseDecoder.swift */; };
-		AD632AAE2194188F8C2B3C7BFB5A2E72 /* URLSession+Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66649B0337B8B790092F8D4FA3A925 /* URLSession+Network.swift */; };
-		B1B09CC36C30EA31E9267C21B8A5B057 /* NetworkKitQueueMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDB3C2FF99B3B8C072300F6AACAF5C8 /* NetworkKitQueueMock.swift */; };
-		B4C46B36D82DD663FAF828FC38F78B86 /* CustomOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38407EE1F7615BEF867181D5C5A0E200 /* CustomOperation.swift */; };
-		C81EF369ABB614A1181A2B1B057E17D5 /* OperationQueueManagerImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9183207C67D0D490A3EAE45C957A6126 /* OperationQueueManagerImp.swift */; };
-		CE118D26B399F4997BDD0D34A2DBEAD6 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A623551DC626B9FE33F22E814778A76C /* NetworkError.swift */; };
-		D8A1A039133B21A8735CA98F9C7DAAC9 /* ClosureCustomOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A338ED75083371B167EB5CD0E8C246 /* ClosureCustomOperation.swift */; };
-		D9FAC1B255439F2EAC09DC598D869923 /* ReAuthenticationServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF412EEB3D08C6DFE5631F71DF2CAD21 /* ReAuthenticationServiceMock.swift */; };
-		DDE2B4912B0D2517004ADBC0 /* URLSession+MulipartFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE2B4902B0D2517004ADBC0 /* URLSession+MulipartFile.swift */; };
-		DDE2B4952B0D7242004ADBC0 /* NetworkSSLPinningHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE2B4942B0D7242004ADBC0 /* NetworkSSLPinningHost.swift */; };
-		DDE2B4972B0D7548004ADBC0 /* Data+RSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE2B4962B0D7548004ADBC0 /* Data+RSA.swift */; };
-		DDE2B4992B0D762A004ADBC0 /* NetworkSSLPinningHostImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE2B4982B0D762A004ADBC0 /* NetworkSSLPinningHostImp.swift */; };
-		DDE2B49B2B0E4F8B004ADBC0 /* NetworkRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE2B49A2B0E4F8B004ADBC0 /* NetworkRequestBuilder.swift */; };
-		DDE2B49D2B0E53E9004ADBC0 /* NetworkKitBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE2B49C2B0E53E9004ADBC0 /* NetworkKitBuilder.swift */; };
-		DDE2B49F2B0E5693004ADBC0 /* NetworkKitQueueBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE2B49E2B0E5693004ADBC0 /* NetworkKitQueueBuilder.swift */; };
-		DDE2B4A92B0E5FAD004ADBC0 /* NetworkKitQueueFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE2B4A82B0E5FAD004ADBC0 /* NetworkKitQueueFacade.swift */; };
-		E311DA8D2071B6C2852CD1388344715B /* NetworkSecurityTrust.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6047CC9F2443C30E27B9EDD2C7866A4F /* NetworkSecurityTrust.swift */; };
-		E55ED5285ABD93E683BC1E0AF31D5DC7 /* NetworkRequestImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326265CBBBD3801F007434083B114206 /* NetworkRequestImp.swift */; };
-		E76D6CEE03979A4168E02978CF044DDF /* ResponseDecoderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF070BB8B835BA75ADB9CAA0DB81FE9 /* ResponseDecoderMock.swift */; };
-		EDD2EA713D46E6337341F5CCED4D0D35 /* NetworkSessionTaskDelegate+SSLPinning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88168AB7F21C9D6E881538722AC7B846 /* NetworkSessionTaskDelegate+SSLPinning.swift */; };
-		FBB856515717EF5ED2D8566C09681CEA /* SecCertificate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA1F469BFA1F126D731B0218CFAF3A6 /* SecCertificate+Extensions.swift */; };
-		FE9E419AC5499BA9F1F8936376948C6A /* NetworkReachabilityImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9EB1BCEEFCBEC54DE591E51DA3F8E4E /* NetworkReachabilityImp.swift */; };
+		A63D106C4F93CD6767269522F552A445 /* NetworkRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73B35440F765C0580DDD1C633AA62C3 /* NetworkRequestBuilder.swift */; };
+		AA5CD9FBCD8D79314D09071E8A1E6ED2 /* NetworkKitMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220860BF6E314E57EEC7864C3DB8A384 /* NetworkKitMock.swift */; };
+		AD52114A11D9CCE0D38EE8689F157225 /* NetworkResponseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE36F650F0BCB22B3C8E188246073854 /* NetworkResponseMock.swift */; };
+		AEF1962C358DEC34B0990F268F2A715F /* NetworkSSLPinningHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D88573AA39A7DDB6949C2658A00180 /* NetworkSSLPinningHost.swift */; };
+		C056D82A0E1D72C3D6733041C4BFFCCF /* NetworkKitQueueFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DCF9E5631192CF142563BDA3CE80ED /* NetworkKitQueueFacade.swift */; };
+		C4DB80F44D72FD17CD00B8CE2512F52F /* SecCertificate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B40C298997D33A91969A38327A2AA6F /* SecCertificate+Extensions.swift */; };
+		C80D7A498832D2AF58CEAA1FA72BF0CB /* NetworkKitQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDAC1DE4B69D35C04C5F3A0F464CDA3B /* NetworkKitQueue.swift */; };
+		C86F5C4DDA46C2C8450A569194C3D562 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C6660DE5E4498E4A36168067239339 /* String+Extensions.swift */; };
+		C9BA180565A347804D4C3079FD0EB379 /* NetworkKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693A0326D89CD0C24E2A1A8C08B18FFC /* NetworkKit.swift */; };
+		CC5AA12BCA5CF8CA4D8342137251124C /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC72C84C54D46AC536897A8EAA20E92 /* NetworkError.swift */; };
+		CE6865794571637697991487B161CDDD /* NetworkTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F48D462AF5B6A0DF72600E0F0B84CB /* NetworkTask.swift */; };
+		D69CE25A8CCEE7D93D5CFC71F1B14784 /* NetworkReachabilityImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1286AE0C3ADCB153A1C129879953B32E /* NetworkReachabilityImp.swift */; };
+		EB8130661219FD920D1BB2959E85C49E /* SSLPinningProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7460382716CEFA1793DBF15880BB67E9 /* SSLPinningProcessor.swift */; };
+		EF68157BD7F08ACABF6DC5A43254E0A4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
+		F186C4F01448BAEA696E23C4FB837004 /* NetworkSwift-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A8AAE58E74D2D759816B151FDDA6E00 /* NetworkSwift-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F3664890C0B3DB4BDA95B0C2050BC387 /* NetworkRequestImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E71DFF169B3AD8D71E3B2BF29CD48F /* NetworkRequestImp.swift */; };
+		F5B67C69A0AC833BC7AE13244A272163 /* NetworkSessionTaskDelegate+SSLPinning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360BB01CDF9F9F9FC9697D0DD9043A42 /* NetworkSessionTaskDelegate+SSLPinning.swift */; };
+		FA1BC4628AD69B30E42B4D534005A4BF /* ClosureCustomOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498DBF115ADB751FFBA67B5CFAF1CB0B /* ClosureCustomOperation.swift */; };
+		FE592E59032CA61CCCB592FE8B1EFDB7 /* NetworkReachabilityMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50F92498584E94F9A6D56BF0A41F61C /* NetworkReachabilityMock.swift */; };
 		FFE3822AC8F14321BDA2DE131FCB010A /* Pods-ExampleTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5390B519E8A604741ACD8AD7BB7069DB /* Pods-ExampleTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		2466E963F8964544EC3C8662B54021CC /* PBXContainerItemProxy */ = {
+		886B25CC3A7F2EF3FEEC5A8F412284D9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
@@ -81,100 +82,93 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0B22071B87CA98991B7BF724F7F7E4AE /* NetworkKitImp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkKitImp.swift; sourceTree = "<group>"; };
-		0F184472031A4E4EA24EB8848E7CFDF6 /* NetworkRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkRequest.swift; sourceTree = "<group>"; };
 		104200B006716F1EDAE9B6587929494A /* NetworkSwift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = NetworkSwift.modulemap; sourceTree = "<group>"; };
 		10F66DFDCAF9222B96323CC9DF77DEBA /* Pods-ExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ExampleTests.release.xcconfig"; sourceTree = "<group>"; };
-		1386DD4FFB041C039AB0B4A8E658F5FA /* SSLPinningProcessor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SSLPinningProcessor.swift; sourceTree = "<group>"; };
+		1286AE0C3ADCB153A1C129879953B32E /* NetworkReachabilityImp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkReachabilityImp.swift; sourceTree = "<group>"; };
+		134237C17519D33021F9C480E7C0EAC3 /* NetworkSecurityTrustImp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkSecurityTrustImp.swift; sourceTree = "<group>"; };
+		17743A58D6F77628B9310083FC54873F /* NetworkResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkResponse.swift; sourceTree = "<group>"; };
+		17F48D462AF5B6A0DF72600E0F0B84CB /* NetworkTask.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkTask.swift; sourceTree = "<group>"; };
+		1A945247D199C1D3FDCF19C6D9C5D745 /* CustomOperation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CustomOperation.swift; sourceTree = "<group>"; };
+		1DDE65BA282335918B21DCD122D69F93 /* NetworkKitQueueBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkKitQueueBuilder.swift; sourceTree = "<group>"; };
 		1F667CC0E19EAF34E5A4119E2121F585 /* Pods-Example */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-Example"; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1FAD9E20EA7D2D35E1DB985A8A9C4083 /* SSLPinningProcessorImp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SSLPinningProcessorImp.swift; sourceTree = "<group>"; };
 		220860BF6E314E57EEC7864C3DB8A384 /* NetworkKitMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkKitMock.swift; path = NetworkSwift/CoreMocks/NetworkKitMock.swift; sourceTree = "<group>"; };
 		2256DBA11AE6CC7054D161B069A83426 /* OperationQueueManagerMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OperationQueueManagerMock.swift; path = NetworkSwift/QueueMocks/OperationQueueManagerMock.swift; sourceTree = "<group>"; };
 		250D5F319184BD284241501EAD89D470 /* NetworkSwift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NetworkSwift-dummy.m"; sourceTree = "<group>"; };
+		26C6660DE5E4498E4A36168067239339 /* String+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		2A5BF1AB075A5E6289C1C16830D4CD4F /* Dictionary+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extensions.swift"; sourceTree = "<group>"; };
 		2FDB3C2FF99B3B8C072300F6AACAF5C8 /* NetworkKitQueueMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkKitQueueMock.swift; path = NetworkSwift/QueueMocks/NetworkKitQueueMock.swift; sourceTree = "<group>"; };
 		3162F48659099DB1B64E772AA0A146AE /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
-		326265CBBBD3801F007434083B114206 /* NetworkRequestImp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkRequestImp.swift; sourceTree = "<group>"; };
-		38407EE1F7615BEF867181D5C5A0E200 /* CustomOperation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CustomOperation.swift; sourceTree = "<group>"; };
+		360BB01CDF9F9F9FC9697D0DD9043A42 /* NetworkSessionTaskDelegate+SSLPinning.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "NetworkSessionTaskDelegate+SSLPinning.swift"; sourceTree = "<group>"; };
+		40D88573AA39A7DDB6949C2658A00180 /* NetworkSSLPinningHost.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkSSLPinningHost.swift; sourceTree = "<group>"; };
+		43D4AF8D765A4001A6581A60780787ED /* NetworkKitQueueImp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkKitQueueImp.swift; sourceTree = "<group>"; };
+		467AB258A51A260D4F07FEA8351C2D0B /* NetworkRetryPolicy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkRetryPolicy.swift; sourceTree = "<group>"; };
+		4706A207C3525869D9C084AABEA98D8A /* NetworkSecurityTrust.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkSecurityTrust.swift; sourceTree = "<group>"; };
 		48BDB3781C6E1F9CE5FE897191AB171D /* Pods-ExampleTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ExampleTests-Info.plist"; sourceTree = "<group>"; };
+		498DBF115ADB751FFBA67B5CFAF1CB0B /* ClosureCustomOperation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ClosureCustomOperation.swift; sourceTree = "<group>"; };
+		4B40C298997D33A91969A38327A2AA6F /* SecCertificate+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "SecCertificate+Extensions.swift"; sourceTree = "<group>"; };
 		4D8EF441374A5ADCA27D61E5983D4F67 /* Pods-Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Example-umbrella.h"; sourceTree = "<group>"; };
 		5390B519E8A604741ACD8AD7BB7069DB /* Pods-ExampleTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ExampleTests-umbrella.h"; sourceTree = "<group>"; };
 		59755BBE1D7995A8AE7AB07606D22F75 /* NetworkSwift-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NetworkSwift-prefix.pch"; sourceTree = "<group>"; };
-		5D2BA700A7B035467A5EBC75A2B439FA /* NetworkKitQueueImp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkKitQueueImp.swift; sourceTree = "<group>"; };
-		5DB125225058FE0791828880D711E70D /* NetworkSessionConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkSessionConfiguration.swift; sourceTree = "<group>"; };
-		6047CC9F2443C30E27B9EDD2C7866A4F /* NetworkSecurityTrust.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkSecurityTrust.swift; sourceTree = "<group>"; };
+		5B04ACE9F35E9D41EE49593432C674F1 /* NetworkReachability.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkReachability.swift; sourceTree = "<group>"; };
+		5B9B8C21A050D2948111AE52A90A05C7 /* NetworkSessionConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkSessionConfiguration.swift; sourceTree = "<group>"; };
 		630CABE8F692FCDBFD1B122A2D0CE388 /* Pods-ExampleTests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-ExampleTests"; path = Pods_ExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		687B514EEBC2F799BD1DB36AA00BD93B /* Pods-Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Example-Info.plist"; sourceTree = "<group>"; };
-		699CDE68C6BED164BAB7EF527047D129 /* NetworkResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkResponse.swift; sourceTree = "<group>"; };
-		69EA8764126338E03477DB1C1968B69B /* NetworkKitQueue.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkKitQueue.swift; sourceTree = "<group>"; };
+		693A0326D89CD0C24E2A1A8C08B18FFC /* NetworkKit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkKit.swift; sourceTree = "<group>"; };
 		6A8B25EE52CA76AB16519AD4E16DFD44 /* Pods-Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Example.modulemap"; sourceTree = "<group>"; };
-		6AA1F469BFA1F126D731B0218CFAF3A6 /* SecCertificate+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "SecCertificate+Extensions.swift"; sourceTree = "<group>"; };
 		71DAFD7277292D9C23AD07A44D2A3AC5 /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
 		72CAFD5231B994228C1FE0357A34875F /* NetworkSwift-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "NetworkSwift-Info.plist"; sourceTree = "<group>"; };
 		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		74B736A703DA1DA7AF88D065355583FB /* NetworkSession.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkSession.swift; sourceTree = "<group>"; };
-		7C16809912471E5E64BDACB536E0C94A /* ResponseDecoder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ResponseDecoder.swift; sourceTree = "<group>"; };
+		745D3E6655FBC00DD3F11A0D6FD9647A /* NetworkKitImp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkKitImp.swift; sourceTree = "<group>"; };
+		7460382716CEFA1793DBF15880BB67E9 /* SSLPinningProcessor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SSLPinningProcessor.swift; sourceTree = "<group>"; };
+		7EC72C84C54D46AC536897A8EAA20E92 /* NetworkError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		81B382D4217C8DC21EDCC8E4EEE6FF1C /* NetworkKitResultMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkKitResultMock.swift; path = NetworkSwift/CoreMocks/NetworkKitResultMock.swift; sourceTree = "<group>"; };
-		88168AB7F21C9D6E881538722AC7B846 /* NetworkSessionTaskDelegate+SSLPinning.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "NetworkSessionTaskDelegate+SSLPinning.swift"; sourceTree = "<group>"; };
 		88D5BE92D5B75C0E22F314CA2B9648BA /* NetworkSwift */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = NetworkSwift; path = NetworkSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8A66649B0337B8B790092F8D4FA3A925 /* URLSession+Network.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "URLSession+Network.swift"; sourceTree = "<group>"; };
 		8D30B609D2F069E5963F2E3D21D36C71 /* Pods-ExampleTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ExampleTests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		9013A048655F1925D715FE71C6135301 /* NetworkResponseImp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkResponseImp.swift; sourceTree = "<group>"; };
-		9183207C67D0D490A3EAE45C957A6126 /* OperationQueueManagerImp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OperationQueueManagerImp.swift; sourceTree = "<group>"; };
-		91E0614FE8C5E2F630B95354471E6BC7 /* OperationQueueManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OperationQueueManager.swift; sourceTree = "<group>"; };
-		9776E36F5279779BCD7BFB93C3D820B5 /* NetworkReachability.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkReachability.swift; sourceTree = "<group>"; };
+		91BC4CE7A79BA0C8710E7A2E13241F32 /* AuthChallengeDecision.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AuthChallengeDecision.swift; sourceTree = "<group>"; };
+		98DCF9E5631192CF142563BDA3CE80ED /* NetworkKitQueueFacade.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkKitQueueFacade.swift; sourceTree = "<group>"; };
+		991369412116354062521D57CE702CEA /* NetworkKitBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkKitBuilder.swift; sourceTree = "<group>"; };
 		9A8AAE58E74D2D759816B151FDDA6E00 /* NetworkSwift-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NetworkSwift-umbrella.h"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		A28CF15D42F9722C4A0283D0167FDA00 /* NetworkTask.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkTask.swift; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9F37F985C4FD91CB2157247C5D54499A /* OperationQueueManagerImp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OperationQueueManagerImp.swift; sourceTree = "<group>"; };
 		A2EA7DA4036AA7DB5DE50D091A3C49A3 /* Pods-ExampleTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ExampleTests-acknowledgements.plist"; sourceTree = "<group>"; };
-		A623551DC626B9FE33F22E814778A76C /* NetworkError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
-		A83019999A64CF5D2A6F5DE9FE643625 /* String+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		A90BD6E5F531E3293A3B649FD7BF8489 /* NetworkSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NetworkSwift.debug.xcconfig; sourceTree = "<group>"; };
-		A9CE806B98BC29971EAA24A765F399B4 /* ReAuthenticationService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReAuthenticationService.swift; sourceTree = "<group>"; };
+		AB7CAF3F4EABBDDE1816DE3DEB41C659 /* OperationQueueManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OperationQueueManager.swift; sourceTree = "<group>"; };
 		AFF070BB8B835BA75ADB9CAA0DB81FE9 /* ResponseDecoderMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ResponseDecoderMock.swift; path = NetworkSwift/CoreMocks/ResponseDecoderMock.swift; sourceTree = "<group>"; };
 		B0E4026BBB3344814549CD1358F1E9B2 /* NetworkTaskMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkTaskMock.swift; path = NetworkSwift/CoreMocks/NetworkTaskMock.swift; sourceTree = "<group>"; };
+		B30E0D531C5587BCC1C5CB2DA542CFF0 /* URLSession+MulipartFile.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "URLSession+MulipartFile.swift"; sourceTree = "<group>"; };
 		B3DCF22AD6CA93D3E57ECEE7D26CFD14 /* Pods-ExampleTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ExampleTests-dummy.m"; sourceTree = "<group>"; };
-		B8A338ED75083371B167EB5CD0E8C246 /* ClosureCustomOperation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ClosureCustomOperation.swift; sourceTree = "<group>"; };
+		B5BCF0E38AB65C27A1DC08B9AAC39986 /* Data+RSA.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Data+RSA.swift"; sourceTree = "<group>"; };
+		B93D062A4F5A825FE94261653976773C /* NetworkResponseImp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkResponseImp.swift; sourceTree = "<group>"; };
 		BC784C8BD66442698323602C5F6028DD /* NetworkSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NetworkSwift.release.xcconfig; sourceTree = "<group>"; };
-		C323FF1F7CF3451D93E1006F98EF00B5 /* NetworkSecurityTrustImp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkSecurityTrustImp.swift; sourceTree = "<group>"; };
+		C2DF7E6DA2358668143C3D54A5674806 /* NetworkKitFacade.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkKitFacade.swift; sourceTree = "<group>"; };
+		C6405C5A290D30F3AA14A9EE0FC320F5 /* NetworkSession.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkSession.swift; sourceTree = "<group>"; };
 		C88809A0C1067F5AAE6740D18B88A4B4 /* Pods-Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Example-dummy.m"; sourceTree = "<group>"; };
+		CA8365E3D7E1257AE1ABB4BB430869FB /* ReAuthenticationService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReAuthenticationService.swift; sourceTree = "<group>"; };
 		CA880FC563E3837FB21F7CFFD51A237F /* Pods-ExampleTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-ExampleTests.modulemap"; sourceTree = "<group>"; };
+		CB9B9C83DD2A68470694603E56A36DC8 /* NetworkRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkRequest.swift; sourceTree = "<group>"; };
+		CDAC1DE4B69D35C04C5F3A0F464CDA3B /* NetworkKitQueue.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkKitQueue.swift; sourceTree = "<group>"; };
 		D15B39135196A0EB2890688E9502BEF0 /* NetworkRequestMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkRequestMock.swift; path = NetworkSwift/CoreMocks/NetworkRequestMock.swift; sourceTree = "<group>"; };
-		D431829909F34E3429FADD9BA2D8EF55 /* NetworkSwift.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = NetworkSwift.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		D47C7FE86EC568E40027BF7DDE364E2F /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		DDE2B4902B0D2517004ADBC0 /* URLSession+MulipartFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+MulipartFile.swift"; sourceTree = "<group>"; };
-		DDE2B4942B0D7242004ADBC0 /* NetworkSSLPinningHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkSSLPinningHost.swift; sourceTree = "<group>"; };
-		DDE2B4962B0D7548004ADBC0 /* Data+RSA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+RSA.swift"; sourceTree = "<group>"; };
-		DDE2B4982B0D762A004ADBC0 /* NetworkSSLPinningHostImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkSSLPinningHostImp.swift; sourceTree = "<group>"; };
-		DDE2B49A2B0E4F8B004ADBC0 /* NetworkRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequestBuilder.swift; sourceTree = "<group>"; };
-		DDE2B49C2B0E53E9004ADBC0 /* NetworkKitBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkKitBuilder.swift; sourceTree = "<group>"; };
-		DDE2B49E2B0E5693004ADBC0 /* NetworkKitQueueBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkKitQueueBuilder.swift; sourceTree = "<group>"; };
-		DDE2B4A82B0E5FAD004ADBC0 /* NetworkKitQueueFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkKitQueueFacade.swift; sourceTree = "<group>"; };
+		D431829909F34E3429FADD9BA2D8EF55 /* NetworkSwift.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = NetworkSwift.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		D47C7FE86EC568E40027BF7DDE364E2F /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
 		DE36F650F0BCB22B3C8E188246073854 /* NetworkResponseMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkResponseMock.swift; path = NetworkSwift/CoreMocks/NetworkResponseMock.swift; sourceTree = "<group>"; };
 		DF412EEB3D08C6DFE5631F71DF2CAD21 /* ReAuthenticationServiceMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReAuthenticationServiceMock.swift; path = NetworkSwift/QueueMocks/ReAuthenticationServiceMock.swift; sourceTree = "<group>"; };
-		E78F45779C3F3BC15FD107823D6DB25B /* NetworkKit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkKit.swift; sourceTree = "<group>"; };
+		E732C813C723438EDB15D60670E7EB1D /* ResponseDecoder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ResponseDecoder.swift; sourceTree = "<group>"; };
+		E73B35440F765C0580DDD1C633AA62C3 /* NetworkRequestBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkRequestBuilder.swift; sourceTree = "<group>"; };
+		EBD1680D837FDD147727669F87894E3F /* SSLPinningProcessorImp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SSLPinningProcessorImp.swift; sourceTree = "<group>"; };
+		EC548BE2ADB63F0735443D9D836CD230 /* URLSession+Network.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "URLSession+Network.swift"; sourceTree = "<group>"; };
 		EDBCE9F9EBE9DF9C48D3A38C0738C540 /* NetworkUploadTaskMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkUploadTaskMock.swift; path = NetworkSwift/CoreMocks/NetworkUploadTaskMock.swift; sourceTree = "<group>"; };
 		EE9D2B69EF447D4DE8104C991B7FE50F /* Pods-ExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EEBB1BF0DE5F53CA59F27CE0BAB704DA /* NetworkDownloadTaskMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkDownloadTaskMock.swift; path = NetworkSwift/CoreMocks/NetworkDownloadTaskMock.swift; sourceTree = "<group>"; };
-		EF1B8DDDEE24051F34FAE9DD1A8B68DB /* Dictionary+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extensions.swift"; sourceTree = "<group>"; };
-		F1AAC1E0A61BAC6BC718BA2A45784297 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		F4F3B480714470B55AEB2D58EB099BC4 /* AuthChallengeDecision.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AuthChallengeDecision.swift; sourceTree = "<group>"; };
+		F0E71DFF169B3AD8D71E3B2BF29CD48F /* NetworkRequestImp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkRequestImp.swift; sourceTree = "<group>"; };
+		F1AAC1E0A61BAC6BC718BA2A45784297 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		F298F52C7D59E059F3500FB4F2D47E77 /* NetworkSSLPinningHostImp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkSSLPinningHostImp.swift; sourceTree = "<group>"; };
 		F50F92498584E94F9A6D56BF0A41F61C /* NetworkReachabilityMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkReachabilityMock.swift; path = NetworkSwift/CoreMocks/NetworkReachabilityMock.swift; sourceTree = "<group>"; };
 		F7288DD407B51A5275F77381E3E5842A /* Pods-Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Example-acknowledgements.plist"; sourceTree = "<group>"; };
-		F9EB1BCEEFCBEC54DE591E51DA3F8E4E /* NetworkReachabilityImp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkReachabilityImp.swift; sourceTree = "<group>"; };
 		FB0B1A85528F983F1215245A3C5E4B17 /* Pods-Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Example-acknowledgements.markdown"; sourceTree = "<group>"; };
-		FC61311305FD60B9417BBAA23270DD33 /* NetworkKitFacade.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkKitFacade.swift; sourceTree = "<group>"; };
 		FF268F7FBD3C70B1ED17409A69CBB410 /* NetworkSessionMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkSessionMock.swift; path = NetworkSwift/CoreMocks/NetworkSessionMock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		032D4FD2EA9E224939974BDDC0C8FBEA /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3D76BB85ED20BC56B16C1202C6BE6E75 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		20565E0D26D16E7C2F086CE424A1BC59 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -191,20 +185,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		59103DF7211C29B28627FE271EDAE231 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF68157BD7F08ACABF6DC5A43254E0A4 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		034E7DF931140865F1B5BA3768062342 /* Interfaces */ = {
-			isa = PBXGroup;
-			children = (
-				69EA8764126338E03477DB1C1968B69B /* NetworkKitQueue.swift */,
-				91E0614FE8C5E2F630B95354471E6BC7 /* OperationQueueManager.swift */,
-				A9CE806B98BC29971EAA24A765F399B4 /* ReAuthenticationService.swift */,
-			);
-			name = Interfaces;
-			path = NetworkSwift/Queue/Interfaces;
-			sourceTree = "<group>";
-		};
 		117158DF6776C75F1219056E87442563 /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -217,10 +208,10 @@
 		129195A1B21C678BC5AE9249B7AA86D2 /* NetworkSwift */ = {
 			isa = PBXGroup;
 			children = (
-				FCE5EBFD5527A998F5F729C62818968A /* Core */,
+				B9E9A58B25630CD839C051D635AE92CE /* Core */,
 				A52437EE4422E953383EA72359D31FBF /* CoreMocks */,
 				678111DCBBD63AA175C1E8235226169E /* Pod */,
-				A152242F89EE826002104F6697328E0F /* Queue */,
+				70910CF0C59A2172A804B6131B09E5C7 /* Queue */,
 				4BDCD82E907FDD9F28E3A06473166330 /* QueueMocks */,
 				82AE8CA0DBCED83D6C6AC5193764B654 /* Support Files */,
 			);
@@ -228,30 +219,60 @@
 			path = ../..;
 			sourceTree = "<group>";
 		};
-		1750A476BDB4ECE2A2D4C846BC837482 /* Implementation */ = {
+		15B081D2F7D11763E4E146AA33410AA0 /* NetworkKitConstruction */ = {
 			isa = PBXGroup;
 			children = (
-				DDE2B4A62B0E5D0E004ADBC0 /* Session */,
-				DDE2B4A52B0E5CF2004ADBC0 /* RequestConstruction */,
-				DDE2B4A42B0E5C9B004ADBC0 /* NetworkKitConstruction */,
-				9013A048655F1925D715FE71C6135301 /* NetworkResponseImp.swift */,
+				991369412116354062521D57CE702CEA /* NetworkKitBuilder.swift */,
+				C2DF7E6DA2358668143C3D54A5674806 /* NetworkKitFacade.swift */,
+				745D3E6655FBC00DD3F11A0D6FD9647A /* NetworkKitImp.swift */,
 			);
-			name = Implementation;
-			path = NetworkSwift/Core/Implementation;
+			name = NetworkKitConstruction;
+			path = NetworkKitConstruction;
 			sourceTree = "<group>";
 		};
-		264152C97420BAE20198FE1E2B576B1B /* Utility */ = {
+		22103A5F25D36FD021DB328EBA784FCD /* SSLPinning */ = {
 			isa = PBXGroup;
 			children = (
-				6AA1F469BFA1F126D731B0218CFAF3A6 /* SecCertificate+Extensions.swift */,
-				EF1B8DDDEE24051F34FAE9DD1A8B68DB /* Dictionary+Extensions.swift */,
-				9776E36F5279779BCD7BFB93C3D820B5 /* NetworkReachability.swift */,
-				F9EB1BCEEFCBEC54DE591E51DA3F8E4E /* NetworkReachabilityImp.swift */,
-				A83019999A64CF5D2A6F5DE9FE643625 /* String+Extensions.swift */,
-				DDE2B4962B0D7548004ADBC0 /* Data+RSA.swift */,
+				91BC4CE7A79BA0C8710E7A2E13241F32 /* AuthChallengeDecision.swift */,
+				4706A207C3525869D9C084AABEA98D8A /* NetworkSecurityTrust.swift */,
+				134237C17519D33021F9C480E7C0EAC3 /* NetworkSecurityTrustImp.swift */,
+				40D88573AA39A7DDB6949C2658A00180 /* NetworkSSLPinningHost.swift */,
+				F298F52C7D59E059F3500FB4F2D47E77 /* NetworkSSLPinningHostImp.swift */,
+				7460382716CEFA1793DBF15880BB67E9 /* SSLPinningProcessor.swift */,
+				EBD1680D837FDD147727669F87894E3F /* SSLPinningProcessorImp.swift */,
+			);
+			name = SSLPinning;
+			path = NetworkSwift/Core/SSLPinning;
+			sourceTree = "<group>";
+		};
+		2A4A216CE55FD726DDAB8E14254C92C8 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				B5BCF0E38AB65C27A1DC08B9AAC39986 /* Data+RSA.swift */,
+				2A5BF1AB075A5E6289C1C16830D4CD4F /* Dictionary+Extensions.swift */,
+				5B04ACE9F35E9D41EE49593432C674F1 /* NetworkReachability.swift */,
+				1286AE0C3ADCB153A1C129879953B32E /* NetworkReachabilityImp.swift */,
+				4B40C298997D33A91969A38327A2AA6F /* SecCertificate+Extensions.swift */,
+				26C6660DE5E4498E4A36168067239339 /* String+Extensions.swift */,
 			);
 			name = Utility;
 			path = NetworkSwift/Core/Utility;
+			sourceTree = "<group>";
+		};
+		37B6E57B049ADBBEEED3ED9AF5F3C8FC /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				7EC72C84C54D46AC536897A8EAA20E92 /* NetworkError.swift */,
+				693A0326D89CD0C24E2A1A8C08B18FFC /* NetworkKit.swift */,
+				CB9B9C83DD2A68470694603E56A36DC8 /* NetworkRequest.swift */,
+				17743A58D6F77628B9310083FC54873F /* NetworkResponse.swift */,
+				467AB258A51A260D4F07FEA8351C2D0B /* NetworkRetryPolicy.swift */,
+				C6405C5A290D30F3AA14A9EE0FC320F5 /* NetworkSession.swift */,
+				17F48D462AF5B6A0DF72600E0F0B84CB /* NetworkTask.swift */,
+				E732C813C723438EDB15D60670E7EB1D /* ResponseDecoder.swift */,
+			);
+			name = Interfaces;
+			path = NetworkSwift/Core/Interfaces;
 			sourceTree = "<group>";
 		};
 		4BDCD82E907FDD9F28E3A06473166330 /* QueueMocks */ = {
@@ -280,6 +301,18 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
+		622BD598429CB656753D86BEE7950254 /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				5B9B8C21A050D2948111AE52A90A05C7 /* NetworkSessionConfiguration.swift */,
+				360BB01CDF9F9F9FC9697D0DD9043A42 /* NetworkSessionTaskDelegate+SSLPinning.swift */,
+				B30E0D531C5587BCC1C5CB2DA542CFF0 /* URLSession+MulipartFile.swift */,
+				EC548BE2ADB63F0735443D9D836CD230 /* URLSession+Network.swift */,
+			);
+			name = Session;
+			path = Session;
+			sourceTree = "<group>";
+		};
 		678111DCBBD63AA175C1E8235226169E /* Pod */ = {
 			isa = PBXGroup;
 			children = (
@@ -290,14 +323,24 @@
 			name = Pod;
 			sourceTree = "<group>";
 		};
-		7D1F9C11AF986DED870CB0A9B4218D8D /* Implementation */ = {
+		70910CF0C59A2172A804B6131B09E5C7 /* Queue */ = {
 			isa = PBXGroup;
 			children = (
-				DDE2B4A72B0E5D37004ADBC0 /* Operation */,
-				DDE2B4A32B0E5C79004ADBC0 /* QueueConstruction */,
+				A65C2A53ECF7329D9F7895BE61146524 /* Implementation */,
+				809967DBCAF4FEF0006C1518B3F4E005 /* Interfaces */,
 			);
-			name = Implementation;
-			path = NetworkSwift/Queue/Implementation;
+			name = Queue;
+			sourceTree = "<group>";
+		};
+		809967DBCAF4FEF0006C1518B3F4E005 /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				CDAC1DE4B69D35C04C5F3A0F464CDA3B /* NetworkKitQueue.swift */,
+				AB7CAF3F4EABBDDE1816DE3DEB41C659 /* OperationQueueManager.swift */,
+				CA8365E3D7E1257AE1ABB4BB430869FB /* ReAuthenticationService.swift */,
+			);
+			name = Interfaces;
+			path = NetworkSwift/Queue/Interfaces;
 			sourceTree = "<group>";
 		};
 		82AE8CA0DBCED83D6C6AC5193764B654 /* Support Files */ = {
@@ -315,28 +358,15 @@
 			path = "Example/Pods/Target Support Files/NetworkSwift";
 			sourceTree = "<group>";
 		};
-		992B14FCE344DA6FE79E5FC408D3EF29 /* Interfaces */ = {
+		A0E2A4F0E2A74B0251B9CAC04C7E9D2B /* Operation */ = {
 			isa = PBXGroup;
 			children = (
-				A623551DC626B9FE33F22E814778A76C /* NetworkError.swift */,
-				E78F45779C3F3BC15FD107823D6DB25B /* NetworkKit.swift */,
-				0F184472031A4E4EA24EB8848E7CFDF6 /* NetworkRequest.swift */,
-				699CDE68C6BED164BAB7EF527047D129 /* NetworkResponse.swift */,
-				74B736A703DA1DA7AF88D065355583FB /* NetworkSession.swift */,
-				A28CF15D42F9722C4A0283D0167FDA00 /* NetworkTask.swift */,
-				7C16809912471E5E64BDACB536E0C94A /* ResponseDecoder.swift */,
+				498DBF115ADB751FFBA67B5CFAF1CB0B /* ClosureCustomOperation.swift */,
+				1A945247D199C1D3FDCF19C6D9C5D745 /* CustomOperation.swift */,
+				9F37F985C4FD91CB2157247C5D54499A /* OperationQueueManagerImp.swift */,
 			);
-			name = Interfaces;
-			path = NetworkSwift/Core/Interfaces;
-			sourceTree = "<group>";
-		};
-		A152242F89EE826002104F6697328E0F /* Queue */ = {
-			isa = PBXGroup;
-			children = (
-				7D1F9C11AF986DED870CB0A9B4218D8D /* Implementation */,
-				034E7DF931140865F1B5BA3768062342 /* Interfaces */,
-			);
-			name = Queue;
+			name = Operation;
+			path = Operation;
 			sourceTree = "<group>";
 		};
 		A52437EE4422E953383EA72359D31FBF /* CoreMocks */ = {
@@ -354,6 +384,50 @@
 				AFF070BB8B835BA75ADB9CAA0DB81FE9 /* ResponseDecoderMock.swift */,
 			);
 			name = CoreMocks;
+			sourceTree = "<group>";
+		};
+		A65C2A53ECF7329D9F7895BE61146524 /* Implementation */ = {
+			isa = PBXGroup;
+			children = (
+				A0E2A4F0E2A74B0251B9CAC04C7E9D2B /* Operation */,
+				B9B3C7B051EE76E8B3CF8596BFDC0866 /* QueueConstruction */,
+			);
+			name = Implementation;
+			path = NetworkSwift/Queue/Implementation;
+			sourceTree = "<group>";
+		};
+		AEBCB35C8F3CA8C466BFCF8B1C33B291 /* Implementation */ = {
+			isa = PBXGroup;
+			children = (
+				B93D062A4F5A825FE94261653976773C /* NetworkResponseImp.swift */,
+				15B081D2F7D11763E4E146AA33410AA0 /* NetworkKitConstruction */,
+				D9FE073716FC900CCB3E0AA1520092BD /* RequestConstruction */,
+				622BD598429CB656753D86BEE7950254 /* Session */,
+			);
+			name = Implementation;
+			path = NetworkSwift/Core/Implementation;
+			sourceTree = "<group>";
+		};
+		B9B3C7B051EE76E8B3CF8596BFDC0866 /* QueueConstruction */ = {
+			isa = PBXGroup;
+			children = (
+				1DDE65BA282335918B21DCD122D69F93 /* NetworkKitQueueBuilder.swift */,
+				98DCF9E5631192CF142563BDA3CE80ED /* NetworkKitQueueFacade.swift */,
+				43D4AF8D765A4001A6581A60780787ED /* NetworkKitQueueImp.swift */,
+			);
+			name = QueueConstruction;
+			path = QueueConstruction;
+			sourceTree = "<group>";
+		};
+		B9E9A58B25630CD839C051D635AE92CE /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				AEBCB35C8F3CA8C466BFCF8B1C33B291 /* Implementation */,
+				37B6E57B049ADBBEEED3ED9AF5F3C8FC /* Interfaces */,
+				22103A5F25D36FD021DB328EBA784FCD /* SSLPinning */,
+				2A4A216CE55FD726DDAB8E14254C92C8 /* Utility */,
+			);
+			name = Core;
 			sourceTree = "<group>";
 		};
 		C1A3AD178A92F4AD5F69BAFF62EB58D4 /* Pods-ExampleTests */ = {
@@ -401,6 +475,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D9FE073716FC900CCB3E0AA1520092BD /* RequestConstruction */ = {
+			isa = PBXGroup;
+			children = (
+				E73B35440F765C0580DDD1C633AA62C3 /* NetworkRequestBuilder.swift */,
+				F0E71DFF169B3AD8D71E3B2BF29CD48F /* NetworkRequestImp.swift */,
+			);
+			name = RequestConstruction;
+			path = RequestConstruction;
+			sourceTree = "<group>";
+		};
 		DB81F6E94718304D14EA9D71C8E940A0 /* Pods-Example */ = {
 			isa = PBXGroup;
 			children = (
@@ -417,98 +501,22 @@
 			path = "Target Support Files/Pods-Example";
 			sourceTree = "<group>";
 		};
-		DDE2B4A32B0E5C79004ADBC0 /* QueueConstruction */ = {
-			isa = PBXGroup;
-			children = (
-				DDE2B4A82B0E5FAD004ADBC0 /* NetworkKitQueueFacade.swift */,
-				DDE2B49E2B0E5693004ADBC0 /* NetworkKitQueueBuilder.swift */,
-				5D2BA700A7B035467A5EBC75A2B439FA /* NetworkKitQueueImp.swift */,
-			);
-			path = QueueConstruction;
-			sourceTree = "<group>";
-		};
-		DDE2B4A42B0E5C9B004ADBC0 /* NetworkKitConstruction */ = {
-			isa = PBXGroup;
-			children = (
-				FC61311305FD60B9417BBAA23270DD33 /* NetworkKitFacade.swift */,
-				DDE2B49C2B0E53E9004ADBC0 /* NetworkKitBuilder.swift */,
-				0B22071B87CA98991B7BF724F7F7E4AE /* NetworkKitImp.swift */,
-			);
-			path = NetworkKitConstruction;
-			sourceTree = "<group>";
-		};
-		DDE2B4A52B0E5CF2004ADBC0 /* RequestConstruction */ = {
-			isa = PBXGroup;
-			children = (
-				DDE2B49A2B0E4F8B004ADBC0 /* NetworkRequestBuilder.swift */,
-				326265CBBBD3801F007434083B114206 /* NetworkRequestImp.swift */,
-			);
-			path = RequestConstruction;
-			sourceTree = "<group>";
-		};
-		DDE2B4A62B0E5D0E004ADBC0 /* Session */ = {
-			isa = PBXGroup;
-			children = (
-				5DB125225058FE0791828880D711E70D /* NetworkSessionConfiguration.swift */,
-				88168AB7F21C9D6E881538722AC7B846 /* NetworkSessionTaskDelegate+SSLPinning.swift */,
-				8A66649B0337B8B790092F8D4FA3A925 /* URLSession+Network.swift */,
-				DDE2B4902B0D2517004ADBC0 /* URLSession+MulipartFile.swift */,
-			);
-			path = Session;
-			sourceTree = "<group>";
-		};
-		DDE2B4A72B0E5D37004ADBC0 /* Operation */ = {
-			isa = PBXGroup;
-			children = (
-				B8A338ED75083371B167EB5CD0E8C246 /* ClosureCustomOperation.swift */,
-				38407EE1F7615BEF867181D5C5A0E200 /* CustomOperation.swift */,
-				9183207C67D0D490A3EAE45C957A6126 /* OperationQueueManagerImp.swift */,
-			);
-			path = Operation;
-			sourceTree = "<group>";
-		};
-		EB8D1048FD5AA0DFEA5780B1CF597C30 /* SSLPinning */ = {
-			isa = PBXGroup;
-			children = (
-				F4F3B480714470B55AEB2D58EB099BC4 /* AuthChallengeDecision.swift */,
-				6047CC9F2443C30E27B9EDD2C7866A4F /* NetworkSecurityTrust.swift */,
-				C323FF1F7CF3451D93E1006F98EF00B5 /* NetworkSecurityTrustImp.swift */,
-				1386DD4FFB041C039AB0B4A8E658F5FA /* SSLPinningProcessor.swift */,
-				1FAD9E20EA7D2D35E1DB985A8A9C4083 /* SSLPinningProcessorImp.swift */,
-				DDE2B4942B0D7242004ADBC0 /* NetworkSSLPinningHost.swift */,
-				DDE2B4982B0D762A004ADBC0 /* NetworkSSLPinningHostImp.swift */,
-			);
-			name = SSLPinning;
-			path = NetworkSwift/Core/SSLPinning;
-			sourceTree = "<group>";
-		};
-		FCE5EBFD5527A998F5F729C62818968A /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				1750A476BDB4ECE2A2D4C846BC837482 /* Implementation */,
-				992B14FCE344DA6FE79E5FC408D3EF29 /* Interfaces */,
-				EB8D1048FD5AA0DFEA5780B1CF597C30 /* SSLPinning */,
-				264152C97420BAE20198FE1E2B576B1B /* Utility */,
-			);
-			name = Core;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		297D94D9F491F7EDE713D9B14BD35E67 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F186C4F01448BAEA696E23C4FB837004 /* NetworkSwift-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		49F8C964F251B59E73BE366D5ACF3E40 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				FFE3822AC8F14321BDA2DE131FCB010A /* Pods-ExampleTests-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E24BD85D09F468DF58405C2CC9C9F9BF /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2868C8DD88225D38E83CF0C5AA5C674A /* NetworkSwift-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -535,7 +543,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				EC0755F9BF46E370A1FC88D433538F9B /* PBXTargetDependency */,
+				4E8989DA1E382C6FD41B0BB3E84E32C7 /* PBXTargetDependency */,
 			);
 			name = "Pods-Example";
 			productName = Pods_Example;
@@ -562,12 +570,12 @@
 		};
 		85E267ED12FFE2981C92895FF980E3C1 /* NetworkSwift */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BCEC98B18DEDD9A880BF7C7C2713B5E2 /* Build configuration list for PBXNativeTarget "NetworkSwift" */;
+			buildConfigurationList = 670DB8CAD51A457092A33F52478508AC /* Build configuration list for PBXNativeTarget "NetworkSwift" */;
 			buildPhases = (
-				E24BD85D09F468DF58405C2CC9C9F9BF /* Headers */,
-				D6D93DC4FC396747ADEEBF953E4F9C14 /* Sources */,
-				032D4FD2EA9E224939974BDDC0C8FBEA /* Frameworks */,
-				A7B5B7E2FB4A3E88C70F2CC44AFCFD7B /* Resources */,
+				297D94D9F491F7EDE713D9B14BD35E67 /* Headers */,
+				8AB6F97AA27A2EAC618792C8102ED5E8 /* Sources */,
+				59103DF7211C29B28627FE271EDAE231 /* Frameworks */,
+				C042C5D9EC7382EE9D0859365C3DBA69 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -615,14 +623,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A7B5B7E2FB4A3E88C70F2CC44AFCFD7B /* Resources */ = {
+		B335D84C52F0595324406FD41BF9AD87 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B335D84C52F0595324406FD41BF9AD87 /* Resources */ = {
+		C042C5D9EC7382EE9D0859365C3DBA69 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -648,78 +656,115 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D6D93DC4FC396747ADEEBF953E4F9C14 /* Sources */ = {
+		8AB6F97AA27A2EAC618792C8102ED5E8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1E799B193A900046C2EBD386DE3F456E /* AuthChallengeDecision.swift in Sources */,
-				D8A1A039133B21A8735CA98F9C7DAAC9 /* ClosureCustomOperation.swift in Sources */,
-				B4C46B36D82DD663FAF828FC38F78B86 /* CustomOperation.swift in Sources */,
-				01B52DF01F822BA372E4F1C189A149AC /* Dictionary+Extensions.swift in Sources */,
-				DDE2B4972B0D7548004ADBC0 /* Data+RSA.swift in Sources */,
-				737A92633C340E15D977961A271E9E6D /* NetworkDownloadTaskMock.swift in Sources */,
-				CE118D26B399F4997BDD0D34A2DBEAD6 /* NetworkError.swift in Sources */,
-				6F08BCBDA0CEE4E433684EC8269B2DE5 /* NetworkKit.swift in Sources */,
-				50B30992669DC1E8B4C575ED55B031BC /* NetworkKitFacade.swift in Sources */,
-				06E9BC047409A5B70878E6801AD55938 /* NetworkKitImp.swift in Sources */,
-				0E3EA0C04355B675C0640DB0F0C5CB8B /* NetworkKitMock.swift in Sources */,
-				208D7CFFADD941BF4F4E62B2DD205F08 /* NetworkKitQueue.swift in Sources */,
-				3128F206220535BE1C6ADD1B9FE79195 /* NetworkKitQueueImp.swift in Sources */,
-				B1B09CC36C30EA31E9267C21B8A5B057 /* NetworkKitQueueMock.swift in Sources */,
-				A02ECD1806D70424C39BACCB3A3BD0CD /* NetworkKitResultMock.swift in Sources */,
-				671F370154503C7FAE54E27943071C4F /* NetworkReachability.swift in Sources */,
-				FE9E419AC5499BA9F1F8936376948C6A /* NetworkReachabilityImp.swift in Sources */,
-				DDE2B4992B0D762A004ADBC0 /* NetworkSSLPinningHostImp.swift in Sources */,
-				DDE2B49B2B0E4F8B004ADBC0 /* NetworkRequestBuilder.swift in Sources */,
-				642860A85FE14EE220665593EB8B21F7 /* NetworkReachabilityMock.swift in Sources */,
-				45B2A944AE40B1690159BA36810E1F4B /* NetworkRequest.swift in Sources */,
-				DDE2B49F2B0E5693004ADBC0 /* NetworkKitQueueBuilder.swift in Sources */,
-				E55ED5285ABD93E683BC1E0AF31D5DC7 /* NetworkRequestImp.swift in Sources */,
-				5DE500837DAD4FFD17745F3C7D1C02AE /* NetworkRequestMock.swift in Sources */,
-				26CBD1E380968FDE390349026A06EE71 /* NetworkResponse.swift in Sources */,
-				8273F70E2B178E574D4C81A1AA9061BD /* NetworkResponseImp.swift in Sources */,
-				15F6E4E52A8437F655C74C9980F31E6F /* NetworkResponseMock.swift in Sources */,
-				E311DA8D2071B6C2852CD1388344715B /* NetworkSecurityTrust.swift in Sources */,
-				348054D70DAC4217CA4136BE9AAB596E /* NetworkSecurityTrustImp.swift in Sources */,
-				DDE2B4952B0D7242004ADBC0 /* NetworkSSLPinningHost.swift in Sources */,
-				13FACFBE53C7CAE027EECC2FF288D99A /* NetworkSession.swift in Sources */,
-				657EA2C200FFA9C28C7D0FDFA4D3C143 /* NetworkSessionConfiguration.swift in Sources */,
-				24842D558799F8B9ED96208C21A7563C /* NetworkSessionMock.swift in Sources */,
-				EDD2EA713D46E6337341F5CCED4D0D35 /* NetworkSessionTaskDelegate+SSLPinning.swift in Sources */,
-				045DEE011CE700CFE2A7FC79C168D199 /* NetworkSwift-dummy.m in Sources */,
-				1BD7C833EF4F9BC9CD69E20982275D2D /* NetworkTask.swift in Sources */,
-				387C6BF65F2F14C1EF7DD9E5F9205BAB /* NetworkTaskMock.swift in Sources */,
-				717E1A38B0BF9254EB45BE185F4614D5 /* NetworkUploadTaskMock.swift in Sources */,
-				27CC6C70818695B52C19AA28B1883A3E /* OperationQueueManager.swift in Sources */,
-				C81EF369ABB614A1181A2B1B057E17D5 /* OperationQueueManagerImp.swift in Sources */,
-				364346B9864EA9AC06ADE2548853474D /* OperationQueueManagerMock.swift in Sources */,
-				DDE2B4912B0D2517004ADBC0 /* URLSession+MulipartFile.swift in Sources */,
-				651CFC97D46676ED11ABDA9AB1360595 /* ReAuthenticationService.swift in Sources */,
-				D9FAC1B255439F2EAC09DC598D869923 /* ReAuthenticationServiceMock.swift in Sources */,
-				DDE2B4A92B0E5FAD004ADBC0 /* NetworkKitQueueFacade.swift in Sources */,
-				A266F76F462A9F8EE723610ED8F51EED /* ResponseDecoder.swift in Sources */,
-				E76D6CEE03979A4168E02978CF044DDF /* ResponseDecoderMock.swift in Sources */,
-				FBB856515717EF5ED2D8566C09681CEA /* SecCertificate+Extensions.swift in Sources */,
-				9EFEF62CB08DCB8FA270D70BEC7BDEE3 /* SSLPinningProcessor.swift in Sources */,
-				9BAFC7E79F3F76463D74304D2938D4F3 /* SSLPinningProcessorImp.swift in Sources */,
-				616BDFABB80F81F909AB32DFF35140ED /* String+Extensions.swift in Sources */,
-				AD632AAE2194188F8C2B3C7BFB5A2E72 /* URLSession+Network.swift in Sources */,
-				DDE2B49D2B0E53E9004ADBC0 /* NetworkKitBuilder.swift in Sources */,
+				7D1AEAD74791AE1A60EC2AB274C9BDFC /* AuthChallengeDecision.swift in Sources */,
+				FA1BC4628AD69B30E42B4D534005A4BF /* ClosureCustomOperation.swift in Sources */,
+				3FE0294AB28A00215989A32489C25B05 /* CustomOperation.swift in Sources */,
+				01CAD8A40C71C3C0B1830A15AF49962E /* Data+RSA.swift in Sources */,
+				1F48ACEED2FFC597CAC647C6A54B68AF /* Dictionary+Extensions.swift in Sources */,
+				1CF345ACD5BC509C41D9499F588E4765 /* NetworkDownloadTaskMock.swift in Sources */,
+				CC5AA12BCA5CF8CA4D8342137251124C /* NetworkError.swift in Sources */,
+				C9BA180565A347804D4C3079FD0EB379 /* NetworkKit.swift in Sources */,
+				3B4E8F43DD6C691F438F0B434B5EB694 /* NetworkKitBuilder.swift in Sources */,
+				234E8370678B05586BED6BE826BFF7CD /* NetworkKitFacade.swift in Sources */,
+				5775EC5F5F57EB7EB3C926C4E29CBBEA /* NetworkKitImp.swift in Sources */,
+				AA5CD9FBCD8D79314D09071E8A1E6ED2 /* NetworkKitMock.swift in Sources */,
+				C80D7A498832D2AF58CEAA1FA72BF0CB /* NetworkKitQueue.swift in Sources */,
+				15D4C3DDBDC26C21B6BB85167B0E783F /* NetworkKitQueueBuilder.swift in Sources */,
+				C056D82A0E1D72C3D6733041C4BFFCCF /* NetworkKitQueueFacade.swift in Sources */,
+				6BABEE001526D182CBB197E06D592729 /* NetworkKitQueueImp.swift in Sources */,
+				999A95BD6D3F26ED37880DDE9A309392 /* NetworkKitQueueMock.swift in Sources */,
+				75C1837F372EBEF34B23A9F9374CB596 /* NetworkKitResultMock.swift in Sources */,
+				1F561C3EC018C3F912B8E01E8ED33935 /* NetworkReachability.swift in Sources */,
+				D69CE25A8CCEE7D93D5CFC71F1B14784 /* NetworkReachabilityImp.swift in Sources */,
+				FE592E59032CA61CCCB592FE8B1EFDB7 /* NetworkReachabilityMock.swift in Sources */,
+				6C8A523C391EE966D423530BA52E9EA1 /* NetworkRequest.swift in Sources */,
+				A63D106C4F93CD6767269522F552A445 /* NetworkRequestBuilder.swift in Sources */,
+				F3664890C0B3DB4BDA95B0C2050BC387 /* NetworkRequestImp.swift in Sources */,
+				276E63EB9830FA5DA2F5A8CFC713511E /* NetworkRequestMock.swift in Sources */,
+				2259C82BB1ED40EDE25F31F5531E88EC /* NetworkResponse.swift in Sources */,
+				55CC2E2B9164E95255EA2974B8F97946 /* NetworkResponseImp.swift in Sources */,
+				AD52114A11D9CCE0D38EE8689F157225 /* NetworkResponseMock.swift in Sources */,
+				47C29629A90A57AF3C347FC2A002D61C /* NetworkRetryPolicy.swift in Sources */,
+				6F87E0744D2BD8ACB67F4EB44E5CEC6B /* NetworkSecurityTrust.swift in Sources */,
+				47C708216888A29EE1D244016BD187FE /* NetworkSecurityTrustImp.swift in Sources */,
+				85C678AB2437F266EA8FF003BAAF652D /* NetworkSession.swift in Sources */,
+				8389AA9DA682C8817373A1D7848FF17E /* NetworkSessionConfiguration.swift in Sources */,
+				7C7C873B5B735013803DCA983D1FBD56 /* NetworkSessionMock.swift in Sources */,
+				F5B67C69A0AC833BC7AE13244A272163 /* NetworkSessionTaskDelegate+SSLPinning.swift in Sources */,
+				AEF1962C358DEC34B0990F268F2A715F /* NetworkSSLPinningHost.swift in Sources */,
+				57651F0280AD79DA47D3E08DB3AE3237 /* NetworkSSLPinningHostImp.swift in Sources */,
+				21D5FD0602FC0E82AED1FDDD7246DFD8 /* NetworkSwift-dummy.m in Sources */,
+				CE6865794571637697991487B161CDDD /* NetworkTask.swift in Sources */,
+				3C6F120A9BFE0B49B1195CF8D36F2431 /* NetworkTaskMock.swift in Sources */,
+				07B57FD5B7554FF753FA30CA5D972E8F /* NetworkUploadTaskMock.swift in Sources */,
+				431B23C52BCDF087A00E5AC48EAFCC6B /* OperationQueueManager.swift in Sources */,
+				03D0F72D68948CB6D28748CEA9D91D33 /* OperationQueueManagerImp.swift in Sources */,
+				64DAFD29AF71C032AA91F44F443E2838 /* OperationQueueManagerMock.swift in Sources */,
+				7040FC521BD8DCEFDC6062AB64DA0940 /* ReAuthenticationService.swift in Sources */,
+				31633692346F4C1657BC6693298464A2 /* ReAuthenticationServiceMock.swift in Sources */,
+				0B30FCE41705EF853889DEFD646A15E6 /* ResponseDecoder.swift in Sources */,
+				7DF1A0B8A22A94D6527C36A4F34C4F56 /* ResponseDecoderMock.swift in Sources */,
+				C4DB80F44D72FD17CD00B8CE2512F52F /* SecCertificate+Extensions.swift in Sources */,
+				EB8130661219FD920D1BB2959E85C49E /* SSLPinningProcessor.swift in Sources */,
+				5E57A03EC8030A9CF828A4FEBD966EEA /* SSLPinningProcessorImp.swift in Sources */,
+				C86F5C4DDA46C2C8450A569194C3D562 /* String+Extensions.swift in Sources */,
+				22324535834F7631F9ECD076DA070E8D /* URLSession+MulipartFile.swift in Sources */,
+				40720CC980EC1AE6CBBE0458FB2C9E40 /* URLSession+Network.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		EC0755F9BF46E370A1FC88D433538F9B /* PBXTargetDependency */ = {
+		4E8989DA1E382C6FD41B0BB3E84E32C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = NetworkSwift;
 			target = 85E267ED12FFE2981C92895FF980E3C1 /* NetworkSwift */;
-			targetProxy = 2466E963F8964544EC3C8662B54021CC /* PBXContainerItemProxy */;
+			targetProxy = 886B25CC3A7F2EF3FEEC5A8F412284D9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		1CC99EF01E6BBDC967F2EBBEB4CAAA42 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A90BD6E5F531E3293A3B649FD7BF8489 /* NetworkSwift.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/NetworkSwift/NetworkSwift-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/NetworkSwift/NetworkSwift-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/NetworkSwift/NetworkSwift.modulemap";
+				PRODUCT_MODULE_NAME = NetworkSwift;
+				PRODUCT_NAME = NetworkSwift;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 		1FF6E10914E5B861A9D671B93014B8A3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 71DAFD7277292D9C23AD07A44D2A3AC5 /* Pods-Example.debug.xcconfig */;
@@ -820,42 +865,6 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
-			};
-			name = Debug;
-		};
-		5A2102E48B705AD386A355137E5BCBB8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = A90BD6E5F531E3293A3B649FD7BF8489 /* NetworkSwift.debug.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/NetworkSwift/NetworkSwift-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/NetworkSwift/NetworkSwift-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/NetworkSwift/NetworkSwift.modulemap";
-				PRODUCT_MODULE_NAME = NetworkSwift;
-				PRODUCT_NAME = NetworkSwift;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
@@ -1034,7 +1043,7 @@
 			};
 			name = Release;
 		};
-		ECE6362C8252DBD12DC5520D7E697FD0 /* Release */ = {
+		C06CCEA0A7DF0E2444EDAA5DA56EC0A6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BC784C8BD66442698323602C5F6028DD /* NetworkSwift.release.xcconfig */;
 			buildSettings = {
@@ -1083,20 +1092,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		670DB8CAD51A457092A33F52478508AC /* Build configuration list for PBXNativeTarget "NetworkSwift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1CC99EF01E6BBDC967F2EBBEB4CAAA42 /* Debug */,
+				C06CCEA0A7DF0E2444EDAA5DA56EC0A6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		AFEEAEFF7FF9D684CD95345965B05EB8 /* Build configuration list for PBXNativeTarget "Pods-Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1FF6E10914E5B861A9D671B93014B8A3 /* Debug */,
 				9520B270635FD18E806D3DB58DE0A983 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		BCEC98B18DEDD9A880BF7C7C2713B5E2 /* Build configuration list for PBXNativeTarget "NetworkSwift" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5A2102E48B705AD386A355137E5BCBB8 /* Debug */,
-				ECE6362C8252DBD12DC5520D7E697FD0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

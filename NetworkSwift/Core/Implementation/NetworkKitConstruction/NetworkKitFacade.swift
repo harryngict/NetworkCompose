@@ -77,15 +77,19 @@ public final class NetworkKitFacade<SessionType: NetworkSession> {
     /// - Parameters:
     ///   - request: The network request to be executed.
     ///   - headers: Additional headers to include in the request.
+    ///   - retryPolicy: The retry policy for the network request.
     /// - Returns: The decoded success type from the response.
     /// - Throws: A `NetworkError` if the request fails.
     @available(iOS 15.0, *)
     public func request<RequestType: NetworkRequest>(
         _ request: RequestType,
-        andHeaders headers: [String: String] = [:]
+        andHeaders headers: [String: String] = [:],
+        retryPolicy: NetworkRetryPolicy = .none
     ) async throws -> RequestType.SuccessType {
         debugPrint(request.debugDescription)
-        return try await networkKit.request(request, andHeaders: headers)
+        return try await networkKit.request(request,
+                                            andHeaders: headers,
+                                            retryPolicy: retryPolicy)
     }
 
     /// Performs a network request with a completion handler.
@@ -93,14 +97,19 @@ public final class NetworkKitFacade<SessionType: NetworkSession> {
     /// - Parameters:
     ///   - request: The network request to be executed.
     ///   - headers: Additional headers to include in the request.
+    ///   - retryPolicy: The retry policy for the network request.
     ///   - completion: The completion handler to be called when the request is complete.
     public func request<RequestType: NetworkRequest>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
+        retryPolicy: NetworkRetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) {
         debugPrint(request.debugDescription)
-        networkKit.request(request, andHeaders: headers, completion: completion)
+        networkKit.request(request,
+                           andHeaders: headers,
+                           retryPolicy: retryPolicy,
+                           completion: completion)
     }
 
     /// Initiates a network request to upload a file.
@@ -109,15 +118,21 @@ public final class NetworkKitFacade<SessionType: NetworkSession> {
     ///   - request: The network request to be executed.
     ///   - headers: Additional headers to include in the request.
     ///   - fileURL: The URL of the file to be uploaded.
+    ///   - retryPolicy: The retry policy for the network request.
     ///   - completion: The completion handler to be called when the request is complete.
     public func uploadFile<RequestType: NetworkRequest>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
         fromFile fileURL: URL,
+        retryPolicy: NetworkRetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) {
         debugPrint(request.debugDescription)
-        networkKit.uploadFile(request, andHeaders: headers, fromFile: fileURL, completion: completion)
+        networkKit.uploadFile(request,
+                              andHeaders: headers,
+                              fromFile: fileURL,
+                              retryPolicy: retryPolicy,
+                              completion: completion)
     }
 
     /// Initiates a network request to download a file.
@@ -125,13 +140,17 @@ public final class NetworkKitFacade<SessionType: NetworkSession> {
     /// - Parameters:
     ///   - request: The network request to be executed.
     ///   - headers: Additional headers to include in the request.
+    ///   - retryPolicy: The retry policy for the network request.
     ///   - completion: The completion handler to be called when the request is complete.
     public func downloadFile<RequestType: NetworkRequest>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
+        retryPolicy: NetworkRetryPolicy = .none,
         completion: @escaping (Result<URL, NetworkError>) -> Void
     ) {
         debugPrint(request.debugDescription)
-        networkKit.downloadFile(request, andHeaders: headers, completion: completion)
+        networkKit.downloadFile(request, andHeaders: headers,
+                                retryPolicy: retryPolicy,
+                                completion: completion)
     }
 }
