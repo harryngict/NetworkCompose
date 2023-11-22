@@ -25,8 +25,6 @@ public class NetworkKitBuilder<SessionType: NetworkSession> {
     private var session: SessionType
     /// The security trust object for SSL pinning.
     private var securityTrust: NetworkSecurityTrust?
-    /// The custom session delegate to handle various session events.
-    private var sessionDelegate: URLSessionDelegate?
 
     /// Initializes a `NetworkKitBuilder` with a base URL and a default session.
     ///
