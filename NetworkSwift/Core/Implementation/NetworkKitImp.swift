@@ -50,38 +50,37 @@ public final class NetworkKitImp<SessionType: NetworkSession>: NetworkKit {
                             delegateQueue: OperationQueue? = OperationQueue.main) throws
     {
         let delegate = NetworkSessionTaskDelegate(securityTrust: securityTrust)
-        guard let sessionType = URLSession(configuration: configuration,
-                                           delegate: delegate,
-                                           delegateQueue: delegateQueue) as? SessionType
+        guard let session = URLSession(configuration: configuration,
+                                       delegate: delegate,
+                                       delegateQueue: delegateQueue) as? SessionType
         else {
             throw NetworkError.invalidSession
         }
-        self.init(baseURL: baseURL, session: sessionType)
+        self.init(baseURL: baseURL, session: session)
     }
 
-    /// Convenience initializer for a custom session delegate.
+    /// Creates a `NetworkKitImp` instance with a custom session delegate.
     ///
-    /// Use this initializer to create a `NetworkKitImp` instance with a custom session delegate.
+    /// Use this initializer to instantiate a `NetworkKitImp` object with a custom session delegate, allowing you to handle various session events.
     ///
     /// - Parameters:
     ///   - baseURL: The base URL for network requests.
     ///   - sessionDelegate: The custom session delegate to handle various session events.
     ///   - configuration: The session configuration for the URL session. The default is `NetworkSessionConfiguration.default`.
-    ///   - delegateQueue: The operation queue on which the delegate will receive URLSessionDelegate callbacks.
-    ///                    The default value is the main operation queue.
+    ///   - delegateQueue: The operation queue on which the delegate will receive URLSessionDelegate callbacks. The default value is the main operation queue.
     /// - Throws: A `NetworkError` if the session cannot be created.
     public convenience init(baseURL: URL,
-                            sessionDelegate: NetworkSessionTaskDelegate,
+                            sessionDelegate: URLSessionDelegate,
                             configuration: URLSessionConfiguration = NetworkSessionConfiguration.default,
                             delegateQueue: OperationQueue? = OperationQueue.main) throws
     {
-        guard let sessionType = URLSession(configuration: configuration,
-                                           delegate: sessionDelegate,
-                                           delegateQueue: delegateQueue) as? SessionType
+        guard let session = URLSession(configuration: configuration,
+                                       delegate: sessionDelegate,
+                                       delegateQueue: delegateQueue) as? SessionType
         else {
             throw NetworkError.invalidSession
         }
-        self.init(baseURL: baseURL, session: sessionType)
+        self.init(baseURL: baseURL, session: session)
     }
 
     // MARK: Request Handling

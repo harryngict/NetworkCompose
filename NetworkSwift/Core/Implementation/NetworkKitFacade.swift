@@ -63,7 +63,7 @@ public final class NetworkKitFacade<SessionType: NetworkSession> {
     ///   - sessionDelegate: The custom session delegate to handle various session events.
     /// - Throws: A `NetworkError` if the session cannot be created.
     public init(baseURL: URL,
-                sessionDelegate: NetworkSessionTaskDelegate) throws
+                sessionDelegate: URLSessionDelegate) throws
     {
         networkKit = try NetworkKitImp<URLSession>(baseURL: baseURL, sessionDelegate: sessionDelegate)
     }

@@ -64,13 +64,13 @@ public final class NetworkKitQueueImp<SessionType: NetworkSession>: NetworkKitQu
                             delegateQueue: OperationQueue? = OperationQueue.main) throws
     {
         let delegate = NetworkSessionTaskDelegate(securityTrust: securityTrust)
-        guard let sessionType = URLSession(configuration: configuration,
-                                           delegate: delegate,
-                                           delegateQueue: delegateQueue) as? SessionType
+        guard let session = URLSession(configuration: configuration,
+                                       delegate: delegate,
+                                       delegateQueue: delegateQueue) as? SessionType
         else {
             throw NetworkError.invalidSession
         }
-        self.init(baseURL: baseURL, session: sessionType, reAuthService: reAuthService)
+        self.init(baseURL: baseURL, session: session, reAuthService: reAuthService)
     }
 
     /// Convenience initializer for a custom session delegate.
@@ -87,17 +87,17 @@ public final class NetworkKitQueueImp<SessionType: NetworkSession>: NetworkKitQu
     /// - Throws: A `NetworkError` if the session cannot be created.
     public convenience init(baseURL: URL,
                             reAuthService: ReAuthenticationService? = nil,
-                            sessionDelegate: NetworkSessionTaskDelegate,
+                            sessionDelegate: URLSessionDelegate,
                             configuration: URLSessionConfiguration = NetworkSessionConfiguration.default,
                             delegateQueue: OperationQueue? = OperationQueue.main) throws
     {
-        guard let sessionType = URLSession(configuration: configuration,
-                                           delegate: sessionDelegate,
-                                           delegateQueue: delegateQueue) as? SessionType
+        guard let session = URLSession(configuration: configuration,
+                                       delegate: sessionDelegate,
+                                       delegateQueue: delegateQueue) as? SessionType
         else {
             throw NetworkError.invalidSession
         }
-        self.init(baseURL: baseURL, session: sessionType, reAuthService: reAuthService)
+        self.init(baseURL: baseURL, session: session, reAuthService: reAuthService)
     }
 
     // MARK: Public Methods
