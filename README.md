@@ -6,21 +6,21 @@
 2. **Upload File**: Supports the secure uploading of files.
 3. **Download File**: Enables the downloading of files with security considerations.
 
-## Features
+## I. Features
 
 - **Completion Request**: Utilizes completion handlers for efficient response handling.
 - **Async Await Request (iOS 15 and above)**: Supports asynchronous programming through Swift's async/await mechanism.
 
-## NetworkSwift/Queue Submodule
+### NetworkSwift/Queue Submodule
 
-NetworkSwift includes a submodule called **NetworkSwift/Queue**, specifically designed to manage auto re-authentication. This feature is crucial in cases where request credentials have expired.
+NetworkSwift includes a submodule called **NetworkKitQueueImp**, specifically designed to manage auto re-authentication. This feature is crucial in cases where request credentials have expired.
 
-## Testability
+## II. Testability
 
 For improved testability, NetworkSwift provides mock implementations, empowering developers to write effective unit tests. This ensures robustness in various scenarios and easy validation of the library's behavior.
 
 
-## Integration
+## III. Integration
 
 ### Integration through CocoaPods
 
@@ -37,16 +37,18 @@ CocoaPods is a dependency manager for Swift projects and makes integration easie
     2.1. **Application**:
    
     ```ruby
-    pod 'NetworkSwift/Core',  '0.0.6'
-    pod 'NetworkSwift/Queue', '0.0.6'
+    pod 'NetworkSwift/Core',  'latest version'
+    pod 'NetworkSwift/Queue', 'latest version'
     ```
 
     2.2. **Testing**:
 
     ```ruby
-    pod 'NetworkSwift/CoreMocks',   '0.0.6'
-    pod 'NetworkSwift/QueueMocks',  '0.0.6'
+    pod 'NetworkSwift/CoreMocks',   'latest version'
+    pod 'NetworkSwift/QueueMocks',  'latest version'
     ```
+    
+Please check latest version [here](https://github.com/harryngict/NetworkSwift/blob/2ed0f4595405ea849b77a9fc39b2ff9aaaf891e6/NetworkSwift.podspec#L3)
 
 3. Install NetworkSwift by executing the following in the Xcode project directory.
 
@@ -56,7 +58,213 @@ CocoaPods is a dependency manager for Swift projects and makes integration easie
 
 4. Now, open your project workspace and check if NetworkSwift is properly added.
 
-## How to Use
+## IV. How to create NetworkRequest
+### 1. Using NetworkRequestBuilder
+
+You can create a `NetworkRequest` using the `NetworkRequestBuilder` class, providing a fluent and expressive way to configure your network requests. Below is an example of how to use it:
+
+```swift
+let request: NetworkRequestImp<YourResponseType> = try? NetworkRequestBuilder<YourResponseType>(path: "/your-endpoint", method: .get)
+    .setQueryParameters(["param1": "value1", "param2": "value2"])
+    .setHeaders(["Authorization": "Bearer YourAccessToken"])
+    .setBodyEncoding(.json)
+    .setTimeoutInterval(30.0)
+    .setCachePolicy(.useProtocolCachePolicy)
+    .setRequiresReAuthentication(true)
+    .build()
+```
+
+### 2. Using NetworkRequestImp Directly
+
+If you prefer a more direct approach, you can create a NetworkRequestImp instance directly. Here's an example:
+
+```swift
+let request: NetworkRequestImp<YourResponseType> = NetworkRequestImp(
+    path: "/your-endpoint",
+    method: .post,
+    queryParameters: ["param1": "value1", "param2": "value2"],
+    headers: ["Authorization": "Bearer YourAccessToken"],
+    bodyEncoding: .json,
+    timeoutInterval: 30.0,
+    cachePolicy: .reloadIgnoringLocalCacheData,
+    responseDecoder: JSONDecoder(),
+    requiresReAuthentication: true
+)
+```
+
+## V. How to create NetworkKitImp
+
+To execute network requests in your application, you can use the provided `NetworkKitImp` along with either the `NetworkKitFacade`, `NetworkKitBuilder`, or by creating an instance directly.
+
+### 1. Using NetworkKitFacade
+
+`NetworkKitFacade` provides a simplified interface to interact with the underlying `NetworkKitImp`. Here's an example of how to create and use `NetworkKitFacade`:
+
+```swift
+let baseURL = URL(string: "https://api.example.com")!
+let networkKitFacade = NetworkKitFacade(baseURL: baseURL)
+
+// Now you can use networkKitFacade to make requests
+networkKitFacade.request(yourRequest) { result in
+    switch result {
+    case let .success(response):
+        // Handle successful response
+    case let .failure(error):
+        // Handle error
+    }
+}
+```
+
+### 2. Using NetworkKitBuilder
+`NetworkKitBuilder` allows you to configure and build a `NetworkKitImp` instance with specific settings. Here's an example:
+
+```swift
+let baseURL = URL(string: "https://api.example.com")!
+let networkKit = try? NetworkKitBuilder(baseURL: baseURL)
+    .setSecurityTrust(yourSecurityTrust)
+    .build()
+
+// Now you can use networkKit to make requests
+networkKit?.request(yourRequest) { result in
+    switch result {
+    case let .success(response):
+        // Handle successful response
+    case let .failure(error):
+        // Handle error
+    }
+}
+```
+
+### 3. Using NetworkKitImp Directly
+If you prefer a more direct approach, you can create a NetworkKitImp instance directly and use it to make requests:
+```swift
+let baseURL = URL(string: "https://api.example.com")!
+let networkKit = NetworkKitImp(baseURL: baseURL)
+
+// Now you can use networkKit to make requests
+networkKit.request(yourRequest) { result in
+    switch result {
+    case let .success(response):
+        // Handle successful response
+    case let .failure(error):
+        // Handle error
+    }
+}
+```
+
+## VI. How to create NetworkKitQueueImp 
+
+To execute network requests with automatic re-authentication, you can use the provided `NetworkKitQueueImp` along with either the `NetworkKitQueueFacade`, `NetworkKitQueueBuilder`, or by creating an instance directly.
+
+### 1. Using NetworkKitQueueFacade
+
+`NetworkKitQueueFacade` provides a high-level interface to interact with the underlying `NetworkKitQueueImp`. Here's an example of how to create and use `NetworkKitQueueFacade`:
+
+```swift
+let baseURL = URL(string: "https://api.example.com")!
+let networkKitQueueFacade = NetworkKitQueueFacade(baseURL: baseURL, reAuthService: yourReAuthService)
+
+// Now you can use networkKitQueueFacade to make requests with automatic re-authentication
+networkKitQueueFacade.request(yourRequest) { result in
+    switch result {
+    case let .success(response):
+        // Handle successful response
+    case let .failure(error):
+        // Handle error, including potential re-authentication failures
+    }
+}
+```
+### 2. Using NetworkKitQueueBuilder
+
+`NetworkKitQueueBuilder` allows you to configure and build a NetworkKitQueueImp instance with specific settings. Here's an example:
+
+```swift
+let baseURL = URL(string: "https://api.example.com")!
+let networkKitQueue = try? NetworkKitQueueBuilder(baseURL: baseURL)
+    .setReAuthService(yourReAuthService)
+    .setSerialOperationQueue(yourSerialOperationQueue)
+    .build()
+
+// Now you can use networkKitQueue to make requests with automatic re-authentication
+networkKitQueue?.request(yourRequest) { result in
+    switch result {
+    case let .success(response):
+        // Handle successful response
+    case let .failure(error):
+        // Handle error, including potential re-authentication failures
+    }
+}
+```
+
+### 3. Using NetworkKitQueueImp Directly
+If you prefer a more direct approach, you can create a NetworkKitQueueImp instance directly and use it to make requests:
+
+``` swift
+let baseURL = URL(string: "https://api.example.com")!
+let networkKitQueue = NetworkKitQueueImp(baseURL: baseURL, reAuthService: yourReAuthService, serialOperationQueue: yourSerialOperationQueue)
+
+// Now you can use networkKitQueue to make requests with automatic re-authentication
+networkKitQueue.request(yourRequest) { result in
+    switch result {
+    case let .success(response):
+        // Handle successful response
+    case let .failure(error):
+        // Handle error, including potential re-authentication failures
+    }
+}
+```
+
+## VII. How to create NetworkSecurityTrustImp for SSL Pinning
+
+To implement SSL pinning in your network requests, you can use the `NetworkSecurityTrustImp` class along with the concrete implementation of `NetworkSSLPinningHost`, `NetworkSSLPinningHostImp`.
+
+### Example Usage:
+
+```swift
+// Creating an SSL pinning host
+let sslPinningHost = NetworkSSLPinningHostImp(host: "api.example.com", pinningHash: ["hash1", "hash2"])
+
+// Creating a NetworkSecurityTrustImp with the SSL pinning host
+let securityTrust = NetworkSecurityTrustImp(sslPinningHosts: [sslPinningHost])
+```
+In this example, sslPinningHosts is an array that can contain multiple instances of NetworkSSLPinningHostImp, each representing a host with its associated pinning hashes. You can customize the host names and pinning hashes based on your SSL pinning requirements.
+
+Now, you can use this securityTrust object when setting up SSL pinning in your network requests.
+
+Remember to replace "api.example.com", "hash1", and "hash2" with your actual host and pinning hashes.
+
+Choose the SSL pinning hosts and hashes that match the servers you intend to communicate with securely.
+
+## VIII. Creating a ReAuthenticationService for Auto Re-authentication
+
+To implement auto re-authentication, you need to create a class or object conforming to the `ReAuthenticationService` protocol. This service will handle the automatic re-authentication process.
+
+### Example Implementation:
+
+```swift
+import Foundation
+
+class YourAutoReAuthenticationService: ReAuthenticationService {
+    // Customize this class based on your authentication requirements
+
+    // MARK: - Re-authentication
+
+    func reAuthen(completion: @escaping (Result<[String: String], NetworkError>) -> Void) {
+        // Implement your auto re-authentication logic here
+        // This could involve refreshing tokens or obtaining new credentials
+
+        // For example, you might refresh an access token and provide the new headers
+        let newHeaders: [String: String] = ["Authorization": "Bearer newAccessToken"]
+
+        // Call the completion handler with the result of re-authentication
+        // In case of success, provide the new headers; otherwise, provide an error
+        let result: Result<[String: String], NetworkError> = .success(newHeaders)
+        completion(result)
+    }
+}
+```
+
+## IX. How to Use NetworkKit and NetworkKit with queue
 
 ```swift
 enum Constant {
@@ -181,6 +389,6 @@ Thats it!! NetworkSwift is successfully integrated and initialized in the projec
 
 For more detail please go to [Example project](https://github.com/harryngict/NetworkSwift/blob/master/Example/Example/Client/ClientNetworkFactory.swift).
 
-## Support
+## X. Support
 Feel free to utilize [JSONPlaceholder](https://jsonplaceholder.typicode.com/guide/) for testing API in Networkit examples. If you encounter any issues with NetworkSwift or need assistance with
 integration, please reach out to me at harryngict@gmail.com. I'm here to support you.
