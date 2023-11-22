@@ -96,25 +96,4 @@ public final class NetworkKitQueueBuilder<SessionType: NetworkSession> {
         }
         return self
     }
-
-    /// Sets a custom session delegate.
-    ///
-    /// - Parameter sessionDelegate: The custom session delegate to handle various session events.
-    /// - Throws: A `NetworkError` if the session cannot be created.
-    /// - Returns: The builder instance for method chaining.
-    public func setSessionDelegate(_ sessionDelegate: URLSessionDelegate) throws -> Self {
-        do {
-            guard let session = URLSession(
-                configuration: NetworkSessionConfiguration.default,
-                delegate: sessionDelegate,
-                delegateQueue: OperationQueue.main
-            ) as? SessionType else {
-                throw NetworkError.invalidSession
-            }
-            self.session = session
-        } catch {
-            throw NetworkError.invalidSession
-        }
-        return self
-    }
 }
