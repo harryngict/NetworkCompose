@@ -7,11 +7,11 @@
 
 import Foundation
 
-import Foundation
-
 /// A builder for constructing instances of `NetworkKitImp`.
 ///
-/// Example usage:
+/// This builder provides a convenient way to create and configure a `NetworkKitImp` instance for making network requests.
+///
+/// ## Example Usage
 /// ```swift
 /// let baseURL = URL(string: "https://api.example.com")!
 /// let networkKit = try? NetworkKitBuilder(baseURL: baseURL)
@@ -47,15 +47,6 @@ public class NetworkKitBuilder<SessionType: NetworkSession> {
         return self
     }
 
-    /// Sets a custom session delegate.
-    ///
-    /// - Parameter sessionDelegate: The custom session delegate to handle various session events.
-    /// - Returns: The builder instance for method chaining.
-    public func setSessionDelegate(_ sessionDelegate: URLSessionDelegate) -> Self {
-        self.sessionDelegate = sessionDelegate
-        return self
-    }
-
     /// Builds and returns a `NetworkKitImp` instance with the configured parameters.
     ///
     /// - Returns: A fully configured `NetworkKitImp` instance.
@@ -66,32 +57,21 @@ public class NetworkKitBuilder<SessionType: NetworkSession> {
                 baseURL: baseURL,
                 session: createSessionWithSSLTrust(securityTrust)
             )
-        } else if let sessionDelegate = sessionDelegate {
-            return try NetworkKitImp(
-                baseURL: baseURL,
-                session: createSessionWithDelegate(sessionDelegate)
-            )
         } else {
             return NetworkKitImp(baseURL: baseURL, session: session)
         }
     }
 
+    /// Creates a session with SSL trust configuration.
+    ///
+    /// - Parameter securityTrust: The security trust object for SSL pinning.
+    /// - Returns: A session instance with SSL trust configuration.
+    /// - Throws: A `NetworkError` if the session cannot be created.
     private func createSessionWithSSLTrust(_ securityTrust: NetworkSecurityTrust) throws -> SessionType {
         let delegate = NetworkSessionTaskDelegate(securityTrust: securityTrust)
         guard let session = URLSession(
             configuration: NetworkSessionConfiguration.default,
             delegate: delegate,
-            delegateQueue: OperationQueue.main
-        ) as? SessionType else {
-            throw NetworkError.invalidSession
-        }
-        return session
-    }
-
-    private func createSessionWithDelegate(_ sessionDelegate: URLSessionDelegate) throws -> SessionType {
-        guard let session = URLSession(
-            configuration: NetworkSessionConfiguration.default,
-            delegate: sessionDelegate,
             delegateQueue: OperationQueue.main
         ) as? SessionType else {
             throw NetworkError.invalidSession

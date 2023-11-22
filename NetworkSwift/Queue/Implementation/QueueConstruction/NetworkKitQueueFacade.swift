@@ -69,30 +69,6 @@ public final class NetworkKitQueueFacade<SessionType: NetworkSession> {
             .build()
     }
 
-    /// Convenience initializer for a custom session delegate.
-    ///
-    /// Use this initializer to create a `NetworkKitQueueImp` instance with a custom session delegate.
-    ///
-    /// - Parameters:
-    ///   - baseURL: The base URL for network requests.
-    ///   - reAuthService: The service responsible for re-authentication.
-    ///   - sessionDelegate: The custom session delegate to handle various session events.
-    ///   - configuration: The session configuration for the URL session. The default is `NetworkSessionConfiguration.default`.
-    ///   - delegateQueue: The operation queue on which the delegate will receive URLSessionDelegate callbacks.
-    ///                    The default value is the main operation queue.
-    /// - Throws: A `NetworkError` if the session cannot be created.
-    public init(baseURL: URL,
-                sessionDelegate: URLSessionDelegate,
-                reAuthService: ReAuthenticationService? = nil,
-                serialOperationQueue: OperationQueueManager = OperationQueueManagerImp(maxConcurrentOperationCount: 1)) throws
-    {
-        networkKitQueue = try NetworkKitQueueBuilder(baseURL: baseURL)
-            .setSessionDelegate(sessionDelegate)
-            .setReAuthService(reAuthService)
-            .setSerialOperationQueue(serialOperationQueue)
-            .build()
-    }
-
     /// Initiates a network request and handles re-authentication if necessary.
     ///
     /// - Parameters:

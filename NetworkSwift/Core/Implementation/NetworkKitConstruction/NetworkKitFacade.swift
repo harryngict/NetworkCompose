@@ -58,20 +58,6 @@ public final class NetworkKitFacade<SessionType: NetworkSession> {
             .build()
     }
 
-    /// Initializes the `NetworkKitFacade` with a custom session delegate.
-    ///
-    /// - Parameters:
-    ///   - baseURL: The base URL for network requests.
-    ///   - sessionDelegate: The custom session delegate to handle various session events.
-    /// - Throws: A `NetworkError` if the session cannot be created.
-    public init(baseURL: URL,
-                sessionDelegate: URLSessionDelegate) throws
-    {
-        networkKit = try NetworkKitBuilder(baseURL: baseURL)
-            .setSessionDelegate(sessionDelegate)
-            .build()
-    }
-
     /// Performs an asynchronous network request using the async/await pattern.
     ///
     /// - Parameters:
