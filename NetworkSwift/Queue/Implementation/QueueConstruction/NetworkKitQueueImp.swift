@@ -38,7 +38,7 @@ public final class NetworkKitQueueImp<SessionType: NetworkSession>: NetworkKitQu
         baseURL: URL,
         session: SessionType = URLSession.shared,
         reAuthService: ReAuthenticationService? = nil,
-        serialOperationQueue: OperationQueueManager = OperationQueueManagerImp(maxConcurrentOperationCount: 1)
+        serialOperationQueue: OperationQueueManager
     ) {
         self.reAuthService = reAuthService
         self.serialOperationQueue = serialOperationQueue

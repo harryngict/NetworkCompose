@@ -49,7 +49,7 @@ public final class NetworkKitQueueBuilder<SessionType: NetworkSession> {
     ///
     /// - Parameter reAuthService: The service responsible for re-authentication.
     /// - Returns: The builder instance for method chaining.
-    public func setReAuthService(_ reAuthService: ReAuthenticationService) -> Self {
+    public func setReAuthService(_ reAuthService: ReAuthenticationService?) -> Self {
         self.reAuthService = reAuthService
         return self
     }

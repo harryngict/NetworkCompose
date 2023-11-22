@@ -56,10 +56,12 @@ final class ClientNetworkFactory {
     }
 
     private func performCompletionRequest(completion: @escaping (String) -> Void) {
-        let service = NetworkKitFacade(baseURL: baseURL)
         let request = NetworkRequestBuilder<[User]>(path: "/comments", method: .GET)
             .setQueryParameters(["postId": "1"])
             .build()
+
+        let service = NetworkKitFacade(baseURL: baseURL)
+
         service.request(request) { (result: Result<[User], NetworkError>) in
             switch result {
             case let .failure(error): completion(error.localizedDescription)
@@ -70,13 +72,13 @@ final class ClientNetworkFactory {
 
     private func performQueueRequest(completion: @escaping (String) -> Void) {
         let reAuthService = ClientReAuthenticationService()
-        let service = NetworkKitQueueImp(baseURL: baseURL, reAuthService: reAuthService)
         let request = NetworkRequestBuilder<User>(path: "/posts", method: .POST)
             .setQueryParameters(["title": "foo",
                                  "body": "bar",
                                  "userId": 1])
             .setRequiresReAuthentication(true)
             .build()
+        let service = NetworkKitQueueBuilder(baseURL: baseURL).setReAuthService(reAuthService).build()
         service.request(request) { (result: Result<User, NetworkError>) in
             switch result {
             case let .failure(error): completion(error.localizedDescription)
@@ -86,12 +88,12 @@ final class ClientNetworkFactory {
     }
 
     private func performDownloadFileRequest(completion: @escaping (String) -> Void) {
-        let service = NetworkKitFacade(baseURL: baseURL)
         let request = NetworkRequestBuilder<User>(path: "/posts/1", method: .PUT)
             .setQueryParameters(["title": "foo",
                                  "body": "bar",
                                  "userId": 1])
             .build()
+        let service = NetworkKitFacade(baseURL: baseURL)
         service.downloadFile(request) { (result: Result<URL, NetworkError>) in
             switch result {
             case let .failure(error): completion(error.localizedDescription)
@@ -101,10 +103,11 @@ final class ClientNetworkFactory {
     }
 
     private func performUploadFileRequest(completion: @escaping (String) -> Void) {
-        let service = NetworkKitFacade(baseURL: baseURL)
         let request = NetworkRequestBuilder<User>(path: "/posts", method: .POST)
             .build()
         let fileURL = URL(fileURLWithPath: "/Users/harrynguyen/Documents/Resources/NetworkSwift/LICENSE")
+
+        let service = NetworkKitFacade(baseURL: baseURL)
         service.uploadFile(request, fromFile: fileURL) { (result: Result<User, NetworkError>) in
             switch result {
             case let .failure(error): completion(error.localizedDescription)
@@ -125,9 +128,7 @@ final class ClientNetworkFactory {
                                      "userId": 1])
                 .build()
 
-            let service = try NetworkKitQueueBuilder(baseURL: baseURL)
-                .setSecurityTrust(securityTrust)
-                .build()
+            let service = try NetworkKitFacade<URLSession>(baseURL: baseURL, securityTrust: securityTrust)
 
             service.request(request) { (result: Result<User, NetworkError>) in
                 switch result {
@@ -146,14 +147,13 @@ final class ClientNetworkFactory {
                                                             pinningHash: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])]
             let securityTrust = NetworkSecurityTrustImp(sslPinningHosts: sslPinningHosts)
 
-            let service = try NetworkKitQueueBuilder(baseURL: baseURL)
-                .setSecurityTrust(securityTrust)
-                .setReAuthService(ClientReAuthenticationService())
-                .build()
-
             let request = NetworkRequestBuilder<User>(path: "/posts/1", method: .PATCH)
                 .setQueryParameters(["title": "foo"])
                 .build()
+
+            let service = try NetworkKitQueueFacade<URLSession>(baseURL: baseURL,
+                                                                securityTrust: securityTrust,
+                                                                reAuthService: ClientReAuthenticationService())
 
             service.request(request) { (result: Result<User, NetworkError>) in
                 switch result {
