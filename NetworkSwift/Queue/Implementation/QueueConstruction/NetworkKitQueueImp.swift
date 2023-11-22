@@ -16,7 +16,7 @@ import Foundation
 /// ```
 public final class NetworkKitQueueImp<SessionType: NetworkSession>: NetworkKitQueue {
     /// The underlying network kit responsible for handling network requests.
-    private let networkKit: NetworkKit
+  private let networkKit: NetworkKitImp<SessionType>
 
     /// The operation queue manager used to serialize network operations.
     private let serialOperationQueue: OperationQueueManager
