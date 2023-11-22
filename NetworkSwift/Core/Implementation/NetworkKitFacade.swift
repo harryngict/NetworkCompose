@@ -53,7 +53,9 @@ public final class NetworkKitFacade<SessionType: NetworkSession> {
     public init(baseURL: URL,
                 securityTrust: NetworkSecurityTrust) throws
     {
-        networkKit = try NetworkKitImp<URLSession>(baseURL: baseURL, securityTrust: securityTrust)
+        networkKit = try NetworkKitBuilder(baseURL: baseURL)
+            .setSecurityTrust(securityTrust)
+            .build()
     }
 
     /// Initializes the `NetworkKitFacade` with a custom session delegate.
@@ -65,7 +67,9 @@ public final class NetworkKitFacade<SessionType: NetworkSession> {
     public init(baseURL: URL,
                 sessionDelegate: URLSessionDelegate) throws
     {
-        networkKit = try NetworkKitImp<URLSession>(baseURL: baseURL, sessionDelegate: sessionDelegate)
+        networkKit = try NetworkKitBuilder(baseURL: baseURL)
+            .setSessionDelegate(sessionDelegate)
+            .build()
     }
 
     /// Performs an asynchronous network request using the async/await pattern.
