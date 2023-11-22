@@ -66,7 +66,8 @@ enum Constant {
 
 ### 1. Request async await for iOS-15 above
 ```swift
-let request = NetworkRequestImp<[User]>(path: "/posts", method: .GET)
+let request = NetworkRequestBuilder<[User]>(path: "/posts", method: .GET)
+    .build()
 let service = NetworkKitFacade(baseURL: baseURL)
 let result: [User] = try await service.request(request)
 completion("\(result)")
@@ -75,8 +76,9 @@ completion("\(result)")
 ### 2. Request completion closure
 
 ```swift
-let request = NetworkRequestImp<[User]>(path: "/comments", method: .GET,
-                                        queryParameters: ["postId": "1"])
+let request = NetworkRequestBuilder<[User]>(path: "/comments", method: .GET)
+    .setQueryParameters(["postId": "1"])
+    .build()
 let service = NetworkKitFacade(baseURL: baseURL)
 service.request(request) { (result: Result<[User], NetworkError>) in
     self.handleResult(result)
@@ -85,12 +87,12 @@ service.request(request) { (result: Result<[User], NetworkError>) in
 
 ### 3. Request and auto re-authentication
 ```swift
-let request = NetworkRequestImp<User>(path: "/posts", method: .POST,
-                                      queryParameters: ["title": "foo",
-                                                        "body": "bar",
-                                                        "userId": 1],
-                                      requiresReAuthentication: true)
-
+let request = NetworkRequestBuilder<User>(path: "/posts", method: .POST)
+    .setQueryParameters(["title": "foo",
+                         "body": "bar",
+                         "userId": 1])
+    .setRequiresReAuthentication(true)
+    .build()
 let reAuthService = ClientReAuthenticationService()
 
 let service = NetworkKitQueueImp(baseURL: baseURL, reAuthService: reAuthService)
@@ -100,10 +102,11 @@ service.request(request) { (result: Result<User, NetworkError>) in
 ```
 ### 4. Download File
 ```swift
-let request = NetworkRequestImp<User>(path: "/posts/1", method: .PUT,
-                                      queryParameters: ["title": "foo",
-                                                        "body": "bar",
-                                                        "userId": 1])
+let request = NetworkRequestBuilder<User>(path: "/posts/1", method: .PUT)
+    .setQueryParameters(["title": "foo",
+                          "body": "bar",
+                          "userId": 1])
+    .build()
 let service = NetworkKitFacade(baseURL: baseURL)
 service.downloadFile(request) { (result: Result<URL, NetworkError>) in
     self.handleResult(result)
@@ -114,7 +117,8 @@ service.downloadFile(request) { (result: Result<URL, NetworkError>) in
 ```swift
 let fileURL = URL(fileURLWithPath: "/Users/harrynguyen/Documents/Resources/NetworkSwift/LICENSE")
 
-let request = NetworkRequestImp<User>(path: "/posts", method: .POST)
+let request = NetworkRequestBuilder<User>(path: "/posts", method: .POST)
+    .build()
 let service = NetworkKitFacade(baseURL: baseURL)
 service.uploadFile(request, fromFile: fileURL) { (result: Result<User, NetworkError>) in
     self.handleResult(result)
@@ -123,10 +127,11 @@ service.uploadFile(request, fromFile: fileURL) { (result: Result<User, NetworkEr
 
 ### 6. Request with SSL Pinning
 ```swift
-let request = NetworkRequestImp<User>(path: "/posts/1", method: .PUT,
-                                      queryParameters: ["title": "foo",
-                                                        "body": "bar",
-                                                        "userId": 1])
+let request = NetworkRequestBuilder<User>(path: "/posts/1", method: .PUT)
+    .setQueryParameters(["title": "foo",
+                          "body": "bar",
+                          "userId": 1])
+    .build()
                                                         
 let sslPinningHosts = [NetworkSSLPinningHostImp(host: "jsonplaceholder.typicode.com",
                                                 pinningHash: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])]
@@ -140,8 +145,9 @@ service.request(request) { (result: Result<User, NetworkError>) in
 
 ### 7. Request and auto re-authentication with SSL Pinning
 ```swift
-let request = NetworkRequestImp<User>(path: "/posts/1", method: .PATCH,
-                                      queryParameters: ["title": "foo"])
+let request = NetworkRequestBuilder<User>(path: "/posts/1", method: .PATCH)
+    .setQueryParameters(["title": "foo"])
+    .build()
                                       
 let reAuthService = ClientReAuthenticationService()
 
@@ -163,7 +169,8 @@ let successResult = NetworkKitResultMock.requestSuccess(
       NetworkResponseMock(statusCode: 200, response: User(id: 1))
 )
 let session = NetworkSessionMock<[User]>(expected: successResult)
-let request = NetworkRequestImp<[User]>(path: "/users", method: .GET)
+let request = NetworkRequestBuilder<User>(path: "/posts", method: .GET)
+    .build()
 let service = NetworkKitFacade<NetworkSessionMock>(baseURL: baseURL, session: session)
 service.request(request) { (result: Result<[User], NetworkError>) in
     self.handleResult(result)

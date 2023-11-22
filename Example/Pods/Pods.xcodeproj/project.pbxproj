@@ -57,6 +57,7 @@
 		DDE2B4952B0D7242004ADBC0 /* NetworkSSLPinningHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE2B4942B0D7242004ADBC0 /* NetworkSSLPinningHost.swift */; };
 		DDE2B4972B0D7548004ADBC0 /* Data+RSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE2B4962B0D7548004ADBC0 /* Data+RSA.swift */; };
 		DDE2B4992B0D762A004ADBC0 /* NetworkSSLPinningHostImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE2B4982B0D762A004ADBC0 /* NetworkSSLPinningHostImp.swift */; };
+		DDE2B49B2B0E4F8B004ADBC0 /* NetworkRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE2B49A2B0E4F8B004ADBC0 /* NetworkRequestBuilder.swift */; };
 		E311DA8D2071B6C2852CD1388344715B /* NetworkSecurityTrust.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6047CC9F2443C30E27B9EDD2C7866A4F /* NetworkSecurityTrust.swift */; };
 		E55ED5285ABD93E683BC1E0AF31D5DC7 /* NetworkRequestImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326265CBBBD3801F007434083B114206 /* NetworkRequestImp.swift */; };
 		E76D6CEE03979A4168E02978CF044DDF /* ResponseDecoderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF070BB8B835BA75ADB9CAA0DB81FE9 /* ResponseDecoderMock.swift */; };
@@ -141,6 +142,7 @@
 		DDE2B4942B0D7242004ADBC0 /* NetworkSSLPinningHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkSSLPinningHost.swift; sourceTree = "<group>"; };
 		DDE2B4962B0D7548004ADBC0 /* Data+RSA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+RSA.swift"; sourceTree = "<group>"; };
 		DDE2B4982B0D762A004ADBC0 /* NetworkSSLPinningHostImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkSSLPinningHostImp.swift; sourceTree = "<group>"; };
+		DDE2B49A2B0E4F8B004ADBC0 /* NetworkRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequestBuilder.swift; sourceTree = "<group>"; };
 		DE36F650F0BCB22B3C8E188246073854 /* NetworkResponseMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkResponseMock.swift; path = NetworkSwift/CoreMocks/NetworkResponseMock.swift; sourceTree = "<group>"; };
 		DF412EEB3D08C6DFE5631F71DF2CAD21 /* ReAuthenticationServiceMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReAuthenticationServiceMock.swift; path = NetworkSwift/QueueMocks/ReAuthenticationServiceMock.swift; sourceTree = "<group>"; };
 		E78F45779C3F3BC15FD107823D6DB25B /* NetworkKit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkKit.swift; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 				88168AB7F21C9D6E881538722AC7B846 /* NetworkSessionTaskDelegate+SSLPinning.swift */,
 				8A66649B0337B8B790092F8D4FA3A925 /* URLSession+Network.swift */,
 				DDE2B4902B0D2517004ADBC0 /* URLSession+MulipartFile.swift */,
+				DDE2B49A2B0E4F8B004ADBC0 /* NetworkRequestBuilder.swift */,
 			);
 			name = Implementation;
 			path = NetworkSwift/Core/Implementation;
@@ -618,6 +621,7 @@
 				671F370154503C7FAE54E27943071C4F /* NetworkReachability.swift in Sources */,
 				FE9E419AC5499BA9F1F8936376948C6A /* NetworkReachabilityImp.swift in Sources */,
 				DDE2B4992B0D762A004ADBC0 /* NetworkSSLPinningHostImp.swift in Sources */,
+				DDE2B49B2B0E4F8B004ADBC0 /* NetworkRequestBuilder.swift in Sources */,
 				642860A85FE14EE220665593EB8B21F7 /* NetworkReachabilityMock.swift in Sources */,
 				45B2A944AE40B1690159BA36810E1F4B /* NetworkRequest.swift in Sources */,
 				E55ED5285ABD93E683BC1E0AF31D5DC7 /* NetworkRequestImp.swift in Sources */,

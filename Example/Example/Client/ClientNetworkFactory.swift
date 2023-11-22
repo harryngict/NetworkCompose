@@ -43,7 +43,8 @@ final class ClientNetworkFactory {
         if #available(iOS 15.0, *) {
             Task {
                 do {
-                    let request = NetworkRequestImp<[User]>(path: "/posts", method: .GET)
+                    let request = NetworkRequestBuilder<[User]>(path: "/posts", method: .GET)
+                        .build()
                     let service = NetworkKitFacade(baseURL: baseURL)
                     let result: [User] = try await service.request(request)
                     completion("\(result)")
@@ -56,7 +57,9 @@ final class ClientNetworkFactory {
 
     private func performCompletionRequest(completion: @escaping (String) -> Void) {
         let service = NetworkKitFacade(baseURL: baseURL)
-        let request = NetworkRequestImp<[User]>(path: "/comments", method: .GET, queryParameters: ["postId": "1"])
+        let request = NetworkRequestBuilder<[User]>(path: "/comments", method: .GET)
+            .setQueryParameters(["postId": "1"])
+            .build()
         service.request(request) { (result: Result<[User], NetworkError>) in
             switch result {
             case let .failure(error): completion(error.localizedDescription)
@@ -68,11 +71,12 @@ final class ClientNetworkFactory {
     private func performQueueRequest(completion: @escaping (String) -> Void) {
         let reAuthService = ClientReAuthenticationService()
         let service = NetworkKitQueueImp(baseURL: baseURL, reAuthService: reAuthService)
-        let request = NetworkRequestImp<User>(path: "/posts", method: .POST,
-                                              queryParameters: ["title": "foo",
-                                                                "body": "bar",
-                                                                "userId": 1],
-                                              requiresReAuthentication: true)
+        let request = NetworkRequestBuilder<User>(path: "/posts", method: .POST)
+            .setQueryParameters(["title": "foo",
+                                 "body": "bar",
+                                 "userId": 1])
+            .setRequiresReAuthentication(true)
+            .build()
         service.request(request) { (result: Result<User, NetworkError>) in
             switch result {
             case let .failure(error): completion(error.localizedDescription)
@@ -83,10 +87,11 @@ final class ClientNetworkFactory {
 
     private func performDownloadFileRequest(completion: @escaping (String) -> Void) {
         let service = NetworkKitFacade(baseURL: baseURL)
-        let request = NetworkRequestImp<User>(path: "/posts/1", method: .PUT,
-                                              queryParameters: ["title": "foo",
-                                                                "body": "bar",
-                                                                "userId": 1])
+        let request = NetworkRequestBuilder<User>(path: "/posts/1", method: .PUT)
+            .setQueryParameters(["title": "foo",
+                                 "body": "bar",
+                                 "userId": 1])
+            .build()
         service.downloadFile(request) { (result: Result<URL, NetworkError>) in
             switch result {
             case let .failure(error): completion(error.localizedDescription)
@@ -97,7 +102,8 @@ final class ClientNetworkFactory {
 
     private func performUploadFileRequest(completion: @escaping (String) -> Void) {
         let service = NetworkKitFacade(baseURL: baseURL)
-        let request = NetworkRequestImp<User>(path: "/posts", method: .POST)
+        let request = NetworkRequestBuilder<User>(path: "/posts", method: .POST)
+            .build()
         let fileURL = URL(fileURLWithPath: "/Users/harrynguyen/Documents/Resources/NetworkSwift/LICENSE")
         service.uploadFile(request, fromFile: fileURL) { (result: Result<User, NetworkError>) in
             switch result {
@@ -113,11 +119,11 @@ final class ClientNetworkFactory {
                                                             pinningHash: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])]
             let securityTrust = NetworkSecurityTrustImp(sslPinningHosts: sslPinningHosts)
             let service = try NetworkKitFacade<URLSession>(baseURL: baseURL, securityTrust: securityTrust)
-            let request = NetworkRequestImp<User>(path: "/posts/1", method: .PUT,
-                                                  queryParameters: ["title": "foo",
-                                                                    "body": "bar",
-                                                                    "userId": 1])
-
+            let request = NetworkRequestBuilder<User>(path: "/posts/1", method: .PUT)
+                .setQueryParameters(["title": "foo",
+                                     "body": "bar",
+                                     "userId": 1])
+                .build()
             service.request(request) { (result: Result<User, NetworkError>) in
                 switch result {
                 case let .failure(error): completion(error.localizedDescription)
@@ -139,8 +145,10 @@ final class ClientNetworkFactory {
             let service = try NetworkKitQueueImp<URLSession>(baseURL: baseURL,
                                                              reAuthService: reAuthService,
                                                              securityTrust: securityTrust)
-            let request = NetworkRequestImp<User>(path: "/posts/1", method: .PATCH,
-                                                  queryParameters: ["title": "foo"])
+
+            let request = NetworkRequestBuilder<User>(path: "/posts/1", method: .PATCH)
+                .setQueryParameters(["title": "foo"])
+                .build()
 
             service.request(request) { (result: Result<User, NetworkError>) in
                 switch result {
@@ -159,7 +167,8 @@ final class ClientNetworkFactory {
         )
         let session = NetworkSessionMock<User>(expected: successResult)
         let service = NetworkKitFacade<NetworkSessionMock>(baseURL: baseURL, session: session)
-        let request = NetworkRequestImp<User>(path: "/users", method: .GET)
+        let request = NetworkRequestBuilder<User>(path: "/posts", method: .GET)
+            .build()
 
         service.request(request) { (result: Result<User, NetworkError>) in
             switch result {
