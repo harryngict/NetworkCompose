@@ -101,7 +101,9 @@
 		1CE5ABBB2AECBB2F006FCFDB /* Example */ = {
 			isa = PBXGroup;
 			children = (
-				DD88E6D92B0059860022E23A /* Client */,
+				DD0B26732B094CFC0045023F /* User.swift */,
+				DD0B26372B07CCBF0045023F /* ClientReAuthenticationService.swift */,
+				DD0B26532B087E9B0045023F /* ClientNetworkFactory.swift */,
 				1CE5ABBC2AECBB2F006FCFDB /* AppDelegate.swift */,
 				1CE5ABBE2AECBB2F006FCFDB /* SceneDelegate.swift */,
 				1CE5ABC02AECBB2F006FCFDB /* ViewController.swift */,
@@ -142,16 +144,6 @@
 				AAC5AA00A22655BE30ADFBEF /* Pods_ExampleTests.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		DD88E6D92B0059860022E23A /* Client */ = {
-			isa = PBXGroup;
-			children = (
-				DD0B26732B094CFC0045023F /* User.swift */,
-				DD0B26372B07CCBF0045023F /* ClientReAuthenticationService.swift */,
-				DD0B26532B087E9B0045023F /* ClientNetworkFactory.swift */,
-			);
-			path = Client;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
