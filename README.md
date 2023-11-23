@@ -153,7 +153,7 @@ let networkKit = try? NetworkKitBuilder(baseURL: baseURL)
     .build()
 
 // Now you can use networkKit to make requests
-networkKit?.request(yourRequest) { result in
+networkKit?.sendRequest(yourRequest) { result in
     switch result {
     case let .success(response):
         // Handle successful response
@@ -195,7 +195,7 @@ let networkKitQueue = try? NetworkKitQueueBuilder(baseURL: baseURL)
     .build()
 
 // Now you can use networkKitQueue to make requests with automatic re-authentication
-networkKitQueue?.request(yourRequest) { result in
+networkKitQueue?.sendRequest(yourRequest) { result in
     switch result {
     case let .success(response):
         // Handle successful response
@@ -325,7 +325,7 @@ enum Constant {
 let request = NetworkRequestBuilder<[User]>(path: "/posts", method: .GET)
     .build()
 let service = NetworkKitBuilder(baseURL: baseURL).build()
-let result: [User] = try await service.request(request)
+let result: [User] = try await service.sendRequest(request)
 completion("\(result)")
 ```
 
@@ -336,7 +336,7 @@ let request = NetworkRequestBuilder<[User]>(path: "/comments", method: .GET)
     .setQueryParameters(["postId": "1"])
     .build()
 let service = NetworkKitBuilder(baseURL: baseURL).build()
-service.request(request) { (result: Result<[User], NetworkError>) in
+service.sendRequest(request) { (result: Result<[User], NetworkError>) in
     self.handleResult(result)
 }
 ```
@@ -371,7 +371,7 @@ let securityTrust = NetworkSecurityTrustImp(sslPinningHosts: sslPinningHosts)
 
 try NetworkKitBuilder(baseURL: baseURL)
     .setSecurityTrust(securityTrust)
-    .request(request) { (result: Result<User, NetworkError>) in
+    .sendRequest(request) { (result: Result<User, NetworkError>) in
         self.handleResult(result)
     }
 ```
@@ -384,7 +384,7 @@ let successResult = NetworkKitResultMock.requestSuccess(
 let session = NetworkSessionMock<[User]>(expected: successResult)
 let request = NetworkRequestBuilder<User>(path: "/posts", method: .GET).build()
 let service = NetworkKitBuilder<NetworkSessionMock>(baseURL: baseURL, session: session).build()
-service.request(request) { (result: Result<[User], NetworkError>) in
+service.sendRequest(request) { (result: Result<[User], NetworkError>) in
     self.handleResult(result)
 }
 ```

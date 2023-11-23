@@ -10,7 +10,7 @@ import Foundation
 /// NetworkSessionProxyDelegate` serves as a delegate for `URLSession` tasks, handling various events and collecting network metrics.
 final class NetworkSessionProxyDelegate: NSObject, URLSessionTaskDelegate, URLSessionDataDelegate {
     /// The metrics collector for collecting network metrics.
-    private let metricsCollector: NetworkMetricsCollector?
+    private var metricsCollector: NetworkMetricsCollector?
 
     /// The SSL pinning processor for handling SSL challenges.
     private var sslPinningProcessor: SSLPinningProcessor?
@@ -18,13 +18,15 @@ final class NetworkSessionProxyDelegate: NSObject, URLSessionTaskDelegate, URLSe
     /// Initializes the `NetworkSessionProxyDelegate` with optional metrics collector and security trust.
     ///
     /// - Parameters:
-    ///   - metricsCollector: An optional `NetworkMetricsCollector` for collecting network metrics.
+    ///   - metricLogger: An optional `NetworkMetricLogger` for collecting network metrics.
     ///   - securityTrust: An optional `NetworkSecurityTrust` for SSL pinning.
     /// - Returns: A new instance of `NetworkSessionProxyDelegate`.
-    public init(metricsCollector: NetworkMetricsCollector? = nil,
-                securityTrust: NetworkSecurityTrust? = nil)
+    init(metricInterceptor: NetworkMetricInterceptor?,
+         securityTrust: NetworkSecurityTrust?)
     {
-        self.metricsCollector = metricsCollector
+        if let metricInterceptor = metricInterceptor {
+            metricsCollector = NetworkMetricsCollectorImp(metricInterceptor: metricInterceptor)
+        }
         if let securityTrust = securityTrust {
             sslPinningProcessor = SSLPinningProcessorImp(securityTrust: securityTrust)
         }
@@ -52,10 +54,6 @@ final class NetworkSessionProxyDelegate: NSObject, URLSessionTaskDelegate, URLSe
         metricsCollector?.taskDidCompleteWithError(task, error: error)
     }
 
-    public func urlSession(_: URLSession, task: URLSessionTask, didFinishCollecting metrics: URLSessionTaskMetrics) {
-        metricsCollector?.taskDidFinishCollecting(task, metrics: metrics)
-    }
-
     public func urlSession(_: URLSession,
                            task: URLSessionTask,
                            didSendBodyData _: Int64,
@@ -63,23 +61,9 @@ final class NetworkSessionProxyDelegate: NSObject, URLSessionTaskDelegate, URLSe
                            totalBytesExpectedToSend: Int64)
     {
         if task is URLSessionUploadTask {
-            metricsCollector?.taskDidUpdateProgres(task, progress: (completed: totalBytesSent, total: totalBytesExpectedToSend))
+            metricsCollector?.taskDidUpdateProgress(task,
+                                                    progress: (completed: totalBytesSent, total: totalBytesExpectedToSend))
         }
-    }
-
-    // MARK: URLSessionDataDelegate
-
-    public func urlSession(_: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
-        metricsCollector?.taskDidReceive(dataTask, data: data)
-    }
-
-    // MARK: URLSessionDownloadDelegate
-
-    public func urlSession(_: URLSession,
-                           downloadTask: URLSessionDownloadTask,
-                           didFinishDownloadingTo location: URL)
-    {
-        metricsCollector?.taskDidFinishDownload(downloadTask, location: location)
     }
 
     public func urlSession(_: URLSession,
@@ -90,5 +74,9 @@ final class NetworkSessionProxyDelegate: NSObject, URLSessionTaskDelegate, URLSe
     {
         metricsCollector?.taskDidUpdateProgress(downloadTask,
                                                 progress: (completed: totalBytesWritten, total: totalBytesExpectedToWrite))
+    }
+
+    public func urlSession(_: URLSession, task: URLSessionTask, didFinishCollecting metrics: URLSessionTaskMetrics) {
+        metricsCollector?.taskDidFinishCollecting(task, metrics: metrics)
     }
 }
