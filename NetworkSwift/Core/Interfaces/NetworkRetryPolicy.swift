@@ -34,7 +34,6 @@ public enum NetworkRetryPolicy {
     /// - Parameter currentRetry: The current retry attempt.
     /// - Returns: `true` if a retry should be attempted; otherwise, `false`.
     func shouldRetry(currentRetry: Int) -> Bool {
-        debugPrint("CurrentRetry time: \(currentRetry)")
         return currentRetry <= retryCount
     }
 }

@@ -17,7 +17,7 @@
 		2694F42A1CF6083841A822B64D8A4E31 /* OperationQueueManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2256DBA11AE6CC7054D161B069A83426 /* OperationQueueManagerMock.swift */; };
 		271291632E750C15F35F87D9C2B578B2 /* NetworkRequestMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15B39135196A0EB2890688E9502BEF0 /* NetworkRequestMock.swift */; };
 		2765F54ACF898444EFE02868DBABE287 /* NetworkResponseImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689FCD943D3ED3BC2797A7DEA627B242 /* NetworkResponseImp.swift */; };
-		291F70FC49B9E598F6E696315DD59407 /* URLSession+MulipartFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9660BBF528194D6DBDDD7A5A6F837B6 /* URLSession+MulipartFile.swift */; };
+		291F70FC49B9E598F6E696315DD59407 /* URLSession+BodyStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9660BBF528194D6DBDDD7A5A6F837B6 /* URLSession+BodyStream.swift */; };
 		2B37290CD7456FC49F475874569FEFE3 /* NetworkDownloadTaskMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBB1BF0DE5F53CA59F27CE0BAB704DA /* NetworkDownloadTaskMock.swift */; };
 		2BCC6B28A29DAEBF4AA8E0E5DD095515 /* NetworkSessionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF268F7FBD3C70B1ED17409A69CBB410 /* NetworkSessionMock.swift */; };
 		31884E8E4197DFF4C60C27F061F0DF21 /* NetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3390CA042D1428B4D60C67ADD640856B /* NetworkRequest.swift */; };
@@ -133,7 +133,7 @@
 		94C6F0AC153F664824A9F71D16E115D8 /* NetworkReachability.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkReachability.swift; sourceTree = "<group>"; };
 		98DCF9E5631192CF142563BDA3CE80ED /* NetworkKitQueueFacade.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkKitQueueFacade.swift; sourceTree = "<group>"; };
 		9A8AAE58E74D2D759816B151FDDA6E00 /* NetworkSwift-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NetworkSwift-umbrella.h"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9EFC0135550C783DE8CBCA80368EFA35 /* NetworkKit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkKit.swift; sourceTree = "<group>"; };
 		9F37F985C4FD91CB2157247C5D54499A /* OperationQueueManagerImp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OperationQueueManagerImp.swift; sourceTree = "<group>"; };
 		A2EA7DA4036AA7DB5DE50D091A3C49A3 /* Pods-ExampleTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ExampleTests-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -152,9 +152,9 @@
 		CCCCFAB5EBB62E37640241D2096DEE3F /* NetworkSSLPinningHost.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkSSLPinningHost.swift; sourceTree = "<group>"; };
 		CDAC1DE4B69D35C04C5F3A0F464CDA3B /* NetworkKitQueue.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkKitQueue.swift; sourceTree = "<group>"; };
 		D15B39135196A0EB2890688E9502BEF0 /* NetworkRequestMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkRequestMock.swift; path = NetworkSwift/CoreMocks/NetworkRequestMock.swift; sourceTree = "<group>"; };
-		D431829909F34E3429FADD9BA2D8EF55 /* NetworkSwift.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = NetworkSwift.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		D47C7FE86EC568E40027BF7DDE364E2F /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
-		D9660BBF528194D6DBDDD7A5A6F837B6 /* URLSession+MulipartFile.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "URLSession+MulipartFile.swift"; sourceTree = "<group>"; };
+		D431829909F34E3429FADD9BA2D8EF55 /* NetworkSwift.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = NetworkSwift.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		D47C7FE86EC568E40027BF7DDE364E2F /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		D9660BBF528194D6DBDDD7A5A6F837B6 /* URLSession+BodyStream.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "URLSession+BodyStream.swift"; sourceTree = "<group>"; };
 		D9AB2F8B2E69D12858257C86C9463268 /* NetworkSecurityTrustImp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkSecurityTrustImp.swift; sourceTree = "<group>"; };
 		DD510C0D5C7816D1F13557994E12395E /* NetworkReachabilityImp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkReachabilityImp.swift; sourceTree = "<group>"; };
 		DE36F650F0BCB22B3C8E188246073854 /* NetworkResponseMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkResponseMock.swift; path = NetworkSwift/CoreMocks/NetworkResponseMock.swift; sourceTree = "<group>"; };
@@ -162,7 +162,7 @@
 		EDBCE9F9EBE9DF9C48D3A38C0738C540 /* NetworkUploadTaskMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkUploadTaskMock.swift; path = NetworkSwift/CoreMocks/NetworkUploadTaskMock.swift; sourceTree = "<group>"; };
 		EE9D2B69EF447D4DE8104C991B7FE50F /* Pods-ExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EEBB1BF0DE5F53CA59F27CE0BAB704DA /* NetworkDownloadTaskMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkDownloadTaskMock.swift; path = NetworkSwift/CoreMocks/NetworkDownloadTaskMock.swift; sourceTree = "<group>"; };
-		F1AAC1E0A61BAC6BC718BA2A45784297 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		F1AAC1E0A61BAC6BC718BA2A45784297 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F216942251FDF7EEE02357D21320A8A4 /* String+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		F50F92498584E94F9A6D56BF0A41F61C /* NetworkReachabilityMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkReachabilityMock.swift; path = NetworkSwift/CoreMocks/NetworkReachabilityMock.swift; sourceTree = "<group>"; };
 		F7288DD407B51A5275F77381E3E5842A /* Pods-Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Example-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -323,10 +323,9 @@
 			children = (
 				C1AD8040D93472370AF1B4DA676C2B8A /* NetworkSessionConfiguration.swift */,
 				027C4DA9F57481C3222A679D8C16A5C0 /* NetworkSessionTaskDelegate+SSLPinning.swift */,
-				D9660BBF528194D6DBDDD7A5A6F837B6 /* URLSession+MulipartFile.swift */,
+				D9660BBF528194D6DBDDD7A5A6F837B6 /* URLSession+BodyStream.swift */,
 				32BEBC217EBDA15A11E6B17DC08ABCF8 /* URLSession+Network.swift */,
 			);
-			name = Session;
 			path = Session;
 			sourceTree = "<group>";
 		};
@@ -352,7 +351,6 @@
 				1A945247D199C1D3FDCF19C6D9C5D745 /* CustomOperation.swift */,
 				9F37F985C4FD91CB2157247C5D54499A /* OperationQueueManagerImp.swift */,
 			);
-			name = Operation;
 			path = Operation;
 			sourceTree = "<group>";
 		};
@@ -407,7 +405,6 @@
 				98DCF9E5631192CF142563BDA3CE80ED /* NetworkKitQueueFacade.swift */,
 				43D4AF8D765A4001A6581A60780787ED /* NetworkKitQueueImp.swift */,
 			);
-			name = QueueConstruction;
 			path = QueueConstruction;
 			sourceTree = "<group>";
 		};
@@ -418,7 +415,6 @@
 				6E6E87BEC9CD35563BD8E3D8B664D8A8 /* NetworkKitFacade.swift */,
 				70339DC55D2A6D15B58BF65038D257CA /* NetworkKitImp.swift */,
 			);
-			name = NetworkKitConstruction;
 			path = NetworkKitConstruction;
 			sourceTree = "<group>";
 		};
@@ -500,7 +496,6 @@
 				7E51B484958DE80CB8110528FACDFFB2 /* NetworkRequestBuilder.swift */,
 				4771DFDA28E368D85BC204519D2D5A21 /* NetworkRequestImp.swift */,
 			);
-			name = RequestConstruction;
 			path = RequestConstruction;
 			sourceTree = "<group>";
 		};
@@ -700,7 +695,7 @@
 				03C1D17E9A858A06C414AB21999BA054 /* SSLPinningProcessor.swift in Sources */,
 				0ADF9A808D1760B9DE7BC8F5C4354A0A /* SSLPinningProcessorImp.swift in Sources */,
 				235DD7758D97C3C5D1192FCA1AEED77D /* String+Extensions.swift in Sources */,
-				291F70FC49B9E598F6E696315DD59407 /* URLSession+MulipartFile.swift in Sources */,
+				291F70FC49B9E598F6E696315DD59407 /* URLSession+BodyStream.swift in Sources */,
 				E430C0DD08311FCBD86FEA91C079B319 /* URLSession+Network.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

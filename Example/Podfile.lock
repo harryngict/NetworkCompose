@@ -1,10 +1,10 @@
 PODS:
-  - NetworkSwift/Core (0.0.7)
-  - NetworkSwift/CoreMocks (0.0.7):
+  - NetworkSwift/Core (0.0.8)
+  - NetworkSwift/CoreMocks (0.0.8):
     - NetworkSwift/Core
-  - NetworkSwift/Queue (0.0.7):
+  - NetworkSwift/Queue (0.0.8):
     - NetworkSwift/Core
-  - NetworkSwift/QueueMocks (0.0.7):
+  - NetworkSwift/QueueMocks (0.0.8):
     - NetworkSwift/Core
     - NetworkSwift/Queue
 
@@ -19,7 +19,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  NetworkSwift: 40955eade2c1755519b14babc65abe31af9219b4
+  NetworkSwift: 9e7aadbee3ac78b2b4e6c803e4457c98d0e28db7
 
 PODFILE CHECKSUM: 9967ee75eb2dfc83c34293716548f0df0ad83818
 

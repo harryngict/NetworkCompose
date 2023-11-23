@@ -94,8 +94,9 @@ extension URLSession: NetworkSession {
         fromFile: URL,
         completion: @escaping ((Result<NetworkResponse, NetworkError>) -> Void)
     ) throws -> NetworkTask {
-        let request = try createMultipartFileRequest(&request, fromFile: fromFile)
-        let task = uploadTask(with: request, fromFile: fromFile) { data, response, error in
+        var bodyStreamRequest = request
+        bodyStreamRequest.httpBodyStream = createHttpBodyStream(fromFileURL: fromFile)
+        let task = dataTask(with: request) { data, response, error in
             self.handleResponse(data: data, response: response, error: error, completion: completion)
         }
         task.resume()
