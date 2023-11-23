@@ -38,10 +38,14 @@ public final class NetworkKitFacade<SessionType: NetworkSession> {
     /// - Parameters:
     ///   - baseURL: The base URL for network requests.
     ///   - session: The network session to use for requests. Defaults to `URLSession.shared`.
+    ///   - networkReachability: The network reachability object. Default is `NetworkReachabilityImp.shared`.
     public init(baseURL: URL,
-                session: SessionType = URLSession.shared)
+                session: SessionType = URLSession.shared,
+                networkReachability: NetworkReachability = NetworkReachabilityImp.shared)
     {
-        networkKit = NetworkKitImp(baseURL: baseURL, session: session)
+        networkKit = NetworkKitImp(baseURL: baseURL,
+                                   session: session,
+                                   networkReachability: networkReachability)
     }
 
     /// Initializes the `NetworkKitFacade` with SSL pinning using a custom security trust.
@@ -49,11 +53,13 @@ public final class NetworkKitFacade<SessionType: NetworkSession> {
     /// - Parameters:
     ///   - baseURL: The base URL for network requests.
     ///   - securityTrust: The security trust object for SSL pinning.
+    ///   - networkReachability: The network reachability object. Default is `NetworkReachabilityImp.shared`.
     /// - Throws: A `NetworkError` if the session cannot be created.
     public init(baseURL: URL,
-                securityTrust: NetworkSecurityTrust) throws
+                securityTrust: NetworkSecurityTrust,
+                networkReachability: NetworkReachability = NetworkReachabilityImp.shared) throws
     {
-        networkKit = try NetworkKitBuilder(baseURL: baseURL)
+        networkKit = try NetworkKitBuilder(baseURL: baseURL, networkReachability: networkReachability)
             .setSecurityTrust(securityTrust)
             .build()
     }
@@ -72,7 +78,6 @@ public final class NetworkKitFacade<SessionType: NetworkSession> {
         andHeaders headers: [String: String] = [:],
         retryPolicy: NetworkRetryPolicy = .none
     ) async throws -> RequestType.SuccessType {
-        debugPrint(request.debugDescription)
         return try await networkKit.request(request,
                                             andHeaders: headers,
                                             retryPolicy: retryPolicy)
@@ -91,7 +96,6 @@ public final class NetworkKitFacade<SessionType: NetworkSession> {
         retryPolicy: NetworkRetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) {
-        debugPrint(request.debugDescription)
         networkKit.request(request,
                            andHeaders: headers,
                            retryPolicy: retryPolicy,
@@ -113,7 +117,6 @@ public final class NetworkKitFacade<SessionType: NetworkSession> {
         retryPolicy: NetworkRetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) {
-        debugPrint(request.debugDescription)
         networkKit.uploadFile(request,
                               andHeaders: headers,
                               fromFile: fileURL,
@@ -134,7 +137,6 @@ public final class NetworkKitFacade<SessionType: NetworkSession> {
         retryPolicy: NetworkRetryPolicy = .none,
         completion: @escaping (Result<URL, NetworkError>) -> Void
     ) {
-        debugPrint(request.debugDescription)
         networkKit.downloadFile(request, andHeaders: headers,
                                 retryPolicy: retryPolicy,
                                 completion: completion)
