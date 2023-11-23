@@ -8,7 +8,7 @@
 import Foundation
 
 /// A metric capturing information about the completion of a network task.
-public struct TaskCompletedMetric: Codable, Sendable {
+public struct TaskCompletedMetric: TaskMetric {
     /// The unique identifier for the network task.
     public var taskId: UUID
 

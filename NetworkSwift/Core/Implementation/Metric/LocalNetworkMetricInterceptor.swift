@@ -11,18 +11,20 @@ public struct LocalNetworkMetricInterceptor: NetworkMetricInterceptor {
     public init() {}
 
     public func sendEvent(_ event: NetworkTaskEvent) {
+        var taskMetric: TaskMetric
         switch event {
         case let .taskCreated(metric):
-            debugPrint("LocalNetworkMetric: taskCreated: \(metric)")
-
+            taskMetric = metric
         case let .taskProgressUpdated(metric):
-            debugPrint("LocalNetworkMetric: taskProgressUpdated: \(metric)")
+            taskMetric = metric
 
         case let .taskCompleted(metric):
-            debugPrint("LocalNetworkMetric: taskCompleted: \(metric)")
+            taskMetric = metric
 
         case let .taskDidFinishCollecting(metric):
-            debugPrint("LocalNetworkMetric: taskDidFinishCollecting: \(metric)")
+            taskMetric = metric
         }
+
+        debugPrint(taskMetric)
     }
 }

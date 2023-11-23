@@ -63,22 +63,4 @@ public class NetworkKitQueueBuilder<SessionType: NetworkSession>: NetworkKitBuil
             observeQueue: observeQueue
         )
     }
-
-    /// Performs a network request with a completion handler.
-    ///
-    /// - Parameters:
-    ///   - sendRequest: The network request to be executed.
-    ///   - headers: Additional headers to include in the request.
-    ///   - retryPolicy: The retry policy for the network request.
-    ///   - completion: The completion handler to be called when the request is complete.
-    public func sendRequest<RequestType>(
-        _ request: RequestType,
-        andHeaders headers: [String: String] = [:],
-        retryPolicy: NetworkRetryPolicy = .none,
-        completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
-    ) where RequestType: NetworkRequest {
-        build().request(request, andHeaders: headers,
-                        retryPolicy: retryPolicy,
-                        completion: completion)
-    }
 }

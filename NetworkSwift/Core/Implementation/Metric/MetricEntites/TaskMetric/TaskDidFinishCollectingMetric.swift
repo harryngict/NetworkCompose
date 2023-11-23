@@ -7,8 +7,10 @@
 
 import Foundation
 
+protocol TaskMetric: Codable, Sendable {}
+
 /// A metric capturing information about a network task after it finishes collecting data.
-public struct TaskDidFinishCollectingMetric: Sendable {
+public struct TaskDidFinishCollectingMetric: TaskMetric {
     /// The type of the network task.
     public var taskType: TaskType
 
@@ -20,9 +22,6 @@ public struct TaskDidFinishCollectingMetric: Sendable {
 
     /// The time interval during which the network task occurred.
     public let taskInterval: DateInterval
-
-    /// Transaction metrics associated with the network task.
-    public let transactionMetrics: [URLSessionTaskTransactionMetrics]
 
     /// The count of bytes received during the network task.
     public let countOfBytesReceived: Int64
@@ -44,7 +43,6 @@ public struct TaskDidFinishCollectingMetric: Sendable {
          createdAt: Date,
          url: URL?,
          taskInterval: DateInterval,
-         transactionMetrics: [URLSessionTaskTransactionMetrics],
          countOfBytesReceived: Int64,
          countOfBytesSent: Int64)
     {
@@ -52,7 +50,6 @@ public struct TaskDidFinishCollectingMetric: Sendable {
         self.createdAt = createdAt
         self.url = url
         self.taskInterval = taskInterval
-        self.transactionMetrics = transactionMetrics
         self.countOfBytesReceived = countOfBytesReceived
         self.countOfBytesSent = countOfBytesSent
     }

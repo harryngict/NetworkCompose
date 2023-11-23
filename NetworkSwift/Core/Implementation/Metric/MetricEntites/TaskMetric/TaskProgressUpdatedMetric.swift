@@ -8,7 +8,7 @@
 import Foundation
 
 /// A metric capturing information about the progress update of a network task.
-public struct TaskProgressUpdatedMetric: Codable, Sendable {
+public struct TaskProgressUpdatedMetric: TaskMetric {
     /// The unique identifier for the network task.
     public var taskId: UUID
 
@@ -39,4 +39,3 @@ public struct TaskProgressUpdatedMetric: Codable, Sendable {
         self.totalUnitCount = totalUnitCount
     }
 }
-

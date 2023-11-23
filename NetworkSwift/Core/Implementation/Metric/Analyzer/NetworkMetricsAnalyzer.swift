@@ -14,9 +14,6 @@ final class NetworkMetricsAnalyzer {
     /// Dictionary to store task contexts with their corresponding keys.
     private var tasks: [TaskKey: TaskContext] = [:]
 
-    /// Lock to ensure thread safety when accessing shared resources.
-    private let lock = NSLock()
-
     /// The interceptor for capturing network metrics.
     private let metricInterceptor: NetworkMetricInterceptor
 
@@ -31,18 +28,14 @@ final class NetworkMetricsAnalyzer {
     ///
     /// - Parameter task: The network task that was created.
     func trackTaskCreated(_ task: URLSessionTask) {
-      lock.lock()
-      let context = context(for: task)
-      lock.unlock()
-
-      guard let originalRequest = task.originalRequest else {
-          return
-      }
-      sendEvent(.taskCreated(TaskCreatedMetric(taskId: context.taskId,
-                                               taskType: TaskType(task: task),
-                                               createdAt: Date(),
-                                               originalRequest: RequestMetric(originalRequest),
-                                               currentRequest: task.currentRequest.map(RequestMetric.init))))
+        guard let originalRequest = task.originalRequest else {
+            return
+        }
+        sendEvent(.taskCreated(TaskCreatedMetric(taskId: context(for: task).taskId,
+                                                 taskType: TaskType(task: task),
+                                                 createdAt: Date(),
+                                                 originalRequest: RequestMetric(originalRequest),
+                                                 currentRequest: task.currentRequest.map(RequestMetric.init))))
     }
 
     /// Tracks the completion of a network task with or without an error and generates a `TaskCompletedMetric`.
@@ -51,25 +44,21 @@ final class NetworkMetricsAnalyzer {
     ///   - task: The network task that completed.
     ///   - error: An optional error indicating how the task completed, or `nil` if the task was successful.
     func trackTaskDidCompleteWithError(_ task: URLSessionTask, didCompleteWithError error: Error?) {
-      lock.lock()
-      let context = self.context(for: task)
-      tasks[TaskKey(task: task)] = nil
-
-      guard let originalRequest = task.originalRequest else {
-          lock.unlock()
-          return
-      }
-      let data = context.data
-      lock.unlock()
-      sendEvent(.taskCompleted(TaskCompletedMetric(taskId: context.taskId,
-                                                   taskType: TaskType(task: task),
-                                                   createdAt: Date(),
-                                                   originalRequest: RequestMetric(originalRequest),
-                                                   currentRequest: task.currentRequest.map(RequestMetric.init),
-                                                   response: task.response.map(ResponseMetric.init),
-                                                   error: error.map(ResponseErrorMetric.init),
-                                                   requestBody: originalRequest.httpBody ?? originalRequest.httpBodyStreamData(),
-                                                   responseBody: data)))
+        guard let originalRequest = task.originalRequest else {
+            return
+        }
+        let context = self.context(for: task)
+        tasks[TaskKey(task: task)] = nil
+        let data = context.data
+        sendEvent(.taskCompleted(TaskCompletedMetric(taskId: context.taskId,
+                                                     taskType: TaskType(task: task),
+                                                     createdAt: Date(),
+                                                     originalRequest: RequestMetric(originalRequest),
+                                                     currentRequest: task.currentRequest.map(RequestMetric.init),
+                                                     response: task.response.map(ResponseMetric.init),
+                                                     error: error.map(ResponseErrorMetric.init),
+                                                     requestBody: originalRequest.httpBody ?? originalRequest.httpBodyStreamData(),
+                                                     responseBody: data)))
     }
 
     /// Tracks the progress update of a network task and generates a `TaskProgressUpdatedMetric`.
@@ -78,14 +67,10 @@ final class NetworkMetricsAnalyzer {
     ///   - task: The network task that updated its progress.
     ///   - progress: A tuple containing the completed and total bytes of the task.
     func trackTaskDidUpdateProgress(_ task: URLSessionTask, didUpdateProgress progress: (completed: Int64, total: Int64)) {
-      lock.lock()
-      let context = self.context(for: task)
-      lock.unlock()
-
-      sendEvent(.taskProgressUpdated(TaskProgressUpdatedMetric(taskId: context.taskId,
-                                                               url: task.originalRequest?.url,
-                                                               completedUnitCount: progress.completed,
-                                                               totalUnitCount: progress.total)))
+        sendEvent(.taskProgressUpdated(TaskProgressUpdatedMetric(taskId: context(for: task).taskId,
+                                                                 url: task.originalRequest?.url,
+                                                                 completedUnitCount: progress.completed,
+                                                                 totalUnitCount: progress.total)))
     }
 
     /// Tracks the completion of collecting metrics for a network task and generates a `TaskDidFinishCollectingMetric`.
@@ -94,13 +79,12 @@ final class NetworkMetricsAnalyzer {
     ///   - task: The network task that finished collecting metrics.
     ///   - metrics: The collected URLSessionTaskMetrics.
     func trackTaskDidFinishCollecting(_ task: URLSessionTask, metrics: URLSessionTaskMetrics) {
-      sendEvent(.taskDidFinishCollecting(TaskDidFinishCollectingMetric(taskType: TaskType(task: task),
-                                                                       createdAt: Date(),
-                                                                       url: task.originalRequest?.url,
-                                                                       taskInterval: metrics.taskInterval,
-                                                                       transactionMetrics: metrics.transactionMetrics,
-                                                                       countOfBytesReceived: task.countOfBytesReceived,
-                                                                       countOfBytesSent: task.countOfBytesSent)))
+        sendEvent(.taskDidFinishCollecting(TaskDidFinishCollectingMetric(taskType: TaskType(task: task),
+                                                                         createdAt: Date(),
+                                                                         url: task.originalRequest?.url,
+                                                                         taskInterval: metrics.taskInterval,
+                                                                         countOfBytesReceived: task.countOfBytesReceived,
+                                                                         countOfBytesSent: task.countOfBytesSent)))
     }
 
     /// Sends a network task event to the associated metric interceptor.
@@ -115,13 +99,13 @@ final class NetworkMetricsAnalyzer {
     /// - Parameter task: The network task to retrieve the context for.
     /// - Returns: The context for the given network task.
     private func context(for task: URLSessionTask) -> TaskContext {
-      let key = TaskKey(task: task)
-      if let context = tasks[key] {
-          return context
-      }
-      let context = TaskContext()
-      tasks[key] = context
-      return context
+        let key = TaskKey(task: task)
+        if let context = tasks[key] {
+            return context
+        }
+        let context = TaskContext()
+        tasks[key] = context
+        return context
     }
 }
 
@@ -153,7 +137,7 @@ final class TaskKey: Hashable {
     ///
     /// - Parameter hasher: The hasher to use for combining the hash values.
     func hash(into hasher: inout Hasher) {
-        // Implementation details...
+        hasher.combine(id?.hashValue)
     }
 
     /// Checks if two `TaskKey` instances are equal.
@@ -163,6 +147,6 @@ final class TaskKey: Hashable {
     ///   - rhs: The right-hand side `TaskKey`.
     /// - Returns: `true` if the two instances are equal, otherwise `false`.
     static func == (lhs: TaskKey, rhs: TaskKey) -> Bool {
-      lhs.task != nil && lhs.id == rhs.id
+        lhs.task != nil && lhs.id == rhs.id
     }
 }
