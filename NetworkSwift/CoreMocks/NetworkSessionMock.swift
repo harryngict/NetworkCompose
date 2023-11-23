@@ -10,9 +10,9 @@ import Foundation
 public final class NetworkSessionMock<T: Decodable>: NetworkSession {
     public typealias NetworkRequestType = NetworkRequestMock<T>
 
-    private var expected: NetworkKitResultMock
+    private var expected: NetworkResultMock
 
-    public init(expected: NetworkKitResultMock) {
+    public init(expected: NetworkResultMock) {
         self.expected = expected
     }
 

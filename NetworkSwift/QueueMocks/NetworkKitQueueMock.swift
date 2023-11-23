@@ -1,5 +1,5 @@
 //
-//  NetworkKitQueueMock.swift
+//  NetworkQueueMock.swift
 //  NetworkSwift/QueueMocks
 //
 //  Created by Hoang Nguyen on 17/11/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class NetworkKitQueueMock: NetworkKitQueue {
+public class NetworkQueueMock: NetworkQueue {
     public init() {}
     public init(reAuthService: ReAuthenticationService? = nil) {
         self.reAuthService = reAuthService

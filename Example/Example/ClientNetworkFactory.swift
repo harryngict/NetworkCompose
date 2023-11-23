@@ -45,7 +45,7 @@ final class ClientNetworkFactory {
                 do {
                     let request = NetworkRequestBuilder<[User]>(path: "/posts", method: .GET)
                         .build()
-                    let service = try NetworkKitBuilder(baseURL: baseURL)
+                    let service = try NetworkBuilder(baseURL: baseURL)
                         .setMetricInterceptor(LocalNetworkMetricInterceptor())
                         .build()
                     let result: [User] = try await service.request(request)
@@ -62,7 +62,7 @@ final class ClientNetworkFactory {
             .setQueryParameters(["postId": "1"])
             .build()
 
-        try? NetworkKitBuilder(baseURL: baseURL)
+        try? NetworkBuilder(baseURL: baseURL)
             .setMetricInterceptor(LocalNetworkMetricInterceptor())
             .build()
             .request(request, retryPolicy: .retry(count: 2, delay: 10)) { (result: Result<[User], NetworkError>) in
@@ -81,7 +81,7 @@ final class ClientNetworkFactory {
                                  "userId": 1])
             .setRequiresReAuthentication(true)
             .build()
-        try? NetworkKitQueueBuilder(baseURL: baseURL)
+        try? NetworkQueueBuilder(baseURL: baseURL)
             .setReAuthService(reAuthService)
             .setMetricInterceptor(LocalNetworkMetricInterceptor())
             .build()
@@ -100,7 +100,7 @@ final class ClientNetworkFactory {
                                  "userId": 1])
             .build()
 
-        try? NetworkKitBuilder(baseURL: baseURL)
+        try? NetworkBuilder(baseURL: baseURL)
             .setMetricInterceptor(LocalNetworkMetricInterceptor())
             .build()
             .downloadFile(request) { (result: Result<URL, NetworkError>) in
@@ -116,7 +116,7 @@ final class ClientNetworkFactory {
             .build()
         let fileURL = URL(fileURLWithPath: "/Users/harrynguyen/Documents/Resources/NetworkSwift/LICENSE")
 
-        try? NetworkKitBuilder(baseURL: baseURL)
+        try? NetworkBuilder(baseURL: baseURL)
             .setMetricInterceptor(LocalNetworkMetricInterceptor())
             .build()
             .uploadFile(request, fromFile: fileURL) { (result: Result<User, NetworkError>) in
@@ -138,7 +138,7 @@ final class ClientNetworkFactory {
                                      "userId": 1])
                 .build()
 
-            try NetworkKitBuilder(baseURL: baseURL)
+            try NetworkBuilder(baseURL: baseURL)
                 .setSSLPinningPolicy(.trust(sslPinningHosts))
                 .setMetricInterceptor(LocalNetworkMetricInterceptor())
                 .build()
@@ -162,7 +162,7 @@ final class ClientNetworkFactory {
                 .setQueryParameters(["title": "foo"])
                 .build()
 
-            try NetworkKitQueueBuilder(baseURL: baseURL)
+            try NetworkQueueBuilder(baseURL: baseURL)
                 .setSSLPinningPolicy(.trust([sslPinningHost]))
                 .setMetricInterceptor(LocalNetworkMetricInterceptor())
                 .setReAuthService(ClientReAuthenticationService())
@@ -179,11 +179,11 @@ final class ClientNetworkFactory {
     }
 
     private func performMockRequest(completion: @escaping (String) -> Void) {
-        let successResult = NetworkKitResultMock.requestSuccess(
+        let successResult = NetworkResultMock.requestSuccess(
             NetworkResponseMock(statusCode: 200, response: User(id: 1))
         )
         let session = NetworkSessionMock<User>(expected: successResult)
-        let service = NetworkKitBuilder<NetworkSessionMock>(baseURL: baseURL, session: session).build()
+        let service = NetworkBuilder<NetworkSessionMock>(baseURL: baseURL, session: session).build()
         let request = NetworkRequestBuilder<User>(path: "/posts", method: .GET)
             .build()
 

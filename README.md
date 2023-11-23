@@ -22,7 +22,7 @@ VI. [How to use NetworkRetryPolicy to send a request](#vii-how-to-use-networkret
    
 VII. [How to create ReAuthenticationService for automatic Re-authentication](#vi-how-to-create-reauthenticationservice-for-automatic-re-authentication)
 
-VIII. [How NetworkKit and NetworkKitQueue send a request](#viii-how-networkkit-and-networkkitqueue-send-a-request)
+VIII. [How NetworkKit and NetworkQueue send a request](#viii-how-networkkit-and-networkqueue-send-a-request)
    - 8.1. [Request async await for iOS-15 above](#1-request-async-await-for-ios-15-above)
    - 8.2. [Request completion closure](#2-request-completion-closure)
    - 8.3. [Request and auto re-authentication](#3-request-and-auto-re-authentication)
@@ -203,7 +203,7 @@ enum Constant {
 ```swift
 let request = NetworkRequestBuilder<[User]>(path: "/posts", method: .GET)
     .build()
-let service = try? NetworkKitBuilder(baseURL: baseURL)
+let service = try? NetworkBuilder(baseURL: baseURL)
     .setMetricInterceptor(LocalNetworkMetricInterceptor())
     .build()    
 let result: [User] = try await service.sendRequest(request)
@@ -216,7 +216,7 @@ self.handleResult(result)
 let request = NetworkRequestBuilder<[User]>(path: "/comments", method: .GET)
     .setQueryParameters(["postId": "1"])
     .build()
-try? NetworkKitBuilder(baseURL: baseURL)
+try? NetworkBuilder(baseURL: baseURL)
     .setMetricInterceptor(LocalNetworkMetricInterceptor())
     .build()
     .request(request, retryPolicy: .retry(count: 5)) { (result: Result<[User], NetworkError>) in
@@ -234,7 +234,7 @@ let request = NetworkRequestBuilder<User>(path: "/posts", method: .POST)
     .build()
 let reAuthService = ClientReAuthenticationService()
 
-try? NetworkKitQueueBuilder(baseURL: baseURL)
+try? NetworkQueueBuilder(baseURL: baseURL)
     .setReAuthService(reAuthService)
     .setMetricInterceptor(LocalNetworkMetricInterceptor())
     .build()
@@ -253,7 +253,7 @@ let request = NetworkRequestBuilder<User>(path: "/posts/1", method: .PUT)
                                                         
 let sslPinningHost = NetworkSSLPinningImp(host: "jsonplaceholder.typicode.com",
                                           pinningHash: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])
-try? NetworkKitBuilder(baseURL: baseURL)
+try? NetworkBuilder(baseURL: baseURL)
     .setSSLPinningPolicy(.trust([sslPinningHost]))
     .setMetricInterceptor(LocalNetworkMetricInterceptor())
     .build()
@@ -264,12 +264,12 @@ try? NetworkKitBuilder(baseURL: baseURL)
 
 ### 8.5. Mocking support for unit tests
 ```swift
-let successResult = NetworkKitResultMock.requestSuccess(
+let successResult = NetworkResultMock.requestSuccess(
       NetworkResponseMock(statusCode: 200, response: User(id: 1))
 )
 let session = NetworkSessionMock<[User]>(expected: successResult)
 let request = NetworkRequestBuilder<User>(path: "/posts", method: .GET).build()
-let service = NetworkKitBuilder<NetworkSessionMock>(baseURL: baseURL, session: session).build()
+let service = NetworkBuilder<NetworkSessionMock>(baseURL: baseURL, session: session).build()
 service.sendRequest(request) { (result: Result<[User], NetworkError>) in
     self.handleResult(result)
 }

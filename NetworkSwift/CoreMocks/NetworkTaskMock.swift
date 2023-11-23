@@ -8,9 +8,9 @@
 import Foundation
 
 public class NetworkTaskMock<T: Decodable>: NetworkTask {
-    private var expected: NetworkKitResultMock
+    private var expected: NetworkResultMock
 
-    public init(expected: NetworkKitResultMock) {
+    public init(expected: NetworkResultMock) {
         self.expected = expected
     }
 

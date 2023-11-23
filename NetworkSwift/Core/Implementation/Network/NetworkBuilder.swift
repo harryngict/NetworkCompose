@@ -1,5 +1,5 @@
 //
-//  NetworkKitBuilder.swift
+//  NetworkBuilder.swift
 //  NetworkSwift/Core
 //
 //  Created by Hoang Nguyen on 24/11/23.
@@ -14,12 +14,12 @@ import Foundation
 /// ## Example Usage
 /// ```swift
 /// let baseURL = URL(string: "https://api.example.com")!
-/// let networkKit = try? NetworkKitBuilder(baseURL: baseURL)
+/// let networkKit = try? NetworkBuilder(baseURL: baseURL)
 ///     .setSecurityTrust(yourSecurityTrust)
 ///     .build()
 /// ```
-public class NetworkKitBuilder<SessionType: NetworkSession>: NetworkKitBuilderBase<SessionType> {
-    /// Initializes a `NetworkKitBuilder` with a base URL and a default session.
+public class NetworkBuilder<SessionType: NetworkSession>: NetworkBuilderBase<SessionType> {
+    /// Initializes a `NetworkBuilder` with a base URL and a default session.
     ///
     /// - Parameters:
     ///   - baseURL: The base URL for network requests.

@@ -1,5 +1,5 @@
 //
-//  NetworkKitQueueBuilder.swift
+//  NetworkQueueBuilder.swift
 //  NetworkSwift/Queue
 //
 //  Created by Hoang Nguyen on 24/11/23.
@@ -7,20 +7,20 @@
 
 import Foundation
 
-/// A builder for constructing instances of `NetworkKitQueueImp`.
+/// A builder for constructing instances of `NetworkQueueImp`.
 ///
 /// Example usage:
 /// ```swift
 /// let baseURL = URL(string: "https://api.example.com")!
-/// let networkKitQueue = NetworkKitQueueBuilder(baseURL: baseURL)
+/// let networkQueue = NetworkQueueBuilder(baseURL: baseURL)
 ///     .setReAuthService(yourReAuthService)
 ///     .setSecurityTrust(yourSecurityTrust)
 ///     .build()
 /// ```
-public class NetworkKitQueueBuilder<SessionType: NetworkSession>: NetworkKitBuilderBase<SessionType> {
+public class NetworkQueueBuilder<SessionType: NetworkSession>: NetworkBuilderBase<SessionType> {
     public var reAuthService: ReAuthenticationService?
 
-    /// Initializes a `NetworkKitQueueBuilder` with a base URL and a default session.
+    /// Initializes a `NetworkQueueBuilder` with a base URL and a default session.
     ///
     /// - Parameters:
     ///   - baseURL: The base URL for network requests.
@@ -50,11 +50,11 @@ public class NetworkKitQueueBuilder<SessionType: NetworkSession>: NetworkKitBuil
         return self
     }
 
-    /// Builds and returns a `NetworkKitQueueImp` instance with the configured parameters.
+    /// Builds and returns a `NetworkQueueImp` instance with the configured parameters.
     ///
-    /// - Returns: A fully configured `NetworkKitQueueImp` instance.
-    public func build() -> NetworkKitQueueImp<SessionType> {
-        return NetworkKitQueueImp(
+    /// - Returns: A fully configured `NetworkQueueImp` instance.
+    public func build() -> NetworkQueueImp<SessionType> {
+        return NetworkQueueImp(
             baseURL: baseURL,
             session: session,
             reAuthService: reAuthService,

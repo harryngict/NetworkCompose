@@ -7,49 +7,17 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "5EA61A56-0B2C-4703-81A4-CFFD71165746"
+            uuid = "440DFE33-A22E-4AC6-807C-B0B81B464D72"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../NetworkSwift/Core/Implementation/Network/NetworkKitImp.swift"
+            filePath = "../NetworkSwift/Core/Implementation/Network/BaseBuilder/NetworkBuilderInterfaces.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
-            landmarkName = "performRequest()"
-            landmarkType = "9">
-            <Locations>
-               <Location
-                  uuid = "5EA61A56-0B2C-4703-81A4-CFFD71165746 - a0dc164d630be1a5"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 () -&gt; () in closure #1 (Swift.Result&lt;&#x3c4;_1_0.SuccessType, NetworkSwift.NetworkError&gt;) -&gt; () in closure #1 (Swift.Result&lt;NetworkSwift.NetworkResponse, NetworkSwift.NetworkError&gt;) -&gt; () in performRequest&lt;&#x3c4;_0_0&gt;&lt;&#x3c4;_1_0 where &#x3c4;_0_0: NetworkSwift.NetworkSession, &#x3c4;_1_0: NetworkSwift.NetworkRequest&gt;() -&gt; ()"
-                  moduleName = "Example"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkSwift/NetworkSwift/Core/Implementation/Network/NetworkKitImp.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "140"
-                  endingLineNumber = "140"
-                  offsetFromSymbolStart = "288">
-               </Location>
-               <Location
-                  uuid = "5EA61A56-0B2C-4703-81A4-CFFD71165746 - a0dc164d630be1a5"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 () -&gt; () in closure #1 (Swift.Result&lt;&#x3c4;_1_0.SuccessType, NetworkSwift.NetworkError&gt;) -&gt; () in closure #1 (Swift.Result&lt;NetworkSwift.NetworkResponse, NetworkSwift.NetworkError&gt;) -&gt; () in performRequest&lt;&#x3c4;_0_0&gt;&lt;&#x3c4;_1_0 where &#x3c4;_0_0: NetworkSwift.NetworkSession, &#x3c4;_1_0: NetworkSwift.NetworkRequest&gt;() -&gt; ()"
-                  moduleName = "Example"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkSwift/NetworkSwift/Core/Implementation/Network/NetworkKitImp.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "140"
-                  endingLineNumber = "140"
-                  offsetFromSymbolStart = "252">
-               </Location>
-            </Locations>
+            startingLineNumber = "10"
+            endingLineNumber = "10"
+            landmarkName = "NetworkBuilderInterfaces"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

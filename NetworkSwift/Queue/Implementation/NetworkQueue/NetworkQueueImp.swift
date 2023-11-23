@@ -1,5 +1,5 @@
 //
-//  NetworkKitQueueImp.swift
+//  NetworkQueueImp.swift
 //  NetworkSwift/Queue
 //
 //  Created by Hoang Nguyen on 17/11/23.
@@ -7,14 +7,14 @@
 
 import Foundation
 
-/// A class implementing the `NetworkKitQueue` protocol that manages the execution of network requests.
+/// A class implementing the `NetworkQueue` protocol that manages the execution of network requests.
 ///
 /// Example usage:
 /// ```swift
 /// let baseURL = URL(string: "https://api.example.com")!
-/// let networkKitQueue = NetworkKitQueueImp(baseURL: baseURL)
+/// let networkKitQueue = NetworkQueueImp(baseURL: baseURL)
 /// ```
-public final class NetworkKitQueueImp<SessionType: NetworkSession>: NetworkKitQueue {
+public final class NetworkQueueImp<SessionType: NetworkSession>: NetworkQueue {
     /// The underlying network kit responsible for handling network requests.
     private let networkKit: NetworkKitImp<SessionType>
 
@@ -26,7 +26,7 @@ public final class NetworkKitQueueImp<SessionType: NetworkSession>: NetworkKitQu
 
     // MARK: Initialization
 
-    /// Initializes the `NetworkKitQueueImp` with the specified configuration.
+    /// Initializes the `NetworkQueueImp` with the specified configuration.
     ///
     /// - Parameters:
     ///   - baseURL: The base URL for network requests.

@@ -1,5 +1,5 @@
 //
-//  NetworkKitBuilderProtocol.swift
+//  NetworkBuilderInterfaces.swift
 //  NetworkSwift/Core
 //
 //  Created by Hoang Nguyen on 24/11/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol NetworkKitBuilderProtocol: AnyObject {
+public protocol NetworkBuilderInterfaces: AnyObject {
     associatedtype SessionType: NetworkSession
 
     /// The base URL for network requests.
