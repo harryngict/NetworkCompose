@@ -11,13 +11,13 @@
 - **Completion Request**: Utilizes completion handlers for efficient response handling.
 - **Async Await Request (iOS 15 and above)**: Supports asynchronous programming through Swift's async/await mechanism.
 
-### NetworkSwift/Queue Submodule
+### NetworkKitQueue
 
-NetworkSwift includes a submodule called **NetworkKitQueueImp**, specifically designed to manage auto re-authentication. This feature is crucial in cases where request credentials have expired.
+NetworkSwift includes a submodule called **NetworkKitQueue**, specifically designed to manage auto re-authentication. This feature is crucial in cases where request credentials have expired.
 
 ## II. Testability
 
-For improved testability, NetworkSwift provides mock implementations, empowering developers to write effective unit tests. This ensures robustness in various scenarios and easy validation of the library's behavior.
+For improved testability, `NetworkSwift` provides mock implementations, empowering developers to write effective unit tests. This ensures robustness in various scenarios and easy validation of the library's behavior.
 
 
 ## III. Integration
@@ -76,7 +76,7 @@ let request: NetworkRequestImp<YourResponseType> = try? NetworkRequestBuilder<Yo
 
 ### 2. Using NetworkRequestImp Directly
 
-If you prefer a more direct approach, you can create a NetworkRequestImp instance directly. Here's an example:
+If you prefer a more direct approach, you can create a `NetworkRequestImp` instance directly. Here's an example:
 
 ```swift
 let request: NetworkRequestImp<YourResponseType> = NetworkRequestImp(
@@ -136,7 +136,7 @@ networkKit?.request(yourRequest) { result in
 ```
 
 ### 3. Using NetworkKitImp Directly
-If you prefer a more direct approach, you can create a NetworkKitImp instance directly and use it to make requests:
+If you prefer a more direct approach, you can create a `NetworkKitImp` instance directly and use it to make requests:
 ```swift
 let baseURL = URL(string: "https://api.example.com")!
 let networkKit = NetworkKitImp(baseURL: baseURL)
@@ -176,13 +176,12 @@ networkKitQueueFacade.request(yourRequest) { result in
 ```
 ### 2. Using NetworkKitQueueBuilder
 
-`NetworkKitQueueBuilder` allows you to configure and build a NetworkKitQueueImp instance with specific settings. Here's an example:
+`NetworkKitQueueBuilder` allows you to configure and build a `NetworkKitQueueImp` instance with specific settings. Here's an example:
 
 ```swift
 let baseURL = URL(string: "https://api.example.com")!
 let networkKitQueue = try? NetworkKitQueueBuilder(baseURL: baseURL)
     .setReAuthService(yourReAuthService)
-    .setSerialOperationQueue(yourSerialOperationQueue)
     .build()
 
 // Now you can use networkKitQueue to make requests with automatic re-authentication
@@ -197,11 +196,11 @@ networkKitQueue?.request(yourRequest) { result in
 ```
 
 ### 3. Using NetworkKitQueueImp Directly
-If you prefer a more direct approach, you can create a NetworkKitQueueImp instance directly and use it to make requests:
+If you prefer a more direct approach, you can create a `NetworkKitQueueImp` instance directly and use it to make requests:
 
 ``` swift
 let baseURL = URL(string: "https://api.example.com")!
-let networkKitQueue = NetworkKitQueueImp(baseURL: baseURL, reAuthService: yourReAuthService, serialOperationQueue: yourSerialOperationQueue)
+let networkKitQueue = NetworkKitQueueImp(baseURL: baseURL, reAuthService: yourReAuthService, operationQueue: yourOperationQueue)
 
 // Now you can use networkKitQueue to make requests with automatic re-authentication
 networkKitQueue.request(yourRequest) { result in
@@ -264,7 +263,46 @@ class YourAutoReAuthenticationService: ReAuthenticationService {
 }
 ```
 
-## IX. How to use NetworkKit and NetworkKitQueue
+## IX. How to use NetworkRetryPolicy to send a request
+
+### 1. Create a NetworkRetryPolicy instance
+You can create an instance of `NetworkRetryPolicy` to control the behavior of request retries. Choose between .none for no retries or .retry(count: Int) to specify the number of retry attempts.
+
+```swift
+// Example: Create a retry policy allowing 3 retries
+let retryPolicy = NetworkRetryPolicy.retry(count: 3)
+```
+### 2. Use NetworkRetryPolicy when sending a request
+
+#### 2.1. Using NetworkKit
+
+```swift
+// Example: Make a request with retry policy using NetworkKit
+networkKit.request(yourRequest, andHeaders: yourHeaders, retryPolicy: retryPolicy) { result in
+    switch result {
+    case let .success(data):
+        // Handle successful response
+    case let .failure(error):
+        // Handle error, which may include errors after retries
+    }
+}
+```
+
+#### 2.2. Using NetworkKitQueue
+
+```swift
+// Example: Make a request with retry policy using NetworkKitQueue
+networkKitQueue.request(yourRequest, andHeaders: yourHeaders, retryPolicy: retryPolicy) { result in
+    switch result {
+    case let .success(data):
+        // Handle successful response
+    case let .failure(error):
+        // Handle error, which may include errors after retries
+    }
+}
+```
+
+## X. How NetworkKit and NetworkKitQueue send a request
 
 ```swift
 enum Constant {
@@ -385,46 +423,8 @@ service.request(request) { (result: Result<[User], NetworkError>) in
 }
 ```
 
-## X. How to use NetworkRetryPolicy to send a request
 
-### 1. Create a NetworkRetryPolicy instance
-You can create an instance of NetworkRetryPolicy to control the behavior of request retries. Choose between .none for no retries or .retry(count: Int) to specify the number of retry attempts.
-
-```swift
-// Example: Create a retry policy allowing 3 retries
-let retryPolicy = NetworkRetryPolicy.retry(count: 3)
-```
-### 2. Use NetworkRetryPolicy when sending a request
-
-#### 2.1. Using `NetworkKit`
-
-```swift
-// Example: Make a request with retry policy using NetworkKit
-networkKit.request(yourRequest, andHeaders: yourHeaders, retryPolicy: retryPolicy) { result in
-    switch result {
-    case let .success(data):
-        // Handle successful response
-    case let .failure(error):
-        // Handle error, which may include errors after retries
-    }
-}
-```
-
-#### 2.2. Using NetworkKitQueue
-
-```swift
-// Example: Make a request with retry policy using NetworkKitQueue
-networkKitQueue.request(yourRequest, andHeaders: yourHeaders, retryPolicy: retryPolicy) { result in
-    switch result {
-    case let .success(data):
-        // Handle successful response
-    case let .failure(error):
-        // Handle error, which may include errors after retries
-    }
-}
-```
-
-Thats it!! NetworkSwift is successfully integrated and initialized in the project, and ready to use. 
+Thats it!! `NetworkSwift` is successfully integrated and initialized in the project, and ready to use. 
 
 For more detail please go to [Example project](https://github.com/harryngict/NetworkSwift/blob/master/Example/Example/Client/ClientNetworkFactory.swift).
 
@@ -433,7 +433,7 @@ Feel free to utilize [JSONPlaceholder](https://jsonplaceholder.typicode.com/guid
 integration, please reach out to me at harryngict@gmail.com. I'm here to support you.
 
 ## XII. Contributing
-If you want to contribute to NetworkSwift, please follow these steps:
+If you want to contribute to `NetworkSwift`, please follow these steps:
 
 1. Fork the repository.
 

@@ -32,3 +32,9 @@ public final class OperationQueueManagerImp: OperationQueueManager {
         operationQueue.addOperation(operation)
     }
 }
+
+/// A default operation queue manager for handling operations.
+public enum DefaultOperationQueueManager {
+    /// The shared operation queue managed by `DefaultOperationQueueManager`.
+    public static let serialOperationQueue: OperationQueueManager = OperationQueueManagerImp(maxConcurrentOperationCount: 1)
+}

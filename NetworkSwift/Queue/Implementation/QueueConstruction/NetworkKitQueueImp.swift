@@ -18,8 +18,8 @@ public final class NetworkKitQueueImp<SessionType: NetworkSession>: NetworkKitQu
     /// The underlying network kit responsible for handling network requests.
     private let networkKit: NetworkKitImp<SessionType>
 
-    /// The operation queue manager used to serialize network operations.
-    private let serialOperationQueue: OperationQueueManager
+    /// The operation queue manager used to  network operations.
+    private let operationQueue: OperationQueueManager
 
     /// The service responsible for re-authentication if required.
     public var reAuthService: ReAuthenticationService?
@@ -32,7 +32,7 @@ public final class NetworkKitQueueImp<SessionType: NetworkSession>: NetworkKitQu
     ///   - baseURL: The base URL for network requests.
     ///   - session: The network session to use for requests.
     ///   - reAuthService: The service responsible for re-authentication.
-    ///   - serialOperationQueue: The operation queue manager for serializing network operations.
+    ///   - operationQueue: The operation queue manager for serializing network operations. Default is `serialOperationQueue`.
     ///   - networkReachability: The network reachability object. Default is `NetworkReachabilityImp.shared`.
     ///   - executeQueue: The dispatch queue for executing network requests.
     ///   - observeQueue: The dispatch queue for observing and handling network events.
@@ -40,13 +40,13 @@ public final class NetworkKitQueueImp<SessionType: NetworkSession>: NetworkKitQu
         baseURL: URL,
         session: SessionType = URLSession.shared,
         reAuthService: ReAuthenticationService? = nil,
-        serialOperationQueue: OperationQueueManager,
+        operationQueue: OperationQueueManager = DefaultOperationQueueManager.serialOperationQueue,
         networkReachability: NetworkReachability = NetworkReachabilityImp.shared,
         executeQueue: NetworkDispatchQueue,
         observeQueue: NetworkDispatchQueue
     ) {
         self.reAuthService = reAuthService
-        self.serialOperationQueue = serialOperationQueue
+        self.operationQueue = operationQueue
         networkKit = NetworkKitImp(baseURL: baseURL,
                                    session: session,
                                    networkReachability: networkReachability,
@@ -73,7 +73,7 @@ public final class NetworkKitQueueImp<SessionType: NetworkSession>: NetworkKitQu
             let operation = createReAuthenticationOperation(request, andHeaders: headers,
                                                             retryPolicy: retryPolicy,
                                                             completion: completion)
-            serialOperationQueue.enqueue(operation)
+            operationQueue.enqueue(operation)
         } else {
             sendRequest(request, andHeaders: headers,
                         allowReAuth: false,
@@ -157,9 +157,9 @@ public final class NetworkKitQueueImp<SessionType: NetworkSession>: NetworkKitQu
         }
     }
 
-    /// Cancels all operations in the serial operation queue.
+    /// Cancels all operations in the operation queue.
     private func cancelAllOperations() {
-        guard let operations = serialOperationQueue.operationQueue.operations as? [ClosureCustomOperation] else {
+        guard let operations = operationQueue.operationQueue.operations as? [ClosureCustomOperation] else {
             return
         }
         for operation in operations {

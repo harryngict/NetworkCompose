@@ -14,7 +14,6 @@ import Foundation
 /// let baseURL = URL(string: "https://api.example.com")!
 /// let networkKitQueue = NetworkKitQueueBuilder(baseURL: baseURL)
 ///     .setReAuthService(yourReAuthService)
-///     .setSerialOperationQueue(yourOperationQueueManager)
 ///     .setSecurityTrust(yourSecurityTrust)
 ///     .build()
 /// ```
@@ -27,9 +26,6 @@ public final class NetworkKitQueueBuilder<SessionType: NetworkSession> {
 
     /// The service responsible for re-authentication if required.
     private var reAuthService: ReAuthenticationService?
-
-    /// The operation queue manager used to serialize network operations.
-    private var serialOperationQueue: OperationQueueManager
 
     /// The network reachability object for monitoring internet connection status.
     private var networkReachability: NetworkReachability
@@ -50,14 +46,12 @@ public final class NetworkKitQueueBuilder<SessionType: NetworkSession> {
     ///   - observeQueue: The dispatch queue for observing and handling network events.
     public init(baseURL: URL,
                 session: SessionType = URLSession.shared,
-                serialOperationQueue: OperationQueueManager = OperationQueueManagerImp(maxConcurrentOperationCount: 1),
                 networkReachability: NetworkReachability = NetworkReachabilityImp.shared,
                 executeQueue: NetworkDispatchQueue = DefaultNetworkDispatchQueue.executeQueue,
                 observeQueue: NetworkDispatchQueue = DefaultNetworkDispatchQueue.observeQueue)
     {
         self.baseURL = baseURL
         self.session = session
-        self.serialOperationQueue = serialOperationQueue
         self.networkReachability = networkReachability
         self.executeQueue = executeQueue
         self.observeQueue = observeQueue
@@ -69,15 +63,6 @@ public final class NetworkKitQueueBuilder<SessionType: NetworkSession> {
     /// - Returns: The builder instance for method chaining.
     public func setReAuthService(_ reAuthService: ReAuthenticationService?) -> Self {
         self.reAuthService = reAuthService
-        return self
-    }
-
-    /// Sets the operation queue manager for serializing network operations.
-    ///
-    /// - Parameter serialOperationQueue: The operation queue manager.
-    /// - Returns: The builder instance for method chaining.
-    public func setSerialOperationQueue(_ serialOperationQueue: OperationQueueManager) -> Self {
-        self.serialOperationQueue = serialOperationQueue
         return self
     }
 
@@ -116,7 +101,6 @@ public final class NetworkKitQueueBuilder<SessionType: NetworkSession> {
             baseURL: baseURL,
             session: session,
             reAuthService: reAuthService,
-            serialOperationQueue: serialOperationQueue,
             networkReachability: networkReachability,
             executeQueue: executeQueue,
             observeQueue: observeQueue

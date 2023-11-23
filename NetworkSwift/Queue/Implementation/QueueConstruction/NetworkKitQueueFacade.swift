@@ -32,7 +32,6 @@ public final class NetworkKitQueueFacade<SessionType: NetworkSession> {
     ///   - baseURL: The base URL for network requests.
     ///   - session: The network session to use for requests.
     ///   - reAuthService: The service responsible for re-authentication.
-    ///   - serialOperationQueue: The operation queue manager for serializing network operations.
     ///   - networkReachability: The network reachability object. Default is `NetworkReachabilityImp.shared`.
     ///   - executeQueue: The dispatch queue for executing network requests.
     ///   - observeQueue: The dispatch queue for observing and handling network events.
@@ -40,7 +39,6 @@ public final class NetworkKitQueueFacade<SessionType: NetworkSession> {
         baseURL: URL,
         session: SessionType = URLSession.shared,
         reAuthService: ReAuthenticationService? = nil,
-        serialOperationQueue: OperationQueueManager = OperationQueueManagerImp(maxConcurrentOperationCount: 1),
         networkReachability: NetworkReachability = NetworkReachabilityImp.shared,
         executeQueue: NetworkDispatchQueue = DefaultNetworkDispatchQueue.executeQueue,
         observeQueue: NetworkDispatchQueue = DefaultNetworkDispatchQueue.observeQueue
@@ -48,7 +46,6 @@ public final class NetworkKitQueueFacade<SessionType: NetworkSession> {
         networkKitQueue = NetworkKitQueueImp(baseURL: baseURL,
                                              session: session,
                                              reAuthService: reAuthService,
-                                             serialOperationQueue: serialOperationQueue,
                                              networkReachability: networkReachability,
                                              executeQueue: executeQueue,
                                              observeQueue: observeQueue)
@@ -72,7 +69,6 @@ public final class NetworkKitQueueFacade<SessionType: NetworkSession> {
     public init(baseURL: URL,
                 securityTrust: NetworkSecurityTrust,
                 reAuthService: ReAuthenticationService? = nil,
-                serialOperationQueue: OperationQueueManager = OperationQueueManagerImp(maxConcurrentOperationCount: 1),
                 networkReachability: NetworkReachability = NetworkReachabilityImp.shared,
                 executeQueue: NetworkDispatchQueue = DefaultNetworkDispatchQueue.executeQueue,
                 observeQueue: NetworkDispatchQueue = DefaultNetworkDispatchQueue.observeQueue) throws
@@ -80,7 +76,6 @@ public final class NetworkKitQueueFacade<SessionType: NetworkSession> {
         networkKitQueue = try NetworkKitQueueBuilder(baseURL: baseURL, networkReachability: networkReachability)
             .setSecurityTrust(securityTrust)
             .setReAuthService(reAuthService)
-            .setSerialOperationQueue(serialOperationQueue)
             .setExecuteQueue(executeQueue)
             .setObserveQueue(observeQueue)
             .build()
