@@ -30,6 +30,12 @@ public final class NetworkKitQueueBuilder<SessionType: NetworkSession> {
     /// The network reachability object for monitoring internet connection status.
     private var networkReachability: NetworkReachability
 
+    /// The security trust object for SSL pinning.
+    private var securityTrust: NetworkSecurityTrust?
+
+    /// The metrics collector object for collecting network metrics.
+    private var metricsCollector: NetworkMetricsCollector?
+
     /// The dispatch queue for executing network requests.
     private var executeQueue: NetworkDispatchQueue
 
@@ -93,6 +99,30 @@ public final class NetworkKitQueueBuilder<SessionType: NetworkSession> {
         return self
     }
 
+    /// Sets the security trust for SSL pinning.
+    ///
+    /// - Parameter securityTrust: The security trust object for SSL pinning.
+    /// - Returns: The builder instance for method chaining.
+    ///
+    /// - Throws: A `NetworkError` if the session cannot be created.
+    public func setSecurityTrust(_ securityTrust: NetworkSecurityTrust) throws -> Self {
+        self.securityTrust = securityTrust
+        session = try createNetworkSession()
+        return self
+    }
+
+    /// Sets the metrics collector for network metrics.
+    ///
+    /// - Parameter metricsCollector: The metrics collector object for collecting network metrics.
+    /// - Returns: The builder instance for method chaining.
+    ///
+    /// - Throws: A `NetworkError` if the session cannot be created.
+    public func setMetricsCollector(_ metricsCollector: NetworkMetricsCollector) throws -> Self {
+        self.metricsCollector = metricsCollector
+        session = try createNetworkSession()
+        return self
+    }
+
     /// Builds and returns a `NetworkKitQueueImp` instance with the configured parameters.
     ///
     /// - Returns: A fully configured `NetworkKitQueueImp` instance.
@@ -107,25 +137,55 @@ public final class NetworkKitQueueBuilder<SessionType: NetworkSession> {
         )
     }
 
-    /// Sets the security trust for SSL pinning.
+    /// Performs a network request with a completion handler.
     ///
-    /// - Parameter securityTrust: The security trust object for SSL pinning.
-    /// - Throws: A `NetworkError` if the session cannot be created.
-    /// - Returns: The builder instance for method chaining.
-    public func setSecurityTrust(_ securityTrust: NetworkSecurityTrust) throws -> Self {
+    /// - Parameters:
+    ///   - request: The network request to be executed.
+    ///   - headers: Additional headers to include in the request.
+    ///   - retryPolicy: The retry policy for the network request.
+    ///   - completion: The completion handler to be called when the request is complete.
+    public func request<RequestType: NetworkRequest>(
+        _ request: RequestType,
+        andHeaders headers: [String: String] = [:],
+        retryPolicy: NetworkRetryPolicy = .none,
+        completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
+    ) {
+        build().request(request, andHeaders: headers,
+                        retryPolicy: retryPolicy,
+                        completion: completion)
+    }
+}
+
+private extension NetworkKitQueueBuilder {
+    /// Creates and returns a network session with the configured parameters.
+    ///
+    /// This method initializes a network session with the provided metrics collector and security trust,
+    /// and returns an instance conforming to the specified `SessionType`.
+    ///
+    /// - Throws: A `NetworkError.invalidSession` if the session cannot be created.
+    ///
+    /// - Returns: A fully configured network session conforming to the specified `SessionType`.
+    ///
+    /// - Parameter metricsCollector: An optional `NetworkMetricsCollector` for collecting network metrics.
+    /// - Parameter securityTrust: An optional `NetworkSecurityTrust` for SSL pinning.
+    ///
+    /// - Important: If a `securityTrust` is provided, SSL pinning will be enabled.
+    ///
+    /// - Note: This method is used internally by the `NetworkKitBuilder` to create the network session.
+    func createNetworkSession() throws -> SessionType {
         do {
-            let delegate = NetworkSessionTaskDelegate(securityTrust: securityTrust)
-            guard let session = URLSession(
-                configuration: NetworkSessionConfiguration.default,
-                delegate: delegate,
-                delegateQueue: nil /// `OperationQueue.main` Will throw message `This method should not be called on the main thread as it may lead to UI unresponsiveness.`
-            ) as? SessionType else {
+            let delegate = NetworkSessionProxyDelegate(metricsCollector: metricsCollector, securityTrust: securityTrust)
+
+            guard let session = URLSession(configuration: NetworkSessionConfiguration.default,
+                                           delegate: delegate,
+                                           delegateQueue: nil) as? SessionType
+            else {
                 throw NetworkError.invalidSession
             }
-            self.session = session
+
+            return session
         } catch {
             throw NetworkError.invalidSession
         }
-        return self
     }
 }
