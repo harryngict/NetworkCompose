@@ -8,6 +8,7 @@ Pod::Spec.new do |spec|
                       DESC
   
   spec.homepage     = "https://github.com/harryngict/NetworkSwift"
+  spec.readme       = "https://github.com/harryngict/NetworkSwift/#{spec.version}/README.md"
   spec.source       = { :git => "git@github.com:harryngict/NetworkSwift.git", :tag => "#{spec.version}" }
   spec.authors      = { "Hoang Nguyen" => "harryngict@gmail.com" }
   spec.license      = { :type => "MIT", :text => "Copyright (c) 2023" }
