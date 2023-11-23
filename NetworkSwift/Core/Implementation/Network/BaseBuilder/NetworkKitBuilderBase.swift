@@ -10,7 +10,7 @@ import Foundation
 public class NetworkKitBuilderBase<SessionType: NetworkSession>: NetworkKitBuilderProtocol {
     public var baseURL: URL
     public var session: SessionType
-    public var securityTrust: NetworkSecurityTrust?
+    public var sslPinningPolicy: NetworkSSLPinningPolicy = .ignore
     public var metricInterceptor: NetworkMetricInterceptor?
     public var networkReachability: NetworkReachability
     public var executeQueue: NetworkDispatchQueue
@@ -39,12 +39,12 @@ public class NetworkKitBuilderBase<SessionType: NetworkSession>: NetworkKitBuild
 
     /// Sets the security trust for SSL pinning.
     ///
-    /// - Parameter securityTrust: The security trust object for SSL pinning.
+    /// - Parameter sslPinningPolicy: The security trust object for SSL pinning.
     /// - Returns: The builder instance for method chaining.
     ///
     /// - Throws: A `NetworkError` if the session cannot be created.
-    public func setSecurityTrust(_ securityTrust: NetworkSecurityTrust) throws -> Self {
-        self.securityTrust = securityTrust
+    public func setSSLPinningPolicy(_ sslPinningPolicy: NetworkSSLPinningPolicy) throws -> Self {
+        self.sslPinningPolicy = sslPinningPolicy
         session = try createNetworkSession()
         return self
     }
@@ -99,16 +99,16 @@ private extension NetworkKitBuilderBase {
     ///
     /// - Returns: A fully configured network session conforming to the specified `SessionType`.
     ///
+    /// - Parameter sslPinningPolicy: A `NetworkSSLPinningPolicy` for SSL pinning.
     /// - Parameter metricInterceptor: An optional `NetworkMetricInterceptor` for collecting network metrics.
-    /// - Parameter securityTrust: An optional `NetworkSecurityTrust` for SSL pinning.
     ///
     /// - Important: If a `securityTrust` is provided, SSL pinning will be enabled.
     ///
     /// - Note: This method is used internally by the `CommonNetworkKitBuilder` to create the network session.
     private func createNetworkSession() throws -> SessionType {
         do {
-            let delegate = NetworkSessionProxyDelegate(metricInterceptor: metricInterceptor,
-                                                       securityTrust: securityTrust)
+            let delegate = NetworkSessionProxyDelegate(sslPinningPolicy: sslPinningPolicy,
+                                                       metricInterceptor: metricInterceptor)
 
             guard let session = URLSession(configuration: NetworkSessionConfiguration.default,
                                            delegate: delegate,

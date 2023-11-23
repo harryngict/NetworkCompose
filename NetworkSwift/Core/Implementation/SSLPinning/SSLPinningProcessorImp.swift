@@ -11,13 +11,13 @@ import Foundation
 ///
 /// This class implements the SSLPinningProcessor protocol and provides methods
 /// for validating server trust using SSL pinning.
-public final class SSLPinningProcessorImp: SSLPinningProcessor {
+final class SSLPinningProcessorImp: SSLPinningProcessor {
     private let securityTrust: NetworkSecurityTrust
 
     /// Initializes an SSLPinningProcessorImp with the specified NetworkSecurityTrust object.
     ///
     /// - Parameter securityTrust: The NetworkSecurityTrust object used for SSL pinning validation.
-    public init(securityTrust: NetworkSecurityTrust) {
+    init(securityTrust: NetworkSecurityTrust) {
         self.securityTrust = securityTrust
     }
 
@@ -29,7 +29,7 @@ public final class SSLPinningProcessorImp: SSLPinningProcessor {
     /// - Parameter protectionSpace: The URLProtectionSpace for which authentication is required.
     /// - Returns: An AuthChallengeDecision indicating whether to perform default handling or
     ///            proceed with the provided decision.
-    public func validateAuthentication(_ protectionSpace: URLProtectionSpace) -> AuthChallengeDecision {
+    func validateAuthentication(_ protectionSpace: URLProtectionSpace) -> AuthChallengeDecision {
         let isSecTrustValidationRequired = (protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust)
 
         // Check if SSL pinning validation is required

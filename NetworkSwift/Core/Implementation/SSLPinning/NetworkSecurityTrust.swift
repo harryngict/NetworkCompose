@@ -8,9 +8,9 @@
 import Foundation
 
 /// A protocol defining the interface for network security trust, with a focus on SSL pinning.
-public protocol NetworkSecurityTrust {
+protocol NetworkSecurityTrust {
     /// An array of SSL pinning hosts containing host names and associated pinning hashes.
-    var sslPinningHosts: [NetworkSSLPinningHost] { get }
+    var sslPinningPolicy: NetworkSSLPinningPolicy { get }
 
     /// Verifies server trust based on SSL pinning logic and makes an authentication decision.
     ///

@@ -15,7 +15,7 @@ IV. [How to create NetworkRequest](#iv-how-to-create-networkrequest)
    - 4.1. [Using NetworkRequestBuilder](#1-using-networkrequestbuilder)
    - 4.2. [Using NetworkRequestImp Directly](#2-using-networkrequestimp-directly)
 
-V. [How to create NetworkSecurityTrustImp for SSL Pinning](#v-how-to-create-networksecuritytrustimp-for-ssl-pinning)
+V. [How to create NetworkSSLPinningPolicy for SSL Pinning](#v-how-to-create-networksslpinningpolicy-for-ssl-pinning)
 
 VI. [How to create ReAuthenticationService for automatic Re-authentication](#vi-how-to-create-reauthenticationservice-for-automatic-re-authentication)
 
@@ -127,20 +127,19 @@ let request: NetworkRequestImp<YourResponseType> = NetworkRequestImp(
 )
 ```
 
-## V. How to create NetworkSecurityTrustImp for SSL Pinning
+## V. How to create NetworkSSLPinningPolicy for SSL Pinning
 
-To implement SSL pinning in your network requests, you can use the `NetworkSecurityTrustImp` class along with the concrete implementation of `NetworkSSLPinningHost`, `NetworkSSLPinningHostImp`.
+To implement SSL pinning in your network requests, you can use the `NetworkSSLPinningPolicy` enum along with the concrete implementation of `NetworkSSLPinning`, `NetworkSSLPinningImp`.
 
 ### Example Usage:
 
 ```swift
 // Creating an SSL pinning host
-let sslPinningHost = NetworkSSLPinningHostImp(host: "api.example.com", pinningHash: ["hash1", "hash2"])
+let sslPinningHost = NetworkSSLPinningImp(host: "api.example.com", pinningHash: ["hash1", "hash2"])
 
-// Creating a NetworkSecurityTrustImp with the SSL pinning host
-let securityTrust = NetworkSecurityTrustImp(sslPinningHosts: [sslPinningHost])
+// Creating a NetworkSSLPinningPolicy with the SSL pinning host
+let sslPinningPolicy = NetworkSSLPinningPolicy.trust([sslPinningHost])
 ```
-In this example, sslPinningHosts is an array that can contain multiple instances of NetworkSSLPinningHostImp, each representing a host with its associated pinning hashes. You can customize the host names and pinning hashes based on your SSL pinning requirements.
 
 Now, you can use this securityTrust object when setting up SSL pinning in your network requests.
 
@@ -247,12 +246,10 @@ let request = NetworkRequestBuilder<User>(path: "/posts/1", method: .PUT)
                           "userId": 1])
     .build()
                                                         
-let sslPinningHosts = [NetworkSSLPinningHostImp(host: "jsonplaceholder.typicode.com",
-                                                pinningHash: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])]
-let securityTrust = NetworkSecurityTrustImp(sslPinningHosts: sslPinningHosts)
-
+let sslPinningHost = NetworkSSLPinningImp(host: "jsonplaceholder.typicode.com",
+                                          pinningHash: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])
 try? NetworkKitBuilder(baseURL: baseURL)
-    .setSecurityTrust(securityTrust)
+    .setSSLPinningPolicy(.trust([sslPinningHost]))
     .setMetricInterceptor(LocalNetworkMetricInterceptor())
     .build()
     .request(request) { (result: Result<User, NetworkError>) in
