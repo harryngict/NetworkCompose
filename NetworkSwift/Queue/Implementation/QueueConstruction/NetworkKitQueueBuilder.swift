@@ -20,7 +20,7 @@ import Foundation
 /// ```
 public final class NetworkKitQueueBuilder<SessionType: NetworkSession> {
     /// The base URL for network requests.
-    private var baseURL: URL
+    private let baseURL: URL
 
     /// The network session to use for requests.
     private var session: SessionType
@@ -31,18 +31,24 @@ public final class NetworkKitQueueBuilder<SessionType: NetworkSession> {
     /// The operation queue manager used to serialize network operations.
     private var serialOperationQueue: OperationQueueManager
 
+    /// The network reachability object for monitoring internet connection status.
+    private var networkReachability: NetworkReachability
+
     /// Initializes a `NetworkKitQueueBuilder` with a base URL and a default session.
     ///
     /// - Parameters:
     ///   - baseURL: The base URL for network requests.
     ///   - session: The network session to use for requests. Defaults to `URLSession.shared`.
+    ///   - networkReachability: The network reachability object. Default is `NetworkReachabilityImp.shared`.
     public init(baseURL: URL,
                 session: SessionType = URLSession.shared,
-                serialOperationQueue: OperationQueueManager = OperationQueueManagerImp(maxConcurrentOperationCount: 1))
+                serialOperationQueue: OperationQueueManager = OperationQueueManagerImp(maxConcurrentOperationCount: 1),
+                networkReachability: NetworkReachability = NetworkReachabilityImp.shared)
     {
         self.baseURL = baseURL
         self.session = session
         self.serialOperationQueue = serialOperationQueue
+        self.networkReachability = networkReachability
     }
 
     /// Sets the re-authentication service.
@@ -71,7 +77,8 @@ public final class NetworkKitQueueBuilder<SessionType: NetworkSession> {
             baseURL: baseURL,
             session: session,
             reAuthService: reAuthService,
-            serialOperationQueue: serialOperationQueue
+            serialOperationQueue: serialOperationQueue,
+            networkReachability: networkReachability
         )
     }
 

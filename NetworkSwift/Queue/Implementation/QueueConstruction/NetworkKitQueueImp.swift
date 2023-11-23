@@ -16,7 +16,7 @@ import Foundation
 /// ```
 public final class NetworkKitQueueImp<SessionType: NetworkSession>: NetworkKitQueue {
     /// The underlying network kit responsible for handling network requests.
-  private let networkKit: NetworkKitImp<SessionType>
+    private let networkKit: NetworkKitImp<SessionType>
 
     /// The operation queue manager used to serialize network operations.
     private let serialOperationQueue: OperationQueueManager
@@ -33,15 +33,19 @@ public final class NetworkKitQueueImp<SessionType: NetworkSession>: NetworkKitQu
     ///   - session: The network session to use for requests.
     ///   - reAuthService: The service responsible for re-authentication.
     ///   - serialOperationQueue: The operation queue manager for serializing network operations.
+    ///   - networkReachability: The network reachability object. Default is `NetworkReachabilityImp.shared`.
     public init(
         baseURL: URL,
         session: SessionType = URLSession.shared,
         reAuthService: ReAuthenticationService? = nil,
-        serialOperationQueue: OperationQueueManager
+        serialOperationQueue: OperationQueueManager,
+        networkReachability: NetworkReachability = NetworkReachabilityImp.shared
     ) {
         self.reAuthService = reAuthService
         self.serialOperationQueue = serialOperationQueue
-        networkKit = NetworkKitImp(baseURL: baseURL, session: session)
+        networkKit = NetworkKitImp(baseURL: baseURL,
+                                   session: session,
+                                   networkReachability: networkReachability)
     }
 
     // MARK: Public Methods
