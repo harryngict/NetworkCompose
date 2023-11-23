@@ -11,6 +11,9 @@ import Foundation
 public protocol NetworkDispatchQueue {
     /// Asynchronously executes the specified work on the queue.
     func async(work: @escaping () -> Void)
+
+    /// Asynchronously executes the specified work after the specified time on the queue.
+    func asyncAfter(deadline: DispatchTime, work: @escaping () -> Void)
 }
 
 /// An extension on DispatchQueue to conform to the NetworkDispatchQueue protocol.
@@ -18,6 +21,11 @@ extension DispatchQueue: NetworkDispatchQueue {
     /// Asynchronously executes the specified work on the queue.
     public func async(work: @escaping () -> Void) {
         async(execute: work)
+    }
+
+    /// Asynchronously executes the specified work after the specified time on the queue.
+    public func asyncAfter(deadline: DispatchTime, work: @escaping () -> Void) {
+        asyncAfter(deadline: deadline, execute: work)
     }
 }
 

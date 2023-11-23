@@ -86,6 +86,9 @@ public final class NetworkKitImp<SessionType: NetworkSession>: NetworkKit {
                 currentRetry += 1
                 let shouldRetry = retryPolicy.shouldRetry(currentRetry: currentRetry)
                 if shouldRetry {
+                    if let delay = retryPolicy.retryDelay(currentRetry: currentRetry) {
+                        try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000)) // Convert seconds to nanoseconds
+                    }
                     return try await performRequest()
                 } else {
                     throw error
@@ -132,7 +135,8 @@ public final class NetworkKitImp<SessionType: NetworkSession>: NetworkKit {
                             currentRetry += 1
                             let shouldRetry = retryPolicy.shouldRetry(currentRetry: currentRetry)
                             if shouldRetry {
-                                self.executeQueue.async {
+                                let delay = retryPolicy.retryDelay(currentRetry: currentRetry) ?? 0
+                                self.executeQueue.asyncAfter(deadline: .now() + delay) {
                                     performRequest()
                                 }
                             } else {
@@ -192,7 +196,8 @@ public final class NetworkKitImp<SessionType: NetworkSession>: NetworkKit {
                             currentRetry += 1
                             let shouldRetry = retryPolicy.shouldRetry(currentRetry: currentRetry)
                             if shouldRetry {
-                                self.executeQueue.async {
+                                let delay = retryPolicy.retryDelay(currentRetry: currentRetry) ?? 0
+                                self.executeQueue.asyncAfter(deadline: .now() + delay) {
                                     performRequest()
                                 }
                             } else {
@@ -250,7 +255,8 @@ public final class NetworkKitImp<SessionType: NetworkSession>: NetworkKit {
                         currentRetry += 1
                         let shouldRetry = retryPolicy.shouldRetry(currentRetry: currentRetry)
                         if shouldRetry {
-                            self.executeQueue.async {
+                            let delay = retryPolicy.retryDelay(currentRetry: currentRetry) ?? 0
+                            self.executeQueue.asyncAfter(deadline: .now() + delay) {
                                 performRequest()
                             }
                         } else {

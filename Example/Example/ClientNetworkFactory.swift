@@ -65,7 +65,7 @@ final class ClientNetworkFactory {
         try? NetworkKitBuilder(baseURL: baseURL)
             .setMetricInterceptor(LocalNetworkMetricInterceptor())
             .build()
-            .request(request, retryPolicy: .retry(count: 5)) { (result: Result<[User], NetworkError>) in
+            .request(request, retryPolicy: .retry(count: 2, delay: 10)) { (result: Result<[User], NetworkError>) in
                 switch result {
                 case let .failure(error): completion(error.localizedDescription)
                 case let .success(users): completion("\(users)")
