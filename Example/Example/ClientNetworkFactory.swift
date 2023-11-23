@@ -45,7 +45,7 @@ final class ClientNetworkFactory {
                 do {
                     let request = NetworkRequestBuilder<[User]>(path: "/posts", method: .GET)
                         .build()
-                    let service = NetworkKitFacade(baseURL: baseURL)
+                    let service = NetworkKitBuilder(baseURL: baseURL).build()
                     let result: [User] = try await service.request(request)
                     completion("\(result)")
                 } catch {
@@ -60,7 +60,7 @@ final class ClientNetworkFactory {
             .setQueryParameters(["postId": "1"])
             .build()
 
-        let service = NetworkKitFacade(baseURL: baseURL)
+        let service = NetworkKitBuilder(baseURL: baseURL)
 
         service.request(request, retryPolicy: .retry(count: 5)) { (result: Result<[User], NetworkError>) in
             switch result {
@@ -93,7 +93,7 @@ final class ClientNetworkFactory {
                                  "body": "bar",
                                  "userId": 1])
             .build()
-        let service = NetworkKitFacade(baseURL: baseURL)
+        let service = NetworkKitBuilder(baseURL: baseURL).build()
         service.downloadFile(request) { (result: Result<URL, NetworkError>) in
             switch result {
             case let .failure(error): completion(error.localizedDescription)
@@ -107,7 +107,7 @@ final class ClientNetworkFactory {
             .build()
         let fileURL = URL(fileURLWithPath: "/Users/harrynguyen/Documents/Resources/NetworkSwift/LICENSE")
 
-        let service = NetworkKitFacade(baseURL: baseURL)
+        let service = NetworkKitBuilder(baseURL: baseURL).build()
         service.uploadFile(request, fromFile: fileURL) { (result: Result<User, NetworkError>) in
             switch result {
             case let .failure(error): completion(error.localizedDescription)
@@ -128,14 +128,15 @@ final class ClientNetworkFactory {
                                      "userId": 1])
                 .build()
 
-            let service = try NetworkKitFacade<URLSession>(baseURL: baseURL, securityTrust: securityTrust)
-
-            service.request(request) { (result: Result<User, NetworkError>) in
-                switch result {
-                case let .failure(error): completion(error.localizedDescription)
-                case let .success(users): completion("\(users)")
+            try NetworkKitBuilder(baseURL: baseURL)
+                .setSecurityTrust(securityTrust)
+                .setMetricsCollector(NetworkMetricsCollectorImp())
+                .request(request) { (result: Result<User, NetworkError>) in
+                    switch result {
+                    case let .failure(error): completion(error.localizedDescription)
+                    case let .success(users): completion("\(users)")
+                    }
                 }
-            }
         } catch {
             completion(error.localizedDescription)
         }
@@ -151,16 +152,16 @@ final class ClientNetworkFactory {
                 .setQueryParameters(["title": "foo"])
                 .build()
 
-            let service = try NetworkKitQueueFacade<URLSession>(baseURL: baseURL,
-                                                                securityTrust: securityTrust,
-                                                                reAuthService: ClientReAuthenticationService())
-
-            service.request(request, retryPolicy: .retry(count: 5)) { (result: Result<User, NetworkError>) in
-                switch result {
-                case let .failure(error): completion(error.localizedDescription)
-                case let .success(users): completion("\(users)")
+            try NetworkKitQueueBuilder(baseURL: baseURL)
+                .setSecurityTrust(securityTrust)
+                .setMetricsCollector(NetworkMetricsCollectorImp())
+                .setReAuthService(ClientReAuthenticationService())
+                .request(request) { (result: Result<User, NetworkError>) in
+                    switch result {
+                    case let .failure(error): completion(error.localizedDescription)
+                    case let .success(users): completion("\(users)")
+                    }
                 }
-            }
         } catch {
             completion(error.localizedDescription)
         }
@@ -171,7 +172,7 @@ final class ClientNetworkFactory {
             NetworkResponseMock(statusCode: 200, response: User(id: 1))
         )
         let session = NetworkSessionMock<User>(expected: successResult)
-        let service = NetworkKitFacade<NetworkSessionMock>(baseURL: baseURL, session: session)
+        let service = NetworkKitBuilder<NetworkSessionMock>(baseURL: baseURL, session: session).build()
         let request = NetworkRequestBuilder<User>(path: "/posts", method: .GET)
             .build()
 

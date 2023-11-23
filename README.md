@@ -16,14 +16,12 @@ IV. [How to create NetworkRequest](#iv-how-to-create-networkrequest)
    - 4.2. [Using NetworkRequestImp Directly](#2-using-networkrequestimp-directly)
 
 V. [How to create NetworkKitImp](#v-how-to-create-networkkitimp)
-   - 5.1. [Using NetworkKitFacade](#1-using-networkkitfacade)
-   - 5.2. [Using NetworkKitBuilder](#2-using-networkkitbuilder)
+   - 5.1. [Using NetworkKitBuilder](#2-using-networkkitbuilder)
    - 5.3. [Using NetworkKitImp Directly](#3-using-networkkitimp-directly)
 
 VI. [How to create NetworkKitQueueImp for automatic re-authentication](#vi-how-to-create-networkkitqueueimp-for-automatic-re-authentication)
-   - 6.1. [Using NetworkKitQueueFacade](#1-using-networkkitqueuefacade)
-   - 6.2. [Using NetworkKitQueueBuilder](#2-using-networkkitqueuebuilder)
-   - 6.3. [Using NetworkKitQueueImp Directly](#3-using-networkkitqueueimp-directly)
+   - 6.1. [Using NetworkKitQueueBuilder](#2-using-networkkitqueuebuilder)
+   - 6.2. [Using NetworkKitQueueImp Directly](#3-using-networkkitqueueimp-directly)
 
 VII. [How to create NetworkSecurityTrustImp for SSL Pinning](#vii-how-to-create-networksecuritytrustimp-for-ssl-pinning)
 
@@ -39,11 +37,8 @@ X. [How NetworkKit and NetworkKitQueue send a request](#x-how-networkkit-and-net
    - 10.1. [Request async await for iOS-15 above](#1-request-async-await-for-ios-15-above)
    - 10.2. [Request completion closure](#2-request-completion-closure)
    - 10.3. [Request and auto re-authentication](#3-request-and-auto-re-authentication)
-   - 10.4. [Download File](#4-download-file)
-   - 10.5. [Upload File](#5-upload-file)
-   - 10.6. [Request with SSL Pinning](#6-request-with-ssl-pinning)
-   - 10.7. [Request and auto re-authentication with SSL Pinning](#7-request-and-auto-re-authentication-with-ssl-pinning)
-   - 10.8. [Mocking support for unit tests](#8-mocking-support-for-unit-tests)
+   - 10.4. [Request with SSL Pinning](#6-request-with-ssl-pinning)
+   - 10.5. [Mocking support for unit tests](#8-mocking-support-for-unit-tests)
 
 XI. [Support](#xi-support)
 
@@ -145,28 +140,10 @@ let request: NetworkRequestImp<YourResponseType> = NetworkRequestImp(
 
 ## V. How to create NetworkKitImp
 
-To execute network requests in your application, you can use the provided `NetworkKitImp` along with either the `NetworkKitFacade`, `NetworkKitBuilder`, or by creating an instance directly.
+To execute network requests in your application, you can use the provided `NetworkKitImp` along with either `NetworkKitBuilder`, or by creating an instance directly.
 
-### 5.1. Using NetworkKitFacade
 
-`NetworkKitFacade` provides a simplified interface to interact with the underlying `NetworkKitImp`. Here's an example of how to create and use `NetworkKitFacade`:
-
-```swift
-let baseURL = URL(string: "https://api.example.com")!
-let networkKitFacade = NetworkKitFacade(baseURL: baseURL)
-
-// Now you can use networkKitFacade to make requests
-networkKitFacade.request(yourRequest) { result in
-    switch result {
-    case let .success(response):
-        // Handle successful response
-    case let .failure(error):
-        // Handle error
-    }
-}
-```
-
-### 5.2. Using NetworkKitBuilder
+### 5.1. Using NetworkKitBuilder
 `NetworkKitBuilder` allows you to configure and build a `NetworkKitImp` instance with specific settings. Here's an example:
 
 ```swift
@@ -186,7 +163,7 @@ networkKit?.request(yourRequest) { result in
 }
 ```
 
-### 5.3. Using NetworkKitImp Directly
+### 5.2. Using NetworkKitImp Directly
 If you prefer a more direct approach, you can create a `NetworkKitImp` instance directly and use it to make requests:
 ```swift
 let baseURL = URL(string: "https://api.example.com")!
@@ -205,27 +182,9 @@ networkKit.request(yourRequest) { result in
 
 ## VI. How to create NetworkKitQueueImp for automatic re-authentication 
 
-To execute network requests with automatic re-authentication, you can use the provided `NetworkKitQueueImp` along with either the `NetworkKitQueueFacade`, `NetworkKitQueueBuilder`, or by creating an instance directly.
+To execute network requests with automatic re-authentication, you can use the provided `NetworkKitQueueImp` along with either `NetworkKitQueueBuilder`, or by creating an instance directly.
 
-### 6.1. Using NetworkKitQueueFacade
-
-`NetworkKitQueueFacade` provides a high-level interface to interact with the underlying `NetworkKitQueueImp`. Here's an example of how to create and use `NetworkKitQueueFacade`:
-
-```swift
-let baseURL = URL(string: "https://api.example.com")!
-let networkKitQueueFacade = NetworkKitQueueFacade(baseURL: baseURL, reAuthService: yourReAuthService)
-
-// Now you can use networkKitQueueFacade to make requests with automatic re-authentication
-networkKitQueueFacade.request(yourRequest) { result in
-    switch result {
-    case let .success(response):
-        // Handle successful response
-    case let .failure(error):
-        // Handle error, including potential re-authentication failures
-    }
-}
-```
-### 6.2. Using NetworkKitQueueBuilder
+### 6.1. Using NetworkKitQueueBuilder
 
 `NetworkKitQueueBuilder` allows you to configure and build a `NetworkKitQueueImp` instance with specific settings. Here's an example:
 
@@ -246,7 +205,7 @@ networkKitQueue?.request(yourRequest) { result in
 }
 ```
 
-### 6.3. Using NetworkKitQueueImp Directly
+### 6.2. Using NetworkKitQueueImp Directly
 If you prefer a more direct approach, you can create a `NetworkKitQueueImp` instance directly and use it to make requests:
 
 ``` swift
@@ -365,7 +324,7 @@ enum Constant {
 ```swift
 let request = NetworkRequestBuilder<[User]>(path: "/posts", method: .GET)
     .build()
-let service = NetworkKitFacade(baseURL: baseURL)
+let service = NetworkKitBuilder(baseURL: baseURL).build()
 let result: [User] = try await service.request(request)
 completion("\(result)")
 ```
@@ -376,7 +335,7 @@ completion("\(result)")
 let request = NetworkRequestBuilder<[User]>(path: "/comments", method: .GET)
     .setQueryParameters(["postId": "1"])
     .build()
-let service = NetworkKitFacade(baseURL: baseURL)
+let service = NetworkKitBuilder(baseURL: baseURL).build()
 service.request(request) { (result: Result<[User], NetworkError>) in
     self.handleResult(result)
 }
@@ -397,32 +356,8 @@ service.request(request) { (result: Result<User, NetworkError>) in
     self.handleResult(result)
 }
 ```
-### 10.4. Download File
-```swift
-let request = NetworkRequestBuilder<User>(path: "/posts/1", method: .PUT)
-    .setQueryParameters(["title": "foo",
-                          "body": "bar",
-                          "userId": 1])
-    .build()
-let service = NetworkKitFacade(baseURL: baseURL)
-service.downloadFile(request) { (result: Result<URL, NetworkError>) in
-    self.handleResult(result)
-}
-```
 
-### 10.5. Upload File
-```swift
-let fileURL = URL(fileURLWithPath: "/Users/harrynguyen/Documents/Resources/NetworkSwift/LICENSE")
-
-let request = NetworkRequestBuilder<User>(path: "/posts", method: .POST)
-    .build()
-let service = NetworkKitFacade(baseURL: baseURL)
-service.uploadFile(request, fromFile: fileURL) { (result: Result<User, NetworkError>) in
-    self.handleResult(result)
-}
-```
-
-### 10.6. Request with SSL Pinning
+### 10.4. Request with SSL Pinning
 ```swift
 let request = NetworkRequestBuilder<User>(path: "/posts/1", method: .PUT)
     .setQueryParameters(["title": "foo",
@@ -434,41 +369,21 @@ let sslPinningHosts = [NetworkSSLPinningHostImp(host: "jsonplaceholder.typicode.
                                                 pinningHash: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])]
 let securityTrust = NetworkSecurityTrustImp(sslPinningHosts: sslPinningHosts)
 
-let service = try NetworkKitFacade<URLSession>(baseURL: baseURL, securityTrust: securityTrust)
-service.request(request) { (result: Result<User, NetworkError>) in
-    self.handleResult(result)
-}
+try NetworkKitBuilder(baseURL: baseURL)
+    .setSecurityTrust(securityTrust)
+    .request(request) { (result: Result<User, NetworkError>) in
+        self.handleResult(result)
+    }
 ```
 
-### 10.7. Request and auto re-authentication with SSL Pinning
-```swift
-let request = NetworkRequestBuilder<User>(path: "/posts/1", method: .PATCH)
-    .setQueryParameters(["title": "foo"])
-    .build()
-                                      
-let reAuthService = ClientReAuthenticationService()
-
-let sslPinningHosts = [NetworkSSLPinningHostImp(host: "jsonplaceholder.typicode.com",
-                                                pinningHash: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])]
-let securityTrust = NetworkSecurityTrustImp(sslPinningHosts: sslPinningHosts)
-
-let service = try NetworkKitQueueImp<URLSession>(baseURL: baseURL,
-                                                 reAuthService: reAuthService,
-                                                 securityTrust: securityTrust)
-service.request(request) { (result: Result<User, NetworkError>) in
-    self.handleResult(result)
-}
-```
-
-### 10.8. Mocking support for unit tests
+### 10.5. Mocking support for unit tests
 ```swift
 let successResult = NetworkKitResultMock.requestSuccess(
       NetworkResponseMock(statusCode: 200, response: User(id: 1))
 )
 let session = NetworkSessionMock<[User]>(expected: successResult)
-let request = NetworkRequestBuilder<User>(path: "/posts", method: .GET)
-    .build()
-let service = NetworkKitFacade<NetworkSessionMock>(baseURL: baseURL, session: session)
+let request = NetworkRequestBuilder<User>(path: "/posts", method: .GET).build()
+let service = NetworkKitBuilder<NetworkSessionMock>(baseURL: baseURL, session: session).build()
 service.request(request) { (result: Result<[User], NetworkError>) in
     self.handleResult(result)
 }

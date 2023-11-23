@@ -7,6 +7,8 @@
 
 import Foundation
 
+import Foundation
+
 /// A builder for constructing instances of `NetworkKitImp`.
 ///
 /// This builder provides a convenient way to create and configure a `NetworkKitImp` instance for making network requests.
@@ -27,6 +29,9 @@ public class NetworkKitBuilder<SessionType: NetworkSession> {
 
     /// The security trust object for SSL pinning.
     private var securityTrust: NetworkSecurityTrust?
+
+    /// The metrics collector object for collecting network metrics.
+    private var metricsCollector: NetworkMetricsCollector?
 
     /// The network reachability object for monitoring internet connection status.
     private var networkReachability: NetworkReachability
@@ -65,19 +70,20 @@ public class NetworkKitBuilder<SessionType: NetworkSession> {
     ///
     /// - Throws: A `NetworkError` if the session cannot be created.
     public func setSecurityTrust(_ securityTrust: NetworkSecurityTrust) throws -> Self {
-        do {
-            let delegate = NetworkSessionTaskDelegate(securityTrust: securityTrust)
-            guard let session = URLSession(
-                configuration: NetworkSessionConfiguration.default,
-                delegate: delegate,
-                delegateQueue: nil /// `OperationQueue.main` Will throw message `This method should not be called on the main thread as it may lead to UI unresponsiveness.`
-            ) as? SessionType else {
-                throw NetworkError.invalidSession
-            }
-            self.session = session
-        } catch {
-            throw NetworkError.invalidSession
-        }
+        self.securityTrust = securityTrust
+        session = try createNetworkSession()
+        return self
+    }
+
+    /// Sets the metrics collector for network metrics.
+    ///
+    /// - Parameter metricsCollector: The metrics collector object for collecting network metrics.
+    /// - Returns: The builder instance for method chaining.
+    ///
+    /// - Throws: A `NetworkError` if the session cannot be created.
+    public func setMetricsCollector(_ metricsCollector: NetworkMetricsCollector) throws -> Self {
+        self.metricsCollector = metricsCollector
+        session = try createNetworkSession()
         return self
     }
 
@@ -120,5 +126,57 @@ public class NetworkKitBuilder<SessionType: NetworkSession> {
             executeQueue: executeQueue,
             observeQueue: observeQueue
         )
+    }
+
+    /// Performs a network request with a completion handler.
+    ///
+    /// - Parameters:
+    ///   - request: The network request to be executed.
+    ///   - headers: Additional headers to include in the request.
+    ///   - retryPolicy: The retry policy for the network request.
+    ///   - completion: The completion handler to be called when the request is complete.
+    public func request<RequestType: NetworkRequest>(
+        _ request: RequestType,
+        andHeaders headers: [String: String] = [:],
+        retryPolicy: NetworkRetryPolicy = .none,
+        completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
+    ) {
+        build().request(request, andHeaders: headers,
+                        retryPolicy: retryPolicy,
+                        completion: completion)
+    }
+}
+
+private extension NetworkKitBuilder {
+    /// Creates and returns a network session with the configured parameters.
+    ///
+    /// This method initializes a network session with the provided metrics collector and security trust,
+    /// and returns an instance conforming to the specified `SessionType`.
+    ///
+    /// - Throws: A `NetworkError.invalidSession` if the session cannot be created.
+    ///
+    /// - Returns: A fully configured network session conforming to the specified `SessionType`.
+    ///
+    /// - Parameter metricsCollector: An optional `NetworkMetricsCollector` for collecting network metrics.
+    /// - Parameter securityTrust: An optional `NetworkSecurityTrust` for SSL pinning.
+    ///
+    /// - Important: If a `securityTrust` is provided, SSL pinning will be enabled.
+    ///
+    /// - Note: This method is used internally by the `NetworkKitBuilder` to create the network session.
+    func createNetworkSession() throws -> SessionType {
+        do {
+            let delegate = NetworkSessionProxyDelegate(metricsCollector: metricsCollector, securityTrust: securityTrust)
+
+            guard let session = URLSession(configuration: NetworkSessionConfiguration.default,
+                                           delegate: delegate,
+                                           delegateQueue: nil) as? SessionType
+            else {
+                throw NetworkError.invalidSession
+            }
+
+            return session
+        } catch {
+            throw NetworkError.invalidSession
+        }
     }
 }

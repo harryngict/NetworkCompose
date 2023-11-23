@@ -10,6 +10,4 @@ import Foundation
 /// A protocol representing a network task.
 public protocol NetworkTask: AnyObject {}
 
-extension URLSessionDataTask: NetworkTask {}
-
-extension URLSessionDownloadTask: NetworkTask {}
+extension URLSessionTask: NetworkTask {}
