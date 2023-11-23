@@ -6,9 +6,13 @@
 //
 
 import Foundation
+import Network
 
 public class NetworkKitMock: NetworkKit {
     public init() {}
+    public init(networkReachability: NetworkReachability) {
+        _networkReachability = networkReachability
+    }
 
     public private(set) var requestCallCount = 0
     public var requestHandler: ((Any, [String: String], NetworkRetryPolicy) async throws -> (Any))?
@@ -46,5 +50,12 @@ public class NetworkKitMock: NetworkKit {
         if let downloadFileHandler = downloadFileHandler {
             downloadFileHandler(request, headers, retryPolicy, completion)
         }
+    }
+
+    public private(set) var networkReachabilitySetCallCount = 0
+    private var _networkReachability: NetworkReachability! { didSet { networkReachabilitySetCallCount += 1 } }
+    public var networkReachability: NetworkReachability {
+        get { return _networkReachability }
+        set { _networkReachability = newValue }
     }
 }

@@ -23,17 +23,97 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "8B301540-644E-450C-A1E1-BF5835F7CA9A"
+            uuid = "B0AB6204-4E24-4949-B010-FD1F2AB656E9"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../NetworkSwift/Core/Implementation/NetworkKitConstruction/NetworkKitBuilder.swift"
+            filePath = "../NetworkSwift/Core/Implementation/NetworkKitConstruction/NetworkKitImp.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "9"
-            endingLineNumber = "9"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "request(_:andHeaders:retryPolicy:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A9AA1D83-1A76-4E62-9030-B413502EFF98"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../NetworkSwift/Core/Implementation/NetworkKitConstruction/NetworkKitImp.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "init(baseURL:session:networkReachability:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "A9AA1D83-1A76-4E62-9030-B413502EFF98 - 66b69a7ba136ed72"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NetworkSwift.NetworkKitImp.init(baseURL: Foundation.URL, session: &#x3c4;_0_0, networkReachability: NetworkSwift.NetworkReachability) -&gt; NetworkSwift.NetworkKitImp&lt;&#x3c4;_0_0&gt;"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkSwift/NetworkSwift/Core/Implementation/NetworkKitConstruction/NetworkKitImp.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "324">
+               </Location>
+               <Location
+                  uuid = "A9AA1D83-1A76-4E62-9030-B413502EFF98 - 96004cfaba8370ba"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Bool) -&gt; () in NetworkSwift.NetworkKitImp.init(baseURL: Foundation.URL, session: A, networkReachability: NetworkSwift.NetworkReachability) -&gt; NetworkSwift.NetworkKitImp&lt;A&gt;"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkSwift/NetworkSwift/Core/Implementation/NetworkKitConstruction/NetworkKitImp.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "20">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0C181AAC-3746-4FD1-A3C2-1C6A1EFEA2B8"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../NetworkSwift/Core/Utility/NetworkReachabilityImp.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "startMonitoring(completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E489A6CF-1B3D-4FC6-9914-739CD257C5BE"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../NetworkSwift/Core/Implementation/NetworkKitConstruction/NetworkKitImp.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
+            landmarkName = "request(_:andHeaders:retryPolicy:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

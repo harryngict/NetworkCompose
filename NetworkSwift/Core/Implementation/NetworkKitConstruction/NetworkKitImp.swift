@@ -15,17 +15,33 @@ import Foundation
 /// let networkKit = NetworkKitImp(baseURL: baseURL)
 /// ```
 public final class NetworkKitImp<SessionType: NetworkSession>: NetworkKit {
+    /// The network session used for making requests.
     private let session: SessionType
+
+    /// The base URL for network requests.
     private let baseURL: URL
+
+    /// The network reachability object for monitoring internet connection status.
+    public let networkReachability: NetworkReachability
 
     /// Initializes the `NetworkKitImp` with the specified configuration.
     ///
     /// - Parameters:
     ///   - baseURL: The base URL for network requests.
-    ///   - session: The network session to use for requests.
-    public init(baseURL: URL, session: SessionType = URLSession.shared) {
+    ///   - session: The network session to use for requests. Default is `URLSession.shared`.
+    ///   - networkReachability: The network reachability object. Default is `NetworkReachabilityImp.shared`.
+    public init(baseURL: URL,
+                session: SessionType = URLSession.shared,
+                networkReachability: NetworkReachability = NetworkReachabilityImp.shared)
+    {
         self.baseURL = baseURL
         self.session = session
+        self.networkReachability = networkReachability
+        self.networkReachability.startMonitoring(completion: { _ in })
+    }
+
+    deinit {
+        self.networkReachability.stopMonitoring()
     }
 
     /// Asynchronously sends a network request and returns the result.
@@ -42,6 +58,11 @@ public final class NetworkKitImp<SessionType: NetworkSession>: NetworkKit {
         andHeaders headers: [String: String] = [:],
         retryPolicy: NetworkRetryPolicy = .none
     ) async throws -> RequestType.SuccessType where RequestType: NetworkRequest {
+        debugPrint(request.debugDescription)
+  
+        guard networkReachability.isInternetAvailable else {
+            throw NetworkError.lostInternetConnection
+        }
         var currentRetry = 0
 
         /// Asynchronously performs the network request.
@@ -77,6 +98,12 @@ public final class NetworkKitImp<SessionType: NetworkSession>: NetworkKit {
         retryPolicy: NetworkRetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: NetworkRequest {
+        debugPrint(request.debugDescription)
+
+        guard networkReachability.isInternetAvailable else {
+            completion(.failure(NetworkError.lostInternetConnection))
+            return
+        }
         var currentRetry = 0
 
         /// Performs the network request with a completion handler.
@@ -122,6 +149,12 @@ public final class NetworkKitImp<SessionType: NetworkSession>: NetworkKit {
         retryPolicy: NetworkRetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: NetworkRequest {
+        debugPrint(request.debugDescription)
+
+        guard networkReachability.isInternetAvailable else {
+            completion(.failure(NetworkError.lostInternetConnection))
+            return
+        }
         var currentRetry = 0
 
         /// Performs the network request to upload a file.
@@ -165,6 +198,12 @@ public final class NetworkKitImp<SessionType: NetworkSession>: NetworkKit {
         retryPolicy: NetworkRetryPolicy = .none,
         completion: @escaping (Result<URL, NetworkError>) -> Void
     ) {
+        debugPrint(request.debugDescription)
+
+        guard networkReachability.isInternetAvailable else {
+            completion(.failure(NetworkError.lostInternetConnection))
+            return
+        }
         var currentRetry = 0
 
         /// Performs the network request to download a file.

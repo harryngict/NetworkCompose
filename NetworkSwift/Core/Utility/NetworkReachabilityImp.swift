@@ -16,15 +16,12 @@ public final class NetworkReachabilityImp: NetworkReachability {
     /// The network path monitor.
     private let monitor = NWPathMonitor()
 
-    /// The current network status.
-    private var status: NWPath.Status = .requiresConnection
-
     /// A boolean indicating whether there is an active internet connection.
     public var isInternetAvailable: Bool
 
     /// Initializes the `NetworkReachabilityImp` and sets the initial internet availability.
     private init() {
-        isInternetAvailable = status == .satisfied
+        isInternetAvailable = true
     }
 
     /// Starts monitoring the network path and calls the provided completion handler
@@ -34,8 +31,7 @@ public final class NetworkReachabilityImp: NetworkReachability {
     public func startMonitoring(completion: @escaping ((Bool) -> Void)) {
         monitor.pathUpdateHandler = { [weak self] path in
             guard let this = self else { return }
-            this.status = path.status
-            this.isInternetAvailable = this.status == .satisfied
+            this.isInternetAvailable = path.status == .satisfied
             completion(this.isInternetAvailable)
         }
         let queue = DispatchQueue(label: "com.NetworkSwift.NetworkReachabilityImp")

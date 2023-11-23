@@ -17,6 +17,8 @@ public protocol NetworkKit: AnyObject {
     ///   - retryPolicy: The retry policy for the network request.
     /// - Returns: A task representing the asynchronous operation.
     /// - Throws: An error if the network request fails.
+    ///
+    /// - Note: This method is available starting from iOS 15.0.
     @available(iOS 15.0, *)
     func request<RequestType: NetworkRequest>(
         _ request: RequestType,
@@ -31,6 +33,8 @@ public protocol NetworkKit: AnyObject {
     ///   - headers: Additional headers to be included in the request.
     ///   - retryPolicy: The retry policy for the network request.
     ///   - completion: The completion handler to be called with the result.
+    ///
+    /// - Note: Use this method for non-async network requests or when compatibility with earlier iOS versions is required.
     func request<RequestType: NetworkRequest>(
         _ request: RequestType,
         andHeaders headers: [String: String],
@@ -67,4 +71,9 @@ public protocol NetworkKit: AnyObject {
         retryPolicy: NetworkRetryPolicy,
         completion: @escaping (Result<URL, NetworkError>) -> Void
     )
+
+    /// The network reachability status.
+    ///
+    /// Use this property to determine the current network reachability status.
+    var networkReachability: NetworkReachability { get }
 }
