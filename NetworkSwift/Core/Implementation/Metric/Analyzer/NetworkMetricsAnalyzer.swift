@@ -14,9 +14,6 @@ final class NetworkMetricsAnalyzer {
     /// Dictionary to store task contexts with their corresponding keys.
     private var tasks: [TaskKey: TaskContext] = [:]
 
-    /// Lock to ensure thread safety when accessing shared resources.
-    private let lock = NSLock()
-
     /// The interceptor for capturing network metrics.
     private let metricInterceptor: NetworkMetricInterceptor
 
@@ -31,14 +28,10 @@ final class NetworkMetricsAnalyzer {
     ///
     /// - Parameter task: The network task that was created.
     func trackTaskCreated(_ task: URLSessionTask) {
-      lock.lock()
-      let context = context(for: task)
-      lock.unlock()
-
       guard let originalRequest = task.originalRequest else {
           return
       }
-      sendEvent(.taskCreated(TaskCreatedMetric(taskId: context.taskId,
+      sendEvent(.taskCreated(TaskCreatedMetric(taskId: context(for: task).taskId,
                                                taskType: TaskType(task: task),
                                                createdAt: Date(),
                                                originalRequest: RequestMetric(originalRequest),
@@ -51,16 +44,12 @@ final class NetworkMetricsAnalyzer {
     ///   - task: The network task that completed.
     ///   - error: An optional error indicating how the task completed, or `nil` if the task was successful.
     func trackTaskDidCompleteWithError(_ task: URLSessionTask, didCompleteWithError error: Error?) {
-      lock.lock()
-      let context = self.context(for: task)
-      tasks[TaskKey(task: task)] = nil
-
       guard let originalRequest = task.originalRequest else {
-          lock.unlock()
           return
       }
+      let context = self.context(for: task)
+      tasks[TaskKey(task: task)] = nil
       let data = context.data
-      lock.unlock()
       sendEvent(.taskCompleted(TaskCompletedMetric(taskId: context.taskId,
                                                    taskType: TaskType(task: task),
                                                    createdAt: Date(),
@@ -78,11 +67,7 @@ final class NetworkMetricsAnalyzer {
     ///   - task: The network task that updated its progress.
     ///   - progress: A tuple containing the completed and total bytes of the task.
     func trackTaskDidUpdateProgress(_ task: URLSessionTask, didUpdateProgress progress: (completed: Int64, total: Int64)) {
-      lock.lock()
-      let context = self.context(for: task)
-      lock.unlock()
-
-      sendEvent(.taskProgressUpdated(TaskProgressUpdatedMetric(taskId: context.taskId,
+      sendEvent(.taskProgressUpdated(TaskProgressUpdatedMetric(taskId: self.context(for: task).taskId,
                                                                url: task.originalRequest?.url,
                                                                completedUnitCount: progress.completed,
                                                                totalUnitCount: progress.total)))
@@ -98,7 +83,6 @@ final class NetworkMetricsAnalyzer {
                                                                        createdAt: Date(),
                                                                        url: task.originalRequest?.url,
                                                                        taskInterval: metrics.taskInterval,
-                                                                       transactionMetrics: metrics.transactionMetrics,
                                                                        countOfBytesReceived: task.countOfBytesReceived,
                                                                        countOfBytesSent: task.countOfBytesSent)))
     }
