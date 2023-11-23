@@ -1,5 +1,5 @@
 //
-//  NetworkSSLPinningHost.swift
+//  NetworkSSLPinning.swift
 //  NetworkSwift/Core
 //
 //  Created by Hoang Nguyen on 22/11/23.
@@ -9,7 +9,7 @@ import Foundation
 
 /// # Obtaining SSL PinningHash Hash Values
 ///
-/// The `pinningHash` values in the `NetworkSSLPinningHost` class represent SHA-256 hashes of the public key pins used for SSL pinning. SSL pinning is a security feature that ensures your app communicates only with a server possessing a specific SSL/TLS certificate.
+/// The `pinningHash` values in the `NetworkSSLPinning` class represent SHA-256 hashes of the public key pins used for SSL pinning. SSL pinning is a security feature that ensures your app communicates only with a server possessing a specific SSL/TLS certificate.
 ///
 /// ## Steps to Obtain SSL PinningHash Hash Values
 ///
@@ -26,7 +26,7 @@ import Foundation
 /// ```
 
 /// A protocol representing a host with SSL pinning information.
-public protocol NetworkSSLPinningHost {
+public protocol NetworkSSLPinning {
     /// The host name associated with the SSL pinning.
     var host: String { get }
 

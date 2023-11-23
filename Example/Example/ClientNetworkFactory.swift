@@ -65,7 +65,7 @@ final class ClientNetworkFactory {
         try? NetworkKitBuilder(baseURL: baseURL)
             .setMetricInterceptor(LocalNetworkMetricInterceptor())
             .build()
-            .request(request, retryPolicy: .retry(count: 5)) { (result: Result<[User], NetworkError>) in
+            .request(request, retryPolicy: .retry(count: 2, delay: 10)) { (result: Result<[User], NetworkError>) in
                 switch result {
                 case let .failure(error): completion(error.localizedDescription)
                 case let .success(users): completion("\(users)")
@@ -129,9 +129,8 @@ final class ClientNetworkFactory {
 
     private func performRequestWithSSL(completion: @escaping (String) -> Void) {
         do {
-            let sslPinningHosts = [NetworkSSLPinningHostImp(host: "jsonplaceholder.typicode.com",
-                                                            pinningHash: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])]
-            let securityTrust = NetworkSecurityTrustImp(sslPinningHosts: sslPinningHosts)
+            let sslPinningHosts = [NetworkSSLPinningImp(host: "jsonplaceholder.typicode.com",
+                                                        pinningHash: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])]
 
             let request = NetworkRequestBuilder<User>(path: "/posts/1", method: .PUT)
                 .setQueryParameters(["title": "foo",
@@ -140,7 +139,7 @@ final class ClientNetworkFactory {
                 .build()
 
             try NetworkKitBuilder(baseURL: baseURL)
-                .setSecurityTrust(securityTrust)
+                .setSSLPinningPolicy(.trust(sslPinningHosts))
                 .setMetricInterceptor(LocalNetworkMetricInterceptor())
                 .build()
                 .request(request) { (result: Result<User, NetworkError>) in
@@ -156,16 +155,15 @@ final class ClientNetworkFactory {
 
     private func performRequestQueueWithSSL(completion: @escaping (String) -> Void) {
         do {
-            let sslPinningHosts = [NetworkSSLPinningHostImp(host: "jsonplaceholder.typicode.com",
-                                                            pinningHash: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])]
-            let securityTrust = NetworkSecurityTrustImp(sslPinningHosts: sslPinningHosts)
+            let sslPinningHost = NetworkSSLPinningImp(host: "jsonplaceholder.typicode.com",
+                                                      pinningHash: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])
 
             let request = NetworkRequestBuilder<User>(path: "/posts/1", method: .PATCH)
                 .setQueryParameters(["title": "foo"])
                 .build()
 
             try NetworkKitQueueBuilder(baseURL: baseURL)
-                .setSecurityTrust(securityTrust)
+                .setSSLPinningPolicy(.trust([sslPinningHost]))
                 .setMetricInterceptor(LocalNetworkMetricInterceptor())
                 .setReAuthService(ClientReAuthenticationService())
                 .build()

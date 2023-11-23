@@ -16,8 +16,8 @@ public protocol NetworkKitBuilderProtocol: AnyObject {
     /// The network session to use for requests.
     var session: SessionType { get set }
 
-    /// The security trust object for SSL pinning.
-    var securityTrust: NetworkSecurityTrust? { get set }
+    /// The security trust policy for SSL pinning.
+    var sslPinningPolicy: NetworkSSLPinningPolicy { get set }
 
     /// The metrics collector object for collecting network metrics.
     var metricInterceptor: NetworkMetricInterceptor? { get set }
@@ -40,11 +40,11 @@ public protocol NetworkKitBuilderProtocol: AnyObject {
 
     /// Sets the security trust for SSL pinning.
     ///
-    /// - Parameter securityTrust: The security trust object for SSL pinning.
+    /// - Parameter sslPinningPolicy: The security trust object for SSL pinning.
     /// - Returns: The builder instance for method chaining.
     ///
     /// - Throws: A `NetworkError` if the session cannot be created.
-    func setSecurityTrust(_ securityTrust: NetworkSecurityTrust) throws -> Self
+    func setSSLPinningPolicy(_ sslPinningPolicy: NetworkSSLPinningPolicy) throws -> Self
 
     /// Sets the metrics collector for network metrics.
     ///

@@ -13,22 +13,22 @@ final class NetworkSessionProxyDelegate: NSObject, URLSessionTaskDelegate, URLSe
     private var metricsCollector: NetworkMetricsCollector?
 
     /// The SSL pinning processor for handling SSL challenges.
-    private var sslPinningProcessor: SSLPinningProcessor?
+    private var sslPinningProcessor: SSLPinningProcessor
 
     /// Initializes the `NetworkSessionProxyDelegate` with optional metrics collector and security trust.
     ///
     /// - Parameters:
+    ///   - sslPinningPolicy: An optional `NetworkSSLPinningPolicy` for SSL pinning.
     ///   - metricLogger: An optional `NetworkMetricLogger` for collecting network metrics.
-    ///   - securityTrust: An optional `NetworkSecurityTrust` for SSL pinning.
     /// - Returns: A new instance of `NetworkSessionProxyDelegate`.
-    init(metricInterceptor: NetworkMetricInterceptor?,
-         securityTrust: NetworkSecurityTrust?)
+    init(sslPinningPolicy: NetworkSSLPinningPolicy,
+         metricInterceptor: NetworkMetricInterceptor?)
     {
+        let securityTrust = NetworkSecurityTrustImp(sslPinningPolicy: sslPinningPolicy)
+        sslPinningProcessor = SSLPinningProcessorImp(securityTrust: securityTrust)
+
         if let metricInterceptor = metricInterceptor {
             metricsCollector = NetworkMetricsCollectorImp(metricInterceptor: metricInterceptor)
-        }
-        if let securityTrust = securityTrust {
-            sslPinningProcessor = SSLPinningProcessorImp(securityTrust: securityTrust)
         }
     }
 
@@ -38,10 +38,6 @@ final class NetworkSessionProxyDelegate: NSObject, URLSessionTaskDelegate, URLSe
                            didReceive challenge: URLAuthenticationChallenge,
                            completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void)
     {
-        guard let sslPinningProcessor else {
-            completionHandler(.performDefaultHandling, nil)
-            return
-        }
         let decision = sslPinningProcessor.validateAuthentication(challenge.protectionSpace)
         completionHandler(decision.authChallengeDisposition, decision.urlCredential)
     }

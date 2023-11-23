@@ -15,12 +15,12 @@ IV. [How to create NetworkRequest](#iv-how-to-create-networkrequest)
    - 4.1. [Using NetworkRequestBuilder](#1-using-networkrequestbuilder)
    - 4.2. [Using NetworkRequestImp Directly](#2-using-networkrequestimp-directly)
 
-V. [How to create NetworkSecurityTrustImp for SSL Pinning](#v-how-to-create-networksecuritytrustimp-for-ssl-pinning)
+V. [How to create NetworkSSLPinningPolicy for SSL Pinning](#v-how-to-create-networksslpinningpolicy-for-ssl-pinning)
 
-VI. [How to create ReAuthenticationService for automatic Re-authentication](#vi-how-to-create-reauthenticationservice-for-automatic-re-authentication)
-
-VII. [How to use NetworkRetryPolicy to send a request](#vii-how-to-use-networkretrypolicy-to-send-a-request)
-   - 7.1. [Create a NetworkRetryPolicy instance](#1-create-a-networkretrypolicy-instance)
+VI. [How to use NetworkRetryPolicy to send a request](#vii-how-to-use-networkretrypolicy-to-send-a-request)
+   - 6.1. [Create a NetworkRetryPolicy instance](#1-create-a-networkretrypolicy-instance)
+   
+VII. [How to create ReAuthenticationService for automatic Re-authentication](#vi-how-to-create-reauthenticationservice-for-automatic-re-authentication)
 
 VIII. [How NetworkKit and NetworkKitQueue send a request](#viii-how-networkkit-and-networkkitqueue-send-a-request)
    - 8.1. [Request async await for iOS-15 above](#1-request-async-await-for-ios-15-above)
@@ -127,28 +127,42 @@ let request: NetworkRequestImp<YourResponseType> = NetworkRequestImp(
 )
 ```
 
-## V. How to create NetworkSecurityTrustImp for SSL Pinning
+## V. How to create NetworkSSLPinningPolicy for SSL Pinning
 
-To implement SSL pinning in your network requests, you can use the `NetworkSecurityTrustImp` class along with the concrete implementation of `NetworkSSLPinningHost`, `NetworkSSLPinningHostImp`.
+To implement SSL pinning in your network requests, you can use the `NetworkSSLPinningPolicy` enum along with the concrete implementation of `NetworkSSLPinning`, `NetworkSSLPinningImp`.
 
 ### Example Usage:
 
 ```swift
 // Creating an SSL pinning host
-let sslPinningHost = NetworkSSLPinningHostImp(host: "api.example.com", pinningHash: ["hash1", "hash2"])
+let sslPinningHost = NetworkSSLPinningImp(host: "api.example.com", pinningHash: ["hash1", "hash2"])
 
-// Creating a NetworkSecurityTrustImp with the SSL pinning host
-let securityTrust = NetworkSecurityTrustImp(sslPinningHosts: [sslPinningHost])
+// Creating a NetworkSSLPinningPolicy with the SSL pinning host
+let sslPinningPolicy = NetworkSSLPinningPolicy.trust([sslPinningHost])
 ```
-In this example, sslPinningHosts is an array that can contain multiple instances of NetworkSSLPinningHostImp, each representing a host with its associated pinning hashes. You can customize the host names and pinning hashes based on your SSL pinning requirements.
 
-Now, you can use this securityTrust object when setting up SSL pinning in your network requests.
+Now, you can use this sslPinningPolicy object when setting up SSL pinning in your network requests.
 
 Remember to replace "api.example.com", "hash1", and "hash2" with your actual host and pinning hashes.
 
 Choose the SSL pinning hosts and hashes that match the servers you intend to communicate with securely.
 
-## VI. How to create ReAuthenticationService for automatic Re-authentication
+## VI. How to use NetworkRetryPolicy to send a request
+
+### 6.1. Create a NetworkRetryPolicy instance
+You can create an instance of `NetworkRetryPolicy` to control the behavior of request retries. Choose between .none for no retries or .retry(count: Int, delay: TimeInterval) to specify the number of retry attempts.
+
+```swift
+// Example: Create a retry policy allowing 3 retries with each delay 30 seconds
+let retryPolicy = NetworkRetryPolicy.retry(count: 3, delay: 30)
+```
+
+```swift
+// Default delay will be 5.0 seconds
+let retryPolicy = NetworkRetryPolicy.retry(count: 3)
+```
+
+## VII. How to create ReAuthenticationService for automatic Re-authentication
 
 To implement auto re-authentication, you need to create a class or object conforming to the `ReAuthenticationService` protocol. This service will handle the automatic re-authentication process.
 
@@ -175,16 +189,6 @@ class YourAutoReAuthenticationService: ReAuthenticationService {
         completion(result)
     }
 }
-```
-
-## VII. How to use NetworkRetryPolicy to send a request
-
-### 7.1. Create a NetworkRetryPolicy instance
-You can create an instance of `NetworkRetryPolicy` to control the behavior of request retries. Choose between .none for no retries or .retry(count: Int) to specify the number of retry attempts.
-
-```swift
-// Example: Create a retry policy allowing 3 retries
-let retryPolicy = NetworkRetryPolicy.retry(count: 3)
 ```
 
 ## VIII. How NetworkKit and NetworkKitQueue send a request
@@ -247,12 +251,10 @@ let request = NetworkRequestBuilder<User>(path: "/posts/1", method: .PUT)
                           "userId": 1])
     .build()
                                                         
-let sslPinningHosts = [NetworkSSLPinningHostImp(host: "jsonplaceholder.typicode.com",
-                                                pinningHash: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])]
-let securityTrust = NetworkSecurityTrustImp(sslPinningHosts: sslPinningHosts)
-
+let sslPinningHost = NetworkSSLPinningImp(host: "jsonplaceholder.typicode.com",
+                                          pinningHash: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])
 try? NetworkKitBuilder(baseURL: baseURL)
-    .setSecurityTrust(securityTrust)
+    .setSSLPinningPolicy(.trust([sslPinningHost]))
     .setMetricInterceptor(LocalNetworkMetricInterceptor())
     .build()
     .request(request) { (result: Result<User, NetworkError>) in
@@ -279,7 +281,7 @@ Thats it!! `NetworkSwift` is successfully integrated and initialized in the proj
 For more detail please go to [Example project](https://github.com/harryngict/NetworkSwift/blob/master/Example/Example/Client/ClientNetworkFactory.swift).
 
 ## IX. Support
-Feel free to utilize [JSONPlaceholder](https://jsonplaceholder.typicode.com/guide/) for testing API in Networkit examples. If you encounter any issues with NetworkSwift or need assistance with
+Feel free to utilize [JSONPlaceholder](https://jsonplaceholder.typicode.com/guide/) for testing API in `NetworkSwift` examples. If you encounter any issues with `NetworkSwift` or need assistance with
 integration, please reach out to me at harryngict@gmail.com. I'm here to support you.
 
 ## X. Contributing

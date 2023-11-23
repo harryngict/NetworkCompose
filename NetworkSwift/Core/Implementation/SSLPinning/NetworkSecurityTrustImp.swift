@@ -8,22 +8,27 @@
 import Foundation
 
 /// A class responsible for verifying server trust based on SSL pinning information.
-public final class NetworkSecurityTrustImp: NetworkSecurityTrust {
+final class NetworkSecurityTrustImp: NetworkSecurityTrust {
     /// An array of SSL pinning hosts containing host names and associated pinning hashes.
-    public let sslPinningHosts: [NetworkSSLPinningHost]
+    let sslPinningPolicy: NetworkSSLPinningPolicy
 
     /// Initializes a `NetworkSecurityTrustImp` instance with SSL pinning hosts.
     ///
-    /// - Parameter sslPinningHosts: An array of `NetworkSSLPinningHost` objects representing SSL pinning information.
-    public init(sslPinningHosts: [NetworkSSLPinningHost]) {
-        self.sslPinningHosts = sslPinningHosts
+    /// - Parameter sslPinningPolicy: An array of `NetworkSSLPinningPolicy` objects representing SSL pinning information.
+    init(sslPinningPolicy: NetworkSSLPinningPolicy) {
+        self.sslPinningPolicy = sslPinningPolicy
     }
 
     /// Verifies server trust based on the provided protection space.
     ///
     /// - Parameter protectionSpace: The URL protection space associated with the authentication challenge.
     /// - Returns: An `AuthChallengeDecision` indicating how to handle the authentication challenge.
-    public func verifyServerTrust(with protectionSpace: URLProtectionSpace) -> AuthChallengeDecision {
+    func verifyServerTrust(with protectionSpace: URLProtectionSpace) -> AuthChallengeDecision {
+        guard case let .trust(sslPinningHosts) = sslPinningPolicy else {
+            return AuthChallengeDecision(authChallengeDisposition: .performDefaultHandling,
+                                         urlCredential: nil)
+        }
+
         guard let serverTrust: SecTrust = protectionSpace.serverTrust else {
             return AuthChallengeDecision(authChallengeDisposition: .performDefaultHandling,
                                          urlCredential: nil)

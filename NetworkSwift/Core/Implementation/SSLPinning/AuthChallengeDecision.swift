@@ -8,7 +8,7 @@
 import Foundation
 
 /// A struct representing a decision related to URL authentication challenges.
-public struct AuthChallengeDecision {
+struct AuthChallengeDecision {
     /// The disposition of the URL authentication challenge.
     let authChallengeDisposition: URLSession.AuthChallengeDisposition
 
