@@ -15,37 +15,25 @@ IV. [How to create NetworkRequest](#iv-how-to-create-networkrequest)
    - 4.1. [Using NetworkRequestBuilder](#1-using-networkrequestbuilder)
    - 4.2. [Using NetworkRequestImp Directly](#2-using-networkrequestimp-directly)
 
-V. [How to create NetworkKitImp](#v-how-to-create-networkkitimp)
-   - 5.1. [Using NetworkKitBuilder](#2-using-networkkitbuilder)
-   - 5.3. [Using NetworkKitImp Directly](#3-using-networkkitimp-directly)
+V. [How to create NetworkSecurityTrustImp for SSL Pinning](#v-how-to-create-networksecuritytrustimp-for-ssl-pinning)
 
-VI. [How to create NetworkKitQueueImp for automatic re-authentication](#vi-how-to-create-networkkitqueueimp-for-automatic-re-authentication)
-   - 6.1. [Using NetworkKitQueueBuilder](#2-using-networkkitqueuebuilder)
-   - 6.2. [Using NetworkKitQueueImp Directly](#3-using-networkkitqueueimp-directly)
+VI. [How to create ReAuthenticationService for automatic Re-authentication](#vi-how-to-create-reauthenticationservice-for-automatic-re-authentication)
 
-VII. [How to create NetworkSecurityTrustImp for SSL Pinning](#vii-how-to-create-networksecuritytrustimp-for-ssl-pinning)
+VII. [How to use NetworkRetryPolicy to send a request](#vii-how-to-use-networkretrypolicy-to-send-a-request)
+   - 7.1. [Create a NetworkRetryPolicy instance](#1-create-a-networkretrypolicy-instance)
 
-VIII. [How to create ReAuthenticationService for automatic Re-authentication](#viii-how-to-create-reauthenticationservice-for-automatic-re-authentication)
+VIII. [How NetworkKit and NetworkKitQueue send a request](#viii-how-networkkit-and-networkkitqueue-send-a-request)
+   - 8.1. [Request async await for iOS-15 above](#1-request-async-await-for-ios-15-above)
+   - 8.2. [Request completion closure](#2-request-completion-closure)
+   - 8.3. [Request and auto re-authentication](#3-request-and-auto-re-authentication)
+   - 8.4. [Request with SSL Pinning](#6-request-with-ssl-pinning)
+   - 8.5. [Mocking support for unit tests](#8-mocking-support-for-unit-tests)
 
-IX. [How to use NetworkRetryPolicy to send a request](#ix-how-to-use-networkretrypolicy-to-send-a-request)
-   - 9.1. [Create a NetworkRetryPolicy instance](#1-create-a-networkretrypolicy-instance)
-   - 9.2. [Use NetworkRetryPolicy when sending a request](#2-use-networkretrypolicy-when-sending-a-request)
-      - 9.2.1. [Using NetworkKit](#21-using-networkkit)
-      - 9.2.2. [Using NetworkKitQueue](#22-using-networkkitqueue)
+IX. [Support](#ix-support)
 
-X. [How NetworkKit and NetworkKitQueue send a request](#x-how-networkkit-and-networkkitqueue-send-a-request)
-   - 10.1. [Request async await for iOS-15 above](#1-request-async-await-for-ios-15-above)
-   - 10.2. [Request completion closure](#2-request-completion-closure)
-   - 10.3. [Request and auto re-authentication](#3-request-and-auto-re-authentication)
-   - 10.4. [Request with SSL Pinning](#6-request-with-ssl-pinning)
-   - 10.5. [Mocking support for unit tests](#8-mocking-support-for-unit-tests)
+X. [Contributing](#x-contributing)
 
-XI. [Support](#xi-support)
-
-XII. [Contributing](#xii-contributing)
-
-XIII. [License](#xiii-license) 
-
+XI. [License](#xii-license) 
 
 
 ## I. Features
@@ -60,6 +48,7 @@ XIII. [License](#xiii-license)
 
 - **Dynamic Observer and Receive Request by Any Dispatch Queue**: Offers dynamic observer support and the ability to receive requests on any dispatch queue.
 
+- **Support collect Network Metric**: Facilitates the collection of network metrics, allowing for analysis and monitoring of network behavior.
 
 ## II. Testability
 
@@ -94,7 +83,7 @@ CocoaPods is a dependency manager for Swift projects and makes integration easie
     pod 'NetworkSwift/QueueMocks',  'latest version'
     ```
     
-Please check latest version [here](https://github.com/harryngict/NetworkSwift/blob/2ed0f4595405ea849b77a9fc39b2ff9aaaf891e6/NetworkSwift.podspec#L3)
+Please check latest version [here](https://github.com/harryngict/NetworkSwift/blob/develop/NetworkSwift.podspec)
 
 3. Install NetworkSwift by executing the following in the Xcode project directory.
 
@@ -138,92 +127,7 @@ let request: NetworkRequestImp<YourResponseType> = NetworkRequestImp(
 )
 ```
 
-## V. How to create NetworkKitImp
-
-To execute network requests in your application, you can use the provided `NetworkKitImp` along with either `NetworkKitBuilder`, or by creating an instance directly.
-
-
-### 5.1. Using NetworkKitBuilder
-`NetworkKitBuilder` allows you to configure and build a `NetworkKitImp` instance with specific settings. Here's an example:
-
-```swift
-let baseURL = URL(string: "https://api.example.com")!
-let networkKit = try? NetworkKitBuilder(baseURL: baseURL)
-    .setSecurityTrust(yourSecurityTrust)
-    .build()
-
-// Now you can use networkKit to make requests
-networkKit?.sendRequest(yourRequest) { result in
-    switch result {
-    case let .success(response):
-        // Handle successful response
-    case let .failure(error):
-        // Handle error
-    }
-}
-```
-
-### 5.2. Using NetworkKitImp Directly
-If you prefer a more direct approach, you can create a `NetworkKitImp` instance directly and use it to make requests:
-```swift
-let baseURL = URL(string: "https://api.example.com")!
-let networkKit = NetworkKitImp(baseURL: baseURL)
-
-// Now you can use networkKit to make requests
-networkKit.request(yourRequest) { result in
-    switch result {
-    case let .success(response):
-        // Handle successful response
-    case let .failure(error):
-        // Handle error
-    }
-}
-```
-
-## VI. How to create NetworkKitQueueImp for automatic re-authentication 
-
-To execute network requests with automatic re-authentication, you can use the provided `NetworkKitQueueImp` along with either `NetworkKitQueueBuilder`, or by creating an instance directly.
-
-### 6.1. Using NetworkKitQueueBuilder
-
-`NetworkKitQueueBuilder` allows you to configure and build a `NetworkKitQueueImp` instance with specific settings. Here's an example:
-
-```swift
-let baseURL = URL(string: "https://api.example.com")!
-let networkKitQueue = try? NetworkKitQueueBuilder(baseURL: baseURL)
-    .setReAuthService(yourReAuthService)
-    .build()
-
-// Now you can use networkKitQueue to make requests with automatic re-authentication
-networkKitQueue?.sendRequest(yourRequest) { result in
-    switch result {
-    case let .success(response):
-        // Handle successful response
-    case let .failure(error):
-        // Handle error, including potential re-authentication failures
-    }
-}
-```
-
-### 6.2. Using NetworkKitQueueImp Directly
-If you prefer a more direct approach, you can create a `NetworkKitQueueImp` instance directly and use it to make requests:
-
-``` swift
-let baseURL = URL(string: "https://api.example.com")!
-let networkKitQueue = NetworkKitQueueImp(baseURL: baseURL, reAuthService: yourReAuthService, operationQueue: yourOperationQueue)
-
-// Now you can use networkKitQueue to make requests with automatic re-authentication
-networkKitQueue.request(yourRequest) { result in
-    switch result {
-    case let .success(response):
-        // Handle successful response
-    case let .failure(error):
-        // Handle error, including potential re-authentication failures
-    }
-}
-```
-
-## VII. How to create NetworkSecurityTrustImp for SSL Pinning
+## V. How to create NetworkSecurityTrustImp for SSL Pinning
 
 To implement SSL pinning in your network requests, you can use the `NetworkSecurityTrustImp` class along with the concrete implementation of `NetworkSSLPinningHost`, `NetworkSSLPinningHostImp`.
 
@@ -244,7 +148,7 @@ Remember to replace "api.example.com", "hash1", and "hash2" with your actual hos
 
 Choose the SSL pinning hosts and hashes that match the servers you intend to communicate with securely.
 
-## VIII. How to create ReAuthenticationService for automatic Re-authentication
+## VI. How to create ReAuthenticationService for automatic Re-authentication
 
 To implement auto re-authentication, you need to create a class or object conforming to the `ReAuthenticationService` protocol. This service will handle the automatic re-authentication process.
 
@@ -273,46 +177,17 @@ class YourAutoReAuthenticationService: ReAuthenticationService {
 }
 ```
 
-## IX. How to use NetworkRetryPolicy to send a request
+## VII. How to use NetworkRetryPolicy to send a request
 
-### 9.1. Create a NetworkRetryPolicy instance
+### 7.1. Create a NetworkRetryPolicy instance
 You can create an instance of `NetworkRetryPolicy` to control the behavior of request retries. Choose between .none for no retries or .retry(count: Int) to specify the number of retry attempts.
 
 ```swift
 // Example: Create a retry policy allowing 3 retries
 let retryPolicy = NetworkRetryPolicy.retry(count: 3)
 ```
-### 9.2. Use NetworkRetryPolicy when sending a request
 
-#### 9.2.1. Using NetworkKit
-
-```swift
-// Example: Make a request with retry policy using NetworkKit
-networkKit.request(yourRequest, andHeaders: yourHeaders, retryPolicy: retryPolicy) { result in
-    switch result {
-    case let .success(data):
-        // Handle successful response
-    case let .failure(error):
-        // Handle error, which may include errors after retries
-    }
-}
-```
-
-#### 9.2.2. Using NetworkKitQueue
-
-```swift
-// Example: Make a request with retry policy using NetworkKitQueue
-networkKitQueue.request(yourRequest, andHeaders: yourHeaders, retryPolicy: retryPolicy) { result in
-    switch result {
-    case let .success(data):
-        // Handle successful response
-    case let .failure(error):
-        // Handle error, which may include errors after retries
-    }
-}
-```
-
-## X. How NetworkKit and NetworkKitQueue send a request
+## VIII. How NetworkKit and NetworkKitQueue send a request
 
 ```swift
 enum Constant {
@@ -320,28 +195,32 @@ enum Constant {
 }
 ```
 
-### 10.1. Request async await for iOS-15 above
+### 8.1. Request async await for iOS-15 above
 ```swift
 let request = NetworkRequestBuilder<[User]>(path: "/posts", method: .GET)
     .build()
-let service = NetworkKitBuilder(baseURL: baseURL).build()
+let service = try? NetworkKitBuilder(baseURL: baseURL)
+    .setMetricInterceptor(LocalNetworkMetricInterceptor())
+    .build()    
 let result: [User] = try await service.sendRequest(request)
-completion("\(result)")
+self.handleResult(result)
 ```
 
-### 10.2. Request completion closure
+### 8.2. Request completion closure
 
 ```swift
 let request = NetworkRequestBuilder<[User]>(path: "/comments", method: .GET)
     .setQueryParameters(["postId": "1"])
     .build()
-let service = NetworkKitBuilder(baseURL: baseURL).build()
-service.sendRequest(request) { (result: Result<[User], NetworkError>) in
-    self.handleResult(result)
-}
+try? NetworkKitBuilder(baseURL: baseURL)
+    .setMetricInterceptor(LocalNetworkMetricInterceptor())
+    .build()
+    .request(request, retryPolicy: .retry(count: 5)) { (result: Result<[User], NetworkError>) in
+        self.handleResult(result)
+    }
 ```
 
-### 10.3. Request and auto re-authentication
+### 8.3. Request and auto re-authentication
 ```swift
 let request = NetworkRequestBuilder<User>(path: "/posts", method: .POST)
     .setQueryParameters(["title": "foo",
@@ -351,13 +230,16 @@ let request = NetworkRequestBuilder<User>(path: "/posts", method: .POST)
     .build()
 let reAuthService = ClientReAuthenticationService()
 
-let service = NetworkKitQueueImp(baseURL: baseURL, reAuthService: reAuthService)
-service.request(request) { (result: Result<User, NetworkError>) in
-    self.handleResult(result)
-}
+try? NetworkKitQueueBuilder(baseURL: baseURL)
+    .setReAuthService(reAuthService)
+    .setMetricInterceptor(LocalNetworkMetricInterceptor())
+    .build()
+    .request(request, retryPolicy: .retry(count: 5)) { (result: Result<User, NetworkError>) in
+        self.handleResult(result)
+    }
 ```
 
-### 10.4. Request with SSL Pinning
+### 8.4. Request with SSL Pinning
 ```swift
 let request = NetworkRequestBuilder<User>(path: "/posts/1", method: .PUT)
     .setQueryParameters(["title": "foo",
@@ -369,14 +251,16 @@ let sslPinningHosts = [NetworkSSLPinningHostImp(host: "jsonplaceholder.typicode.
                                                 pinningHash: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])]
 let securityTrust = NetworkSecurityTrustImp(sslPinningHosts: sslPinningHosts)
 
-try NetworkKitBuilder(baseURL: baseURL)
+try? NetworkKitBuilder(baseURL: baseURL)
     .setSecurityTrust(securityTrust)
-    .sendRequest(request) { (result: Result<User, NetworkError>) in
+    .setMetricInterceptor(LocalNetworkMetricInterceptor())
+    .build()
+    .request(request) { (result: Result<User, NetworkError>) in
         self.handleResult(result)
     }
 ```
 
-### 10.5. Mocking support for unit tests
+### 8.5. Mocking support for unit tests
 ```swift
 let successResult = NetworkKitResultMock.requestSuccess(
       NetworkResponseMock(statusCode: 200, response: User(id: 1))
@@ -394,11 +278,11 @@ Thats it!! `NetworkSwift` is successfully integrated and initialized in the proj
 
 For more detail please go to [Example project](https://github.com/harryngict/NetworkSwift/blob/master/Example/Example/Client/ClientNetworkFactory.swift).
 
-## XI. Support
+## IX. Support
 Feel free to utilize [JSONPlaceholder](https://jsonplaceholder.typicode.com/guide/) for testing API in Networkit examples. If you encounter any issues with NetworkSwift or need assistance with
 integration, please reach out to me at harryngict@gmail.com. I'm here to support you.
 
-## XII. Contributing
+## X. Contributing
 If you want to contribute to `NetworkSwift`, please follow these steps:
 
 1. Fork the repository.
@@ -407,5 +291,5 @@ If you want to contribute to `NetworkSwift`, please follow these steps:
 
 3. Make your changes and submit a pull request.
 
-## XIII. License
+## XI. License
 NetworkSwift is available under the MIT license. See the [LICENSE](https://github.com/harryngict/NetworkSwift/blob/master/LICENSE) file for more information.

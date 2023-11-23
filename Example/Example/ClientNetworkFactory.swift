@@ -45,7 +45,9 @@ final class ClientNetworkFactory {
                 do {
                     let request = NetworkRequestBuilder<[User]>(path: "/posts", method: .GET)
                         .build()
-                    let service = NetworkKitBuilder(baseURL: baseURL).build()
+                    let service = try NetworkKitBuilder(baseURL: baseURL)
+                        .setMetricInterceptor(LocalNetworkMetricInterceptor())
+                        .build()
                     let result: [User] = try await service.request(request)
                     completion("\(result)")
                 } catch {
@@ -60,14 +62,15 @@ final class ClientNetworkFactory {
             .setQueryParameters(["postId": "1"])
             .build()
 
-        let service = NetworkKitBuilder(baseURL: baseURL)
-
-        service.sendRequest(request, retryPolicy: .retry(count: 5)) { (result: Result<[User], NetworkError>) in
-            switch result {
-            case let .failure(error): completion(error.localizedDescription)
-            case let .success(users): completion("\(users)")
+        try? NetworkKitBuilder(baseURL: baseURL)
+            .setMetricInterceptor(LocalNetworkMetricInterceptor())
+            .build()
+            .request(request, retryPolicy: .retry(count: 5)) { (result: Result<[User], NetworkError>) in
+                switch result {
+                case let .failure(error): completion(error.localizedDescription)
+                case let .success(users): completion("\(users)")
+                }
             }
-        }
     }
 
     private func performQueueRequest(completion: @escaping (String) -> Void) {
@@ -78,13 +81,16 @@ final class ClientNetworkFactory {
                                  "userId": 1])
             .setRequiresReAuthentication(true)
             .build()
-        let service = NetworkKitQueueBuilder(baseURL: baseURL).setReAuthService(reAuthService).build()
-        service.request(request) { (result: Result<User, NetworkError>) in
-            switch result {
-            case let .failure(error): completion(error.localizedDescription)
-            case let .success(user): completion("\(user)")
+        try? NetworkKitQueueBuilder(baseURL: baseURL)
+            .setReAuthService(reAuthService)
+            .setMetricInterceptor(LocalNetworkMetricInterceptor())
+            .build()
+            .request(request) { (result: Result<User, NetworkError>) in
+                switch result {
+                case let .failure(error): completion(error.localizedDescription)
+                case let .success(user): completion("\(user)")
+                }
             }
-        }
     }
 
     private func performDownloadFileRequest(completion: @escaping (String) -> Void) {
@@ -93,13 +99,16 @@ final class ClientNetworkFactory {
                                  "body": "bar",
                                  "userId": 1])
             .build()
-        let service = NetworkKitBuilder(baseURL: baseURL).build()
-        service.downloadFile(request) { (result: Result<URL, NetworkError>) in
-            switch result {
-            case let .failure(error): completion(error.localizedDescription)
-            case let .success(url): completion("\(url.absoluteString)")
+
+        try? NetworkKitBuilder(baseURL: baseURL)
+            .setMetricInterceptor(LocalNetworkMetricInterceptor())
+            .build()
+            .downloadFile(request) { (result: Result<URL, NetworkError>) in
+                switch result {
+                case let .failure(error): completion(error.localizedDescription)
+                case let .success(url): completion("\(url.absoluteString)")
+                }
             }
-        }
     }
 
     private func performUploadFileRequest(completion: @escaping (String) -> Void) {
@@ -107,13 +116,15 @@ final class ClientNetworkFactory {
             .build()
         let fileURL = URL(fileURLWithPath: "/Users/harrynguyen/Documents/Resources/NetworkSwift/LICENSE")
 
-        let service = NetworkKitBuilder(baseURL: baseURL).build()
-        service.uploadFile(request, fromFile: fileURL) { (result: Result<User, NetworkError>) in
-            switch result {
-            case let .failure(error): completion(error.localizedDescription)
-            case let .success(user): completion("\(user)")
+        try? NetworkKitBuilder(baseURL: baseURL)
+            .setMetricInterceptor(LocalNetworkMetricInterceptor())
+            .build()
+            .uploadFile(request, fromFile: fileURL) { (result: Result<User, NetworkError>) in
+                switch result {
+                case let .failure(error): completion(error.localizedDescription)
+                case let .success(user): completion("\(user)")
+                }
             }
-        }
     }
 
     private func performRequestWithSSL(completion: @escaping (String) -> Void) {
@@ -131,7 +142,8 @@ final class ClientNetworkFactory {
             try NetworkKitBuilder(baseURL: baseURL)
                 .setSecurityTrust(securityTrust)
                 .setMetricInterceptor(LocalNetworkMetricInterceptor())
-                .sendRequest(request) { (result: Result<User, NetworkError>) in
+                .build()
+                .request(request) { (result: Result<User, NetworkError>) in
                     switch result {
                     case let .failure(error): completion(error.localizedDescription)
                     case let .success(users): completion("\(users)")
@@ -156,7 +168,8 @@ final class ClientNetworkFactory {
                 .setSecurityTrust(securityTrust)
                 .setMetricInterceptor(LocalNetworkMetricInterceptor())
                 .setReAuthService(ClientReAuthenticationService())
-                .sendRequest(request) { (result: Result<User, NetworkError>) in
+                .build()
+                .request(request) { (result: Result<User, NetworkError>) in
                     switch result {
                     case let .failure(error): completion(error.localizedDescription)
                     case let .success(users): completion("\(users)")

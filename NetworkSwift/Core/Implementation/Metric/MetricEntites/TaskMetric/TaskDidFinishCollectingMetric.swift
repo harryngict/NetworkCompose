@@ -7,8 +7,10 @@
 
 import Foundation
 
+protocol TaskMetric: Codable, Sendable {}
+
 /// A metric capturing information about a network task after it finishes collecting data.
-public struct TaskDidFinishCollectingMetric: Codable, Sendable {
+public struct TaskDidFinishCollectingMetric: TaskMetric {
     /// The type of the network task.
     public var taskType: TaskType
 

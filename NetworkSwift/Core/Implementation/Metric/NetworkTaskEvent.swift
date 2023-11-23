@@ -8,7 +8,7 @@
 import Foundation
 
 /// An enumeration representing various events related to a network task.
-public enum NetworkTaskEvent: Sendable {
+public enum NetworkTaskEvent: Codable, Sendable {
     /// Indicates that a network task has been created.
     case taskCreated(_ metric: TaskCreatedMetric)
 
