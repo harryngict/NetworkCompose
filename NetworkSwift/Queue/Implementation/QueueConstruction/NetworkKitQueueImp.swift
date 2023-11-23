@@ -34,18 +34,24 @@ public final class NetworkKitQueueImp<SessionType: NetworkSession>: NetworkKitQu
     ///   - reAuthService: The service responsible for re-authentication.
     ///   - serialOperationQueue: The operation queue manager for serializing network operations.
     ///   - networkReachability: The network reachability object. Default is `NetworkReachabilityImp.shared`.
+    ///   - executeQueue: The dispatch queue for executing network requests.
+    ///   - observeQueue: The dispatch queue for observing and handling network events.
     public init(
         baseURL: URL,
         session: SessionType = URLSession.shared,
         reAuthService: ReAuthenticationService? = nil,
         serialOperationQueue: OperationQueueManager,
-        networkReachability: NetworkReachability = NetworkReachabilityImp.shared
+        networkReachability: NetworkReachability = NetworkReachabilityImp.shared,
+        executeQueue: NetworkDispatchQueue,
+        observeQueue: NetworkDispatchQueue
     ) {
         self.reAuthService = reAuthService
         self.serialOperationQueue = serialOperationQueue
         networkKit = NetworkKitImp(baseURL: baseURL,
                                    session: session,
-                                   networkReachability: networkReachability)
+                                   networkReachability: networkReachability,
+                                   executeQueue: executeQueue,
+                                   observeQueue: observeQueue)
     }
 
     // MARK: Public Methods

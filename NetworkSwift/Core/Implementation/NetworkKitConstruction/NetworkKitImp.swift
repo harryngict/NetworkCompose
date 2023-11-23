@@ -24,19 +24,31 @@ public final class NetworkKitImp<SessionType: NetworkSession>: NetworkKit {
     /// The network reachability object for monitoring internet connection status.
     public let networkReachability: NetworkReachability
 
+    /// The dispatch queue for executing network requests.
+    private let executeQueue: NetworkDispatchQueue
+
+    /// The dispatch queue for observing and handling network events.
+    private let observeQueue: NetworkDispatchQueue
+
     /// Initializes the `NetworkKitImp` with the specified configuration.
     ///
     /// - Parameters:
     ///   - baseURL: The base URL for network requests.
     ///   - session: The network session to use for requests. Default is `URLSession.shared`.
     ///   - networkReachability: The network reachability object. Default is `NetworkReachabilityImp.shared`.
+    ///   - executeQueue: The dispatch queue for executing network requests.
+    ///   - observeQueue: The dispatch queue for observing and handling network events.
     public init(baseURL: URL,
                 session: SessionType = URLSession.shared,
-                networkReachability: NetworkReachability = NetworkReachabilityImp.shared)
+                networkReachability: NetworkReachability = NetworkReachabilityImp.shared,
+                executeQueue: NetworkDispatchQueue,
+                observeQueue: NetworkDispatchQueue)
     {
         self.baseURL = baseURL
         self.session = session
         self.networkReachability = networkReachability
+        self.executeQueue = executeQueue
+        self.observeQueue = observeQueue
         self.networkReachability.startMonitoring(completion: { _ in })
     }
 
@@ -102,7 +114,9 @@ public final class NetworkKitImp<SessionType: NetworkSession>: NetworkKit {
         debugPrint(request.debugDescription)
 
         guard networkReachability.isInternetAvailable else {
-            completion(.failure(NetworkError.lostInternetConnection))
+            observeQueue.async {
+                completion(.failure(NetworkError.lostInternetConnection))
+            }
             return
         }
         var currentRetry = 0
@@ -115,24 +129,33 @@ public final class NetworkKitImp<SessionType: NetworkSession>: NetworkKit {
                     self.handleResult(result, for: request) { result in
                         switch result {
                         case let .success(model):
-                            completion(.success(model))
+                            self.observeQueue.async {
+                                completion(.success(model))
+                            }
                         case let .failure(error):
                             currentRetry += 1
                             let shouldRetry = retryPolicy.shouldRetry(currentRetry: currentRetry)
                             if shouldRetry {
-                                performRequest()
+                                self.executeQueue.async {
+                                    performRequest()
+                                }
                             } else {
-                                completion(.failure(error))
+                                self.observeQueue.async {
+                                    completion(.failure(error))
+                                }
                             }
                         }
                     }
                 }
             } catch {
-                completion(.failure(NetworkError.invalidSession))
+                observeQueue.async {
+                    completion(.failure(NetworkError.invalidSession))
+                }
             }
         }
-
-        performRequest()
+        executeQueue.async {
+            performRequest()
+        }
     }
 
     /// Uploads a file using a network request and executes the completion handler with the result.
@@ -153,7 +176,9 @@ public final class NetworkKitImp<SessionType: NetworkSession>: NetworkKit {
         debugPrint(request.debugDescription)
 
         guard networkReachability.isInternetAvailable else {
-            completion(.failure(NetworkError.lostInternetConnection))
+            observeQueue.async {
+                completion(.failure(NetworkError.lostInternetConnection))
+            }
             return
         }
         var currentRetry = 0
@@ -166,24 +191,34 @@ public final class NetworkKitImp<SessionType: NetworkSession>: NetworkKit {
                     self.handleResult(result, for: request) { result in
                         switch result {
                         case let .success(model):
-                            completion(.success(model))
+                            self.observeQueue.async {
+                                completion(.success(model))
+                            }
                         case let .failure(error):
                             currentRetry += 1
                             let shouldRetry = retryPolicy.shouldRetry(currentRetry: currentRetry)
                             if shouldRetry {
-                                performRequest()
+                                self.executeQueue.async {
+                                    performRequest()
+                                }
                             } else {
-                                completion(.failure(error))
+                                self.observeQueue.async {
+                                    completion(.failure(error))
+                                }
                             }
                         }
                     }
                 }
             } catch {
-                completion(.failure(NetworkError.invalidSession))
+                observeQueue.async {
+                    completion(.failure(NetworkError.invalidSession))
+                }
             }
         }
 
-        performRequest()
+        executeQueue.async {
+            performRequest()
+        }
     }
 
     /// Downloads a file using a network request and executes the completion handler with the result.
@@ -202,7 +237,9 @@ public final class NetworkKitImp<SessionType: NetworkSession>: NetworkKit {
         debugPrint(request.debugDescription)
 
         guard networkReachability.isInternetAvailable else {
-            completion(.failure(NetworkError.lostInternetConnection))
+            observeQueue.async {
+                completion(.failure(NetworkError.lostInternetConnection))
+            }
             return
         }
         var currentRetry = 0
@@ -214,23 +251,33 @@ public final class NetworkKitImp<SessionType: NetworkSession>: NetworkKit {
                 session.beginDownloadTask(networkRequest) { result in
                     switch result {
                     case let .success(url):
-                        completion(.success(url))
+                        self.observeQueue.async {
+                            completion(.success(url))
+                        }
                     case let .failure(error):
                         currentRetry += 1
                         let shouldRetry = retryPolicy.shouldRetry(currentRetry: currentRetry)
                         if shouldRetry {
-                            performRequest()
+                            self.executeQueue.async {
+                                performRequest()
+                            }
                         } else {
-                            completion(.failure(error))
+                            self.observeQueue.async {
+                                completion(.failure(error))
+                            }
                         }
                     }
                 }
             } catch {
-                completion(.failure(NetworkError.invalidSession))
+                observeQueue.async {
+                    completion(.failure(NetworkError.invalidSession))
+                }
             }
         }
 
-        performRequest()
+        executeQueue.async {
+            performRequest()
+        }
     }
 
     private func buildNetworkRequest<RequestType: NetworkRequest>(
@@ -263,6 +310,7 @@ public final class NetworkKitImp<SessionType: NetworkSession>: NetworkKit {
             } catch {
                 if let error = error as? NetworkError {
                     completion(.failure(error))
+
                 } else {
                     completion(.failure(NetworkError.networkError(nil, error.localizedDescription)))
                 }

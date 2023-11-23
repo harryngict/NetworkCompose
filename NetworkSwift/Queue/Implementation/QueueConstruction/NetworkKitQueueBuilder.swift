@@ -34,21 +34,33 @@ public final class NetworkKitQueueBuilder<SessionType: NetworkSession> {
     /// The network reachability object for monitoring internet connection status.
     private var networkReachability: NetworkReachability
 
+    /// The dispatch queue for executing network requests.
+    private var executeQueue: NetworkDispatchQueue
+
+    /// The dispatch queue for observing and handling network events.
+    private var observeQueue: NetworkDispatchQueue
+
     /// Initializes a `NetworkKitQueueBuilder` with a base URL and a default session.
     ///
     /// - Parameters:
     ///   - baseURL: The base URL for network requests.
     ///   - session: The network session to use for requests. Defaults to `URLSession.shared`.
     ///   - networkReachability: The network reachability object. Default is `NetworkReachabilityImp.shared`.
+    ///   - executeQueue: The dispatch queue for executing network requests.
+    ///   - observeQueue: The dispatch queue for observing and handling network events.
     public init(baseURL: URL,
                 session: SessionType = URLSession.shared,
                 serialOperationQueue: OperationQueueManager = OperationQueueManagerImp(maxConcurrentOperationCount: 1),
-                networkReachability: NetworkReachability = NetworkReachabilityImp.shared)
+                networkReachability: NetworkReachability = NetworkReachabilityImp.shared,
+                executeQueue: NetworkDispatchQueue = DefaultNetworkDispatchQueue.executeQueue,
+                observeQueue: NetworkDispatchQueue = DefaultNetworkDispatchQueue.observeQueue)
     {
         self.baseURL = baseURL
         self.session = session
         self.serialOperationQueue = serialOperationQueue
         self.networkReachability = networkReachability
+        self.executeQueue = executeQueue
+        self.observeQueue = observeQueue
     }
 
     /// Sets the re-authentication service.
@@ -69,6 +81,33 @@ public final class NetworkKitQueueBuilder<SessionType: NetworkSession> {
         return self
     }
 
+    /// Sets the custom network reachability object.
+    ///
+    /// - Parameter reachability: The custom network reachability object.
+    /// - Returns: The builder instance for method chaining.
+    public func setNetworkReachability(_ reachability: NetworkReachability) -> Self {
+        networkReachability = reachability
+        return self
+    }
+
+    /// Sets the custom dispatch queue for executing network requests.
+    ///
+    /// - Parameter executeQueue: The custom dispatch queue for executing network requests.
+    /// - Returns: The builder instance for method chaining.
+    public func setExecuteQueue(_ executeQueue: NetworkDispatchQueue) -> Self {
+        self.executeQueue = executeQueue
+        return self
+    }
+
+    /// Sets the custom dispatch queue for observing and handling network events.
+    ///
+    /// - Parameter observeQueue: The custom dispatch queue for observing and handling network events.
+    /// - Returns: The builder instance for method chaining.
+    public func setObserveQueue(_ observeQueue: NetworkDispatchQueue) -> Self {
+        self.observeQueue = observeQueue
+        return self
+    }
+
     /// Builds and returns a `NetworkKitQueueImp` instance with the configured parameters.
     ///
     /// - Returns: A fully configured `NetworkKitQueueImp` instance.
@@ -78,7 +117,9 @@ public final class NetworkKitQueueBuilder<SessionType: NetworkSession> {
             session: session,
             reAuthService: reAuthService,
             serialOperationQueue: serialOperationQueue,
-            networkReachability: networkReachability
+            networkReachability: networkReachability,
+            executeQueue: executeQueue,
+            observeQueue: observeQueue
         )
     }
 
@@ -93,7 +134,7 @@ public final class NetworkKitQueueBuilder<SessionType: NetworkSession> {
             guard let session = URLSession(
                 configuration: NetworkSessionConfiguration.default,
                 delegate: delegate,
-                delegateQueue: OperationQueue.main
+                delegateQueue: nil /// `OperationQueue.main` Will throw message `This method should not be called on the main thread as it may lead to UI unresponsiveness.`
             ) as? SessionType else {
                 throw NetworkError.invalidSession
             }

@@ -39,13 +39,19 @@ public final class NetworkKitFacade<SessionType: NetworkSession> {
     ///   - baseURL: The base URL for network requests.
     ///   - session: The network session to use for requests. Defaults to `URLSession.shared`.
     ///   - networkReachability: The network reachability object. Default is `NetworkReachabilityImp.shared`.
+    ///   - executeQueue: The dispatch queue for executing network requests.
+    ///   - observeQueue: The dispatch queue for observing and handling network events.
     public init(baseURL: URL,
                 session: SessionType = URLSession.shared,
-                networkReachability: NetworkReachability = NetworkReachabilityImp.shared)
+                networkReachability: NetworkReachability = NetworkReachabilityImp.shared,
+                executeQueue: NetworkDispatchQueue = DefaultNetworkDispatchQueue.executeQueue,
+                observeQueue: NetworkDispatchQueue = DefaultNetworkDispatchQueue.observeQueue)
     {
         networkKit = NetworkKitImp(baseURL: baseURL,
                                    session: session,
-                                   networkReachability: networkReachability)
+                                   networkReachability: networkReachability,
+                                   executeQueue: executeQueue,
+                                   observeQueue: observeQueue)
     }
 
     /// Initializes the `NetworkKitFacade` with SSL pinning using a custom security trust.
@@ -54,13 +60,19 @@ public final class NetworkKitFacade<SessionType: NetworkSession> {
     ///   - baseURL: The base URL for network requests.
     ///   - securityTrust: The security trust object for SSL pinning.
     ///   - networkReachability: The network reachability object. Default is `NetworkReachabilityImp.shared`.
+    ///   - executeQueue: The dispatch queue for executing network requests.
+    ///   - observeQueue: The dispatch queue for observing and handling network events.
     /// - Throws: A `NetworkError` if the session cannot be created.
     public init(baseURL: URL,
                 securityTrust: NetworkSecurityTrust,
-                networkReachability: NetworkReachability = NetworkReachabilityImp.shared) throws
+                networkReachability: NetworkReachability = NetworkReachabilityImp.shared,
+                executeQueue: NetworkDispatchQueue = DefaultNetworkDispatchQueue.executeQueue,
+                observeQueue: NetworkDispatchQueue = DefaultNetworkDispatchQueue.observeQueue) throws
     {
         networkKit = try NetworkKitBuilder(baseURL: baseURL, networkReachability: networkReachability)
             .setSecurityTrust(securityTrust)
+            .setExecuteQueue(executeQueue)
+            .setObserveQueue(observeQueue)
             .build()
     }
 

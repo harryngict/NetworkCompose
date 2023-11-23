@@ -62,7 +62,7 @@ final class ClientNetworkFactory {
 
         let service = NetworkKitFacade(baseURL: baseURL)
 
-        service.request(request) { (result: Result<[User], NetworkError>) in
+        service.request(request, retryPolicy: .retry(count: 5)) { (result: Result<[User], NetworkError>) in
             switch result {
             case let .failure(error): completion(error.localizedDescription)
             case let .success(users): completion("\(users)")
@@ -155,7 +155,7 @@ final class ClientNetworkFactory {
                                                                 securityTrust: securityTrust,
                                                                 reAuthService: ClientReAuthenticationService())
 
-            service.request(request) { (result: Result<User, NetworkError>) in
+            service.request(request, retryPolicy: .retry(count: 5)) { (result: Result<User, NetworkError>) in
                 switch result {
                 case let .failure(error): completion(error.localizedDescription)
                 case let .success(users): completion("\(users)")

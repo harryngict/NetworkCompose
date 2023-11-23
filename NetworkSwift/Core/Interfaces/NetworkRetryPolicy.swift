@@ -5,6 +5,7 @@
 //  Created by Hoang Nguyen on 23/11/23.
 //
 
+// TODO: Enhancement Retry policy - Smarter retry https://github.com/harryngict/NetworkSwift/issues/8
 import Foundation
 
 /// Enumeration representing the retry policy for network requests.
@@ -33,6 +34,7 @@ public enum NetworkRetryPolicy {
     /// - Parameter currentRetry: The current retry attempt.
     /// - Returns: `true` if a retry should be attempted; otherwise, `false`.
     func shouldRetry(currentRetry: Int) -> Bool {
+        debugPrint("CurrentRetry time: \(currentRetry)")
         return currentRetry <= retryCount
     }
 }
