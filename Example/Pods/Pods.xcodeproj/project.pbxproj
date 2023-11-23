@@ -61,6 +61,7 @@
 		D6F269F92DE5774CA076BB531E0BD6C2 /* NetworkKitQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDAC1DE4B69D35C04C5F3A0F464CDA3B /* NetworkKitQueue.swift */; };
 		DA32872408BF71B722191AE9D3F4A457 /* NetworkSessionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1AD8040D93472370AF1B4DA676C2B8A /* NetworkSessionConfiguration.swift */; };
 		DC74BA357937989C7C80D526E1825539 /* NetworkResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7355DD6E447733EC2D63E5C94561CCE /* NetworkResponse.swift */; };
+		DDC617372B0F5ED100B48101 /* NetworkLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC617362B0F5ED100B48101 /* NetworkLogger.swift */; };
 		DED6B6D01FBF63D01FA56C4F26EF4B9D /* OperationQueueManagerImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F37F985C4FD91CB2157247C5D54499A /* OperationQueueManagerImp.swift */; };
 		E430C0DD08311FCBD86FEA91C079B319 /* URLSession+Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BEBC217EBDA15A11E6B17DC08ABCF8 /* URLSession+Network.swift */; };
 		E446E7A2A852EE098D6B24AA944BE156 /* NetworkReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C6F0AC153F664824A9F71D16E115D8 /* NetworkReachability.swift */; };
@@ -157,6 +158,7 @@
 		D9660BBF528194D6DBDDD7A5A6F837B6 /* URLSession+BodyStream.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "URLSession+BodyStream.swift"; sourceTree = "<group>"; };
 		D9AB2F8B2E69D12858257C86C9463268 /* NetworkSecurityTrustImp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkSecurityTrustImp.swift; sourceTree = "<group>"; };
 		DD510C0D5C7816D1F13557994E12395E /* NetworkReachabilityImp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkReachabilityImp.swift; sourceTree = "<group>"; };
+		DDC617362B0F5ED100B48101 /* NetworkLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLogger.swift; sourceTree = "<group>"; };
 		DE36F650F0BCB22B3C8E188246073854 /* NetworkResponseMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkResponseMock.swift; path = NetworkSwift/CoreMocks/NetworkResponseMock.swift; sourceTree = "<group>"; };
 		DF412EEB3D08C6DFE5631F71DF2CAD21 /* ReAuthenticationServiceMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReAuthenticationServiceMock.swift; path = NetworkSwift/QueueMocks/ReAuthenticationServiceMock.swift; sourceTree = "<group>"; };
 		EDBCE9F9EBE9DF9C48D3A38C0738C540 /* NetworkUploadTaskMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkUploadTaskMock.swift; path = NetworkSwift/CoreMocks/NetworkUploadTaskMock.swift; sourceTree = "<group>"; };
@@ -458,6 +460,7 @@
 		D0E04FB8240154337C9ED1046D6B4EAC /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				DDC617352B0F5EB600B48101 /* NetworkLogger */,
 				6F7B48839F4F80240D3143079F873D50 /* Implementation */,
 				AC131C9765FC7599BA4D322D3DCE35E1 /* Interfaces */,
 				95B7491E0851EEEE99326E0C61F288FD /* SSLPinning */,
@@ -488,6 +491,14 @@
 			);
 			name = "Pods-Example";
 			path = "Target Support Files/Pods-Example";
+			sourceTree = "<group>";
+		};
+		DDC617352B0F5EB600B48101 /* NetworkLogger */ = {
+			isa = PBXGroup;
+			children = (
+				DDC617362B0F5ED100B48101 /* NetworkLogger.swift */,
+			);
+			path = NetworkLogger;
 			sourceTree = "<group>";
 		};
 		DE193249530187EB37EFBFAF16A52E58 /* RequestConstruction */ = {
@@ -642,6 +653,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDC617372B0F5ED100B48101 /* NetworkLogger.swift in Sources */,
 				34D0CA4774D6CEB9A67388BCFA24A933 /* AuthChallengeDecision.swift in Sources */,
 				4603B35C678F27B946A23C82F051F675 /* ClosureCustomOperation.swift in Sources */,
 				F775649F91706192900377A7E9C02BEA /* CustomOperation.swift in Sources */,

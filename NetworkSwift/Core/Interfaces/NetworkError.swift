@@ -21,7 +21,7 @@ import Foundation
 ///     print("Localized Description: \(error.localizedDescription)")
 /// }
 /// ```
-public enum NetworkError: Error {
+public enum NetworkError: Error, Sendable {
     /// Represents an error when the URL is malformed.
     ///
     /// - Parameters:

@@ -15,7 +15,7 @@ import Foundation
 /// ```swift
 /// let response = NetworkResponseImp(statusCode: 200, data: responseData)
 /// ```
-struct NetworkResponseImp: NetworkResponse {
+struct NetworkResponseImp: NetworkResponse, Sendable {
     /// The HTTP status code of the response.
     let statusCode: Int
     /// The raw data received in the response.

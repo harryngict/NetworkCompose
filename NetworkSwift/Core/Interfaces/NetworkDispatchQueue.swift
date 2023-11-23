@@ -22,7 +22,7 @@ extension DispatchQueue: NetworkDispatchQueue {
 }
 
 /// A namespace for default network dispatch queues.
-public enum DefaultNetworkDispatchQueue {
+public enum DefaultNetworkDispatchQueue: Sendable {
     /// The default execution queue for network operations.
     public static let executeQueue: NetworkDispatchQueue = DispatchQueue(label: "com.NetworkSwift.NetworkDispatchQueue", qos: .userInitiated)
 

@@ -196,17 +196,17 @@ private extension NetworkRequest {
 }
 
 /// Enumeration to represent different HTTP methods.
-public enum NetworkMethod: String {
+public enum NetworkMethod: String, Sendable {
     case GET, POST, PUT, DELETE, HEAD, PATCH
 }
 
 /// Enumeration to represent different network cache policies.
-public enum NetworkCachePolicy {
+public enum NetworkCachePolicy: Sendable {
     case remote, ignoreCache, cacheData
 }
 
 /// Enumeration to represent different encoding types for the request body.
-public enum BodyEncoding {
+public enum BodyEncoding: Sendable {
     case json
     case url
 }

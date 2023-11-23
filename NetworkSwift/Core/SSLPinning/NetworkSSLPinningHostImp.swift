@@ -8,7 +8,7 @@
 import Foundation
 
 /// A concrete implementation of `NetworkSSLPinningHost`.
-public struct NetworkSSLPinningHostImp: NetworkSSLPinningHost {
+public struct NetworkSSLPinningHostImp: NetworkSSLPinningHost, Sendable {
     /// The host name associated with the SSL pinning.
     public var host: String
 

@@ -8,7 +8,7 @@
 import Foundation
 
 /// Configuration options for a network session.
-public enum NetworkSessionConfiguration {
+public enum NetworkSessionConfiguration: Sendable {
     /// The default configuration for a network session.
     public static var `default`: URLSessionConfiguration {
         let sessionConfig = URLSessionConfiguration.ephemeral

@@ -12,7 +12,7 @@ import Foundation
 ///
 /// - `none`: No retry will be attempted.
 /// - `retry(count)`: Retry the request up to the specified count.
-public enum NetworkRetryPolicy {
+public enum NetworkRetryPolicy: Sendable {
     /// No retry will be attempted.
     case none
 
