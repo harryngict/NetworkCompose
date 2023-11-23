@@ -408,7 +408,7 @@ networkKit.request(yourRequest, andHeaders: yourHeaders, retryPolicy: retryPolic
         // Handle error, which may include errors after retries
     }
 }
-```swift
+```
 
 #### 2.2. Using NetworkKitQueue
 
