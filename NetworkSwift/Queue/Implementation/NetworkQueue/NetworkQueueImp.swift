@@ -12,7 +12,7 @@ import Foundation
 /// Example usage:
 /// ```swift
 /// let baseURL = URL(string: "https://api.example.com")!
-/// let networkKitQueue = NetworkQueueImp(baseURL: baseURL)
+/// let networkQueue = NetworkQueueImp(baseURL: baseURL)
 /// ```
 public final class NetworkQueueImp<SessionType: NetworkSession>: NetworkQueue {
     /// The underlying network kit responsible for handling network requests.

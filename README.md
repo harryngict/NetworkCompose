@@ -191,7 +191,7 @@ class YourAutoReAuthenticationService: ReAuthenticationService {
 }
 ```
 
-## VIII. How NetworkKit and NetworkKitQueue send a request
+## VIII. How NetworkKit and NetworkQueue send a request
 
 ```swift
 enum Constant {
