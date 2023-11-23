@@ -132,7 +132,6 @@ public final class NetworkKitQueueImp<SessionType: NetworkSession>: NetworkKitQu
         retryPolicy: NetworkRetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) {
-        debugPrint(request.debugDescription)
         networkKit.request(request, andHeaders: headers, retryPolicy: retryPolicy) { result in
             switch result {
             case let .success(model):

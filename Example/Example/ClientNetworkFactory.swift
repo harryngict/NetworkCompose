@@ -62,7 +62,7 @@ final class ClientNetworkFactory {
 
         let service = NetworkKitBuilder(baseURL: baseURL)
 
-        service.request(request, retryPolicy: .retry(count: 5)) { (result: Result<[User], NetworkError>) in
+        service.sendRequest(request, retryPolicy: .retry(count: 5)) { (result: Result<[User], NetworkError>) in
             switch result {
             case let .failure(error): completion(error.localizedDescription)
             case let .success(users): completion("\(users)")
@@ -130,8 +130,8 @@ final class ClientNetworkFactory {
 
             try NetworkKitBuilder(baseURL: baseURL)
                 .setSecurityTrust(securityTrust)
-                .setMetricsCollector(NetworkMetricsCollectorImp())
-                .request(request) { (result: Result<User, NetworkError>) in
+                .setMetricInterceptor(LocalNetworkMetricInterceptor())
+                .sendRequest(request) { (result: Result<User, NetworkError>) in
                     switch result {
                     case let .failure(error): completion(error.localizedDescription)
                     case let .success(users): completion("\(users)")
@@ -154,9 +154,9 @@ final class ClientNetworkFactory {
 
             try NetworkKitQueueBuilder(baseURL: baseURL)
                 .setSecurityTrust(securityTrust)
-                .setMetricsCollector(NetworkMetricsCollectorImp())
+                .setMetricInterceptor(LocalNetworkMetricInterceptor())
                 .setReAuthService(ClientReAuthenticationService())
-                .request(request) { (result: Result<User, NetworkError>) in
+                .sendRequest(request) { (result: Result<User, NetworkError>) in
                     switch result {
                     case let .failure(error): completion(error.localizedDescription)
                     case let .success(users): completion("\(users)")

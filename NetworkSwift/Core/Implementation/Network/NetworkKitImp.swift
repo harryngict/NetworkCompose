@@ -71,8 +71,6 @@ public final class NetworkKitImp<SessionType: NetworkSession>: NetworkKit {
         andHeaders headers: [String: String] = [:],
         retryPolicy: NetworkRetryPolicy = .none
     ) async throws -> RequestType.SuccessType where RequestType: NetworkRequest {
-        debugPrint(request.debugDescription)
-
         guard networkReachability.isInternetAvailable else {
             throw NetworkError.lostInternetConnection
         }
@@ -111,8 +109,6 @@ public final class NetworkKitImp<SessionType: NetworkSession>: NetworkKit {
         retryPolicy: NetworkRetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: NetworkRequest {
-        debugPrint(request.debugDescription)
-
         guard networkReachability.isInternetAvailable else {
             observeQueue.async {
                 completion(.failure(NetworkError.lostInternetConnection))
@@ -173,8 +169,6 @@ public final class NetworkKitImp<SessionType: NetworkSession>: NetworkKit {
         retryPolicy: NetworkRetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: NetworkRequest {
-        debugPrint(request.debugDescription)
-
         guard networkReachability.isInternetAvailable else {
             observeQueue.async {
                 completion(.failure(NetworkError.lostInternetConnection))
@@ -234,8 +228,6 @@ public final class NetworkKitImp<SessionType: NetworkSession>: NetworkKit {
         retryPolicy: NetworkRetryPolicy = .none,
         completion: @escaping (Result<URL, NetworkError>) -> Void
     ) {
-        debugPrint(request.debugDescription)
-
         guard networkReachability.isInternetAvailable else {
             observeQueue.async {
                 completion(.failure(NetworkError.lostInternetConnection))
