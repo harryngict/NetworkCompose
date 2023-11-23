@@ -1,10 +1,6 @@
 # NetworkSwift
 
-**NetworkSwift** is a versatile and lightweight networking library designed for flexibility, supporting various session types, including URLSession. The library follows a defined contract, implementing three core functions:
-
-1. **HTTPS Request**: Facilitates secure HTTP requests, with support for SSL pinning to enhance security.
-2. **Upload File**: Supports the secure uploading of files.
-3. **Download File**: Enables the downloading of files with security considerations.
+**NetworkSwift** is a versatile and lightweight networking library designed for flexibility, supporting various session types, including URLSession.
 
 ## Table of Contents
 
@@ -31,7 +27,7 @@ VI. [How to create NetworkKitQueueImp for automatic re-authentication](#vi-how-t
 
 VII. [How to create NetworkSecurityTrustImp for SSL Pinning](#vii-how-to-create-networksecuritytrustimp-for-ssl-pinning)
 
-VIII. [How to create ReAuthenticationService for Auto Re-authentication](#viii-how-to-create-reauthenticationservice-for-auto-re-authentication)
+VIII. [How to create ReAuthenticationService for automatic Re-authentication](#viii-how-to-create-reauthenticationservice-for-automatic-re-authentication)
 
 IX. [How to use NetworkRetryPolicy to send a request](#ix-how-to-use-networkretrypolicy-to-send-a-request)
    - 9.1. [Create a NetworkRetryPolicy instance](#1-create-a-networkretrypolicy-instance)
@@ -207,7 +203,7 @@ networkKit.request(yourRequest) { result in
 }
 ```
 
-## VI. How to create NetworkKitQueueImp 
+## VI. How to create NetworkKitQueueImp for automatic re-authentication 
 
 To execute network requests with automatic re-authentication, you can use the provided `NetworkKitQueueImp` along with either the `NetworkKitQueueFacade`, `NetworkKitQueueBuilder`, or by creating an instance directly.
 
@@ -289,7 +285,7 @@ Remember to replace "api.example.com", "hash1", and "hash2" with your actual hos
 
 Choose the SSL pinning hosts and hashes that match the servers you intend to communicate with securely.
 
-## VIII. How to create ReAuthenticationService for Auto Re-authentication
+## VIII. How to create ReAuthenticationService for automatic Re-authentication
 
 To implement auto re-authentication, you need to create a class or object conforming to the `ReAuthenticationService` protocol. This service will handle the automatic re-authentication process.
 
