@@ -1,6 +1,6 @@
 //
 //  DebugNetworkMetricInterceptor.swift
-//  NetworkCompose/Core
+//  NetworkCompose
 //
 //  Created by Hoang Nguyen on 24/11/23.
 //
@@ -13,15 +13,15 @@ public struct DebugNetworkMetricInterceptor: NetworkMetricInterceptor {
     public func sendEvent(_ event: NetworkTaskEvent) {
         var taskMetric: TaskMetric
         switch event {
-        case let .taskCreated(metric):
+        case let .created(metric):
             taskMetric = metric
-        case let .taskProgressUpdated(metric):
-            taskMetric = metric
-
-        case let .taskCompleted(metric):
+        case let .progressUpdated(metric):
             taskMetric = metric
 
-        case let .taskDidFinishCollecting(metric):
+        case let .completed(metric):
+            taskMetric = metric
+
+        case let .didFinishCollecting(metric):
             taskMetric = metric
         }
 

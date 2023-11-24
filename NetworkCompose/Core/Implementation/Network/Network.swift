@@ -1,20 +1,15 @@
 //
-//  NetworkCore.swift
-//  NetworkCompose/Core
+//  Network.swift
+//  NetworkCompose
 //
 //  Created by Hoang Nguyen on 11/11/23.
 //
 
 import Foundation
 
-/// A class implementing the `NetworkCoreInterface` protocol that handles network requests.
+/// A class implementing the `NetworkInterface` protocol that handles network requests.
 ///
-/// Example usage:
-/// ```swift
-/// let baseURL = URL(string: "https://api.example.com")!
-/// let network = NetworkCore(baseURL: baseURL)
-/// ```
-public final class NetworkCore<SessionType: NetworkSession>: NetworkCoreInterface {
+final class Network<SessionType: NetworkSession>: NetworkInterface {
     /// The network session used for making requests.
     private let session: SessionType
 
@@ -30,19 +25,19 @@ public final class NetworkCore<SessionType: NetworkSession>: NetworkCoreInterfac
     /// The dispatch queue for observing and handling network events.
     private let observeQueue: NetworkDispatchQueue
 
-    /// Initializes the `NetworkCore` with the specified configuration.
+    /// Initializes the `Network` with the specified configuration.
     ///
     /// - Parameters:
     ///   - baseURL: The base URL for network requests.
-    ///   - session: The network session to use for requests. Default is `URLSession.shared`.
-    ///   - networkReachability: The network reachability object. Default is `NetworkReachabilityImp.shared`.
+    ///   - session: The network session to use for requests.
+    ///   - networkReachability: The network reachability object.
     ///   - executeQueue: The dispatch queue for executing network requests.
     ///   - observeQueue: The dispatch queue for observing and handling network events.
-    public init(baseURL: URL,
-                session: SessionType = URLSession.shared,
-                networkReachability: NetworkReachability = NetworkReachabilityImp.shared,
-                executeQueue: NetworkDispatchQueue,
-                observeQueue: NetworkDispatchQueue)
+    init(baseURL: URL,
+         session: SessionType,
+         networkReachability: NetworkReachability,
+         executeQueue: NetworkDispatchQueue,
+         observeQueue: NetworkDispatchQueue)
     {
         self.baseURL = baseURL
         self.session = session
@@ -52,7 +47,7 @@ public final class NetworkCore<SessionType: NetworkSession>: NetworkCoreInterfac
         self.networkReachability.startMonitoring(completion: { _ in })
     }
 
-    /// Deinitializes the `NetworkCore` and stops monitoring network reachability.
+    /// Deinitializes the `Network` and stops monitoring network reachability.
     deinit {
         self.networkReachability.stopMonitoring()
     }
@@ -66,7 +61,7 @@ public final class NetworkCore<SessionType: NetworkSession>: NetworkCoreInterfac
     /// - Returns: A task representing the asynchronous operation.
     /// - Throws: An error if the network request fails.
     @available(iOS 15.0, *)
-    public func request<RequestType>(
+    func request<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
         retryPolicy: NetworkRetryPolicy = .none
@@ -106,7 +101,7 @@ public final class NetworkCore<SessionType: NetworkSession>: NetworkCoreInterfac
     ///   - headers: Additional headers to be included in the request.
     ///   - retryPolicy: The retry policy for the network request.
     ///   - completion: The completion handler to be called with the result.
-    public func request<RequestType>(
+    func request<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
         retryPolicy: NetworkRetryPolicy = .none,
@@ -166,7 +161,7 @@ public final class NetworkCore<SessionType: NetworkSession>: NetworkCoreInterfac
     ///   - fileURL: The URL of the file to be uploaded.
     ///   - retryPolicy: The retry policy for the network request.
     ///   - completion: The completion handler to be called with the result.
-    public func uploadFile<RequestType>(
+    func uploadFile<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
         fromFile fileURL: URL,
@@ -227,7 +222,7 @@ public final class NetworkCore<SessionType: NetworkSession>: NetworkCoreInterfac
     ///   - headers: Additional headers to be included in the request.
     ///   - retryPolicy: The retry policy for the network request.
     ///   - completion: The completion handler to be called with the result.
-    public func downloadFile<RequestType: NetworkRequestInterface>(
+    func downloadFile<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
         retryPolicy: NetworkRetryPolicy = .none,

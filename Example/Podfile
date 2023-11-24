@@ -6,14 +6,13 @@ use_frameworks!
 
 target 'Example' do
   pod 'NetworkCompose/Core',  :path => '../'
-  pod 'NetworkCompose/CoreMocks', :path => '../'
-  
   pod 'NetworkCompose/Queue',  :path => '../'
-  pod 'NetworkCompose/QueueMocks',  :path => '../'
 end
 
 target 'ExampleTests' do
   inherit! :search_paths
+  pod 'NetworkCompose/CoreMocks', :path => '../'
+  pod 'NetworkCompose/QueueMocks',  :path => '../'
 end
 
 post_install do |installer|

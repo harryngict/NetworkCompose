@@ -1,6 +1,6 @@
 //
 //  NetworkTaskEvent.swift
-//  NetworkCompose/Core
+//  NetworkCompose
 //
 //  Created by Hoang Nguyen on 23/11/23.
 //
@@ -10,24 +10,24 @@ import Foundation
 /// An enumeration representing various events related to a network task.
 public enum NetworkTaskEvent: Codable, Sendable {
     /// Indicates that a network task has been created.
-    case taskCreated(_ metric: TaskCreatedMetric)
+    case created(_ metric: TaskCreatedMetric)
 
     /// Indicates that the progress of a network task has been updated.
-    case taskProgressUpdated(_ metric: TaskProgressUpdatedMetric)
+    case progressUpdated(_ metric: TaskProgressUpdatedMetric)
 
     /// Indicates that a network task has been completed.
-    case taskCompleted(_ metric: TaskCompletedMetric)
+    case completed(_ metric: TaskCompletedMetric)
 
     /// Indicates that metrics for a network task have been collected.
-    case taskDidFinishCollecting(_ metric: TaskDidFinishCollectingMetric)
+    case didFinishCollecting(_ metric: TaskDidFinishCollectingMetric)
 
     /// The URL associated with the event, if applicable.
     var name: String {
         switch self {
-        case .taskCreated: return "TaskCreated"
-        case .taskProgressUpdated: return "TaskProgressUpdated"
-        case .taskCompleted: return "TaskCompleted"
-        case .taskDidFinishCollecting: return "TaskDidFinishCollecting"
+        case .created: return "TaskCreated"
+        case .progressUpdated: return "TaskProgressUpdated"
+        case .completed: return "TaskCompleted"
+        case .didFinishCollecting: return "TaskDidFinishCollecting"
         }
     }
 }

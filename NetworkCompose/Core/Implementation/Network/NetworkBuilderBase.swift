@@ -1,6 +1,6 @@
 //
-//  NetworkComposerBase.swift
-//  NetworkCompose/Core
+//  NetworkBuilderBase.swift
+//  NetworkCompose
 //
 //  Created by Hoang Nguyen on 24/11/23.
 //
@@ -8,49 +8,41 @@
 import Foundation
 
 /// A base class for building network configurations.
-///
-/// Subclasses must provide a concrete implementation of `NetworkSession` as the associated type.
-public class NetworkComposerBase<SessionType: NetworkSession>: NetworkComposerInterface {
+public class NetworkBuilderBase<SessionType: NetworkSession> {
     /// The base URL for network requests.
-    public var baseURL: URL
+    var baseURL: URL
 
     /// The network session to use for requests.
-    public var session: SessionType
+    var session: SessionType
 
     /// The security trust policy for SSL pinning.
-    public var sslPinningPolicy: NetworkSSLPinningPolicy = .ignore
+    var sslPinningPolicy: NetworkSSLPinningPolicy?
 
     /// The metrics collector object for collecting network metrics.
-    public var metricInterceptor: NetworkMetricInterceptor?
+    var metricInterceptor: NetworkMetricInterceptor?
 
     /// The network reachability object for monitoring internet connection status.
-    public var networkReachability: NetworkReachability
+    var networkReachability: NetworkReachability = NetworkReachabilityImp.shared
 
     /// The dispatch queue for executing network requests.
-    public var executeQueue: NetworkDispatchQueue
+    var executeQueue: NetworkDispatchQueue = DefaultNetworkDispatchQueue.executeQueue
 
     /// The dispatch queue for observing and handling network events.
-    public var observeQueue: NetworkDispatchQueue
+    var observeQueue: NetworkDispatchQueue = DefaultNetworkDispatchQueue.observeQueue
 
-    /// Initializes a `NetworkComposerBase` with a base URL and a default session.
+    /// Then environment represents the current network environment for the application.
+    var strategy: NetworkStrategy?
+
+    /// Initializes a `NetworkComposeBase` with a base URL and a default session.
     ///
     /// - Parameters:
     ///   - baseURL: The base URL for network requests.
     ///   - session: The network session to use for requests.
-    ///   - networkReachability: The network reachability object. Default is `NetworkReachabilityImp.shared`.
-    ///   - executeQueue: The dispatch queue for executing network requests.
-    ///   - observeQueue: The dispatch queue for observing and handling network events.
     public required init(baseURL: URL,
-                         session: SessionType,
-                         networkReachability: NetworkReachability,
-                         executeQueue: NetworkDispatchQueue,
-                         observeQueue: NetworkDispatchQueue)
+                         session: SessionType)
     {
         self.baseURL = baseURL
         self.session = session
-        self.networkReachability = networkReachability
-        self.executeQueue = executeQueue
-        self.observeQueue = observeQueue
     }
 
     /// Sets the security trust for SSL pinning.
@@ -104,6 +96,36 @@ public class NetworkComposerBase<SessionType: NetworkSession>: NetworkComposerIn
         return self
     }
 
+    /// Sets the network strategy for handling network events.
+    ///
+    /// - Parameter strategy: The network strategy to be set.
+    /// - Returns: The builder instance for method chaining.
+    public func setNetworkStrategy(_ strategy: NetworkStrategy) -> Self {
+        self.strategy = strategy
+        return self
+    }
+
+    /// Resets the configuration of the network builder to its default state.
+    ///
+    /// This method clears any custom SSL pinning policy, metric interceptor, network strategy,
+    /// and sets default values for execution and observation queues, and network reachability.
+    ///
+    /// - Returns: The modified instance of the network builder with the default configuration.
+    public func setDefaultConfiguration() -> Self {
+        sslPinningPolicy = nil
+        metricInterceptor = nil
+        strategy = nil
+        executeQueue = DefaultNetworkDispatchQueue.executeQueue
+        observeQueue = DefaultNetworkDispatchQueue.observeQueue
+        networkReachability = NetworkReachabilityImp.shared
+        if let session = try? createNetworkSession() {
+            self.session = session
+        }
+        return self
+    }
+}
+
+private extension NetworkBuilderBase {
     /// Creates and returns a network session with the configured parameters.
     ///
     /// This method initializes a network session with the provided metrics collector and security trust,
@@ -116,10 +138,10 @@ public class NetworkComposerBase<SessionType: NetworkSession>: NetworkComposerIn
     /// - Parameter sslPinningPolicy: A `NetworkSSLPinningPolicy` for SSL pinning.
     /// - Parameter metricInterceptor: An optional `NetworkMetricInterceptor` for collecting network metrics.
     ///
-    /// - Important: If a `securityTrust` is provided, SSL pinning will be enabled.
+    /// - Important: If a `SSLPinningPolicy` is provided, SSL pinning will be enabled.
     ///
-    /// - Note: This method is used internally by the `NetworkComposerBase` to create the network session.
-    private func createNetworkSession() throws -> SessionType {
+    /// - Note: This method is used internally by the `NetworkComposeBase` to create the network session.
+    func createNetworkSession() throws -> SessionType {
         do {
             let delegate = NetworkSessionProxyDelegate(sslPinningPolicy: sslPinningPolicy,
                                                        metricInterceptor: metricInterceptor)

@@ -1,6 +1,6 @@
 //
 //  NetworkTaskMock.swift
-//  NetworkCompose/CoreMocks
+//  NetworkCompose
 //
 //  Created by Hoang Nguyen on 18/11/23.
 //
@@ -8,9 +8,9 @@
 import Foundation
 
 public class NetworkTaskMock<T: Decodable>: NetworkTask {
-    private var expected: NetworkResultMock
+    private var expected: NetworkExpectation.Response
 
-    public init(expected: NetworkResultMock) {
+    public init(expected: NetworkExpectation.Response) {
         self.expected = expected
     }
 
@@ -20,7 +20,8 @@ public class NetworkTaskMock<T: Decodable>: NetworkTask {
     ) {
         switch expected {
         case let .failure(error): completion(.failure(error))
-        case let .requestSuccess(response): completion(.success(response))
+        case let .successResponse(response):
+            completion(.success(NetworkResponseMock(response: response)))
         default: break
         }
     }

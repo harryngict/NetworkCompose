@@ -1,6 +1,6 @@
 //
 //  NetworkRequestBuilder.swift
-//  NetworkCompose/Core
+//  NetworkCompose
 //
 //  Created by Hoang Nguyen on 22/11/23.
 //
@@ -11,18 +11,6 @@ import Foundation
 ///
 /// Use this class to construct a `NetworkRequest` with customizable parameters.
 ///
-/// - Note: Example usage:
-///   ```swift
-///   let request = NetworkRequestBuilder<MyResponseType>(path: "/api/endpoint", method: .get)
-///       .setQueryParameters(["param": "value"])
-///       .setHeaders(["Authorization": "Bearer token"])
-///       .setBodyEncoding(.urlEncoded)
-///       .setTimeoutInterval(30.0)
-///       .setResponseDecoder(customDecoder)
-///       .setCachePolicy(.useCache)
-///       .setRequiresReAuthentication(true)
-///       .build()
-///   ```
 public class NetworkRequestBuilder<T: Codable> {
     /// The endpoint path for the network request.
     private var path: String

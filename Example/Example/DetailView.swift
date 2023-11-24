@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DetailView: View {
-    let type: ExampleType
+    let type: DemoScenario
     @State private var result: String = ""
     @State private var isLoading: Bool = true
 
@@ -25,14 +25,12 @@ struct DetailView: View {
             }
         }
         .onAppear {
-            guard let baseURL = URL(string: Constant.baseURL) else {
-                return
-            }
-
-            ClientNetworkFactory(baseURL: baseURL).makeRequest(for: type) { receivedResult in
-                result = receivedResult
-                isLoading = false
-            }
+            ClientDemoNetwork
+                .shared
+                .makeRequest(for: type) { receivedResult in
+                    result = receivedResult
+                    isLoading = false
+                }
         }
     }
 }
@@ -45,10 +43,4 @@ struct ActivityIndicator: UIViewRepresentable {
     }
 
     func updateUIView(_: UIActivityIndicatorView, context _: Context) {}
-}
-
-struct DetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        DetailView(type: .requestCompletion)
-    }
 }

@@ -1,6 +1,6 @@
 //
 //  NetworkSessionProxyDelegate.swift
-//  NetworkCompose/Core
+//  NetworkCompose
 //
 //  Created by Hoang Nguyen on 23/11/23.
 //
@@ -14,7 +14,7 @@ final class NetworkSessionProxyDelegate: NSObject, URLSessionTaskDelegate, URLSe
     private var metricsCollector: NetworkMetricsCollector?
 
     /// The SSL pinning processor for handling SSL challenges.
-    private var sslPinningProcessor: SSLPinningProcessor
+    private var sslPinningProcessor: SSLPinningProcessor?
 
     /// Initializes the `NetworkSessionProxyDelegate` with optional metrics collector and security trust.
     ///
@@ -22,12 +22,14 @@ final class NetworkSessionProxyDelegate: NSObject, URLSessionTaskDelegate, URLSe
     ///   - sslPinningPolicy: An optional `NetworkSSLPinningPolicy` for SSL pinning.
     ///   - metricInterceptor: An optional `NetworkMetricInterceptor` for collecting network metrics.
     /// - Returns: A new instance of `NetworkSessionProxyDelegate`.
-    init(sslPinningPolicy: NetworkSSLPinningPolicy,
+    init(sslPinningPolicy: NetworkSSLPinningPolicy?,
          metricInterceptor: NetworkMetricInterceptor?)
     {
-        let securityTrust = NetworkSecurityTrustImp(sslPinnings: sslPinningPolicy.sslPinnings)
-        sslPinningProcessor = SSLPinningProcessorImp(sslPinningPolicy: sslPinningPolicy,
-                                                     securityTrust: securityTrust)
+        if let sslPinningPolicy = sslPinningPolicy {
+            let securityTrust = NetworkSecurityTrustImp(sslPinnings: sslPinningPolicy.sslPinnings)
+            sslPinningProcessor = SSLPinningProcessorImp(sslPinningPolicy: sslPinningPolicy,
+                                                         securityTrust: securityTrust)
+        }
 
         if let metricInterceptor = metricInterceptor {
             metricsCollector = NetworkMetricsCollectorImp(metricInterceptor: metricInterceptor)
@@ -46,7 +48,9 @@ final class NetworkSessionProxyDelegate: NSObject, URLSessionTaskDelegate, URLSe
                            didReceive challenge: URLAuthenticationChallenge,
                            completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void)
     {
-        guard case .trust = sslPinningProcessor.sslPinningPolicy else {
+        guard let sslPinningProcessor = sslPinningProcessor,
+              case .trust = sslPinningProcessor.sslPinningPolicy
+        else {
             completionHandler(.performDefaultHandling, nil)
             return
         }

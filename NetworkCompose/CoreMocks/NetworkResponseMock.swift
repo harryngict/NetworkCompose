@@ -1,6 +1,6 @@
 //
 //  NetworkResponseMock.swift
-//  NetworkCompose/CoreMocks
+//  NetworkCompose
 //
 //  Created by Hoang Nguyen on 11/11/23.
 //
@@ -11,7 +11,9 @@ public class NetworkResponseMock: NetworkResponse {
     public var statusCode: Int
     public var data: Data
 
-    public init(statusCode: Int, response: Encodable? = nil) {
+    public init(statusCode: Int = 200,
+                response: Encodable? = nil)
+    {
         self.statusCode = statusCode
         if let response = response, let data = try? JSONEncoder().encode(response) {
             self.data = data

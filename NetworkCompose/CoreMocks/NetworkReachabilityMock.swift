@@ -1,6 +1,6 @@
 //
 //  NetworkReachabilityMock.swift
-//  NetworkCompose/CoreMocks
+//  NetworkCompose
 //
 //  Created by Hoang Nguyen on 19/11/23.
 //

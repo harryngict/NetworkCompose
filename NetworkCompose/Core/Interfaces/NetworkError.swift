@@ -1,6 +1,6 @@
 //
 //  NetworkError.swift
-//  NetworkCompose/Core
+//  NetworkCompose
 //
 //  Created by Hoang Nguyen on 11/11/23.
 //
@@ -11,17 +11,7 @@ import Foundation
 ///
 /// This enumeration provides a set of network-related error cases that can be thrown during network operations.
 ///
-/// Example Usage:
-///
-/// ```swift
-/// do {
-///     throw NetworkError.badURLComponents(components)
-/// } catch let error as NetworkError {
-///     print("Error Code: \(error.errorCode)")
-///     print("Localized Description: \(error.localizedDescription)")
-/// }
-/// ```
-public enum NetworkError: Error, Codable, Sendable {
+public enum NetworkError: Error, Sendable, Equatable, Hashable {
     /// Represents an error when the URL is malformed.
     ///
     /// - Parameters:
