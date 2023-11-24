@@ -1,5 +1,5 @@
 //
-//  NetworkRequest.swift
+//  NetworkRequestInterface.swift
 //  NetworkSwift/Core
 //
 //  Created by Hoang Nguyen on 11/11/23.
@@ -8,7 +8,7 @@
 import Foundation
 
 /// Protocol for defining network requests.
-public protocol NetworkRequest {
+public protocol NetworkRequestInterface {
     /// Endpoint path for the request.
     var path: String { get }
 
@@ -40,8 +40,8 @@ public protocol NetworkRequest {
     associatedtype SuccessType: Decodable
 }
 
-/// Default implementations for the NetworkRequest protocol.
-public extension NetworkRequest {
+/// Default implementations for the NetworkRequestInterface .
+public extension NetworkRequestInterface {
     /// Indicates whether re-authentication is required for the request.
     var requiresReAuthentication: Bool { return false }
 
@@ -163,8 +163,8 @@ public extension NetworkRequest {
     }
 }
 
-/// Extends the `NetworkRequest` protocol with a default implementation for the body property.
-private extension NetworkRequest {
+/// Extends the `NetworkRequestInterface` protocol with a default implementation for the body property.
+private extension NetworkRequestInterface {
     /// Helper method to encode the request parameters to JSON.
     ///
     /// This method converts the request parameters into JSON data.

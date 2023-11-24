@@ -23,7 +23,7 @@ public protocol NetworkQueue: AnyObject {
     ///   - headers: Additional headers to be included in the request.
     ///   - retryPolicy: The retry policy for the network request.
     ///   - completion: A closure to be executed upon completion of the request.
-    func request<RequestType: NetworkRequest>(
+    func request<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String],
         retryPolicy: NetworkRetryPolicy,

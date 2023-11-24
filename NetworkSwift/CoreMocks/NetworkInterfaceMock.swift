@@ -17,7 +17,7 @@ public class NetworkInterfaceMock: NetworkInterface {
     public private(set) var requestCallCount = 0
     public var requestHandler: ((Any, [String: String], NetworkRetryPolicy) async throws -> (Any))?
     @available(iOS 15.0, *)
-    public func request<RequestType: NetworkRequest>(_ request: RequestType, andHeaders headers: [String: String], retryPolicy: NetworkRetryPolicy) async throws -> RequestType.SuccessType {
+    public func request<RequestType: NetworkRequestInterface>(_ request: RequestType, andHeaders headers: [String: String], retryPolicy: NetworkRetryPolicy) async throws -> RequestType.SuccessType {
         requestCallCount += 1
         if let requestHandler = requestHandler {
             return try await requestHandler(request, headers, retryPolicy) as! RequestType.SuccessType
@@ -27,7 +27,7 @@ public class NetworkInterfaceMock: NetworkInterface {
 
     public private(set) var requestAndHeadersCallCount = 0
     public var requestAndHeadersHandler: ((Any, [String: String], NetworkRetryPolicy, Any) -> Void)?
-    public func request<RequestType: NetworkRequest>(_ request: RequestType, andHeaders headers: [String: String], retryPolicy: NetworkRetryPolicy, completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void) {
+    public func request<RequestType: NetworkRequestInterface>(_ request: RequestType, andHeaders headers: [String: String], retryPolicy: NetworkRetryPolicy, completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void) {
         requestAndHeadersCallCount += 1
         if let requestAndHeadersHandler = requestAndHeadersHandler {
             requestAndHeadersHandler(request, headers, retryPolicy, completion)
@@ -36,7 +36,7 @@ public class NetworkInterfaceMock: NetworkInterface {
 
     public private(set) var uploadFileCallCount = 0
     public var uploadFileHandler: ((Any, [String: String], URL, NetworkRetryPolicy, Any) -> Void)?
-    public func uploadFile<RequestType: NetworkRequest>(_ request: RequestType, andHeaders headers: [String: String], fromFile fileURL: URL, retryPolicy: NetworkRetryPolicy, completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void) {
+    public func uploadFile<RequestType: NetworkRequestInterface>(_ request: RequestType, andHeaders headers: [String: String], fromFile fileURL: URL, retryPolicy: NetworkRetryPolicy, completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void) {
         uploadFileCallCount += 1
         if let uploadFileHandler = uploadFileHandler {
             uploadFileHandler(request, headers, fileURL, retryPolicy, completion)
@@ -45,7 +45,7 @@ public class NetworkInterfaceMock: NetworkInterface {
 
     public private(set) var downloadFileCallCount = 0
     public var downloadFileHandler: ((Any, [String: String], NetworkRetryPolicy, @escaping (Result<URL, NetworkError>) -> Void) -> Void)?
-    public func downloadFile<RequestType: NetworkRequest>(_ request: RequestType, andHeaders headers: [String: String], retryPolicy: NetworkRetryPolicy, completion: @escaping (Result<URL, NetworkError>) -> Void) {
+    public func downloadFile<RequestType: NetworkRequestInterface>(_ request: RequestType, andHeaders headers: [String: String], retryPolicy: NetworkRetryPolicy, completion: @escaping (Result<URL, NetworkError>) -> Void) {
         downloadFileCallCount += 1
         if let downloadFileHandler = downloadFileHandler {
             downloadFileHandler(request, headers, retryPolicy, completion)

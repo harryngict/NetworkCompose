@@ -70,7 +70,7 @@ public final class NetworkImp<SessionType: NetworkSession>: NetworkInterface {
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
         retryPolicy: NetworkRetryPolicy = .none
-    ) async throws -> RequestType.SuccessType where RequestType: NetworkRequest {
+    ) async throws -> RequestType.SuccessType where RequestType: NetworkRequestInterface {
         guard networkReachability.isInternetAvailable else {
             throw NetworkError.lostInternetConnection
         }
@@ -111,7 +111,7 @@ public final class NetworkImp<SessionType: NetworkSession>: NetworkInterface {
         andHeaders headers: [String: String] = [:],
         retryPolicy: NetworkRetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
-    ) where RequestType: NetworkRequest {
+    ) where RequestType: NetworkRequestInterface {
         guard networkReachability.isInternetAvailable else {
             observeQueue.async {
                 completion(.failure(NetworkError.lostInternetConnection))
@@ -172,7 +172,7 @@ public final class NetworkImp<SessionType: NetworkSession>: NetworkInterface {
         fromFile fileURL: URL,
         retryPolicy: NetworkRetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
-    ) where RequestType: NetworkRequest {
+    ) where RequestType: NetworkRequestInterface {
         guard networkReachability.isInternetAvailable else {
             observeQueue.async {
                 completion(.failure(NetworkError.lostInternetConnection))
@@ -227,7 +227,7 @@ public final class NetworkImp<SessionType: NetworkSession>: NetworkInterface {
     ///   - headers: Additional headers to be included in the request.
     ///   - retryPolicy: The retry policy for the network request.
     ///   - completion: The completion handler to be called with the result.
-    public func downloadFile<RequestType: NetworkRequest>(
+    public func downloadFile<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
         retryPolicy: NetworkRetryPolicy = .none,
@@ -278,14 +278,14 @@ public final class NetworkImp<SessionType: NetworkSession>: NetworkInterface {
         }
     }
 
-    private func buildNetworkRequest<RequestType: NetworkRequest>(
+    private func buildNetworkRequest<RequestType: NetworkRequestInterface>(
         for request: RequestType,
         andHeaders headers: [String: String]
     ) throws -> SessionType.NetworkRequestType {
         return try session.build(request, withBaseURL: baseURL, andHeaders: headers)
     }
 
-    private func handleSuccessResponse<RequestType: NetworkRequest>(
+    private func handleSuccessResponse<RequestType: NetworkRequestInterface>(
         _ response: NetworkResponse,
         for request: RequestType
     ) throws -> RequestType.SuccessType {
@@ -299,7 +299,7 @@ public final class NetworkImp<SessionType: NetworkSession>: NetworkInterface {
         _ result: Result<NetworkResponse, NetworkError>,
         for request: RequestType,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
-    ) where RequestType: NetworkRequest {
+    ) where RequestType: NetworkRequestInterface {
         switch result {
         case let .success(response):
             do {

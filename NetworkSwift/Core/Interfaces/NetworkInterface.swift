@@ -20,7 +20,7 @@ public protocol NetworkInterface: AnyObject {
     ///
     /// - Note: This method is available starting from iOS 15.0.
     @available(iOS 15.0, *)
-    func request<RequestType: NetworkRequest>(
+    func request<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String],
         retryPolicy: NetworkRetryPolicy
@@ -35,7 +35,7 @@ public protocol NetworkInterface: AnyObject {
     ///   - completion: The completion handler to be called with the result.
     ///
     /// - Note: Use this method for non-async network requests or when compatibility with earlier iOS versions is required.
-    func request<RequestType: NetworkRequest>(
+    func request<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String],
         retryPolicy: NetworkRetryPolicy,
@@ -50,7 +50,7 @@ public protocol NetworkInterface: AnyObject {
     ///   - fileURL: The URL of the file to be uploaded.
     ///   - retryPolicy: The retry policy for the network request.
     ///   - completion: The completion handler to be called with the result.
-    func uploadFile<RequestType: NetworkRequest>(
+    func uploadFile<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String],
         fromFile fileURL: URL,
@@ -65,7 +65,7 @@ public protocol NetworkInterface: AnyObject {
     ///   - headers: Additional headers to be included in the request.
     ///   - retryPolicy: The retry policy for the network request.
     ///   - completion: The completion handler to be called with the result.
-    func downloadFile<RequestType: NetworkRequest>(
+    func downloadFile<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String],
         retryPolicy: NetworkRetryPolicy,

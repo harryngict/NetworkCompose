@@ -15,7 +15,7 @@ import Foundation
 /// ```swift
 /// let baseURL = URL(string: "https://api.example.com")!
 /// let network = try? NetworkBuilder(baseURL: baseURL)
-///     .setSecurityTrust(yourSecurityTrust)
+///     .setSSLPinningPolicy(yourSSLPinningPolicy)
 ///     .build()
 /// ```
 public class NetworkBuilder<SessionType: NetworkSession>: NetworkBuilderBase<SessionType> {

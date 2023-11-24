@@ -18,7 +18,7 @@ public class NetworkQueueMock: NetworkQueue {
 
     public private(set) var requestCallCount = 0
     public var requestHandler: ((Any, [String: String], NetworkRetryPolicy, Any) -> Void)?
-    public func request<RequestType: NetworkRequest>(_ request: RequestType, andHeaders headers: [String: String], retryPolicy: NetworkRetryPolicy, completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void) {
+    public func request<RequestType: NetworkRequestInterface>(_ request: RequestType, andHeaders headers: [String: String], retryPolicy: NetworkRetryPolicy, completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void) {
         requestCallCount += 1
         if let requestHandler = requestHandler {
             requestHandler(request, headers, retryPolicy, completion)

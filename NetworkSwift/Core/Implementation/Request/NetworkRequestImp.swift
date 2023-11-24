@@ -24,7 +24,7 @@ import Foundation
 ///                                       cachePolicy: .useProtocolCachePolicy,
 ///                                       requiresReAuthentication: true)
 /// ```
-public struct NetworkRequestImp<T: Codable>: NetworkRequest {
+public struct NetworkRequestImp<T: Codable>: NetworkRequestInterface {
     /// The type representing the successful response, conforming to `Codable`.
     public typealias SuccessType = T
 

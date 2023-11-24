@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct NetworkRequestMock<T: Decodable>: NetworkRequest {
+public struct NetworkRequestMock<T: Decodable>: NetworkRequestInterface {
     public typealias SuccessType = T
     public var path: String
     public var method: NetworkMethod

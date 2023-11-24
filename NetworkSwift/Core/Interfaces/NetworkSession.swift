@@ -17,7 +17,7 @@ public protocol NetworkSession: AnyObject {
     ///   - baseURL: The base URL for the request.
     ///   - headers: Additional headers to be included in the request.
     /// - Returns: The built network request.
-    func build<RequestType: NetworkRequest>(
+    func build<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
         withBaseURL baseURL: URL,
         andHeaders headers: [String: String]

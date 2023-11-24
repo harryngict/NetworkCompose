@@ -63,7 +63,7 @@ public final class NetworkQueueImp<SessionType: NetworkSession>: NetworkQueue {
     ///   - headers: Additional headers to include in the request.
     ///   - retryPolicy: The retry policy for the network request.
     ///   - completion: The completion handler to be called when the request is complete.
-    public func request<RequestType: NetworkRequest>(
+    public func request<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
         retryPolicy: NetworkRetryPolicy = .none,
@@ -92,7 +92,7 @@ public final class NetworkQueueImp<SessionType: NetworkSession>: NetworkQueue {
     ///   - retryPolicy: The retry policy for the network request.
     ///   - completion: The completion handler to be called when the request is complete.
     /// - Returns: The created operation.
-    private func createReAuthenticationOperation<RequestType: NetworkRequest>(
+    private func createReAuthenticationOperation<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String],
         retryPolicy: NetworkRetryPolicy,
@@ -125,7 +125,7 @@ public final class NetworkQueueImp<SessionType: NetworkSession>: NetworkQueue {
     ///   - allowReAuth: A flag indicating whether re-authentication is allowed.
     ///   - retryPolicy: The retry policy for the network request.
     ///   - completion: The completion handler to be called when the request is complete.
-    private func sendRequest<RequestType: NetworkRequest>(
+    private func sendRequest<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String],
         allowReAuth: Bool,

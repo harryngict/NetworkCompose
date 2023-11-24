@@ -22,7 +22,7 @@ extension URLSession: NetworkSession {
         _ request: RequestType,
         withBaseURL baseURL: URL,
         andHeaders headers: [String: String]
-    ) throws -> URLRequest where RequestType: NetworkRequest {
+    ) throws -> URLRequest where RequestType: NetworkRequestInterface {
         guard var components = URLComponents(url: baseURL.appendingPathComponent(request.path),
                                              resolvingAgainstBaseURL: false)
         else {

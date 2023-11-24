@@ -20,7 +20,7 @@ public final class NetworkSessionMock<T: Decodable>: NetworkSession {
         _ request: RequestType,
         withBaseURL _: URL,
         andHeaders _: [String: String]
-    ) throws -> NetworkRequestMock<T> where RequestType: NetworkRequest {
+    ) throws -> NetworkRequestMock<T> where RequestType: NetworkRequestInterface {
         return NetworkRequestMock(path: request.path,
                                   method: request.method,
                                   queryParameters: request.queryParameters,
