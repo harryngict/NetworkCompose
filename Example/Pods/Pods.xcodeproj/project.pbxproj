@@ -13,7 +13,7 @@
 		09EBEF70EDC9D06AB37CD205B5FB24DC /* NetworkBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3431C58B4C366989141E3B1CBA84A898 /* NetworkBuilder.swift */; };
 		0E7140B353A815931C946DD65EF5C2A5 /* CustomOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C47D8C64580E237BD07E3541443DA1 /* CustomOperation.swift */; };
 		147F66D3E47531C80F82EB4E3B26FC1F /* NetworkSwift-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 72FE430F60724F34D4530FBF81C37FBA /* NetworkSwift-dummy.m */; };
-		1828C9AEF76F2C33364C94347AD4E44F /* NetworkRequestImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF522E2871918273A658262418BDF9AD /* NetworkRequestImp.swift */; };
+		1828C9AEF76F2C33364C94347AD4E44F /* NetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF522E2871918273A658262418BDF9AD /* NetworkRequest.swift */; };
 		18D56E2831D01369816F3CC55E12992C /* NetworkSSLPinningImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EF477573BDB83356CDE4522A48240B /* NetworkSSLPinningImp.swift */; };
 		260319DDE994FADEA1C7816C41125E99 /* ResponseErrorMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8535FC8FCE12A37F3F0CC1DAE3C384F /* ResponseErrorMetric.swift */; };
 		2B4F0117F1D1C22DC2CDF8B3567FBDE1 /* NetworkQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7755727842C52C4D174A6C596FD4D95 /* NetworkQueue.swift */; };
@@ -190,7 +190,7 @@
 		DA1A8FF7A5DFA18C18A3E121479BB65A /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		DA8B8758AEC71C13DC292F70FB025F17 /* NetworkSwift-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NetworkSwift-prefix.pch"; sourceTree = "<group>"; };
 		DDC617832B0FE1A400B48101 /* NetworSSLPinningPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworSSLPinningPolicy.swift; sourceTree = "<group>"; };
-		DF522E2871918273A658262418BDF9AD /* NetworkRequestImp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkRequestImp.swift; sourceTree = "<group>"; };
+		DF522E2871918273A658262418BDF9AD /* NetworkRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkRequest.swift; sourceTree = "<group>"; };
 		E6F3958E844C76B6ECF54BC5ED84CF2D /* NetworkSwift.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = NetworkSwift.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		E88BC56D946E14AFFD2C9843D7C16EBD /* NetworkSwift-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "NetworkSwift-Info.plist"; sourceTree = "<group>"; };
 		E8CF26B5739BD51AE1D68898B9F17083 /* NetworkTaskMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkTaskMock.swift; path = NetworkSwift/CoreMocks/NetworkTaskMock.swift; sourceTree = "<group>"; };
@@ -391,7 +391,7 @@
 			isa = PBXGroup;
 			children = (
 				725ABAB2F8101559F442E860FB331736 /* NetworkRequestBuilder.swift */,
-				DF522E2871918273A658262418BDF9AD /* NetworkRequestImp.swift */,
+				DF522E2871918273A658262418BDF9AD /* NetworkRequest.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -810,7 +810,7 @@
 				F96FB7E58F3E994A0F2F6C7D4DB13E4F /* NetworkReachabilityMock.swift in Sources */,
 				A1AA8603C1E422F7F94BA78A341AEF15 /* NetworkRequestInterface.swift in Sources */,
 				68CBF9D5737B22664509208F902E3D7B /* NetworkRequestBuilder.swift in Sources */,
-				1828C9AEF76F2C33364C94347AD4E44F /* NetworkRequestImp.swift in Sources */,
+				1828C9AEF76F2C33364C94347AD4E44F /* NetworkRequest.swift in Sources */,
 				C91F7A00E2C07545035C01A6E0D8335C /* NetworkRequestMock.swift in Sources */,
 				75FF5C441BDAA1C9328572D76DC82F31 /* NetworkResponse.swift in Sources */,
 				D5B02778A9F94EC96DB65235A465B37E /* NetworkResponseImp.swift in Sources */,

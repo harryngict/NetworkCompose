@@ -1,5 +1,5 @@
 //
-//  NetworkRequestImp.swift
+//  NetworkRequest.swift
 //  NetworkSwift/Core
 //
 //  Created by Hoang Nguyen on 20/11/23.
@@ -14,17 +14,7 @@ import Foundation
 ///
 /// - Note: Conform the `SuccessType` associated type to `Codable` to facilitate automatic response decoding.
 ///
-/// Example usage:
-/// ```swift
-/// let request = NetworkRequestImp<User>(path: "/users/123",
-///                                       method: .GET,
-///                                       queryParameters: ["filter": "active"],
-///                                       headers: ["Authorization": "Bearer YOUR_ACCESS_TOKEN"],
-///                                       timeoutInterval: 30.0,
-///                                       cachePolicy: .useProtocolCachePolicy,
-///                                       requiresReAuthentication: true)
-/// ```
-public struct NetworkRequestImp<T: Codable>: NetworkRequestInterface {
+public struct NetworkRequest<T: Codable>: NetworkRequestInterface {
     /// The type representing the successful response, conforming to `Codable`.
     public typealias SuccessType = T
 
@@ -47,7 +37,7 @@ public struct NetworkRequestImp<T: Codable>: NetworkRequestInterface {
     /// A flag indicating whether the request requires re-authentication.
     public var requiresReAuthentication: Bool
 
-    /// Initializes a `NetworkRequestImp` instance with the specified parameters.
+    /// Initializes a `NetworkRequest` instance with the specified parameters.
     ///
     /// - Parameters:
     ///   - path: The path of the request endpoint.

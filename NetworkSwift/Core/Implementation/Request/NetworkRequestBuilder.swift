@@ -7,9 +7,9 @@
 
 import Foundation
 
-/// A builder class for creating instances of `NetworkRequestImp`.
+/// A builder class for creating instances of `NetworkRequest`.
 ///
-/// Use this class to construct a `NetworkRequestImp` with customizable parameters.
+/// Use this class to construct a `NetworkRequest` with customizable parameters.
 ///
 /// - Note: Example usage:
 ///   ```swift
@@ -122,11 +122,11 @@ public class NetworkRequestBuilder<T: Codable> {
         return self
     }
 
-    /// Builds and returns a `NetworkRequestImp` instance with the configured parameters.
+    /// Builds and returns a `NetworkRequest` instance with the configured parameters.
     ///
-    /// - Returns: A fully configured `NetworkRequestImp` instance.
-    public func build() -> NetworkRequestImp<T> {
-        return NetworkRequestImp(
+    /// - Returns: A fully configured `NetworkRequest` instance.
+    public func build() -> NetworkRequest<T> {
+        return NetworkRequest(
             path: path,
             method: method,
             queryParameters: queryParameters,

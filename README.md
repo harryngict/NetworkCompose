@@ -13,7 +13,7 @@ III. [Integration](#iii-integration)
    
 IV. [How to create NetworkRequest](#iv-how-to-create-networkrequest)
    - 4.1. [Using NetworkRequestBuilder](#41-using-networkrequestbuilder)
-   - 4.2. [Using NetworkRequestImp Directly](#42-using-networkrequestimp-directly)
+   - 4.2. [Using NetworkRequest Directly](#42-using-networkrequest-directly)
 
 V. [How to create NetworkSSLPinningPolicy for SSL Pinning](#v-how-to-create-networksslpinningpolicy-for-ssl-pinning)
 
@@ -101,7 +101,7 @@ Please check latest version [here](https://github.com/harryngict/NetworkSwift/bl
 You can create a `NetworkRequest` using the `NetworkRequestBuilder` class, providing a fluent and expressive way to configure your network requests. Below is an example of how to use it:
 
 ```swift
-let request: NetworkRequestImp<YourResponseType> = try? NetworkRequestBuilder<YourResponseType>(path: "/your-endpoint", method: .get)
+let request: NetworkRequest<YourResponseType> = try? NetworkRequestBuilder<YourResponseType>(path: "/your-endpoint", method: .get)
     .setQueryParameters(["param1": "value1", "param2": "value2"])
     .setHeaders(["Authorization": "Bearer YourAccessToken"])
     .setBodyEncoding(.json)
@@ -111,12 +111,12 @@ let request: NetworkRequestImp<YourResponseType> = try? NetworkRequestBuilder<Yo
     .build()
 ```
 
-### 4.2. Using NetworkRequestImp Directly
+### 4.2. Using NetworkRequest Directly
 
-If you prefer a more direct approach, you can create a `NetworkRequestImp` instance directly. Here's an example:
+If you prefer a more direct approach, you can create a `NetworkRequest` instance directly. Here's an example:
 
 ```swift
-let request: NetworkRequestImp<YourResponseType> = NetworkRequestImp(
+let request: NetworkRequest<YourResponseType> = NetworkRequest(
     path: "/your-endpoint",
     method: .post,
     queryParameters: ["param1": "value1", "param2": "value2"],
