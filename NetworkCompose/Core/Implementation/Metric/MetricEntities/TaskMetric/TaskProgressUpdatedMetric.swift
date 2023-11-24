@@ -9,8 +9,11 @@ import Foundation
 
 /// A metric capturing information about the progress update of a network task.
 public struct TaskProgressUpdatedMetric: TaskMetric {
-    /// The unique identifier for the network task.
-    public var taskId: UUID
+    /// The type of network task.
+    public var taskType: TaskType
+
+    /// The timestamp when the network task was created.
+    public var createdAt: Date
 
     /// The URL associated with the progress update, if applicable.
     public var url: URL?
@@ -24,16 +27,19 @@ public struct TaskProgressUpdatedMetric: TaskMetric {
     /// Initializes a `TaskProgressUpdatedMetric` instance.
     ///
     /// - Parameters:
-    ///   - taskId: The unique identifier for the network task.
+    ///   - taskType: The type of network task.
+    ///   - createdAt: The timestamp when the network task was created.
     ///   - url: The URL associated with the progress update, if applicable.
     ///   - completedUnitCount: The number of units of work that have been completed.
     ///   - totalUnitCount: The total number of units of work for the task.
-    public init(taskId: UUID,
+    public init(taskType: TaskType,
+                createdAt: Date,
                 url: URL?,
                 completedUnitCount: Int64,
                 totalUnitCount: Int64)
     {
-        self.taskId = taskId
+        self.taskType = taskType
+        self.createdAt = createdAt
         self.url = url
         self.completedUnitCount = completedUnitCount
         self.totalUnitCount = totalUnitCount

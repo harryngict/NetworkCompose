@@ -9,9 +9,6 @@ import Foundation
 
 /// A metric capturing information about the creation of a network task.
 public struct TaskCreatedMetric: TaskMetric {
-    /// The unique identifier for the network task.
-    public var taskId: UUID
-
     /// The type of the network task.
     public var taskType: TaskType
 
@@ -27,18 +24,15 @@ public struct TaskCreatedMetric: TaskMetric {
     /// Initializes a `TaskCreatedMetric` instance.
     ///
     /// - Parameters:
-    ///   - taskId: The unique identifier for the network task.
     ///   - taskType: The type of the network task.
     ///   - createdAt: The timestamp when the metric was created.
     ///   - originalRequest: The original request associated with the network task.
     ///   - currentRequest: The current request associated with the network task, if applicable.
-    public init(taskId: UUID,
-                taskType: TaskType,
+    public init(taskType: TaskType,
                 createdAt: Date,
                 originalRequest: RequestMetric,
                 currentRequest: RequestMetric?)
     {
-        self.taskId = taskId
         self.taskType = taskType
         self.createdAt = createdAt
         self.originalRequest = originalRequest

@@ -121,11 +121,11 @@ public class ClientNetworkFactory {
     }
 
     private func performRequestReportMetric(completion: @escaping (String) -> Void) {
-        let request = NetworkRequestBuilder<User>(path: "/posts", method: .POST)
+        let request = NetworkRequestBuilder<User>(path: "/posts/asdasdsadsad", method: .POST)
             .build()
 
         try? NetworkCoreBuilder(baseURL: baseURL)
-            .setMetricInterceptor(LocalNetworkMetricInterceptor())
+            .setMetricInterceptor(DebugNetworkMetricInterceptor())
             .build()
             .request(request) { (result: Result<User, NetworkError>) in
                 switch result {
@@ -142,12 +142,16 @@ public class ClientNetworkFactory {
 
         NetworkCoreBuilder(baseURL: baseURL)
             .build()
-            .request(request, retryPolicy: .retry(count: 2, delay: 5)) { (result: Result<User, NetworkError>) in
-                switch result {
-                case let .failure(error): completion(error.localizedDescription)
-                case let .success(user): completion("\(user)")
-                }
+            .request(request, retryPolicy: .exponentialRetry(count: 3,
+                                                             initialDelay: 1,
+                                                             multiplier: 2.0,
+                                                             maxDelay: 30.0))
+        { (result: Result<User, NetworkError>) in
+            switch result {
+            case let .failure(error): completion(error.localizedDescription)
+            case let .success(user): completion("\(user)")
             }
+        }
     }
 
     private func performRequestMock(completion: @escaping (String) -> Void) {
@@ -169,8 +173,8 @@ public class ClientNetworkFactory {
 }
 
 extension ClientNetworkFactory: ReAuthenticationService {
-  public func reAuthen(completion: @escaping (Result<[String: String], NetworkError>) -> Void) {
-      // For testing now. In fact, this value should get `newtoken` from the real service
-      completion(.success(["jwt_token": "newtoken"]))
-  }
+    public func reAuthen(completion: @escaping (Result<[String: String], NetworkError>) -> Void) {
+        // For testing now. In fact, this value should get `newtoken` from the real service
+        completion(.success(["jwt_token": "newtoken"]))
+    }
 }

@@ -22,12 +22,12 @@ public enum NetworkTaskEvent: Codable, Sendable {
     case taskDidFinishCollecting(_ metric: TaskDidFinishCollectingMetric)
 
     /// The URL associated with the event, if applicable.
-    var url: URL? {
+    var name: String {
         switch self {
-        case let .taskCreated(metric): return metric.originalRequest.url
-        case let .taskProgressUpdated(metric): return metric.url
-        case let .taskCompleted(metric): return metric.originalRequest.url
-        case let .taskDidFinishCollecting(metric): return metric.url
+        case .taskCreated: return "TaskCreated"
+        case .taskProgressUpdated: return "TaskProgressUpdated"
+        case .taskCompleted: return "TaskCompleted"
+        case .taskDidFinishCollecting: return "TaskDidFinishCollecting"
         }
     }
 }

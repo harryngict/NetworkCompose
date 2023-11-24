@@ -152,16 +152,14 @@ Choose the SSL pinning hosts and hashes that match the servers you intend to com
 ## VI. How to use NetworkRetryPolicy to send a request
 
 ### 6.1. Create a NetworkRetryPolicy instance
-You can create an instance of `NetworkRetryPolicy` to control the behavior of request retries. Choose between .none for no retries or .retry(count: Int, delay: TimeInterval) to specify the number of retry attempts.
+You can create an instance of `NetworkRetryPolicy` to control the behavior of request retries.
 
 ```swift
-// Example: Create a retry policy allowing 3 retries with each delay 5.0 seconds
-let retryPolicy = NetworkRetryPolicy.retry(count: 2, delay: 5.0)
-```
+// Example: Retry up to 3 times with a constant delay of 5 seconds between attempts
+let constantRetry = NetworkRetryPolicy.constant(count: 3, delay: 5.0)
 
-```swift
-// Default delay will be 10.0 seconds
-let retryPolicy = NetworkRetryPolicy.retry(count: 3)
+// Example: Retry up to 5 times with exponential backoff starting from 1 second, multiplying by 5, and capping at 30 seconds
+let exponentialRetry = NetworkRetryPolicy.exponentialRetry(count: 5, initialDelay: 1.0, multiplier: 5.0, maxDelay: 30.0)
 ```
 
 ## VII. How to create ReAuthenticationService for automatic Re-authentication
@@ -274,7 +272,7 @@ let request = NetworkRequestBuilder<User>(path: "/posts/1/retry", method: .PUT)
     .build()
 NetworkCoreBuilder(baseURL: baseURL)
     .build()
-    .request(request, retryPolicy: .retry(count: 2, delay: 5)) { (result: Result<User, NetworkError>) in
+    .request(request, retryPolicy: .constant(count: 2, delay: 5)) { (result: Result<User, NetworkError>) in
         self.handleResult(result)
     }
 ```

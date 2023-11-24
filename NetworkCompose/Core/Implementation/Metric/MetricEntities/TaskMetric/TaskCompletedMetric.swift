@@ -9,9 +9,6 @@ import Foundation
 
 /// A metric capturing information about the completion of a network task.
 public struct TaskCompletedMetric: TaskMetric {
-    /// The unique identifier for the network task.
-    public var taskId: UUID
-
     /// The type of network task.
     public var taskType: TaskType
 
@@ -39,7 +36,6 @@ public struct TaskCompletedMetric: TaskMetric {
     /// Initializes a `TaskCompletedMetric` instance.
     ///
     /// - Parameters:
-    ///   - taskId: The unique identifier for the network task.
     ///   - taskType: The type of network task.
     ///   - createdAt: The timestamp when the network task was created.
     ///   - originalRequest: The original request metrics associated with the network task.
@@ -48,8 +44,7 @@ public struct TaskCompletedMetric: TaskMetric {
     ///   - error: The error metrics associated with the network task, if an error occurred.
     ///   - requestBody: The data representing the request body, if applicable.
     ///   - responseBody: The data representing the response body, if applicable.
-    public init(taskId: UUID,
-                taskType: TaskType,
+    public init(taskType: TaskType,
                 createdAt: Date,
                 originalRequest: RequestMetric,
                 currentRequest: RequestMetric?,
@@ -58,7 +53,6 @@ public struct TaskCompletedMetric: TaskMetric {
                 requestBody: Data?,
                 responseBody: Data?)
     {
-        self.taskId = taskId
         self.taskType = taskType
         self.createdAt = createdAt
         self.originalRequest = originalRequest

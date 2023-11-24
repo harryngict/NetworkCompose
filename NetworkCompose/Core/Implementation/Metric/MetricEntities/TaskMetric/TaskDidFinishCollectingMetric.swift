@@ -29,6 +29,9 @@ public struct TaskDidFinishCollectingMetric: TaskMetric {
     /// The count of bytes sent during the network task.
     public let countOfBytesSent: Int64
 
+    /// The status code of network task
+    public let statusCode: Int
+
     /// Initializes a `TaskDidFinishCollectingMetric` instance.
     ///
     /// - Parameters:
@@ -39,12 +42,14 @@ public struct TaskDidFinishCollectingMetric: TaskMetric {
     ///   - transactionMetrics: Transaction metrics associated with the network task.
     ///   - countOfBytesReceived: The count of bytes received during the network task.
     ///   - countOfBytesSent: The count of bytes sent during the network task.
+    ///   - statusCode: The status of network task
     init(taskType: TaskType,
          createdAt: Date,
          url: URL?,
          taskInterval: DateInterval,
          countOfBytesReceived: Int64,
-         countOfBytesSent: Int64)
+         countOfBytesSent: Int64,
+         statusCode: Int)
     {
         self.taskType = taskType
         self.createdAt = createdAt
@@ -52,5 +57,6 @@ public struct TaskDidFinishCollectingMetric: TaskMetric {
         self.taskInterval = taskInterval
         self.countOfBytesReceived = countOfBytesReceived
         self.countOfBytesSent = countOfBytesSent
+        self.statusCode = statusCode
     }
 }
