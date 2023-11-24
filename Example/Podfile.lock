@@ -1,26 +1,26 @@
 PODS:
-  - NetworkSwift/Core (0.0.9)
-  - NetworkSwift/CoreMocks (0.0.9):
-    - NetworkSwift/Core
-  - NetworkSwift/Queue (0.0.9):
-    - NetworkSwift/Core
-  - NetworkSwift/QueueMocks (0.0.9):
-    - NetworkSwift/Core
-    - NetworkSwift/Queue
+  - NetworkCompose/Core (0.0.1)
+  - NetworkCompose/CoreMocks (0.0.1):
+    - NetworkCompose/Core
+  - NetworkCompose/Queue (0.0.1):
+    - NetworkCompose/Core
+  - NetworkCompose/QueueMocks (0.0.1):
+    - NetworkCompose/Core
+    - NetworkCompose/Queue
 
 DEPENDENCIES:
-  - NetworkSwift/Core (from `../`)
-  - NetworkSwift/CoreMocks (from `../`)
-  - NetworkSwift/Queue (from `../`)
-  - NetworkSwift/QueueMocks (from `../`)
+  - NetworkCompose/Core (from `../`)
+  - NetworkCompose/CoreMocks (from `../`)
+  - NetworkCompose/Queue (from `../`)
+  - NetworkCompose/QueueMocks (from `../`)
 
 EXTERNAL SOURCES:
-  NetworkSwift:
+  NetworkCompose:
     :path: "../"
 
 SPEC CHECKSUMS:
-  NetworkSwift: 1ad88b6eb8d93bad01795e6db26b49742882212a
+  NetworkCompose: b6adc547d007e2d6894b916cc0d398c8e67f0a0f
 
-PODFILE CHECKSUM: 9967ee75eb2dfc83c34293716548f0df0ad83818
+PODFILE CHECKSUM: b61ea0f6dca625f3da6b87c77dfc57a2e71704f6
 
 COCOAPODS: 1.12.1

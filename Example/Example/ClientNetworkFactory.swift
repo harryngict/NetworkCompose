@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import NetworkSwift
+import NetworkCompose
 
 enum Constant {
     static let baseURL: String = "https://jsonplaceholder.typicode.com"

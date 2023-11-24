@@ -1,6 +1,6 @@
-# NetworkSwift
+# NetworkCompose
 
-**NetworkSwift** is a versatile and lightweight networking library designed for flexibility, supporting various session types, including URLSession.
+**NetworkCompose** is a versatile and lightweight networking library designed for flexibility, supporting various session types, including URLSession.
 
 ## Table of Contents
 
@@ -54,7 +54,7 @@ XI. [License](#xi-license)
 
 ## II. Testability
 
-For improved testability, `NetworkSwift` provides mock implementations, empowering developers to write effective unit tests. This ensures robustness in various scenarios and easy validation of the library's behavior.
+For improved testability, `NetworkCompose` provides mock implementations, empowering developers to write effective unit tests. This ensures robustness in various scenarios and easy validation of the library's behavior.
 
 
 ## III. Integration
@@ -74,26 +74,26 @@ CocoaPods is a dependency manager for Swift projects and makes integration easie
      **Application**:
    
     ```ruby
-    pod 'NetworkSwift/Core',  'latest version'
-    pod 'NetworkSwift/Queue', 'latest version'
+    pod 'NetworkCompose/Core',  'latest version'
+    pod 'NetworkCompose/Queue', 'latest version'
     ```
 
     **Testing**:
 
     ```ruby
-    pod 'NetworkSwift/CoreMocks',   'latest version'
-    pod 'NetworkSwift/QueueMocks',  'latest version'
+    pod 'NetworkCompose/CoreMocks',   'latest version'
+    pod 'NetworkCompose/QueueMocks',  'latest version'
     ```
     
-Please check latest version [here](https://github.com/harryngict/NetworkSwift/blob/develop/NetworkSwift.podspec)
+Please check latest version [here](https://github.com/harryngict/NetworkCompose/blob/develop/NetworkCompose.podspec)
 
-3. Install NetworkSwift by executing the following in the Xcode project directory.
+3. Install NetworkCompose by executing the following in the Xcode project directory.
 
     ```bash
     pod install
     ```
 
-4. Now, open your project workspace and check if NetworkSwift is properly added.
+4. Now, open your project workspace and check if NetworkCompose is properly added.
 
 ## IV. How to create NetworkRequest
 ### 4.1. Using NetworkRequestBuilder
@@ -293,16 +293,16 @@ service.sendRequest(request) { (result: Result<[User], NetworkError>) in
 ```
 
 
-Thats it!! `NetworkSwift` is successfully integrated and initialized in the project, and ready to use. 
+Thats it!! `NetworkCompose` is successfully integrated and initialized in the project, and ready to use. 
 
-For more detail please go to [Example project](https://github.com/harryngict/NetworkSwift/blob/master/Example/Example/Client/ClientNetworkFactory.swift).
+For more detail please go to [Example project](https://github.com/harryngict/NetworkCompose/blob/master/Example/Example/Client/ClientNetworkFactory.swift).
 
 ## IX. Support
-Feel free to utilize [JSONPlaceholder](https://jsonplaceholder.typicode.com/guide/) for testing API in `NetworkSwift` examples. If you encounter any issues with `NetworkSwift` or need assistance with
+Feel free to utilize [JSONPlaceholder](https://jsonplaceholder.typicode.com/guide/) for testing API in `NetworkCompose` examples. If you encounter any issues with `NetworkCompose` or need assistance with
 integration, please reach out to me at harryngict@gmail.com. I'm here to support you.
 
 ## X. Contributing
-If you want to contribute to `NetworkSwift`, please follow these steps:
+If you want to contribute to `NetworkCompose`, please follow these steps:
 
 1. Fork the repository.
 
@@ -311,4 +311,4 @@ If you want to contribute to `NetworkSwift`, please follow these steps:
 3. Make your changes and submit a pull request.
 
 ## XI. License
-NetworkSwift is available under the MIT license. See the [LICENSE](https://github.com/harryngict/NetworkSwift/blob/master/LICENSE) file for more information.
+NetworkCompose is available under the MIT license. See the [LICENSE](https://github.com/harryngict/NetworkCompose/blob/master/LICENSE) file for more information.

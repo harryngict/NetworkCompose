@@ -5,11 +5,11 @@ platform :ios, '12.0'
 use_frameworks!
 
 target 'Example' do
-  pod 'NetworkSwift/Core',  :path => '../'
-  pod 'NetworkSwift/CoreMocks', :path => '../'
+  pod 'NetworkCompose/Core',  :path => '../'
+  pod 'NetworkCompose/CoreMocks', :path => '../'
   
-  pod 'NetworkSwift/Queue',  :path => '../'
-  pod 'NetworkSwift/QueueMocks',  :path => '../'
+  pod 'NetworkCompose/Queue',  :path => '../'
+  pod 'NetworkCompose/QueueMocks',  :path => '../'
 end
 
 target 'ExampleTests' do

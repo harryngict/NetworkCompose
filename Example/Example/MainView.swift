@@ -36,7 +36,7 @@ struct MainView: View {
                     }
                 }
             }
-            .navigationBarTitle("NetworkSwift", displayMode: .inline)
+            .navigationBarTitle("NetworkCompose", displayMode: .inline)
         }
     }
 }

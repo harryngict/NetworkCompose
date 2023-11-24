@@ -513,10 +513,10 @@
 					"-framework",
 					"\"Foundation\"",
 					"-framework",
-					"\"NetworkSwift\"",
+					"\"NetworkCompose\"",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.NetworkSwift.Example;
+				PRODUCT_BUNDLE_IDENTIFIER = com.NetworkCompose.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -552,10 +552,10 @@
 					"-framework",
 					"\"Foundation\"",
 					"-framework",
-					"\"NetworkSwift\"",
+					"\"NetworkCompose\"",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.NetworkSwift.Example;
+				PRODUCT_BUNDLE_IDENTIFIER = com.NetworkCompose.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -585,7 +585,7 @@
 					"\"Foundation\"",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.NetworkSwift.ExampleTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.NetworkCompose.ExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -617,7 +617,7 @@
 					"\"Foundation\"",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.NetworkSwift.ExampleTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.NetworkCompose.ExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;

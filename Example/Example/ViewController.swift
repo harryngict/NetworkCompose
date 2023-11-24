@@ -5,7 +5,7 @@
 //  Created by Hoang Nguyen on 28/10/23.
 //
 
-import NetworkSwift
+import NetworkCompose
 import SwiftUI
 import UIKit
 

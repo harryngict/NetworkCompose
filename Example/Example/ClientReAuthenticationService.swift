@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import NetworkSwift
+import NetworkCompose
 
 /// A service responsible for handling client re-authentication.
 ///
@@ -37,7 +37,7 @@ final class ClientReAuthenticationService: ReAuthenticationService {
     ///
     /// - Note: This implementation is for testing purposes. In a production environment, this method should interact
     ///         with the actual re-authentication service to obtain a new token.
-    func reAuthen(completion: @escaping (Result<[String: String], NetworkSwift.NetworkError>) -> Void) {
+    func reAuthen(completion: @escaping (Result<[String: String], NetworkError>) -> Void) {
         // For testing now. In fact, this value should get `newtoken` from the real service
         completion(.success(["jwt_token": "newtoken"]))
     }
