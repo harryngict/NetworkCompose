@@ -1,6 +1,6 @@
 //
 //  NetworkQueue.swift
-//  NetworkCompose/Queue
+//  NetworkCompose
 //
 //  Created by Hoang Nguyen on 17/11/23.
 //
@@ -14,9 +14,9 @@ import Foundation
 /// let baseURL = URL(string: "https://api.example.com")!
 /// let networkQueue = NetworkQueue(baseURL: baseURL)
 /// ```
-public final class NetworkQueue<SessionType: NetworkSession>: NetworkQueueInterface {
+final class NetworkQueue<SessionType: NetworkSession>: NetworkQueueInterface {
     /// The underlying network responsible for handling network requests.
-    private let network: NetworkCore<SessionType>
+    private let network: NetworkInterface
 
     /// The operation queue manager used to  network operations.
     private let operationQueue: OperationQueueManager
@@ -36,7 +36,7 @@ public final class NetworkQueue<SessionType: NetworkSession>: NetworkQueueInterf
     ///   - networkReachability: The network reachability object. Default is `NetworkReachabilityImp.shared`.
     ///   - executeQueue: The dispatch queue for executing network requests.
     ///   - observeQueue: The dispatch queue for observing and handling network events.
-    public init(
+    init(
         baseURL: URL,
         session: SessionType = URLSession.shared,
         reAuthService: ReAuthenticationService? = nil,
@@ -47,11 +47,11 @@ public final class NetworkQueue<SessionType: NetworkSession>: NetworkQueueInterf
     ) {
         self.reAuthService = reAuthService
         self.operationQueue = operationQueue
-        network = NetworkCore(baseURL: baseURL,
-                              session: session,
-                              networkReachability: networkReachability,
-                              executeQueue: executeQueue,
-                              observeQueue: observeQueue)
+        network = Network(baseURL: baseURL,
+                          session: session,
+                          networkReachability: networkReachability,
+                          executeQueue: executeQueue,
+                          observeQueue: observeQueue)
     }
 
     // MARK: Public Methods
@@ -63,7 +63,7 @@ public final class NetworkQueue<SessionType: NetworkSession>: NetworkQueueInterf
     ///   - headers: Additional headers to include in the request.
     ///   - retryPolicy: The retry policy for the network request.
     ///   - completion: The completion handler to be called when the request is complete.
-    public func request<RequestType: NetworkRequestInterface>(
+    func request<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
         retryPolicy: NetworkRetryPolicy = .none,

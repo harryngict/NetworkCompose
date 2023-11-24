@@ -1,6 +1,6 @@
 //
-//  NetworkCoreMock.swift
-//  NetworkCompose/CoreMocks
+//  NetworkMock.swift
+//  NetworkCompose
 //
 //  Created by Hoang Nguyen on 18/11/23.
 //
@@ -8,7 +8,7 @@
 import Foundation
 import Network
 
-public class NetworkCoreMock: NetworkCoreInterface {
+public class NetworkMock: NetworkInterface {
     public init() {}
     public init(networkReachability: NetworkReachability) {
         _networkReachability = networkReachability

@@ -1,6 +1,6 @@
 //
-//  NetworkCoreInterface.swift
-//  NetworkCompose/Core
+//  NetworkInterface.swift
+//  NetworkCompose
 //
 //  Created by Hoang Nguyen on 11/11/23.
 //
@@ -8,7 +8,7 @@
 import Foundation
 
 /// A protocol representing the network communication interface.
-public protocol NetworkCoreInterface: AnyObject {
+public protocol NetworkInterface: AnyObject {
     /// Asynchronously sends a network request and returns the result.
     ///
     /// - Parameters:
@@ -71,9 +71,55 @@ public protocol NetworkCoreInterface: AnyObject {
         retryPolicy: NetworkRetryPolicy,
         completion: @escaping (Result<URL, NetworkError>) -> Void
     )
+}
 
-    /// The network reachability status.
-    ///
-    /// Use this property to determine the current network reachability status.
-    var networkReachability: NetworkReachability { get }
+public extension NetworkInterface {
+    @available(iOS 15.0, *)
+    func request<RequestType: NetworkRequestInterface>(
+        _ request: RequestType,
+        andHeaders headers: [String: String] = [:],
+        retryPolicy: NetworkRetryPolicy = .none
+    ) async throws -> RequestType.SuccessType {
+        try await self.request(request,
+                               andHeaders: headers,
+                               retryPolicy: retryPolicy)
+    }
+
+    func request<RequestType: NetworkRequestInterface>(
+        _ request: RequestType,
+        andHeaders headers: [String: String] = [:],
+        retryPolicy: NetworkRetryPolicy = .none,
+        completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
+    ) {
+        self.request(request,
+                     andHeaders: headers,
+                     retryPolicy: retryPolicy,
+                     completion: completion)
+    }
+
+    func uploadFile<RequestType: NetworkRequestInterface>(
+        _ request: RequestType,
+        andHeaders headers: [String: String] = [:],
+        fromFile fileURL: URL,
+        retryPolicy: NetworkRetryPolicy = .none,
+        completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
+    ) {
+        uploadFile(request,
+                   andHeaders: headers,
+                   fromFile: fileURL,
+                   retryPolicy: retryPolicy,
+                   completion: completion)
+    }
+
+    func downloadFile<RequestType: NetworkRequestInterface>(
+        _ request: RequestType,
+        andHeaders headers: [String: String],
+        retryPolicy: NetworkRetryPolicy,
+        completion: @escaping (Result<URL, NetworkError>) -> Void
+    ) {
+        downloadFile(request,
+                     andHeaders: headers,
+                     retryPolicy: retryPolicy,
+                     completion: completion)
+    }
 }

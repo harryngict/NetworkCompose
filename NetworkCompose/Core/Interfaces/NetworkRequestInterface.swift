@@ -1,6 +1,6 @@
 //
 //  NetworkRequestInterface.swift
-//  NetworkCompose/Core
+//  NetworkCompose
 //
 //  Created by Hoang Nguyen on 11/11/23.
 //

@@ -1,6 +1,6 @@
 //
 //  ResponseDecoderMock.swift
-//  NetworkCompose/CoreMocks
+//  NetworkCompose
 //
 //  Created by Hoang Nguyen on 18/11/23.
 //

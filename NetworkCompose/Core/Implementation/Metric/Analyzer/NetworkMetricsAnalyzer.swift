@@ -1,6 +1,6 @@
 //
 //  NetworkMetricsAnalyzer.swift
-//  NetworkCompose/Core
+//  NetworkCompose
 //
 //  Created by Hoang Nguyen on 24/11/23.
 //
@@ -28,10 +28,10 @@ final class NetworkMetricsAnalyzer {
         guard let originalRequest = task.originalRequest else {
             return
         }
-        sendEvent(.taskCreated(TaskCreatedMetric(taskType: TaskType(task: task),
-                                                 createdAt: Date(),
-                                                 originalRequest: RequestMetric(originalRequest),
-                                                 currentRequest: task.currentRequest.map(RequestMetric.init))))
+        sendEvent(.created(TaskCreatedMetric(taskType: TaskType(task: task),
+                                             createdAt: Date(),
+                                             originalRequest: RequestMetric(originalRequest),
+                                             currentRequest: task.currentRequest.map(RequestMetric.init))))
     }
 
     /// Tracks the completion of a network task with or without an error and generates a `TaskCompletedMetric`.
@@ -43,14 +43,14 @@ final class NetworkMetricsAnalyzer {
         guard let originalRequest = task.originalRequest else {
             return
         }
-        sendEvent(.taskCompleted(TaskCompletedMetric(taskType: TaskType(task: task),
-                                                     createdAt: Date(),
-                                                     originalRequest: RequestMetric(originalRequest),
-                                                     currentRequest: task.currentRequest.map(RequestMetric.init),
-                                                     response: task.response.map(ResponseMetric.init),
-                                                     error: error.map(ResponseErrorMetric.init),
-                                                     requestBody: originalRequest.httpBody ?? originalRequest.httpBodyStreamData(),
-                                                     responseBody: nil)))
+        sendEvent(.completed(TaskCompletedMetric(taskType: TaskType(task: task),
+                                                 createdAt: Date(),
+                                                 originalRequest: RequestMetric(originalRequest),
+                                                 currentRequest: task.currentRequest.map(RequestMetric.init),
+                                                 response: task.response.map(ResponseMetric.init),
+                                                 error: error.map(ResponseErrorMetric.init),
+                                                 requestBody: originalRequest.httpBody ?? originalRequest.httpBodyStreamData(),
+                                                 responseBody: nil)))
     }
 
     /// Tracks the progress update of a network task and generates a `TaskProgressUpdatedMetric`.
@@ -59,11 +59,11 @@ final class NetworkMetricsAnalyzer {
     ///   - task: The network task that updated its progress.
     ///   - progress: A tuple containing the completed and total bytes of the task.
     func trackTaskDidUpdateProgress(_ task: URLSessionTask, didUpdateProgress progress: (completed: Int64, total: Int64)) {
-        sendEvent(.taskProgressUpdated(TaskProgressUpdatedMetric(taskType: TaskType(task: task),
-                                                                 createdAt: Date(),
-                                                                 url: task.originalRequest?.url,
-                                                                 completedUnitCount: progress.completed,
-                                                                 totalUnitCount: progress.total)))
+        sendEvent(.progressUpdated(TaskProgressUpdatedMetric(taskType: TaskType(task: task),
+                                                             createdAt: Date(),
+                                                             url: task.originalRequest?.url,
+                                                             completedUnitCount: progress.completed,
+                                                             totalUnitCount: progress.total)))
     }
 
     /// Tracks the completion of collecting metrics for a network task and generates a `TaskDidFinishCollectingMetric`.
@@ -73,13 +73,13 @@ final class NetworkMetricsAnalyzer {
     ///   - metrics: The collected URLSessionTaskMetrics.
     func trackTaskDidFinishCollecting(_ task: URLSessionTask, metrics: URLSessionTaskMetrics) {
         let statusCode = (metrics.transactionMetrics.first?.response as? HTTPURLResponse)?.statusCode ?? -1
-        sendEvent(.taskDidFinishCollecting(TaskDidFinishCollectingMetric(taskType: TaskType(task: task),
-                                                                         createdAt: Date(),
-                                                                         url: task.originalRequest?.url,
-                                                                         taskInterval: metrics.taskInterval,
-                                                                         countOfBytesReceived: task.countOfBytesReceived,
-                                                                         countOfBytesSent: task.countOfBytesSent,
-                                                                         statusCode: statusCode)))
+        sendEvent(.didFinishCollecting(TaskDidFinishCollectingMetric(taskType: TaskType(task: task),
+                                                                     createdAt: Date(),
+                                                                     url: task.originalRequest?.url,
+                                                                     taskInterval: metrics.taskInterval,
+                                                                     countOfBytesReceived: task.countOfBytesReceived,
+                                                                     countOfBytesSent: task.countOfBytesSent,
+                                                                     statusCode: statusCode)))
     }
 
     /// Sends a network task event to the associated metric interceptor.

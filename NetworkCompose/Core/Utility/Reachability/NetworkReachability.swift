@@ -1,6 +1,6 @@
 //
 //  NetworkReachability.swift
-//  NetworkCompose/Core
+//  NetworkCompose
 //
 //  Created by Hoang Nguyen on 19/11/23.
 //

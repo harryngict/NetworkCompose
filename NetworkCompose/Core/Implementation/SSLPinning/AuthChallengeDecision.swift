@@ -1,6 +1,6 @@
 //
 //  AuthChallengeDecision.swift
-//  NetworkCompose/Core
+//  NetworkCompose
 //
 //  Created by Hoang Nguyen on 21/11/23.
 //

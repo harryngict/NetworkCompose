@@ -25,14 +25,12 @@ struct DetailView: View {
             }
         }
         .onAppear {
-            guard let baseURL = URL(string: Constant.baseURL) else {
-                return
-            }
-
-            ClientNetworkFactory(baseURL: baseURL).makeRequest(for: type) { receivedResult in
-                result = receivedResult
-                isLoading = false
-            }
+            ClientNetworkDemo
+                .shared
+                .makeRequest(for: type) { receivedResult in
+                    result = receivedResult
+                    isLoading = false
+                }
         }
     }
 }

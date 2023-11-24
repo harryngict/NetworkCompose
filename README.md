@@ -22,7 +22,7 @@ VI. [How to use NetworkRetryPolicy to send a request](#vi-how-to-use-networkretr
    
 VII. [How to create ReAuthenticationService for automatic Re-authentication](#vii-how-to-create-reauthenticationservice-for-automatic-re-authentication)
 
-VIII. [How NetworkCore and NetworkQueue send a request](#viii-how-networkcore-and-networkqueue-send-a-request)
+VIII. [How Network and NetworkQueue send a request](#viii-how-network-and-networkqueue-send-a-request)
    - 8.1. [Request async await for iOS-15 above](#81-request-async-await-for-ios-15-above)
    - 8.2. [Request completion closure](#82-request-completion-closure)
    - 8.3. [Request and auto re-authentication](#83-request-and-auto-re-authentication)
@@ -191,7 +191,7 @@ class YourAutoReAuthenticationService: ReAuthenticationService {
 }
 ```
 
-## VIII. How NetworkCore and NetworkQueue send a request
+## VIII. How Network and NetworkQueue send a request
 
 ```swift
 enum Constant {
@@ -203,7 +203,7 @@ enum Constant {
 ```swift
 let request = NetworkRequestBuilder<[User]>(path: "/posts", method: .GET)
     .build()
-let service = NetworkCoreBuilder(baseURL: baseURL).build()    
+let service = NetworkBuilder(baseURL: baseURL).build()    
 let result: [User] = try await service.sendRequest(request)
 self.handleResult(result)
 ```
@@ -214,7 +214,7 @@ self.handleResult(result)
 let request = NetworkRequestBuilder<[User]>(path: "/comments", method: .GET)
     .setQueryParameters(["postId": "1"])
     .build()
-NetworkCoreBuilder(baseURL: baseURL)
+NetworkBuilderBase(baseURL: baseURL)
     .build()
     .request(request) { (result: Result<[User], NetworkError>) in
         self.handleResult(result)
@@ -246,7 +246,7 @@ let request = NetworkRequestBuilder<User>(path: "/posts/1", method: .PUT)
     .build()
 let sslPinningHost = NetworkSSLPinningImp(host: "jsonplaceholder.typicode.com",
                                           hashKeys: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])
-try? NetworkCoreBuilder(baseURL: baseURL)
+try? NetworkBuilder(baseURL: baseURL)
     .setSSLPinningPolicy(.trust([sslPinningHost]))
     .build()
     .request(request) { (result: Result<User, NetworkError>) in
@@ -258,7 +258,7 @@ try? NetworkCoreBuilder(baseURL: baseURL)
 ```swift
 let request = NetworkRequestBuilder<User>(path: "/posts", method: .POST)
     .build()
-try? NetworkCoreBuilder(baseURL: baseURL)
+try? NetworkBuilder(baseURL: baseURL)
     .setMetricInterceptor(LocalNetworkMetricInterceptor())
     .build()
     .request(request) { (result: Result<User, NetworkError>) in
@@ -270,7 +270,7 @@ try? NetworkCoreBuilder(baseURL: baseURL)
 let request = NetworkRequestBuilder<User>(path: "/posts/1/retry", method: .PUT)
     .setQueryParameters(["title": "foo"])
     .build()
-NetworkCoreBuilder(baseURL: baseURL)
+NetworkBuilder(baseURL: baseURL)
     .build()
     .request(request, retryPolicy: .constant(count: 2, delay: 5)) { (result: Result<User, NetworkError>) in
         self.handleResult(result)
@@ -284,7 +284,7 @@ let successResult = NetworkResultMock.requestSuccess(
 )
 let session = NetworkSessionMock<[User]>(expected: successResult)
 let request = NetworkRequestBuilder<User>(path: "/posts", method: .GET).build()
-let service = NetworkCoreBuilder<NetworkSessionMock>(baseURL: baseURL, session: session).build()
+let service = NetworkBuilderBase<NetworkSessionMock>(baseURL: baseURL, session: session).build()
 service.sendRequest(request) { (result: Result<[User], NetworkError>) in
     self.handleResult(result)
 }

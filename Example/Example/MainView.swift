@@ -14,7 +14,7 @@ enum ExampleType: String {
     case requestWithSSL = "Request with SSL Pinning"
     case requestReportMetric = "Request with report metric"
     case requestRetry = "Request with retry"
-    case requestMock = "Request mocking support for unit tests"
+    case requestSupportAutomation = "Request demo for automation test"
 }
 
 struct MainView: View {
@@ -23,7 +23,7 @@ struct MainView: View {
     let types: [ExampleType] = [.requestAsync, .requestCompletion,
                                 .requestQueue, .requestWithSSL,
                                 .requestReportMetric, .requestRetry,
-                                .requestMock]
+                                .requestSupportAutomation]
 
     var body: some View {
         NavigationView {

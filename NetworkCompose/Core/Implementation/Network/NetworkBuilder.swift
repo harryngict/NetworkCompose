@@ -1,5 +1,5 @@
 //
-//  NetworkQueueBuilder.swift
+//  NetworkBuilder.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 24/11/23.
@@ -7,28 +7,26 @@
 
 import Foundation
 
-/// A builder for constructing instances of `NetworkQueue`.
+/// A builder for constructing instances of `Network`.
 ///
-/// Example usage:
+/// This builder provides a convenient way to create and configure a `NetworkInterface` instance for making network requests.
+///
+/// ## Example Usage
 /// ```swift
 /// let baseURL = URL(string: "https://api.example.com")!
-/// let networkQueue = NetworkQueueBuilder(baseURL: baseURL)
-///     .setReAuthService(yourReAuthService)
-///     .setSecurityTrust(yourSecurityTrust)
+/// let network = try? NetworkBuilder(baseURL: baseURL)
+///     .setSSLPinningPolicy(yourSSLPinningPolicy)
 ///     .build()
 /// ```
-public class NetworkQueueBuilder<SessionType: NetworkSession>: NetworkBuilderBase<SessionType> {
-    /// The re-authentication service associated with the builder.
-    private var reAuthService: ReAuthenticationService?
-
-    /// Initializes a `NetworkQueueBuilder` with a base URL and a default session.
+public class NetworkBuilder<SessionType: NetworkSession>: NetworkBuilderBase<SessionType> {
+    /// Initializes a `NetworkCompose` with a base URL and a default session.
     ///
     /// - Parameters:
     ///   - baseURL: The base URL for network requests.
-    ///   - session: The network session to use for requests. Defaults to `URLSession.shared`.
+    ///   - session: The network session to use for requests. Default is `URLSession.shared`.
     ///   - networkReachability: The network reachability object. Default is `NetworkReachabilityImp.shared`.
-    ///   - executeQueue: The dispatch queue for executing network requests.
-    ///   - observeQueue: The dispatch queue for observing and handling network events.
+    ///   - executeQueue: The dispatch queue for executing network requests. Default is `DefaultNetworkDispatchQueue.executeQueue`.
+    ///   - observeQueue: The dispatch queue for observing and handling network events. Default is `DefaultNetworkDispatchQueue.observeQueue`.
     ///   - strategy: The network strategy to be applied. Default is `.server`.
     public required init(baseURL: URL,
                          session: SessionType = URLSession.shared,
@@ -45,34 +43,25 @@ public class NetworkQueueBuilder<SessionType: NetworkSession>: NetworkBuilderBas
                    strategy: strategy)
     }
 
-    /// Sets the re-authentication service for the builder.
+    /// Builds and returns a `NetworkInterface` instance with the configured parameters.
     ///
-    /// - Parameter reAuthService: The service responsible for re-authentication.
-    /// - Returns: The builder instance for method chaining.
-    public func setReAuthService(_ reAuthService: ReAuthenticationService?) -> Self {
-        self.reAuthService = reAuthService
-        return self
-    }
-
-    /// Builds and returns a `NetworkQueueInterface` instance with the configured parameters.
-    ///
-    /// - Returns: A fully configured `NetworkQueueInterface` instance.
-    public func build() -> NetworkQueueInterface {
+    /// - Returns: A fully configured `NetworkInterface` instance.
+    /// - Throws: A `NetworkError` if the session cannot be created.
+    public func build() -> NetworkInterface {
         switch strategy {
         case let .mocker(provider):
-            return NetworkQueueDecorator(
+            return NetworkDecorator(
                 baseURL: baseURL,
                 session: session,
-                reAuthService: reAuthService,
                 executeQueue: executeQueue,
                 observeQueue: observeQueue,
                 expectations: provider.networkExpectations
             )
+
         case .server:
-            return NetworkQueue(
+            return Network(
                 baseURL: baseURL,
                 session: session,
-                reAuthService: reAuthService,
                 networkReachability: networkReachability,
                 executeQueue: executeQueue,
                 observeQueue: observeQueue

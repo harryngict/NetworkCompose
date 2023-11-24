@@ -1,6 +1,6 @@
 //
 //  NetworkError.swift
-//  NetworkCompose/Core
+//  NetworkCompose
 //
 //  Created by Hoang Nguyen on 11/11/23.
 //
@@ -21,7 +21,7 @@ import Foundation
 ///     print("Localized Description: \(error.localizedDescription)")
 /// }
 /// ```
-public enum NetworkError: Error, Codable, Sendable {
+public enum NetworkError: Error, Sendable, Equatable, Hashable {
     /// Represents an error when the URL is malformed.
     ///
     /// - Parameters:

@@ -1,6 +1,6 @@
 //
 //  NetworkSessionMock.swift
-//  NetworkCompose/CoreMocks
+//  NetworkCompose
 //
 //  Created by Hoang Nguyen on 11/11/23.
 //
@@ -10,9 +10,9 @@ import Foundation
 public final class NetworkSessionMock<T: Decodable>: NetworkSession {
     public typealias NetworkRequestType = NetworkRequestMock<T>
 
-    private var expected: NetworkResultMock
+    private var expected: NetworkExpectation.Response
 
-    public init(expected: NetworkResultMock) {
+    public init(expected: NetworkExpectation.Response) {
         self.expected = expected
     }
 
@@ -35,7 +35,8 @@ public final class NetworkSessionMock<T: Decodable>: NetworkSession {
     ) async throws -> NetworkResponse {
         switch expected {
         case let .failure(error): throw error
-        case let .requestSuccess(response): return response
+        case let .successResponse(response):
+            return NetworkResponseMock(response: response)
         default: throw NetworkError.invalidResponse
         }
     }

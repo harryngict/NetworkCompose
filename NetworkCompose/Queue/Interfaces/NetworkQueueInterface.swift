@@ -1,6 +1,6 @@
 //
 //  NetworkQueueInterface.swift
-//  NetworkCompose/Queue
+//  NetworkCompose
 //
 //  Created by Hoang Nguyen on 17/11/23.
 //
@@ -29,4 +29,18 @@ public protocol NetworkQueueInterface: AnyObject {
         retryPolicy: NetworkRetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     )
+}
+
+public extension NetworkQueueInterface {
+    func request<RequestType: NetworkRequestInterface>(
+        _ request: RequestType,
+        andHeaders headers: [String: String] = [:],
+        retryPolicy: NetworkRetryPolicy = .none,
+        completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
+    ) {
+        self.request(request,
+                     andHeaders: headers,
+                     retryPolicy: retryPolicy,
+                     completion: completion)
+    }
 }
