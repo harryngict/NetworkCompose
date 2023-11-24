@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// A builder for constructing instances of `NetworkQueueImp`.
+/// A builder for constructing instances of `NetworkQueue`.
 ///
 /// Example usage:
 /// ```swift
@@ -17,7 +17,7 @@ import Foundation
 ///     .setSecurityTrust(yourSecurityTrust)
 ///     .build()
 /// ```
-public class NetworkQueueBuilder<SessionType: NetworkSession>: NetworkBuilderBase<SessionType> {
+public class NetworkQueueBuilder<SessionType: NetworkSession>: NetworkComposerBase<SessionType> {
     public var reAuthService: ReAuthenticationService?
 
     /// Initializes a `NetworkQueueBuilder` with a base URL and a default session.
@@ -50,11 +50,11 @@ public class NetworkQueueBuilder<SessionType: NetworkSession>: NetworkBuilderBas
         return self
     }
 
-    /// Builds and returns a `NetworkQueueImp` instance with the configured parameters.
+    /// Builds and returns a `NetworkQueue` instance with the configured parameters.
     ///
-    /// - Returns: A fully configured `NetworkQueueImp` instance.
-    public func build() -> NetworkQueueImp<SessionType> {
-        return NetworkQueueImp(
+    /// - Returns: A fully configured `NetworkQueue` instance.
+    public func build() -> NetworkQueue<SessionType> {
+        return NetworkQueue(
             baseURL: baseURL,
             session: session,
             reAuthService: reAuthService,

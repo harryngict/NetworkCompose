@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class NetworkQueueMock: NetworkQueue {
+public class NetworkQueueMock: NetworkQueueInterface {
     public init() {}
     public init(reAuthService: ReAuthenticationService? = nil) {
         self.reAuthService = reAuthService

@@ -52,7 +52,7 @@ public class ClientNetworkFactory {
                 do {
                     let request = NetworkRequestBuilder<[User]>(path: "/posts", method: .GET)
                         .build()
-                    let service = NetworkBuilder(baseURL: baseURL).build()
+                    let service = NetworkCoreBuilder(baseURL: baseURL).build()
                     let result: [User] = try await service.request(request)
                     completion("\(result)")
                 } catch {
@@ -67,7 +67,7 @@ public class ClientNetworkFactory {
             .setQueryParameters(["postId": "1"])
             .build()
 
-        NetworkBuilder(baseURL: baseURL)
+        NetworkCoreBuilder(baseURL: baseURL)
             .build()
             .request(request) { (result: Result<[User], NetworkError>) in
                 switch result {
@@ -84,7 +84,7 @@ public class ClientNetworkFactory {
                                  "userId": 1])
             .setRequiresReAuthentication(true)
             .build()
-            NetworkQueueBuilder(baseURL: baseURL)
+        NetworkQueueBuilder(baseURL: baseURL)
             .setReAuthService(ClientReAuthenticationService())
             .build()
             .request(request) { (result: Result<User, NetworkError>) in
@@ -106,7 +106,7 @@ public class ClientNetworkFactory {
                                      "userId": 1])
                 .build()
 
-            try NetworkBuilder(baseURL: baseURL)
+            try NetworkCoreBuilder(baseURL: baseURL)
                 .setSSLPinningPolicy(.trust(sslPinningHosts))
                 .build()
                 .request(request) { (result: Result<User, NetworkError>) in
@@ -124,7 +124,7 @@ public class ClientNetworkFactory {
         let request = NetworkRequestBuilder<User>(path: "/posts", method: .POST)
             .build()
 
-        try? NetworkBuilder(baseURL: baseURL)
+        try? NetworkCoreBuilder(baseURL: baseURL)
             .setMetricInterceptor(LocalNetworkMetricInterceptor())
             .build()
             .request(request) { (result: Result<User, NetworkError>) in
@@ -140,7 +140,7 @@ public class ClientNetworkFactory {
             .setQueryParameters(["title": "foo"])
             .build()
 
-        NetworkBuilder(baseURL: baseURL)
+        NetworkCoreBuilder(baseURL: baseURL)
             .build()
             .request(request, retryPolicy: .retry(count: 2, delay: 5)) { (result: Result<User, NetworkError>) in
                 switch result {
@@ -155,7 +155,7 @@ public class ClientNetworkFactory {
             NetworkResponseMock(statusCode: 200, response: User(id: 1))
         )
         let session = NetworkSessionMock<User>(expected: successResult)
-        let service = NetworkBuilder<NetworkSessionMock>(baseURL: baseURL, session: session).build()
+        let service = NetworkCoreBuilder<NetworkSessionMock>(baseURL: baseURL, session: session).build()
         let request = NetworkRequestBuilder<User>(path: "/posts", method: .GET)
             .build()
 

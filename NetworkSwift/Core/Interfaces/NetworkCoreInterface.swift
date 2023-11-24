@@ -1,5 +1,5 @@
 //
-//  NetworkInterface.swift
+//  NetworkCoreInterface.swift
 //  NetworkSwift/Core
 //
 //  Created by Hoang Nguyen on 11/11/23.
@@ -8,7 +8,7 @@
 import Foundation
 
 /// A protocol representing the network communication interface.
-public protocol NetworkInterface: AnyObject {
+public protocol NetworkCoreInterface: AnyObject {
     /// Asynchronously sends a network request and returns the result.
     ///
     /// - Parameters:

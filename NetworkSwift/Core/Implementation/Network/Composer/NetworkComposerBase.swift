@@ -1,5 +1,5 @@
 //
-//  NetworkBuilderBase.swift
+//  NetworkComposerBase.swift
 //  NetworkSwift/Core
 //
 //  Created by Hoang Nguyen on 24/11/23.
@@ -10,7 +10,7 @@ import Foundation
 /// A base class for building network configurations.
 ///
 /// Subclasses must provide a concrete implementation of `NetworkSession` as the associated type.
-public class NetworkBuilderBase<SessionType: NetworkSession>: NetworkBuilderInterface {
+public class NetworkComposerBase<SessionType: NetworkSession>: NetworkComposerInterface {
     /// The base URL for network requests.
     public var baseURL: URL
 
@@ -32,7 +32,7 @@ public class NetworkBuilderBase<SessionType: NetworkSession>: NetworkBuilderInte
     /// The dispatch queue for observing and handling network events.
     public var observeQueue: NetworkDispatchQueue
 
-    /// Initializes a `NetworkBuilderBase` with a base URL and a default session.
+    /// Initializes a `NetworkComposerBase` with a base URL and a default session.
     ///
     /// - Parameters:
     ///   - baseURL: The base URL for network requests.
@@ -118,7 +118,7 @@ public class NetworkBuilderBase<SessionType: NetworkSession>: NetworkBuilderInte
     ///
     /// - Important: If a `securityTrust` is provided, SSL pinning will be enabled.
     ///
-    /// - Note: This method is used internally by the `NetworkBuilderBase` to create the network session.
+    /// - Note: This method is used internally by the `NetworkComposerBase` to create the network session.
     private func createNetworkSession() throws -> SessionType {
         do {
             let delegate = NetworkSessionProxyDelegate(sslPinningPolicy: sslPinningPolicy,

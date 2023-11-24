@@ -1,5 +1,5 @@
 //
-//  NetworkBuilderInterface.swift
+//  NetworkComposerInterface.swift
 //  NetworkSwift/Core
 //
 //  Created by Hoang Nguyen on 24/11/23.
@@ -8,7 +8,7 @@
 import Foundation
 
 /// A protocol defining the interface for building network configurations.
-public protocol NetworkBuilderInterface: AnyObject {
+public protocol NetworkComposerInterface: AnyObject {
     /// The type of network session to be used for requests.
     associatedtype SessionType: NetworkSession
 

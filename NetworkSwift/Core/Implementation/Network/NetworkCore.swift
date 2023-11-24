@@ -1,5 +1,5 @@
 //
-//  NetworkImp.swift
+//  NetworkCore.swift
 //  NetworkSwift/Core
 //
 //  Created by Hoang Nguyen on 11/11/23.
@@ -7,14 +7,14 @@
 
 import Foundation
 
-/// A class implementing the `NetworkInterface` protocol that handles network requests.
+/// A class implementing the `NetworkCoreInterface` protocol that handles network requests.
 ///
 /// Example usage:
 /// ```swift
 /// let baseURL = URL(string: "https://api.example.com")!
-/// let network = NetworkImp(baseURL: baseURL)
+/// let network = NetworkCore(baseURL: baseURL)
 /// ```
-public final class NetworkImp<SessionType: NetworkSession>: NetworkInterface {
+public final class NetworkCore<SessionType: NetworkSession>: NetworkCoreInterface {
     /// The network session used for making requests.
     private let session: SessionType
 
@@ -30,7 +30,7 @@ public final class NetworkImp<SessionType: NetworkSession>: NetworkInterface {
     /// The dispatch queue for observing and handling network events.
     private let observeQueue: NetworkDispatchQueue
 
-    /// Initializes the `NetworkImp` with the specified configuration.
+    /// Initializes the `NetworkCore` with the specified configuration.
     ///
     /// - Parameters:
     ///   - baseURL: The base URL for network requests.
@@ -52,7 +52,7 @@ public final class NetworkImp<SessionType: NetworkSession>: NetworkInterface {
         self.networkReachability.startMonitoring(completion: { _ in })
     }
 
-    /// Deinitializes the `NetworkImp` and stops monitoring network reachability.
+    /// Deinitializes the `NetworkCore` and stops monitoring network reachability.
     deinit {
         self.networkReachability.stopMonitoring()
     }

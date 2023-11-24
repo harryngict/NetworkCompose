@@ -1,5 +1,5 @@
 //
-//  NetworkQueue.swift
+//  NetworkQueueInterface.swift
 //  NetworkSwift/Queue
 //
 //  Created by Hoang Nguyen on 17/11/23.
@@ -8,7 +8,7 @@
 import Foundation
 
 /// A protocol for managing network requests within a queue, providing support for authentication services and asynchronous request handling.
-public protocol NetworkQueue: AnyObject {
+public protocol NetworkQueueInterface: AnyObject {
     // MARK: - Properties
 
     /// An optional reauthentication service for handling reauthentication challenges.

@@ -1,5 +1,5 @@
 //
-//  NetworkQueueImp.swift
+//  NetworkQueue.swift
 //  NetworkSwift/Queue
 //
 //  Created by Hoang Nguyen on 17/11/23.
@@ -12,11 +12,11 @@ import Foundation
 /// Example usage:
 /// ```swift
 /// let baseURL = URL(string: "https://api.example.com")!
-/// let networkQueue = NetworkQueueImp(baseURL: baseURL)
+/// let networkQueue = NetworkQueue(baseURL: baseURL)
 /// ```
-public final class NetworkQueueImp<SessionType: NetworkSession>: NetworkQueue {
+public final class NetworkQueue<SessionType: NetworkSession>: NetworkQueueInterface {
     /// The underlying network responsible for handling network requests.
-    private let network: NetworkImp<SessionType>
+    private let network: NetworkCore<SessionType>
 
     /// The operation queue manager used to  network operations.
     private let operationQueue: OperationQueueManager
@@ -26,7 +26,7 @@ public final class NetworkQueueImp<SessionType: NetworkSession>: NetworkQueue {
 
     // MARK: Initialization
 
-    /// Initializes the `NetworkQueueImp` with the specified configuration.
+    /// Initializes the `NetworkQueue` with the specified configuration.
     ///
     /// - Parameters:
     ///   - baseURL: The base URL for network requests.
@@ -47,11 +47,11 @@ public final class NetworkQueueImp<SessionType: NetworkSession>: NetworkQueue {
     ) {
         self.reAuthService = reAuthService
         self.operationQueue = operationQueue
-        network = NetworkImp(baseURL: baseURL,
-                             session: session,
-                             networkReachability: networkReachability,
-                             executeQueue: executeQueue,
-                             observeQueue: observeQueue)
+        network = NetworkCore(baseURL: baseURL,
+                              session: session,
+                              networkReachability: networkReachability,
+                              executeQueue: executeQueue,
+                              observeQueue: observeQueue)
     }
 
     // MARK: Public Methods
