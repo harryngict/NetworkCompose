@@ -34,5 +34,5 @@ if ! command -v swiftformat &>/dev/null; then
   fi
 fi
 
-ignore_folders=("/ExampleTests" "/ExampleTests")
+ignore_folders=("Scripts")
 execute_format_code "${ignore_folders[@]}"

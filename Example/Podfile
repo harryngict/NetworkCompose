@@ -5,11 +5,7 @@ platform :ios, '12.0'
 use_frameworks!
 
 target 'Example' do
-  pod 'NetworkCompose/Core',  :path => '../'
-  pod 'NetworkCompose/CoreMocks', :path => '../'
-  
-  pod 'NetworkCompose/Queue',  :path => '../'
-  pod 'NetworkCompose/QueueMocks',  :path => '../'
+  pod 'NetworkCompose',  :path => '../'
 end
 
 target 'ExampleTests' do
