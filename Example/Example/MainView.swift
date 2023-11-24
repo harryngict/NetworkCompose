@@ -8,23 +8,22 @@
 import SwiftUI
 
 enum ExampleType: String {
-    case requestCompletion = "Request completion closure"
     case requestAsync = "Request async await for iOS-15 above"
+    case requestCompletion = "Request completion closure"
     case requestQueue = "Request and auto re-authentication"
-    case downloadFile = "Download File"
-    case uploadFile = "Upload File"
     case requestWithSSL = "Request with SSL Pinning"
-    case requestQueueWithSSL = "Request and auto re-authentication with SSL Pinning"
-    case requestMock = "Mocking support for unit tests"
+    case requestReportMetric = "Request with report metric"
+    case requestRetry = "Request with retry"
+    case requestMock = "Request mocking support for unit tests"
 }
 
 struct MainView: View {
     @State private var selectedType: ExampleType?
 
     let types: [ExampleType] = [.requestAsync, .requestCompletion,
-                                .requestQueue, .downloadFile,
-                                .uploadFile, .requestWithSSL,
-                                .requestQueueWithSSL, .requestMock]
+                                .requestQueue, .requestWithSSL,
+                                .requestReportMetric, .requestRetry,
+                                .requestMock]
 
     var body: some View {
         NavigationView {
@@ -37,7 +36,7 @@ struct MainView: View {
                     }
                 }
             }
-            .navigationBarTitle("NetworkSwift - NK", displayMode: .inline)
+            .navigationBarTitle("NetworkSwift", displayMode: .inline)
         }
     }
 }

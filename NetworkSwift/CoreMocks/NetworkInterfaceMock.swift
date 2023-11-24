@@ -1,5 +1,5 @@
 //
-//  NetworkKitMock.swift
+//  NetworkInterfaceMock.swift
 //  NetworkSwift/CoreMocks
 //
 //  Created by Hoang Nguyen on 18/11/23.
@@ -8,7 +8,7 @@
 import Foundation
 import Network
 
-public class NetworkKitMock: NetworkKit {
+public class NetworkInterfaceMock: NetworkInterface {
     public init() {}
     public init(networkReachability: NetworkReachability) {
         _networkReachability = networkReachability

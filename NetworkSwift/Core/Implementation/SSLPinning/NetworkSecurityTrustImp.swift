@@ -10,13 +10,13 @@ import Foundation
 /// A class responsible for verifying server trust based on SSL pinning information.
 final class NetworkSecurityTrustImp: NetworkSecurityTrust {
     /// An array of SSL pinning hosts containing host names and associated pinning hashes.
-    let sslPinningPolicy: NetworkSSLPinningPolicy
+    let sslPinnings: [NetworkSSLPinning]
 
     /// Initializes a `NetworkSecurityTrustImp` instance with SSL pinning hosts.
     ///
-    /// - Parameter sslPinningPolicy: An array of `NetworkSSLPinningPolicy` objects representing SSL pinning information.
-    init(sslPinningPolicy: NetworkSSLPinningPolicy) {
-        self.sslPinningPolicy = sslPinningPolicy
+    /// - Parameter sslPinnings: An array of `NetworkSSLPinning` objects representing SSL pinning information.
+    init(sslPinnings: [NetworkSSLPinning]) {
+        self.sslPinnings = sslPinnings
     }
 
     /// Verifies server trust based on the provided protection space.
@@ -24,11 +24,6 @@ final class NetworkSecurityTrustImp: NetworkSecurityTrust {
     /// - Parameter protectionSpace: The URL protection space associated with the authentication challenge.
     /// - Returns: An `AuthChallengeDecision` indicating how to handle the authentication challenge.
     func verifyServerTrust(with protectionSpace: URLProtectionSpace) -> AuthChallengeDecision {
-        guard case let .trust(sslPinningHosts) = sslPinningPolicy else {
-            return AuthChallengeDecision(authChallengeDisposition: .performDefaultHandling,
-                                         urlCredential: nil)
-        }
-
         guard let serverTrust: SecTrust = protectionSpace.serverTrust else {
             return AuthChallengeDecision(authChallengeDisposition: .performDefaultHandling,
                                          urlCredential: nil)
@@ -57,7 +52,8 @@ final class NetworkSecurityTrustImp: NetworkSecurityTrust {
 
         let hash = serverKey.addRSAHeaderBase64EncodedString()
 
-        if let host = sslPinningHosts.first(where: { $0.host == protectionSpace.host }), host.pinningHash.contains(hash) {
+        if let sslPinning = sslPinnings.first(where: { $0.host == protectionSpace.host }), sslPinning.hashKeys.contains(hash) {
+            debugPrint("NetworkSSLPinningPolicy trust: \(sslPinning.host)")
             return AuthChallengeDecision(authChallengeDisposition: .useCredential,
                                          urlCredential: URLCredential(trust: serverTrust))
         }

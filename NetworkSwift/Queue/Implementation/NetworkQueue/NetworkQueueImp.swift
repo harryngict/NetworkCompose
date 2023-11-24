@@ -15,8 +15,8 @@ import Foundation
 /// let networkQueue = NetworkQueueImp(baseURL: baseURL)
 /// ```
 public final class NetworkQueueImp<SessionType: NetworkSession>: NetworkQueue {
-    /// The underlying network kit responsible for handling network requests.
-    private let networkKit: NetworkKitImp<SessionType>
+    /// The underlying network responsible for handling network requests.
+    private let network: NetworkImp<SessionType>
 
     /// The operation queue manager used to  network operations.
     private let operationQueue: OperationQueueManager
@@ -47,11 +47,11 @@ public final class NetworkQueueImp<SessionType: NetworkSession>: NetworkQueue {
     ) {
         self.reAuthService = reAuthService
         self.operationQueue = operationQueue
-        networkKit = NetworkKitImp(baseURL: baseURL,
-                                   session: session,
-                                   networkReachability: networkReachability,
-                                   executeQueue: executeQueue,
-                                   observeQueue: observeQueue)
+        network = NetworkImp(baseURL: baseURL,
+                             session: session,
+                             networkReachability: networkReachability,
+                             executeQueue: executeQueue,
+                             observeQueue: observeQueue)
     }
 
     // MARK: Public Methods
@@ -132,7 +132,7 @@ public final class NetworkQueueImp<SessionType: NetworkSession>: NetworkQueue {
         retryPolicy: NetworkRetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) {
-        networkKit.request(request, andHeaders: headers, retryPolicy: retryPolicy) { result in
+        network.request(request, andHeaders: headers, retryPolicy: retryPolicy) { result in
             switch result {
             case let .success(model):
                 completion(.success(model))

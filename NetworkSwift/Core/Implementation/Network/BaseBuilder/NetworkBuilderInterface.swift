@@ -1,5 +1,5 @@
 //
-//  NetworkBuilderInterfaces.swift
+//  NetworkBuilderInterface.swift
 //  NetworkSwift/Core
 //
 //  Created by Hoang Nguyen on 24/11/23.
@@ -7,7 +7,9 @@
 
 import Foundation
 
-public protocol NetworkBuilderInterfaces: AnyObject {
+/// A protocol defining the interface for building network configurations.
+public protocol NetworkBuilderInterface: AnyObject {
+    /// The type of network session to be used for requests.
     associatedtype SessionType: NetworkSession
 
     /// The base URL for network requests.
@@ -31,7 +33,14 @@ public protocol NetworkBuilderInterfaces: AnyObject {
     /// The dispatch queue for observing and handling network events.
     var observeQueue: NetworkDispatchQueue { get set }
 
-    /// Initializes a network kit builder with a base URL and a default session.
+    /// Initializes a network builder with a base URL and a default session.
+    ///
+    /// - Parameters:
+    ///   - baseURL: The base URL for network requests.
+    ///   - session: The network session to use for requests.
+    ///   - networkReachability: The network reachability object for monitoring internet connection status.
+    ///   - executeQueue: The dispatch queue for executing network requests.
+    ///   - observeQueue: The dispatch queue for observing and handling network events.
     init(baseURL: URL,
          session: SessionType,
          networkReachability: NetworkReachability,

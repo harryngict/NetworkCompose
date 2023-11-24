@@ -31,5 +31,5 @@ public protocol NetworkSSLPinning {
     var host: String { get }
 
     /// The SSL pinning hashes associated with the host.
-    var pinningHash: [String] { get }
+    var hashKeys: Set<String> { get }
 }

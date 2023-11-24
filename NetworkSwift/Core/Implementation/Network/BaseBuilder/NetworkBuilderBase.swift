@@ -7,13 +7,29 @@
 
 import Foundation
 
-public class NetworkBuilderBase<SessionType: NetworkSession>: NetworkBuilderInterfaces {
+/// A base class for building network configurations.
+///
+/// Subclasses must provide a concrete implementation of `NetworkSession` as the associated type.
+public class NetworkBuilderBase<SessionType: NetworkSession>: NetworkBuilderInterface {
+    /// The base URL for network requests.
     public var baseURL: URL
+
+    /// The network session to use for requests.
     public var session: SessionType
+
+    /// The security trust policy for SSL pinning.
     public var sslPinningPolicy: NetworkSSLPinningPolicy = .ignore
+
+    /// The metrics collector object for collecting network metrics.
     public var metricInterceptor: NetworkMetricInterceptor?
+
+    /// The network reachability object for monitoring internet connection status.
     public var networkReachability: NetworkReachability
+
+    /// The dispatch queue for executing network requests.
     public var executeQueue: NetworkDispatchQueue
+
+    /// The dispatch queue for observing and handling network events.
     public var observeQueue: NetworkDispatchQueue
 
     /// Initializes a `NetworkBuilderBase` with a base URL and a default session.
@@ -87,9 +103,7 @@ public class NetworkBuilderBase<SessionType: NetworkSession>: NetworkBuilderInte
         self.observeQueue = observeQueue
         return self
     }
-}
 
-private extension NetworkBuilderBase {
     /// Creates and returns a network session with the configured parameters.
     ///
     /// This method initializes a network session with the provided metrics collector and security trust,

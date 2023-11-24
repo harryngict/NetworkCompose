@@ -1,5 +1,5 @@
 //
-//  NetworkKitImp.swift
+//  NetworkImp.swift
 //  NetworkSwift/Core
 //
 //  Created by Hoang Nguyen on 11/11/23.
@@ -7,14 +7,14 @@
 
 import Foundation
 
-/// A class implementing the `NetworkKit` protocol that handles network requests.
+/// A class implementing the `NetworkInterface` protocol that handles network requests.
 ///
 /// Example usage:
 /// ```swift
 /// let baseURL = URL(string: "https://api.example.com")!
-/// let networkKit = NetworkKitImp(baseURL: baseURL)
+/// let network = NetworkImp(baseURL: baseURL)
 /// ```
-public final class NetworkKitImp<SessionType: NetworkSession>: NetworkKit {
+public final class NetworkImp<SessionType: NetworkSession>: NetworkInterface {
     /// The network session used for making requests.
     private let session: SessionType
 
@@ -30,7 +30,7 @@ public final class NetworkKitImp<SessionType: NetworkSession>: NetworkKit {
     /// The dispatch queue for observing and handling network events.
     private let observeQueue: NetworkDispatchQueue
 
-    /// Initializes the `NetworkKitImp` with the specified configuration.
+    /// Initializes the `NetworkImp` with the specified configuration.
     ///
     /// - Parameters:
     ///   - baseURL: The base URL for network requests.
@@ -52,7 +52,7 @@ public final class NetworkKitImp<SessionType: NetworkSession>: NetworkKit {
         self.networkReachability.startMonitoring(completion: { _ in })
     }
 
-    /// Deinitializes the `NetworkKitImp` and stops monitoring network reachability.
+    /// Deinitializes the `NetworkImp` and stops monitoring network reachability.
     deinit {
         self.networkReachability.stopMonitoring()
     }

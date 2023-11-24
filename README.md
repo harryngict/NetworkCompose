@@ -9,31 +9,33 @@ I. [Features](#i-features)
 II. [Testability](#ii-testability)
 
 III. [Integration](#iii-integration)
-   - 3.1. [Integration through CocoaPods](#integration-through-cocoapods)
+   - 3.1. [Integration through CocoaPods](#31-integration-through-cocoapods)
    
 IV. [How to create NetworkRequest](#iv-how-to-create-networkrequest)
-   - 4.1. [Using NetworkRequestBuilder](#1-using-networkrequestbuilder)
-   - 4.2. [Using NetworkRequestImp Directly](#2-using-networkrequestimp-directly)
+   - 4.1. [Using NetworkRequestBuilder](#41-using-networkrequestbuilder)
+   - 4.2. [Using NetworkRequestImp Directly](#42-using-networkrequestimp-directly)
 
 V. [How to create NetworkSSLPinningPolicy for SSL Pinning](#v-how-to-create-networksslpinningpolicy-for-ssl-pinning)
 
-VI. [How to use NetworkRetryPolicy to send a request](#vii-how-to-use-networkretrypolicy-to-send-a-request)
-   - 6.1. [Create a NetworkRetryPolicy instance](#1-create-a-networkretrypolicy-instance)
+VI. [How to use NetworkRetryPolicy to send a request](#vi-how-to-use-networkretrypolicy-to-send-a-request)
+   - 6.1. [Create a NetworkRetryPolicy instance](#61-create-a-networkretrypolicy-instance)
    
-VII. [How to create ReAuthenticationService for automatic Re-authentication](#vi-how-to-create-reauthenticationservice-for-automatic-re-authentication)
+VII. [How to create ReAuthenticationService for automatic Re-authentication](#vii-how-to-create-reauthenticationservice-for-automatic-re-authentication)
 
-VIII. [How NetworkKit and NetworkQueue send a request](#viii-how-networkkit-and-networkqueue-send-a-request)
-   - 8.1. [Request async await for iOS-15 above](#1-request-async-await-for-ios-15-above)
-   - 8.2. [Request completion closure](#2-request-completion-closure)
-   - 8.3. [Request and auto re-authentication](#3-request-and-auto-re-authentication)
-   - 8.4. [Request with SSL Pinning](#6-request-with-ssl-pinning)
-   - 8.5. [Mocking support for unit tests](#8-mocking-support-for-unit-tests)
+VIII. [How NetworkInterface and NetworkQueue send a request](#viii-how-networkinterface-and-networkqueue-send-a-request)
+   - 8.1. [Request async await for iOS-15 above](#81-request-async-await-for-ios-15-above)
+   - 8.2. [Request completion closure](#82-request-completion-closure)
+   - 8.3. [Request and auto re-authentication](#83-request-and-auto-re-authentication)
+   - 8.4. [Request with SSL Pinning](#84-request-with-ssl-pinning)
+   - 8.5. [Request with Metric report](#85-request-with-metric-report)
+   - 8.6. [Request with retry policy](#86-request-with-retry-policy)
+   - 8.7. [Request Mocking support for unit tests](#87-request-mocking-support-for-unit-tests)
 
 IX. [Support](#ix-support)
 
 X. [Contributing](#x-contributing)
 
-XI. [License](#xii-license) 
+XI. [License](#xi-license) 
 
 
 ## I. Features
@@ -135,7 +137,7 @@ To implement SSL pinning in your network requests, you can use the `NetworkSSLPi
 
 ```swift
 // Creating an SSL pinning host
-let sslPinningHost = NetworkSSLPinningImp(host: "api.example.com", pinningHash: ["hash1", "hash2"])
+let sslPinningHost = NetworkSSLPinningImp(host: "api.example.com", hashKeys: ["hash1", "hash2"])
 
 // Creating a NetworkSSLPinningPolicy with the SSL pinning host
 let sslPinningPolicy = NetworkSSLPinningPolicy.trust([sslPinningHost])
@@ -153,12 +155,12 @@ Choose the SSL pinning hosts and hashes that match the servers you intend to com
 You can create an instance of `NetworkRetryPolicy` to control the behavior of request retries. Choose between .none for no retries or .retry(count: Int, delay: TimeInterval) to specify the number of retry attempts.
 
 ```swift
-// Example: Create a retry policy allowing 3 retries with each delay 30 seconds
-let retryPolicy = NetworkRetryPolicy.retry(count: 3, delay: 30)
+// Example: Create a retry policy allowing 3 retries with each delay 5.0 seconds
+let retryPolicy = NetworkRetryPolicy.retry(count: 2, delay: 5.0)
 ```
 
 ```swift
-// Default delay will be 5.0 seconds
+// Default delay will be 10.0 seconds
 let retryPolicy = NetworkRetryPolicy.retry(count: 3)
 ```
 
@@ -191,7 +193,7 @@ class YourAutoReAuthenticationService: ReAuthenticationService {
 }
 ```
 
-## VIII. How NetworkKit and NetworkQueue send a request
+## VIII. How NetworkInterface and NetworkQueue send a request
 
 ```swift
 enum Constant {
@@ -203,9 +205,7 @@ enum Constant {
 ```swift
 let request = NetworkRequestBuilder<[User]>(path: "/posts", method: .GET)
     .build()
-let service = try? NetworkBuilder(baseURL: baseURL)
-    .setMetricInterceptor(LocalNetworkMetricInterceptor())
-    .build()    
+let service = NetworkBuilder(baseURL: baseURL).build()    
 let result: [User] = try await service.sendRequest(request)
 self.handleResult(result)
 ```
@@ -216,10 +216,9 @@ self.handleResult(result)
 let request = NetworkRequestBuilder<[User]>(path: "/comments", method: .GET)
     .setQueryParameters(["postId": "1"])
     .build()
-try? NetworkBuilder(baseURL: baseURL)
-    .setMetricInterceptor(LocalNetworkMetricInterceptor())
+NetworkBuilder(baseURL: baseURL)
     .build()
-    .request(request, retryPolicy: .retry(count: 5)) { (result: Result<[User], NetworkError>) in
+    .request(request) { (result: Result<[User], NetworkError>) in
         self.handleResult(result)
     }
 ```
@@ -232,13 +231,10 @@ let request = NetworkRequestBuilder<User>(path: "/posts", method: .POST)
                          "userId": 1])
     .setRequiresReAuthentication(true)
     .build()
-let reAuthService = ClientReAuthenticationService()
-
 try? NetworkQueueBuilder(baseURL: baseURL)
-    .setReAuthService(reAuthService)
-    .setMetricInterceptor(LocalNetworkMetricInterceptor())
+    .setReAuthService(ClientReAuthenticationService())
     .build()
-    .request(request, retryPolicy: .retry(count: 5)) { (result: Result<User, NetworkError>) in
+    .request(request) { (result: Result<User, NetworkError>) in
         self.handleResult(result)
     }
 ```
@@ -250,19 +246,41 @@ let request = NetworkRequestBuilder<User>(path: "/posts/1", method: .PUT)
                           "body": "bar",
                           "userId": 1])
     .build()
-                                                        
 let sslPinningHost = NetworkSSLPinningImp(host: "jsonplaceholder.typicode.com",
-                                          pinningHash: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])
+                                          hashKeys: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])
 try? NetworkBuilder(baseURL: baseURL)
     .setSSLPinningPolicy(.trust([sslPinningHost]))
-    .setMetricInterceptor(LocalNetworkMetricInterceptor())
     .build()
     .request(request) { (result: Result<User, NetworkError>) in
         self.handleResult(result)
     }
 ```
 
-### 8.5. Mocking support for unit tests
+### 8.5. Request with Metric report
+```swift
+let request = NetworkRequestBuilder<User>(path: "/posts", method: .POST)
+    .build()
+try? NetworkBuilder(baseURL: baseURL)
+    .setMetricInterceptor(LocalNetworkMetricInterceptor())
+    .build()
+    .request(request) { (result: Result<User, NetworkError>) in
+        self.handleResult(result)
+    }
+```
+### 8.6. Request with retry policy
+```swift
+let request = NetworkRequestBuilder<User>(path: "/posts/1/retry", method: .PUT)
+    .setQueryParameters(["title": "foo"])
+    .build()
+try? NetworkBuilder(baseURL: baseURL)
+    .setSSLPinningPolicy(.trust([sslPinningHost]))
+    .build()
+    .request(request, retryPolicy: .retry(count: 2, delay: 5)) { (result: Result<User, NetworkError>) in
+        self.handleResult(result)
+    }
+```
+
+### 8.7. Request Mocking support for unit tests
 ```swift
 let successResult = NetworkResultMock.requestSuccess(
       NetworkResponseMock(statusCode: 200, response: User(id: 1))

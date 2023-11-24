@@ -7,14 +7,14 @@
 
 import Foundation
 
-/// A builder for constructing instances of `NetworkKitImp`.
+/// A builder for constructing instances of `NetworkImp`.
 ///
-/// This builder provides a convenient way to create and configure a `NetworkKitImp` instance for making network requests.
+/// This builder provides a convenient way to create and configure a `NetworkImp` instance for making network requests.
 ///
 /// ## Example Usage
 /// ```swift
 /// let baseURL = URL(string: "https://api.example.com")!
-/// let networkKit = try? NetworkBuilder(baseURL: baseURL)
+/// let network = try? NetworkBuilder(baseURL: baseURL)
 ///     .setSecurityTrust(yourSecurityTrust)
 ///     .build()
 /// ```
@@ -40,12 +40,12 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkBuilderBase<Ses
                    observeQueue: observeQueue)
     }
 
-    /// Builds and returns a `NetworkKitImp` instance with the configured parameters.
+    /// Builds and returns a `NetworkImp` instance with the configured parameters.
     ///
-    /// - Returns: A fully configured `NetworkKitImp` instance.
+    /// - Returns: A fully configured `NetworkImp` instance.
     /// - Throws: A `NetworkError` if the session cannot be created.
-    public func build() -> NetworkKitImp<SessionType> {
-        return NetworkKitImp(
+    public func build() -> NetworkImp<SessionType> {
+        return NetworkImp(
             baseURL: baseURL,
             session: session,
             networkReachability: networkReachability,

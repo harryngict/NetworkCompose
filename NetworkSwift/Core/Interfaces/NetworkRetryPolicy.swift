@@ -16,8 +16,8 @@ public enum NetworkRetryPolicy: Sendable {
     ///
     /// - Parameters:
     ///   - count: The maximum number of retry attempts.
-    ///   - delay: The delay (in seconds) between retry attempts. Default is 5.0 second.
-    case retry(count: Int, delay: TimeInterval = 5.0)
+    ///   - delay: The delay (in seconds) between retry attempts. Default is 10.0 second.
+    case retry(count: Int, delay: TimeInterval = 10.0)
 
     /// The number of retry attempts allowed by the policy.
     var retryCount: Int {
@@ -34,6 +34,7 @@ public enum NetworkRetryPolicy: Sendable {
     /// - Parameter currentRetry: The current retry attempt.
     /// - Returns: `true` if a retry should be attempted; otherwise, `false`.
     func shouldRetry(currentRetry: Int) -> Bool {
+        debugPrint("NetworkRetryPolicy: \(currentRetry)")
         return currentRetry <= retryCount
     }
 

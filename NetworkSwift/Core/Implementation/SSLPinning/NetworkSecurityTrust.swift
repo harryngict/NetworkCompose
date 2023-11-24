@@ -8,9 +8,12 @@
 import Foundation
 
 /// A protocol defining the interface for network security trust, with a focus on SSL pinning.
+///
+/// Conforming types are responsible for verifying server trust based on SSL pinning logic and making
+/// authentication decisions during network requests.
 protocol NetworkSecurityTrust {
     /// An array of SSL pinning hosts containing host names and associated pinning hashes.
-    var sslPinningPolicy: NetworkSSLPinningPolicy { get }
+    var sslPinnings: [NetworkSSLPinning] { get }
 
     /// Verifies server trust based on SSL pinning logic and makes an authentication decision.
     ///
