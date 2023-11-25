@@ -1,26 +1,16 @@
 PODS:
-  - NetworkCompose/Core (0.0.1)
-  - NetworkCompose/CoreMocks (0.0.1):
-    - NetworkCompose/Core
-  - NetworkCompose/Queue (0.0.1):
-    - NetworkCompose/Core
-  - NetworkCompose/QueueMocks (0.0.1):
-    - NetworkCompose/Core
-    - NetworkCompose/Queue
+  - NetworkCompose (0.0.1)
 
 DEPENDENCIES:
-  - NetworkCompose/Core (from `../`)
-  - NetworkCompose/CoreMocks (from `../`)
-  - NetworkCompose/Queue (from `../`)
-  - NetworkCompose/QueueMocks (from `../`)
+  - NetworkCompose (from `../Sources`)
 
 EXTERNAL SOURCES:
   NetworkCompose:
-    :path: "../"
+    :path: "../Sources"
 
 SPEC CHECKSUMS:
-  NetworkCompose: 395b08eeee434b9c6cf2f82fe29634e39b5dc344
+  NetworkCompose: 5c9c8f5801b9f61ae05bf15ac3d2e07803632b5a
 
-PODFILE CHECKSUM: d9bc95ef26602dc7f4dfabb7c87621185406dcb3
+PODFILE CHECKSUM: 6658ef32bee0cda304c320cef427e6951088ce1c
 
 COCOAPODS: 1.14.3

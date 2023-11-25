@@ -5,14 +5,11 @@ platform :ios, '12.0'
 use_frameworks!
 
 target 'Example' do
-  pod 'NetworkCompose/Core',  :path => '../'
-  pod 'NetworkCompose/Queue',  :path => '../'
+  pod 'NetworkCompose',  :path => '../Sources'
 end
 
 target 'ExampleTests' do
   inherit! :search_paths
-  pod 'NetworkCompose/CoreMocks', :path => '../'
-  pod 'NetworkCompose/QueueMocks',  :path => '../'
 end
 
 post_install do |installer|
