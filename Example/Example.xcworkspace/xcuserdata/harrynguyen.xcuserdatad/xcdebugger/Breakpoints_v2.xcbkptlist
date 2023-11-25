@@ -146,5 +146,133 @@
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "158CEADE-A3B3-4DFD-BD66-66C65C395A39"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../NetworkCompose/Core/Implementation/SSLPinning/NetworkSecurityTrustImp.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
+            landmarkName = "verifyServerTrust(with:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "158CEADE-A3B3-4DFD-BD66-66C65C395A39 - 6364efdc5516f36f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NetworkCompose.NetworkSecurityTrustImp.verifyServerTrust(with: __C.NSURLProtectionSpace) -&gt; NetworkCompose.AuthChallengeDecision"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkCompose/NetworkCompose/Core/Implementation/SSLPinning/NetworkSecurityTrustImp.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "28"
+                  endingLineNumber = "28"
+                  offsetFromSymbolStart = "2144">
+               </Location>
+               <Location
+                  uuid = "158CEADE-A3B3-4DFD-BD66-66C65C395A39 - 6364efdc5516f36f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NetworkCompose.NetworkSecurityTrustImp.verifyServerTrust(with: __C.NSURLProtectionSpace) -&gt; NetworkCompose.AuthChallengeDecision"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkCompose/NetworkCompose/Core/Implementation/SSLPinning/NetworkSecurityTrustImp.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "28"
+                  endingLineNumber = "28"
+                  offsetFromSymbolStart = "2432">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "56EB9333-4E95-4173-9995-F06A30AD82A1"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Sources/NetworkCompose/Core/Implementation/Request/NetworkRequest.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "10"
+            endingLineNumber = "10"
+            landmarkName = "NetworkRequest"
+            landmarkType = "14">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "66CA539A-1827-44DF-BA54-8A29E80CE750"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Sources/NetworkCompose/Core/Implementation/Metric/Analyzer/NetworkMetricsAnalyzer.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
+            landmarkName = "trackTaskDidCompleteWithError(_:didCompleteWithError:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6AC6F93F-81E0-49C0-BAFF-756BB3E78C71"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Sources/NetworkCompose/Core/Implementation/Network/Network.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "request(_:andHeaders:retryPolicy:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "6AC6F93F-81E0-49C0-BAFF-756BB3E78C71 - 679dba140067f630"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NetworkCompose.Network.request&lt;&#x3c4;_0_0 where &#x3c4;_1_0: NetworkCompose.NetworkRequestInterface&gt;(_: &#x3c4;_1_0, andHeaders: Swift.Dictionary&lt;Swift.String, Swift.String&gt;, retryPolicy: NetworkCompose.NetworkRetryPolicy) async throws -&gt; &#x3c4;_1_0.SuccessType"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/Core/Implementation/Network/Network.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "104">
+               </Location>
+               <Location
+                  uuid = "6AC6F93F-81E0-49C0-BAFF-756BB3E78C71 - eba46edeece48a98"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for NetworkCompose.Network.request&lt;&#x3c4;_0_0 where &#x3c4;_1_0: NetworkCompose.NetworkRequestInterface&gt;(_: &#x3c4;_1_0, andHeaders: Swift.Dictionary&lt;Swift.String, Swift.String&gt;, retryPolicy: NetworkCompose.NetworkRetryPolicy) async throws -&gt; &#x3c4;_1_0.SuccessType"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/Core/Implementation/Network/Network.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "88">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>
