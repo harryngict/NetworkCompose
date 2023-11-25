@@ -1,305 +1,246 @@
 # NetworkCompose
 
-**NetworkCompose** is a versatile and lightweight networking library designed for flexibility, supporting various session types, including URLSession.
+NetworkCompose simplifies and enhances network-related tasks by providing a flexible and intuitive composition of network components. Reduce development effort and make your networking layer easy to maintain with seamless integration, SSL pinning, mocking, metric reporting, and smart retry mechanisms. It supports dynamic automation, making it a powerful tool for managing network operations in your Swift applications.
 
 ## Table of Contents
 
 I. [Features](#i-features)
-   
+
 II. [Testability](#ii-testability)
 
 III. [Integration](#iii-integration)
    - 3.1. [Integration through CocoaPods](#31-integration-through-cocoapods)
-   
-IV. [How to create NetworkRequest](#iv-how-to-create-networkrequest)
-   - 4.1. [Using NetworkRequestBuilder](#41-using-networkrequestbuilder)
-   - 4.2. [Using NetworkRequest Directly](#42-using-networkrequest-directly)
+   - 3.2. [Integration through Swift Package Manager (SPM)](#32-integration-through-swift-package-manager-spm)
 
-V. [How to create NetworkSSLPinningPolicy for SSL Pinning](#v-how-to-create-networksslpinningpolicy-for-ssl-pinning)
+IV. [Basic Setup](#iv-basic-setup)
 
-VI. [How to use NetworkRetryPolicy to send a request](#vi-how-to-use-networkretrypolicy-to-send-a-request)
-   - 6.1. [Create a NetworkRetryPolicy instance](#61-create-a-networkretrypolicy-instance)
-   
-VII. [How to create ReAuthenticationService for automatic Re-authentication](#vii-how-to-create-reauthenticationservice-for-automatic-re-authentication)
+V. [Making Requests](#v-making-requests)
+   - 5.1. [Async/Await Request](#51-asyncawait-request)
+   - 5.2. [Completion Handler Request](#52-completion-handler-request)
+   - 5.3. [Re-authentication](#53-re-authentication)
+   - 5.4. [SSL Pinning](#54-ssl-pinning)
+   - 5.5. [Network Metric](#55-network-metric)
+   - 5.6. [Smart Retry](#56-smart-retry)
+   - 5.7. [Automation Test](#57-automation-test)
+   - 5.8. [setDefaultConfiguration](#58-setdefaultconfiguration)
 
-VIII. [How Network and NetworkQueue send a request](#viii-how-network-and-networkqueue-send-a-request)
-   - 8.1. [Request async await for iOS-15 above](#81-request-async-await-for-ios-15-above)
-   - 8.2. [Request completion closure](#82-request-completion-closure)
-   - 8.3. [Request and auto re-authentication](#83-request-and-auto-re-authentication)
-   - 8.4. [Request with SSL Pinning](#84-request-with-ssl-pinning)
-   - 8.5. [Request with Metric report](#85-request-with-metric-report)
-   - 8.6. [Request with retry policy](#86-request-with-retry-policy)
-   - 8.7. [Request Mocking support for unit tests](#87-request-mocking-support-for-unit-tests)
+VI. [Support](#vi-support)
 
-IX. [Support](#ix-support)
+VII. [Contributing](#vii-contributing)
 
-X. [Contributing](#x-contributing)
-
-XI. [License](#xi-license) 
-
+VIII. [License](#viii-license)
 
 ## I. Features
 
-- **Completion Request**: Utilizes completion handlers for efficient response handling.
-  
-- **Async Await Request (iOS 15 and above)**: Supports asynchronous programming through Swift's async/await mechanism.
+- **Seamless URLSession Integration**: Reduce development effort by seamlessly integrating with URLSession, providing a unified and streamlined networking experience.
 
-- **Support SSL Pinning**: Enables secure communication by supporting SSL pinning.
+- **SSL Pinning**: Enhance security effortlessly with built-in support for SSL pinning to establish trust and secure communication.
 
-- **Support Retry**: Provides support for request retrying to enhance reliability.
+- **Mocking for Automation Tests**: Easily mock network responses for automation tests, reducing the effort required for testing scenarios and ensuring robust automation.
 
-- **Dynamic Observer and Receive Request by Any Dispatch Queue**: Offers dynamic observer support and the ability to receive requests on any dispatch queue.
+- **Metric Reporting**: Gain insights into network performance effortlessly with comprehensive metric reporting capabilities, making it easy to identify and optimize bottlenecks.
 
-- **Support collect Network Metric**: Facilitates the collection of network metrics, allowing for analysis and monitoring of network behavior.
+- **Smart Retry Mechanisms**: Effortlessly handle transient errors with smart retry mechanisms, ensuring a more robust and reliable networking layer.
 
 ## II. Testability
 
-For improved testability, `NetworkCompose` provides mock implementations, empowering developers to write effective unit tests. This ensures robustness in various scenarios and easy validation of the library's behavior.
-
+`NetworkCompose` is designed with testability in mind, making it easy to write unit tests and ensure the reliability of your networking layer. Effortlessly mock servers for UI and automation tests, streamlining the testing process.
 
 ## III. Integration
 
 ### 3.1. Integration through CocoaPods
 
-CocoaPods is a dependency manager for Swift projects and makes integration easier.
+To integrate NetworkCompose into your Xcode project using CocoaPods, add the following to your `Podfile`:
 
-1. If you don't have CocoaPods installed, you can do it by executing the following line in your terminal.
-
-    ```bash
-    sudo gem install cocoapods
-    ```
-
-2. If you don't have a Podfile, create a plain text file named Podfile in the Xcode project directory with the following content, making sure to set the platform and version that matches your app.
-
-     **Application**:
-   
-    ```ruby
-    pod 'NetworkCompose/Core',  'latest version'
-    pod 'NetworkCompose/Queue', 'latest version'
-    ```
-
-    **Testing**:
-
-    ```ruby
-    pod 'NetworkCompose/CoreMocks',   'latest version'
-    pod 'NetworkCompose/QueueMocks',  'latest version'
-    ```
-    
-Please check latest version [here](https://github.com/harryngict/NetworkCompose/blob/develop/NetworkCompose.podspec)
-
-3. Install NetworkCompose by executing the following in the Xcode project directory.
-
-    ```bash
-    pod install
-    ```
-
-4. Now, open your project workspace and check if NetworkCompose is properly added.
-
-## IV. How to create NetworkRequest
-### 4.1. Using NetworkRequestBuilder
-
-You can create a `NetworkRequest` using the `NetworkRequestBuilder` class, providing a fluent and expressive way to configure your network requests. Below is an example of how to use it:
-
+```ruby
+pod 'NetworkCompose', '~> 0.0.2'
+```
+then run:
+```bash
+pod install
+```
+### 3.2. Integration through Swift Package Manager (SPM)
+To integrate NetworkCompose using Swift Package Manager, add the following to your Package.swift file:
 ```swift
-let request: NetworkRequest<YourResponseType> = try? NetworkRequestBuilder<YourResponseType>(path: "/your-endpoint", method: .get)
-    .setQueryParameters(["param1": "value1", "param2": "value2"])
-    .setHeaders(["Authorization": "Bearer YourAccessToken"])
-    .setBodyEncoding(.json)
-    .setTimeoutInterval(30.0)
-    .setCachePolicy(.useProtocolCachePolicy)
-    .setRequiresReAuthentication(true)
-    .build()
+dependencies: [
+    .package(url: "https://github.com/harryngict/NetworkCompose.git", from: "0.0.2")
+],
+targets: [
+    .target(
+        name: "YourTargetName",
+        dependencies: ["NetworkCompose"]
+    )
+]
+```
+Replace "YourTargetName" with the name of your target. Then, run:
+```bash
+swift package update
 ```
 
-### 4.2. Using NetworkRequest Directly
+## IV. Basic setup
+`NetworkCompose` provides a set of abstractions and components to manage your network requests. Here's a basic setup using `NetworkBuilder` and `NetworkQueueBuilder`.
 
-If you prefer a more direct approach, you can create a `NetworkRequest` instance directly. Here's an example:
-
-```swift
-let request: NetworkRequest<YourResponseType> = NetworkRequest(
-    path: "/your-endpoint",
-    method: .post,
-    queryParameters: ["param1": "value1", "param2": "value2"],
-    headers: ["Authorization": "Bearer YourAccessToken"],
-    bodyEncoding: .json,
-    timeoutInterval: 30.0,
-    cachePolicy: .reloadIgnoringLocalCacheData,
-    responseDecoder: JSONDecoder(),
-    requiresReAuthentication: true
-)
+``` swift
+let baseURL = URL(string: "https://jsonplaceholder.typicode.com")!
+let network: NetworkBuilder<URLSession> = NetworkBuilder(baseURL: baseURL)
+let networkQueue: NetworkQueueBuilder<URLSession> = NetworkQueueBuilder(baseURL: baseURL)
 ```
 
-## V. How to create NetworkSSLPinningPolicy for SSL Pinning
+## V. Making Requests
+Now, let's see how to make various types of network requests using `NetworkBuilder` and `NetworkQueueBuilder`.
 
-To implement SSL pinning in your network requests, you can use the `NetworkSSLPinningPolicy` enum along with the concrete implementation of `NetworkSSLPinning`, `NetworkSSLPinningImp`.
-
-### Example Usage:
-
+### 5.1. Async/Await Request
 ```swift
-// Creating an SSL pinning host
-let sslPinningHost = NetworkSSLPinningImp(host: "api.example.com", hashKeys: ["hash1", "hash2"])
-
-// Creating a NetworkSSLPinningPolicy with the SSL pinning host
-let sslPinningPolicy = NetworkSSLPinningPolicy.trust([sslPinningHost])
+let request = NetworkRequestBuilder<[User]>(path: "/posts", method: .GET).build()
+let result: [User] = try await network.build().request(request)
+// Handler \(result) here
 ```
 
-Now, you can use this sslPinningPolicy object when setting up SSL pinning in your network requests.
-
-Remember to replace "api.example.com", "hash1", and "hash2" with your actual host and pinning hashes.
-
-Choose the SSL pinning hosts and hashes that match the servers you intend to communicate with securely.
-
-## VI. How to use NetworkRetryPolicy to send a request
-
-### 6.1. Create a NetworkRetryPolicy instance
-You can create an instance of `NetworkRetryPolicy` to control the behavior of request retries.
-
-```swift
-// Example: Retry up to 3 times with a constant delay of 5 seconds between attempts
-let constantRetry = NetworkRetryPolicy.constant(count: 3, delay: 5.0)
-
-// Example: Retry up to 5 times with exponential backoff starting from 1 second, multiplying by 5, and capping at 30 seconds
-let exponentialRetry = NetworkRetryPolicy.exponentialRetry(count: 5, initialDelay: 1.0, multiplier: 5.0, maxDelay: 30.0)
-```
-
-## VII. How to create ReAuthenticationService for automatic Re-authentication
-
-To implement auto re-authentication, you need to create a class or object conforming to the `ReAuthenticationService` protocol. This service will handle the automatic re-authentication process.
-
-### Example Implementation:
-
-```swift
-import Foundation
-
-class YourAutoReAuthenticationService: ReAuthenticationService {
-    // Customize this class based on your authentication requirements
-
-    // MARK: - Re-authentication
-
-    func reAuthen(completion: @escaping (Result<[String: String], NetworkError>) -> Void) {
-        // Implement your auto re-authentication logic here
-        // This could involve refreshing tokens or obtaining new credentials
-
-        // For example, you might refresh an access token and provide the new headers
-        let newHeaders: [String: String] = ["Authorization": "Bearer newAccessToken"]
-
-        // Call the completion handler with the result of re-authentication
-        // In case of success, provide the new headers; otherwise, provide an error
-        let result: Result<[String: String], NetworkError> = .success(newHeaders)
-        completion(result)
-    }
-}
-```
-
-## VIII. How Network and NetworkQueue send a request
-
-```swift
-enum Constant {
-    static let baseURL: String = "https://jsonplaceholder.typicode.com"
-}
-```
-
-### 8.1. Request async await for iOS-15 above
-```swift
-let request = NetworkRequestBuilder<[User]>(path: "/posts", method: .GET)
-    .build()
-let service = NetworkBuilder(baseURL: baseURL).build()    
-let result: [User] = try await service.sendRequest(request)
-self.handleResult(result)
-```
-
-### 8.2. Request completion closure
-
+### 5.2. Completion Handler Request
 ```swift
 let request = NetworkRequestBuilder<[User]>(path: "/comments", method: .GET)
-    .setQueryParameters(["postId": "1"])
-    .build()
-NetworkBuilderBase(baseURL: baseURL)
-    .build()
-    .request(request) { (result: Result<[User], NetworkError>) in
-        self.handleResult(result)
-    }
-```
-
-### 8.3. Request and auto re-authentication
-```swift
-let request = NetworkRequestBuilder<User>(path: "/posts", method: .POST)
-    .setQueryParameters(["title": "foo",
-                         "body": "bar",
-                         "userId": 1])
-    .setRequiresReAuthentication(true)
-    .build()
-    NetworkQueueBuilder(baseURL: baseURL)
-    .setReAuthService(ClientReAuthenticationService())
-    .build()
-    .request(request) { (result: Result<User, NetworkError>) in
-        self.handleResult(result)
-    }
-```
-
-### 8.4. Request with SSL Pinning
-```swift
-let request = NetworkRequestBuilder<User>(path: "/posts/1", method: .PUT)
-    .setQueryParameters(["title": "foo",
-                          "body": "bar",
-                          "userId": 1])
-    .build()
-let sslPinningHost = NetworkSSLPinningImp(host: "jsonplaceholder.typicode.com",
-                                          hashKeys: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])
-try? NetworkBuilder(baseURL: baseURL)
-    .setSSLPinningPolicy(.trust([sslPinningHost]))
-    .build()
-    .request(request) { (result: Result<User, NetworkError>) in
-        self.handleResult(result)
-    }
-```
-
-### 8.5. Request with Metric report
-```swift
-let request = NetworkRequestBuilder<User>(path: "/posts", method: .POST)
-    .build()
-try? NetworkBuilder(baseURL: baseURL)
-    .setMetricInterceptor(LocalNetworkMetricInterceptor())
-    .build()
-    .request(request) { (result: Result<User, NetworkError>) in
-        self.handleResult(result)
-    }
-```
-### 8.6. Request with retry policy
-```swift
-let request = NetworkRequestBuilder<User>(path: "/posts/1/retry", method: .PUT)
-    .setQueryParameters(["title": "foo"])
-    .build()
-NetworkBuilder(baseURL: baseURL)
-    .build()
-    .request(request, retryPolicy: .constant(count: 2, delay: 5)) { (result: Result<User, NetworkError>) in
-        self.handleResult(result)
-    }
-```
-
-### 8.7. Request Mocking support for unit tests
-```swift
-let successResult = NetworkResultMock.requestSuccess(
-      NetworkResponseMock(statusCode: 200, response: User(id: 1))
-)
-let session = NetworkSessionMock<[User]>(expected: successResult)
-let request = NetworkRequestBuilder<User>(path: "/posts", method: .GET).build()
-let service = NetworkBuilderBase<NetworkSessionMock>(baseURL: baseURL, session: session).build()
-service.sendRequest(request) { (result: Result<[User], NetworkError>) in
-    self.handleResult(result)
+        .setQueryParameters(["postId": "1"])
+        .build()
+        
+network.build().request(request) { (result: Result<[User], NetworkError>) in
+    // Handler result here
 }
 ```
 
+### 5.3. Re-authentication
+```swift
+ let request = NetworkRequestBuilder<User>(path: "/posts", method: .POST)
+        .setQueryParameters(["title": "foo", "body": "bar", "userId": 1])
+        .setRequiresReAuthentication(true)
+        .build()
+
+networkQueue.setReAuthService(self) // setReAuthService to enable re-authentication
+            build()
+            .request(request) { (result: Result<User, NetworkError>) in
+                 // Handler result here
+             }
+```
+We have to conforms to the `ReAuthenticationService` protocol, which allows you to handle re-authentication.
+``` swift
+/// Re-authenticates the user and provides a new token.
+    public func reAuthen(completion: @escaping (Result<[String: String], NetworkError>) -> Void) {
+        // For testing now. In fact, this value should get `newtoken` from the real service
+        completion(.success(["jwt_token": "newtoken"]))
+    }
+```
+
+### 5.4. SSL Pinning
+```swift
+let sslPinningHosts = [NetworkSSLPinningImp(host: "jsonplaceholder.typicode.com",
+                                                    hashKeys: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])]
+
+let request = NetworkRequestBuilder<User>(path: "/posts/1", method: .PUT)
+            .setQueryParameters(["title": "foo", "body": "bar", "userId": 1])
+            .build()
+
+try network.setSSLPinningPolicy(.trust(sslPinningHosts)) // setSSLPinningPolicy to enable SSL Pinning
+           .build()
+           .request(request) { (result: Result<User, NetworkError>) in
+                 // Handler result here
+            }
+```
+
+### 5.5. Network Metric
+```swift
+let request = NetworkRequestBuilder<User>(path: "/posts", method: .POST).build()
+
+try? network.setMetricInterceptor(DebugNetworkMetricInterceptor()) // setMetricInterceptor to report metric
+            .build()
+            .request(request) { (result: Result<User, NetworkError>) in
+                // Handler result here
+            }
+```
+
+Report will show us the information of request, task, session
+```
+==============METRIC_REPORT_START==============
+🚀 NetworkCompose event name: TaskCreated:
+{
+  "currentRequest" : {
+    "timeout" : 60,
+    "rawCachePolicy" : 1,
+    "headers" : {
+      "Content-Type" : "application\/json; charset=UTF-8"
+    },
+    "options" : 3,
+    "url" : "https:\/\/jsonplaceholder.typicode.com\/posts",
+    "httpMethod" : "POST"
+  },
+  "createdAt" : "2023-11-25T14:41:59Z",
+  "originalRequest" : {
+    "timeout" : 60,
+    "httpMethod" : "POST",
+    "headers" : {
+      "Content-Type" : "application\/json; charset=UTF-8"
+    },
+    "options" : 3,
+    "url" : "https:\/\/jsonplaceholder.typicode.com\/posts",
+    "rawCachePolicy" : 1
+  }
+}
+==============METRIC_REPORT_END==============
+```
+
+### 5.6. Smart Retry
+```swift
+ let request = NetworkRequestBuilder<User>(path: "/posts/1/retry", method: .PUT)
+        .setQueryParameters(["title": "foo"])
+        .build()
+
+    network.build()
+          .request(request, retryPolicy: .exponentialRetry(count: 3, initialDelay: 1, multiplier: 2.0, maxDelay: 30.0))
+    { (result: Result<User, NetworkError>) in
+        // Handler result here
+    }
+```
+
+### 5.7. Automation Test
+```swift
+let request = NetworkRequestBuilder<User>(path: "/posts", method: .GET).build()
+
+network.setNetworkStrategy(.mocker(self)) // setNetworkStrategy to mocker
+       .build()
+       .request(request) { (result: Result<User, NetworkError>) in
+          // Handler result here
+        }
+```
+We have conforms to the `NetworkExpectationProvider` protocol, allowing you to provide network expectations for testing purposes.
+
+```swift
+// MARK: NetworkExpectationProvider
+
+extension ClientDemoNetwork: NetworkExpectationProvider {
+    /// The network expectations provided by the factory for testing purposes.
+    public var networkExpectations: [NetworkCompose.NetworkExpectation] {
+        let apiOne = NetworkExpectation(name: "abc",
+                                        path: "/posts",
+                                        method: .GET,
+                                        response: .successResponse(User(id: 1)))
+        return [apiOne]
+    }
+}
+```
+### 5.8. setDefaultConfiguration
+The setDefaultConfiguration function is available to reset all configurations for `NetworkBuilder` and `NetworkQueueBuilder`
+```swift
+network.setDefaultConfiguration()
+networkQueue.setDefaultConfiguration()
+```
 
 Thats it!! `NetworkCompose` is successfully integrated and initialized in the project, and ready to use. 
 
-For more detail please go to [Example project](https://github.com/harryngict/NetworkCompose/blob/master/Example/Example/Client/ClientNetworkFactory.swift).
+For more detail please go to [Example project](https://github.com/harryngict/NetworkCompose/blob/develop/Example/Example/ClientDemoNetwork.swift).
 
-## IX. Support
+## VI. Support
 Feel free to utilize [JSONPlaceholder](https://jsonplaceholder.typicode.com/guide/) for testing API in `NetworkCompose` examples. If you encounter any issues with `NetworkCompose` or need assistance with
 integration, please reach out to me at harryngict@gmail.com. I'm here to support you.
 
-## X. Contributing
+## VII. Contributing
 If you want to contribute to `NetworkCompose`, please follow these steps:
 
 1. Fork the repository.
@@ -308,5 +249,5 @@ If you want to contribute to `NetworkCompose`, please follow these steps:
 
 3. Make your changes and submit a pull request.
 
-## XI. License
+## VIII. License
 NetworkCompose is available under the MIT license. See the [LICENSE](https://github.com/harryngict/NetworkCompose/blob/master/LICENSE) file for more information.

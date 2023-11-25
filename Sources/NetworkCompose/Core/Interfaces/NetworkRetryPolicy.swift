@@ -45,6 +45,7 @@ public enum NetworkRetryPolicy: Sendable {
     /// - Parameter currentRetry: The current retry attempt.
     /// - Returns: `true` if a retry should be attempted; otherwise, `false`.
     func shouldRetry(currentRetry: Int) -> Bool {
+        debugPrint("🔄 NetworkCompose retry count: \(currentRetry)")
         return currentRetry <= retryCount
     }
 
