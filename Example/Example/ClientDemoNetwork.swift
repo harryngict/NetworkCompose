@@ -8,26 +8,18 @@
 import Foundation
 import NetworkCompose
 
-/// Typealias for the main network builder using URLSession.
 typealias Network = NetworkBuilder<URLSession>
-
-/// Typealias for the network queue builder using URLSession.
 typealias NetworkQueue = NetworkQueueBuilder<URLSession>
 
-/// A provider class for managing the main network and network queue instances.
 final class NetworkHubProvider {
-    /// Constants used by the `NetworkHubProvider`.
     enum Constant {
         static let baseURL: String = "https://jsonplaceholder.typicode.com"
     }
 
-    /// The main network instance.
     let network: Network
 
-    /// The network queue instance.
     let networkQueue: NetworkQueue
 
-    /// Shared instance of the `NetworkHubProvider`.
     static let shared = NetworkHubProvider()
 
     private init() {
@@ -37,7 +29,6 @@ final class NetworkHubProvider {
     }
 }
 
-/// A factory class for creating and performing various network requests.
 final class ClientDemoNetwork {
     static let shared = ClientDemoNetwork()
 
