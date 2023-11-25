@@ -7,23 +7,13 @@
 
 import SwiftUI
 
-enum ExampleType: String {
-    case requestAsync = "Request async await for iOS-15 above"
-    case requestCompletion = "Request completion closure"
-    case requestQueue = "Request and auto re-authentication"
-    case requestWithSSL = "Request with SSL Pinning"
-    case requestReportMetric = "Request with report metric"
-    case requestRetry = "Request with retry"
-    case requestSupportAutomation = "Request demo for automation test"
-}
-
 struct MainView: View {
-    @State private var selectedType: ExampleType?
+    @State private var selectedType: DemoScenario?
 
-    let types: [ExampleType] = [.requestAsync, .requestCompletion,
-                                .requestQueue, .requestWithSSL,
-                                .requestReportMetric, .requestRetry,
-                                .requestSupportAutomation]
+    let types: [DemoScenario] = [.asyncWait, .completion,
+                                 .reAuthentication, .enabledSSLPinning,
+                                 .networkMetricReport, .smartRetry,
+                                 .supportAutomationTest]
 
     var body: some View {
         NavigationView {
@@ -36,13 +26,13 @@ struct MainView: View {
                     }
                 }
             }
-            .navigationBarTitle("NetworkCompose", displayMode: .inline)
+            .navigationBarTitle("NetworkCompose demo", displayMode: .inline)
         }
     }
 }
 
 struct CustomCell: View {
-    let type: ExampleType
+    let type: DemoScenario
     var onTap: () -> Void
 
     var body: some View {
@@ -54,11 +44,5 @@ struct CustomCell: View {
         .onTapGesture {
             onTap()
         }
-    }
-}
-
-struct MainView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainView()
     }
 }

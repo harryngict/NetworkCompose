@@ -1,5 +1,5 @@
 //
-//  ClientNetworkDemo.swift
+//  ClientDemoNetwork.swift
 //  Example
 //
 //  Created by Hoang Nguyen on 18/11/23.
@@ -38,8 +38,8 @@ final class NetworkHubProvider {
 }
 
 /// A factory class for creating and performing various network requests.
-final class ClientNetworkDemo {
-    static let shared = ClientNetworkDemo()
+final class ClientDemoNetwork {
+    static let shared = ClientDemoNetwork()
 
     private let network: Network
     private let networkQueue: NetworkQueue
@@ -52,40 +52,43 @@ final class ClientNetworkDemo {
     }
 
     func makeRequest(
-        for type: ExampleType,
+        for scenario: DemoScenario,
         completion: @escaping (String) -> Void
     ) {
-        switch type {
-        case .requestAsync:
-            performRequestAsyncAwait(completion: completion)
+        switch scenario {
+        case .asyncWait:
+            performAsyncAwaitRequest(completion: completion)
 
-        case .requestCompletion:
-            performRequestCompletion(completion: completion)
+        case .completion:
+            performCompletionRequest(completion: completion)
 
-        case .requestQueue:
+        case .reAuthentication:
             performReAuthentication(completion: completion)
-        case .requestWithSSL:
-            performrEnabledSSLPinning(completion: completion)
 
-        case .requestReportMetric:
-            performCollectMetricReport(completion: completion)
+        case .enabledSSLPinning:
+            performRequestWithEnabledSSLPinning(completion: completion)
 
-        case .requestRetry:
-            performRequestRetry(completion: completion)
+        case .networkMetricReport:
+            performCollectNetworkMetric(completion: completion)
 
-        case .requestSupportAutomation:
+        case .smartRetry:
+            performRequestWithSmartRetry(completion: completion)
+
+        case .supportAutomationTest:
             performRequestDemoAutomation(completion: completion)
         }
     }
 
-    private func performRequestAsyncAwait(completion: @escaping (String) -> Void) {
+    private func performAsyncAwaitRequest(completion: @escaping (String) -> Void) {
         if #available(iOS 15.0, *) {
             Task {
                 do {
                     let request = NetworkRequestBuilder<[User]>(path: "/posts", method: .GET)
                         .build()
-                    let service = network.build()
-                    let result: [User] = try await service.request(request)
+
+                    let result: [User] = try await network
+                        .setDefaultConfiguration()
+                        .build().request(request)
                     completion("\(result)")
                 } catch {
                     completion((error as? NetworkError)?.localizedDescription ?? error.localizedDescription)
@@ -94,12 +97,13 @@ final class ClientNetworkDemo {
         }
     }
 
-    private func performRequestCompletion(completion: @escaping (String) -> Void) {
+    private func performCompletionRequest(completion: @escaping (String) -> Void) {
         let request = NetworkRequestBuilder<[User]>(path: "/comments", method: .GET)
             .setQueryParameters(["postId": "1"])
             .build()
 
         network
+            .setDefaultConfiguration()
             .build()
             .request(request) { (result: Result<[User], NetworkError>) in
                 switch result {
@@ -116,7 +120,9 @@ final class ClientNetworkDemo {
                                  "userId": 1])
             .setRequiresReAuthentication(true)
             .build()
+
         networkQueue
+            .setDefaultConfiguration()
             .setReAuthService(self) // setReAuthService to enable re authentication
             .build()
             .request(request) { (result: Result<User, NetworkError>) in
@@ -127,7 +133,7 @@ final class ClientNetworkDemo {
             }
     }
 
-    private func performrEnabledSSLPinning(completion: @escaping (String) -> Void) {
+    private func performRequestWithEnabledSSLPinning(completion: @escaping (String) -> Void) {
         do {
             let sslPinningHosts = [NetworkSSLPinningImp(host: "jsonplaceholder.typicode.com",
                                                         hashKeys: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])]
@@ -139,6 +145,7 @@ final class ClientNetworkDemo {
                 .build()
 
             try network
+                .setDefaultConfiguration()
                 .setSSLPinningPolicy(.trust(sslPinningHosts)) // setSSLPinningPolicy to enable SSLPinning
                 .build()
                 .request(request) { (result: Result<User, NetworkError>) in
@@ -152,11 +159,12 @@ final class ClientNetworkDemo {
         }
     }
 
-    private func performCollectMetricReport(completion: @escaping (String) -> Void) {
+    private func performCollectNetworkMetric(completion: @escaping (String) -> Void) {
         let request = NetworkRequestBuilder<User>(path: "/posts", method: .POST)
             .build()
 
         try? network
+            .setDefaultConfiguration()
             .setMetricInterceptor(DebugNetworkMetricInterceptor()) // setMetricInterceptor to report metric
             .build()
             .request(request) { (result: Result<User, NetworkError>) in
@@ -167,12 +175,13 @@ final class ClientNetworkDemo {
             }
     }
 
-    private func performRequestRetry(completion: @escaping (String) -> Void) {
+    private func performRequestWithSmartRetry(completion: @escaping (String) -> Void) {
         let request = NetworkRequestBuilder<User>(path: "/posts/1/retry", method: .PUT)
             .setQueryParameters(["title": "foo"])
             .build()
 
         network
+            .setDefaultConfiguration()
             .build()
             .request(request, retryPolicy: .exponentialRetry(count: 3,
                                                              initialDelay: 1,
@@ -189,7 +198,9 @@ final class ClientNetworkDemo {
     private func performRequestDemoAutomation(completion: @escaping (String) -> Void) {
         let request = NetworkRequestBuilder<User>(path: "/posts", method: .GET)
             .build()
+
         network
+            .setDefaultConfiguration()
             .setNetworkStrategy(.mocker(self)) // setNetworkStrategy is mocker
             .build()
             .request(request) { (result: Result<User, NetworkError>) in
@@ -203,7 +214,7 @@ final class ClientNetworkDemo {
 
 // MARK: ReAuthenticationService
 
-extension ClientNetworkDemo: ReAuthenticationService {
+extension ClientDemoNetwork: ReAuthenticationService {
     /// Re-authenticates the user and provides a new token.
     public func reAuthen(completion: @escaping (Result<[String: String], NetworkError>) -> Void) {
         // For testing now. In fact, this value should get `newtoken` from the real service
@@ -213,7 +224,7 @@ extension ClientNetworkDemo: ReAuthenticationService {
 
 // MARK: NetworkExpectationProvider
 
-extension ClientNetworkDemo: NetworkExpectationProvider {
+extension ClientDemoNetwork: NetworkExpectationProvider {
     /// The network expectations provided by the factory for testing purposes.
     public var networkExpectations: [NetworkCompose.NetworkExpectation] {
         let apiOne = NetworkExpectation(name: "abc",

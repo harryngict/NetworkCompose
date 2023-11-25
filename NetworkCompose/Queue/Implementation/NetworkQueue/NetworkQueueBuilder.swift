@@ -7,42 +7,23 @@
 
 import Foundation
 
-/// A builder for constructing instances of `NetworkQueue`.
-///
-/// Example usage:
-/// ```swift
-/// let baseURL = URL(string: "https://api.example.com")!
-/// let networkQueue = NetworkQueueBuilder(baseURL: baseURL)
-///     .setReAuthService(yourReAuthService)
-///     .setSecurityTrust(yourSecurityTrust)
-///     .build()
-/// ```
 public class NetworkQueueBuilder<SessionType: NetworkSession>: NetworkBuilderBase<SessionType> {
     /// The re-authentication service associated with the builder.
     private var reAuthService: ReAuthenticationService?
+
+    /// The operation queue manager used to  network operations.
+    private var operationQueue: OperationQueueManager = DefaultOperationQueueManager.serialOperationQueue
 
     /// Initializes a `NetworkQueueBuilder` with a base URL and a default session.
     ///
     /// - Parameters:
     ///   - baseURL: The base URL for network requests.
     ///   - session: The network session to use for requests. Defaults to `URLSession.shared`.
-    ///   - networkReachability: The network reachability object. Default is `NetworkReachabilityImp.shared`.
-    ///   - executeQueue: The dispatch queue for executing network requests.
-    ///   - observeQueue: The dispatch queue for observing and handling network events.
-    ///   - strategy: The network strategy to be applied. Default is `.server`.
     public required init(baseURL: URL,
-                         session: SessionType = URLSession.shared,
-                         networkReachability: NetworkReachability = NetworkReachabilityImp.shared,
-                         executeQueue: NetworkDispatchQueue = DefaultNetworkDispatchQueue.executeQueue,
-                         observeQueue: NetworkDispatchQueue = DefaultNetworkDispatchQueue.observeQueue,
-                         strategy: NetworkStrategy = .server)
+                         session: SessionType = URLSession.shared)
     {
         super.init(baseURL: baseURL,
-                   session: session,
-                   networkReachability: networkReachability,
-                   executeQueue: executeQueue,
-                   observeQueue: observeQueue,
-                   strategy: strategy)
+                   session: session)
     }
 
     /// Sets the re-authentication service for the builder.
@@ -54,29 +35,42 @@ public class NetworkQueueBuilder<SessionType: NetworkSession>: NetworkBuilderBas
         return self
     }
 
+    /// Resets the configuration of the network builder and its related properties to their default state.
+    ///
+    /// This method clears any custom re-authentication service, operation queue, SSL pinning policy,
+    /// metric interceptor, network strategy, and sets default values for execution and observation queues,
+    /// and network reachability.
+    ///
+    /// - Returns: The modified instance of the network builder with the default configuration.
+    override public func setDefaultConfiguration() -> Self {
+        reAuthService = nil
+        operationQueue = DefaultOperationQueueManager.serialOperationQueue
+        _ = super.setDefaultConfiguration()
+        return self
+    }
+
     /// Builds and returns a `NetworkQueueInterface` instance with the configured parameters.
     ///
     /// - Returns: A fully configured `NetworkQueueInterface` instance.
     public func build() -> NetworkQueueInterface {
-        switch strategy {
-        case let .mocker(provider):
-            return NetworkQueueDecorator(
-                baseURL: baseURL,
-                session: session,
-                reAuthService: reAuthService,
-                executeQueue: executeQueue,
-                observeQueue: observeQueue,
-                expectations: provider.networkExpectations
-            )
-        case .server:
+        guard let strategy = strategy, case let .mocker(provider) = strategy else {
             return NetworkQueue(
                 baseURL: baseURL,
                 session: session,
                 reAuthService: reAuthService,
+                operationQueue: operationQueue,
                 networkReachability: networkReachability,
                 executeQueue: executeQueue,
                 observeQueue: observeQueue
             )
         }
+        return NetworkQueueDecorator(
+            baseURL: baseURL,
+            session: session,
+            reAuthService: reAuthService,
+            executeQueue: executeQueue,
+            observeQueue: observeQueue,
+            expectations: provider.networkExpectations
+        )
     }
 }

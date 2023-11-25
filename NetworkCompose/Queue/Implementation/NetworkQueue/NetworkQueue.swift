@@ -8,12 +8,6 @@
 import Foundation
 
 /// A class implementing the `NetworkQueue` protocol that manages the execution of network requests.
-///
-/// Example usage:
-/// ```swift
-/// let baseURL = URL(string: "https://api.example.com")!
-/// let networkQueue = NetworkQueue(baseURL: baseURL)
-/// ```
 final class NetworkQueue<SessionType: NetworkSession>: NetworkQueueInterface {
     /// The underlying network responsible for handling network requests.
     private let network: NetworkInterface
@@ -38,10 +32,10 @@ final class NetworkQueue<SessionType: NetworkSession>: NetworkQueueInterface {
     ///   - observeQueue: The dispatch queue for observing and handling network events.
     init(
         baseURL: URL,
-        session: SessionType = URLSession.shared,
-        reAuthService: ReAuthenticationService? = nil,
-        operationQueue: OperationQueueManager = DefaultOperationQueueManager.serialOperationQueue,
-        networkReachability: NetworkReachability = NetworkReachabilityImp.shared,
+        session: SessionType,
+        reAuthService: ReAuthenticationService?,
+        operationQueue: OperationQueueManager,
+        networkReachability: NetworkReachability,
         executeQueue: NetworkDispatchQueue,
         observeQueue: NetworkDispatchQueue
     ) {
