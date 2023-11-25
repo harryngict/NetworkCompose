@@ -53,8 +53,11 @@ final class NetworkSecurityTrustImp: NetworkSecurityTrust {
         let hash = serverKey.addRSAHeaderBase64EncodedString()
 
         if let sslPinning = sslPinnings.first(where: { $0.host == protectionSpace.host }), sslPinning.hashKeys.contains(hash) {
+            debugPrint("🤝 NetworkCompose trust: \(protectionSpace.host)")
             return AuthChallengeDecision(authChallengeDisposition: .useCredential,
                                          urlCredential: URLCredential(trust: serverTrust))
+        } else {
+            debugPrint("🚫 NetworkCompose doest not trust: \(protectionSpace.host)")
         }
 
         return AuthChallengeDecision(authChallengeDisposition: .cancelAuthenticationChallenge, urlCredential: nil)

@@ -26,17 +26,20 @@ public struct DebugNetworkMetricInterceptor: NetworkMetricInterceptor {
         }
 
         do {
+            print("==============METRIC_REPORT_START==============")
+            print("🚀 NetworkCompose event name: \(event.name):")
             let encoder = JSONEncoder()
             encoder.outputFormatting = .prettyPrinted
             encoder.dateEncodingStrategy = .iso8601
-            let jsonData = try encoder.encode(taskMetric)
-            if let jsonString = String(data: jsonData, encoding: .utf8) {
-                print("\n🚀🚀🚀 \(event.name):\n\(jsonString)")
+            if let metricReport = try String(data: encoder.encode(taskMetric), encoding: .utf8) {
+                print("\n\(metricReport)")
             } else {
-                print("\n⚠️⚠️⚠️ \(event.name): Failed to convert JSON data to string.")
+                print("🚫 NetworkCompose failed to convert json for metric name \(event.name)")
             }
+            print("==============METRIC_REPORT_END==============")
+            print("\n")
         } catch {
-            print("\n⚠️⚠️⚠️ \(event.name):\n\(error)")
+            print("🚫 NetworkCompose can not parse metric name \(event.name):  \(error.localizedDescription)")
         }
     }
 }
