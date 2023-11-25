@@ -11,10 +11,6 @@ import Foundation
 ///
 /// Use this structure to encapsulate the HTTP status code and data returned from a network operation.
 ///
-/// Example usage:
-/// ```swift
-/// let response = NetworkResponseImp(statusCode: 200, data: responseData)
-/// ```
 struct NetworkResponseImp: NetworkResponse, Sendable {
     /// The HTTP status code of the response.
     let statusCode: Int

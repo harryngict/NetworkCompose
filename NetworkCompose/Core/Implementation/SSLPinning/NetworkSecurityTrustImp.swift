@@ -53,7 +53,6 @@ final class NetworkSecurityTrustImp: NetworkSecurityTrust {
         let hash = serverKey.addRSAHeaderBase64EncodedString()
 
         if let sslPinning = sslPinnings.first(where: { $0.host == protectionSpace.host }), sslPinning.hashKeys.contains(hash) {
-            debugPrint("NetworkSSLPinningPolicy trust: \(sslPinning.host)")
             return AuthChallengeDecision(authChallengeDisposition: .useCredential,
                                          urlCredential: URLCredential(trust: serverTrust))
         }

@@ -9,11 +9,6 @@ import Foundation
 
 /// A class implementing the `NetworkInterface` protocol that handles network requests.
 ///
-/// Example usage:
-/// ```swift
-/// let baseURL = URL(string: "https://api.example.com")!
-/// let network = Network(baseURL: baseURL)
-/// ```
 final class Network<SessionType: NetworkSession>: NetworkInterface {
     /// The network session used for making requests.
     private let session: SessionType
@@ -34,13 +29,13 @@ final class Network<SessionType: NetworkSession>: NetworkInterface {
     ///
     /// - Parameters:
     ///   - baseURL: The base URL for network requests.
-    ///   - session: The network session to use for requests. Default is `URLSession.shared`.
-    ///   - networkReachability: The network reachability object. Default is `NetworkReachabilityImp.shared`.
+    ///   - session: The network session to use for requests.
+    ///   - networkReachability: The network reachability object.
     ///   - executeQueue: The dispatch queue for executing network requests.
     ///   - observeQueue: The dispatch queue for observing and handling network events.
     init(baseURL: URL,
-         session: SessionType = URLSession.shared,
-         networkReachability: NetworkReachability = NetworkReachabilityImp.shared,
+         session: SessionType,
+         networkReachability: NetworkReachability,
          executeQueue: NetworkDispatchQueue,
          observeQueue: NetworkDispatchQueue)
     {
