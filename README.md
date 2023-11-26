@@ -126,7 +126,7 @@ let request = NetworkRequest<ArticleResponse>(path: "/posts", method: .GET)
     .build()
 
 network
-    .setNetworkStrategy(.mocker(yourMocker))
+    .setMockerStrategy(.mocker(yourMockerType))
     .request(request) { result in
         // Handle the result
     }
