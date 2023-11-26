@@ -249,18 +249,13 @@ private extension ClientDemoNetwork {
         encoder.outputFormatting = .prettyPrinted
         encoder.dateEncodingStrategy = .iso8601
         let metricReport = try? String(data: encoder.encode(event.taskMetric), encoding: .utf8)
-        let message = "Metric event received: \(metricReport ?? "")"
-        showAlert(eventName: event.name, message: message)
+        showAlert(event.name, message: metricReport ?? "")
     }
 
-    func showAlert(eventName _: String, message: String) {
-        let alertController = UIAlertController(title: "Metric Event", message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-
-        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
-           let rootViewController = sceneDelegate.window?.rootViewController
-        {
-            rootViewController.present(alertController, animated: true, completion: nil)
-        }
+    func showAlert(_ eventName: String, message: String) {
+        let alertController = UIAlertController(title: "Metric event: \(eventName)", message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+        let topViewController = UIApplication.topViewController()
+        topViewController?.present(alertController, animated: true, completion: nil)
     }
 }

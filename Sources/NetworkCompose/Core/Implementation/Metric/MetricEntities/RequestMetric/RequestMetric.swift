@@ -16,7 +16,6 @@ public struct RequestMetric: Codable, Sendable {
     }
 
     public var timeout: TimeInterval
-    public var options: Options
     public var contentType: ContentTypeMetric? {
         headers?["Content-Type"].flatMap(ContentTypeMetric.init)
     }
@@ -29,21 +28,5 @@ public struct RequestMetric: Codable, Sendable {
         httpMethod = urlRequest.httpMethod
         rawCachePolicy = urlRequest.cachePolicy.rawValue
         timeout = urlRequest.timeoutInterval
-        options = Options(urlRequest)
-    }
-
-    public struct Options: OptionSet, Hashable, Codable, Sendable {
-        public let rawValue: Int8
-        public init(rawValue: Int8) { self.rawValue = rawValue }
-        public static let allowsCellularAccess = Options(rawValue: 1 << 0)
-        public static let httpShouldHandleCookies = Options(rawValue: 1 << 1)
-        public static let httpShouldUsePipelining = Options(rawValue: 1 << 2)
-
-        init(_ request: URLRequest) {
-            self = []
-            if request.allowsCellularAccess { insert(.allowsCellularAccess) }
-            if request.httpShouldHandleCookies { insert(.httpShouldHandleCookies) }
-            if request.httpShouldUsePipelining { insert(.httpShouldUsePipelining) }
-        }
     }
 }
