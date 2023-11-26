@@ -50,25 +50,29 @@ public class NetworkCompose<SessionType: NetworkSession>: NetworkSettings<Sessio
         return self
     }
 
-    public func build() -> NetworkProxyInterface {
-        guard let strategy = strategy, case let .mocker(provider) = strategy else {
-            return NetworkProxy(
+    public func build() -> NetworkCoordinatorInterface {
+        guard let mockerStrategy = mockerStrategy else {
+            var storageService: StorageService?
+            if let storageStrategy { storageService = StorageServiceProvider(storageStrategy) }
+            return NetworkCoordinator(
                 baseURL: baseURL,
                 session: session,
                 reAuthService: reAuthService,
                 operationQueue: operationQueue,
                 networkReachability: networkReachability,
                 executeQueue: executeQueue,
-                observeQueue: observeQueue
+                observeQueue: observeQueue,
+                storageService: storageService
             )
         }
-        return NetworkMocker(
+
+        return NetworkMockerCoordinator(
             baseURL: baseURL,
             session: session,
             reAuthService: reAuthService,
             executeQueue: executeQueue,
             observeQueue: observeQueue,
-            expectations: provider.networkExpectations
+            mockerStrategy: mockerStrategy
         )
     }
 }
