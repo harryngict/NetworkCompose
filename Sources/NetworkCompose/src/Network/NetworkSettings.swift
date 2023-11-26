@@ -15,8 +15,10 @@ public class NetworkSettings<SessionType: NetworkSession> {
     var networkReachability: NetworkReachability = NetworkReachabilityImp.shared
     var executeQueue: NetworkDispatchQueue = DefaultNetworkDispatchQueue.executeQueue
     var observeQueue: NetworkDispatchQueue = DefaultNetworkDispatchQueue.observeQueue
-    var strategy: NetworkStrategy?
-
+    /// The strategy for mocking network events.
+    var mockerStrategy: MockerStrategy?
+    /// The strategy for handling storable network events.
+    var storageStrategy: StorageStrategy?
     public required init(baseURL: URL,
                          session: SessionType)
     {
@@ -75,12 +77,21 @@ public class NetworkSettings<SessionType: NetworkSession> {
         return self
     }
 
-    /// Sets the network strategy for handling network events.
+    /// Sets the mocker strategy for the object.
     ///
-    /// - Parameter strategy: The network strategy to be set.
+    /// - Parameter strategy: The mocker strategy to be set.
+    /// - Returns: The modified object with the updated mocker strategy.
+    public func setMockerStrategy(_ strategy: MockerStrategy) -> Self {
+        mockerStrategy = strategy
+        return self
+    }
+
+    /// Sets the Storage strategy for handling network events.
+    ///
+    /// - Parameter strategy: The Storable strategy to be set.
     /// - Returns: The builder instance for method chaining.
-    public func setNetworkStrategy(_ strategy: NetworkStrategy) -> Self {
-        self.strategy = strategy
+    public func setStorageStrategy(_ strategy: StorageStrategy) -> Self {
+        storageStrategy = strategy
         return self
     }
 
@@ -93,7 +104,8 @@ public class NetworkSettings<SessionType: NetworkSession> {
     public func setDefaultConfiguration() -> Self {
         sslPinningPolicy = nil
         metricInterceptor = nil
-        strategy = nil
+        mockerStrategy = nil
+        storageStrategy = nil
         executeQueue = DefaultNetworkDispatchQueue.executeQueue
         observeQueue = DefaultNetworkDispatchQueue.observeQueue
         networkReachability = NetworkReachabilityImp.shared
@@ -105,6 +117,10 @@ public class NetworkSettings<SessionType: NetworkSession> {
 }
 
 private extension NetworkSettings {
+    /// Creates a network session based on the current SSL pinning policy and metric interceptor.
+    ///
+    /// - Returns: A network session instance.
+    /// - Throws: A `NetworkError` if the session cannot be created.
     func createNetworkSession() throws -> SessionType {
         do {
             let delegate = NetworkSessionProxyDelegate(sslPinningPolicy: sslPinningPolicy,

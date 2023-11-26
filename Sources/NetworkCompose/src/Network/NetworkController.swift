@@ -1,5 +1,5 @@
 //
-//  NetworkCore.swift
+//  NetworkController.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 11/11/23.
@@ -7,12 +7,13 @@
 
 import Foundation
 
-final class NetworkCore<SessionType: NetworkSession>: NetworkCoreInterface {
+final class NetworkController<SessionType: NetworkSession>: NetworkControllerInterface {
     private let session: SessionType
     private let baseURL: URL
     public let networkReachability: NetworkReachability
     private let executeQueue: NetworkDispatchQueue
     private let observeQueue: NetworkDispatchQueue
+    private var storageService: StorageService?
 
     /// Initializes the `Network` with the specified configuration.
     ///
@@ -26,13 +27,15 @@ final class NetworkCore<SessionType: NetworkSession>: NetworkCoreInterface {
          session: SessionType,
          networkReachability: NetworkReachability,
          executeQueue: NetworkDispatchQueue,
-         observeQueue: NetworkDispatchQueue)
+         observeQueue: NetworkDispatchQueue,
+         storageService: StorageService?)
     {
         self.baseURL = baseURL
         self.session = session
         self.networkReachability = networkReachability
         self.executeQueue = executeQueue
         self.observeQueue = observeQueue
+        self.storageService = storageService
         self.networkReachability.startMonitoring(completion: { _ in })
     }
 
@@ -188,7 +191,15 @@ final class NetworkCore<SessionType: NetworkSession>: NetworkCoreInterface {
         guard (200 ... 299).contains(response.statusCode) else {
             throw NetworkError.error(response.statusCode, nil)
         }
-        return try request.responseDecoder.decode(RequestType.SuccessType.self, from: response.data)
+        let model = try request.responseDecoder.decode(RequestType.SuccessType.self, from: response.data)
+
+        /// Store object for automation testing.
+        if let storageService = storageService {
+            try storageService.storeResponse(request,
+                                             data: response.data,
+                                             model: model)
+        }
+        return model
     }
 
     private func handleResult<RequestType>(
