@@ -11,8 +11,8 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
     private let session: SessionType
     private let baseURL: URL
     public let networkReachability: NetworkReachability
-    private let executeQueue: NetworkDispatchQueue
-    private let observeQueue: NetworkDispatchQueue
+    private let executeQueue: DispatchQueueType
+    private let observeQueue: DispatchQueueType
     private var storageService: StorageService?
 
     /// Initializes the `Network` with the specified configuration.
@@ -23,11 +23,12 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
     ///   - networkReachability: The network reachability object.
     ///   - executeQueue: The dispatch queue for executing network requests.
     ///   - observeQueue: The dispatch queue for observing and handling network events.
+    ///   - storageService: An optional storage service for handling persistent data.
     init(baseURL: URL,
          session: SessionType,
          networkReachability: NetworkReachability,
-         executeQueue: NetworkDispatchQueue,
-         observeQueue: NetworkDispatchQueue,
+         executeQueue: DispatchQueueType,
+         observeQueue: DispatchQueueType,
          storageService: StorageService?)
     {
         self.baseURL = baseURL
@@ -42,7 +43,7 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
     func request<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
-        retryPolicy: NetworkRetryPolicy = .none,
+        retryPolicy: RetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: NetworkRequestInterface {
         guard networkReachability.isInternetAvailable else {
@@ -88,7 +89,7 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
         fromFile fileURL: URL,
-        retryPolicy: NetworkRetryPolicy = .none,
+        retryPolicy: RetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: NetworkRequestInterface {
         guard networkReachability.isInternetAvailable else {
@@ -134,7 +135,7 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
     func download<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
-        retryPolicy: NetworkRetryPolicy = .none,
+        retryPolicy: RetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: NetworkRequestInterface {
         guard networkReachability.isInternetAvailable else {
@@ -229,7 +230,7 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
 
     private func retryIfNeeded<SuccessType>(
         currentRetry: Int,
-        retryPolicy: NetworkRetryPolicy,
+        retryPolicy: RetryPolicy,
         error: NetworkError,
         performRequest: @escaping () -> Void,
         completion: @escaping (Result<SuccessType, NetworkError>) -> Void

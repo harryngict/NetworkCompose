@@ -1,5 +1,5 @@
 //
-//  NetworkRetryPolicy.swift
+//  RetryPolicy.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 23/11/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum NetworkRetryPolicy: Sendable {
+public enum RetryPolicy: Sendable {
     case none
 
     /// Constant retry policy with a fixed number of retry attempts and a constant delay between retries.

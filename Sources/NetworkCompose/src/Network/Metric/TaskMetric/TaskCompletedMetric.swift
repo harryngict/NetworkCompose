@@ -15,7 +15,6 @@ public struct TaskCompletedMetric: TaskMetric {
     public var response: ResponseMetric?
     public var error: ResponseErrorMetric?
     public var requestBody: Data?
-    public var responseBody: Data?
 
     public init(taskType: TaskType,
                 createdAt: Date,
@@ -23,8 +22,7 @@ public struct TaskCompletedMetric: TaskMetric {
                 currentRequest: RequestMetric?,
                 response: ResponseMetric?,
                 error: ResponseErrorMetric?,
-                requestBody: Data?,
-                responseBody: Data?)
+                requestBody: Data?)
     {
         self.taskType = taskType
         self.createdAt = createdAt
@@ -33,6 +31,5 @@ public struct TaskCompletedMetric: TaskMetric {
         self.response = response
         self.error = error
         self.requestBody = requestBody
-        self.responseBody = responseBody
     }
 }

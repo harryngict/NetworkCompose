@@ -8,6 +8,6 @@
 import Foundation
 
 protocol SSLPinningProcessor {
-    var sslPinningPolicy: NetworkSSLPinningPolicy { get }
+    var sslPinningPolicy: SSLPinningPolicy { get }
     func validateAuthentication(_ protectionSpace: URLProtectionSpace) -> AuthChallengeDecision
 }

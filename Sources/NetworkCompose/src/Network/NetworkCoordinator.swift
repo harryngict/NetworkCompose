@@ -35,8 +35,8 @@ final class NetworkCoordinator<SessionType: NetworkSession>: NetworkCoordinatorI
         reAuthService: ReAuthenticationService?,
         operationQueue: OperationQueueManager,
         networkReachability: NetworkReachability,
-        executeQueue: NetworkDispatchQueue,
-        observeQueue: NetworkDispatchQueue,
+        executeQueue: DispatchQueueType,
+        observeQueue: DispatchQueueType,
         storageService: StorageService?
     ) {
         self.reAuthService = reAuthService
@@ -52,7 +52,7 @@ final class NetworkCoordinator<SessionType: NetworkSession>: NetworkCoordinatorI
     func request<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
-        retryPolicy: NetworkRetryPolicy = .none,
+        retryPolicy: RetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) {
         guard request.requiresReAuthentication else {
@@ -74,7 +74,7 @@ final class NetworkCoordinator<SessionType: NetworkSession>: NetworkCoordinatorI
         _ request: RequestType,
         andHeaders headers: [String: String],
         fromFile fileURL: URL,
-        retryPolicy: NetworkRetryPolicy,
+        retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) {
         guard request.requiresReAuthentication else {
@@ -97,7 +97,7 @@ final class NetworkCoordinator<SessionType: NetworkSession>: NetworkCoordinatorI
     func download<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String],
-        retryPolicy: NetworkRetryPolicy,
+        retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) {
         guard request.requiresReAuthentication else {
@@ -131,7 +131,7 @@ extension NetworkCoordinator {
     private func createRequestOperation<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String],
-        retryPolicy: NetworkRetryPolicy,
+        retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) -> CustomOperation {
         let asyncOperation = ClosureCustomOperation { operation in
@@ -155,7 +155,7 @@ extension NetworkCoordinator {
         _ request: RequestType,
         andHeaders headers: [String: String],
         allowReAuth: Bool,
-        retryPolicy: NetworkRetryPolicy,
+        retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) {
         networkCore.request(request, andHeaders: headers, retryPolicy: retryPolicy) { result in
@@ -190,7 +190,7 @@ extension NetworkCoordinator {
         _ request: RequestType,
         andHeaders headers: [String: String],
         fromFile fileURL: URL,
-        retryPolicy: NetworkRetryPolicy,
+        retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) -> CustomOperation {
         let asyncOperation = ClosureCustomOperation { operation in
@@ -217,7 +217,7 @@ extension NetworkCoordinator {
         andHeaders headers: [String: String],
         fromFile fileURL: URL,
         allowReAuth: Bool,
-        retryPolicy: NetworkRetryPolicy,
+        retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) {
         networkCore.upload(request,
@@ -258,7 +258,7 @@ extension NetworkCoordinator {
     private func createDownloadOperation<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String],
-        retryPolicy: NetworkRetryPolicy,
+        retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) -> CustomOperation {
         let asyncOperation = ClosureCustomOperation { operation in
@@ -282,7 +282,7 @@ extension NetworkCoordinator {
         _ request: RequestType,
         andHeaders headers: [String: String],
         allowReAuth: Bool,
-        retryPolicy: NetworkRetryPolicy,
+        retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) {
         networkCore.download(request, andHeaders: headers, retryPolicy: retryPolicy) { result in

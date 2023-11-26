@@ -1,5 +1,5 @@
 //
-//  NetworkSecurityTrust.swift
+//  SecurityTrust.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 21/11/23.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-protocol NetworkSecurityTrust {
-    var sslPinnings: [NetworkSSLPinning] { get }
+protocol SecurityTrust {
+    var sslPinnings: [SSLPinning] { get }
 
     func verifyServerTrust(with protectionSpace: URLProtectionSpace) -> AuthChallengeDecision
 }

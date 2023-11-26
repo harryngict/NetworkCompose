@@ -15,8 +15,8 @@ public enum NetworkError: Error, Sendable, Equatable, Hashable {
     case downloadResponseTempURLNil
     case lostInternetConnection
     case decodingFailed(modeType: String, context: String)
-    case automation(AutomationError) // FOR AUTOMATION TESTING
     case error(Int?, String?)
+    case automation(AutomationError) // Support for automation testing
 
     public var errorCode: Int {
         switch self {
@@ -27,8 +27,8 @@ public enum NetworkError: Error, Sendable, Equatable, Hashable {
         case .downloadResponseTempURLNil: return -105
         case .lostInternetConnection: return -106
         case .decodingFailed: return -107
+        case let .error(code, _): return code ?? -108
         case let .automation(error): return error.errorCode
-        case let .error(code, _): return code ?? -112
         }
     }
 

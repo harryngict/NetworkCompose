@@ -20,7 +20,7 @@ public protocol NetworkControllerInterface: AnyObject {
     func request<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String],
-        retryPolicy: NetworkRetryPolicy,
+        retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     )
 
@@ -36,7 +36,7 @@ public protocol NetworkControllerInterface: AnyObject {
         _ request: RequestType,
         andHeaders headers: [String: String],
         fromFile fileURL: URL,
-        retryPolicy: NetworkRetryPolicy,
+        retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     )
 
@@ -50,7 +50,7 @@ public protocol NetworkControllerInterface: AnyObject {
     func download<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String],
-        retryPolicy: NetworkRetryPolicy,
+        retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     )
 }
@@ -59,7 +59,7 @@ public extension NetworkControllerInterface {
     func request<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
-        retryPolicy: NetworkRetryPolicy = .none,
+        retryPolicy: RetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) {
         self.request(request,
@@ -72,7 +72,7 @@ public extension NetworkControllerInterface {
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
         fromFile fileURL: URL,
-        retryPolicy: NetworkRetryPolicy = .none,
+        retryPolicy: RetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) {
         upload(request,
@@ -85,7 +85,7 @@ public extension NetworkControllerInterface {
     func download<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
-        retryPolicy: NetworkRetryPolicy = .none,
+        retryPolicy: RetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) {
         download(request,

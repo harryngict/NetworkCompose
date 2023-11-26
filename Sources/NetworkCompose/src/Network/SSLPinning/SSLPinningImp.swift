@@ -1,5 +1,5 @@
 //
-//  NetworkSSLPinningImp.swift
+//  SSLPinningImp.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 22/11/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct NetworkSSLPinningImp: NetworkSSLPinning, Sendable {
+public struct SSLPinningImp: SSLPinning, Sendable {
     public var host: String
     public var hashKeys: Set<String>
 

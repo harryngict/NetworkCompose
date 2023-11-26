@@ -92,8 +92,8 @@ final class ClientDemoNetwork {
         completion: @escaping (Result<[Article], NetworkError>) -> Void
     ) {
         do {
-            let sslPinningHosts = [NetworkSSLPinningImp(host: "jsonplaceholder.typicode.com",
-                                                        hashKeys: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])]
+            let sslPinningHosts = [SSLPinningImp(host: "jsonplaceholder.typicode.com",
+                                                 hashKeys: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])]
 
             let request = NetworkRequest<Article>(path: "/posts/1", method: .PUT)
                 .setQueryParameters(["title": "foo",
@@ -124,7 +124,7 @@ final class ClientDemoNetwork {
 
         try? network
             .setDefaultConfiguration() //  reset all configurations
-            .setMetricInterceptor(DefaultNetworkMetricInterceptor { event in // setMetricInterceptor to report metric
+            .setMetricInterceptor(DefaultMetricInterceptor { event in // setMetricInterceptor to report metric
                 DispatchQueue.main.async { self.showMessageForMetricEvent(event) }
             })
             .build()
@@ -144,10 +144,10 @@ final class ClientDemoNetwork {
             .build()
 
         // exponential retry
-        let retryPolicy: NetworkRetryPolicy = .exponentialRetry(count: 4,
-                                                                initialDelay: 1,
-                                                                multiplier: 3.0,
-                                                                maxDelay: 30.0)
+        let retryPolicy: RetryPolicy = .exponentialRetry(count: 4,
+                                                         initialDelay: 1,
+                                                         multiplier: 3.0,
+                                                         maxDelay: 30.0)
         network
             .setDefaultConfiguration() //  reset all configurations
             .build()
@@ -201,12 +201,14 @@ extension ClientDemoNetwork: EndpointExpectationProvider {
     }
 }
 
+// MARK: Helper for demo
+
 private extension ClientDemoNetwork {
-    func showMessageForMetricEvent(_ event: NetworkTaskEvent) {
+    func showMessageForMetricEvent(_ event: TaskMetricEvent) {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
         encoder.dateEncodingStrategy = .iso8601
-        let metricReport = try? String(data: encoder.encode(event.taskMetric), encoding: .utf8)
+        let metricReport = try? String(data: encoder.encode(event.metric), encoding: .utf8)
         showAlert(event.name, message: metricReport ?? "")
     }
 

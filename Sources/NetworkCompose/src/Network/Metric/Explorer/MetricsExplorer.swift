@@ -1,5 +1,5 @@
 //
-//  NetworkMetricsAnalyzer.swift
+//  MetricsExplorer.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 24/11/23.
@@ -7,10 +7,10 @@
 
 import Foundation
 
-final class NetworkMetricsAnalyzer {
-    private let metricInterceptor: NetworkMetricInterceptor
+final class MetricsExplorer {
+    private let metricInterceptor: MetricInterceptor
 
-    init(metricInterceptor: NetworkMetricInterceptor) {
+    init(metricInterceptor: MetricInterceptor) {
         self.metricInterceptor = metricInterceptor
     }
 
@@ -34,8 +34,7 @@ final class NetworkMetricsAnalyzer {
                                                  currentRequest: task.currentRequest.map(RequestMetric.init),
                                                  response: task.response.map(ResponseMetric.init),
                                                  error: error.map(ResponseErrorMetric.init),
-                                                 requestBody: originalRequest.httpBody ?? originalRequest.httpBodyStreamData(),
-                                                 responseBody: nil)))
+                                                 requestBody: originalRequest.httpBody ?? originalRequest.httpBodyStreamData())))
     }
 
     func trackTaskDidUpdateProgress(_ task: URLSessionTask, didUpdateProgress progress: (completed: Int64, total: Int64)) {
@@ -57,7 +56,7 @@ final class NetworkMetricsAnalyzer {
                                                                      statusCode: statusCode)))
     }
 
-    private func sendEvent(_ event: NetworkTaskEvent) {
+    private func sendEvent(_ event: TaskMetricEvent) {
         metricInterceptor.sendEvent(event)
     }
 }

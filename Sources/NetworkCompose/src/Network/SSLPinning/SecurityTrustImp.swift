@@ -1,5 +1,5 @@
 //
-//  NetworkSecurityTrustImp.swift
+//  SecurityTrustImp.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 21/11/23.
@@ -7,10 +7,10 @@
 
 import Foundation
 
-final class NetworkSecurityTrustImp: NetworkSecurityTrust {
-    let sslPinnings: [NetworkSSLPinning]
+final class SecurityTrustImp: SecurityTrust {
+    let sslPinnings: [SSLPinning]
 
-    init(sslPinnings: [NetworkSSLPinning]) {
+    init(sslPinnings: [SSLPinning]) {
         self.sslPinnings = sslPinnings
     }
 

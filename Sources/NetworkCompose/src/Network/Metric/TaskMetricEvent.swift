@@ -1,5 +1,5 @@
 //
-//  NetworkTaskEvent.swift
+//  TaskMetricEvent.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 23/11/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum NetworkTaskEvent: Codable, Sendable {
+public enum TaskMetricEvent: Codable, Sendable {
     case created(_ metric: TaskCreatedMetric)
     case progressUpdated(_ metric: TaskProgressUpdatedMetric)
     case completed(_ metric: TaskCompletedMetric)
@@ -22,7 +22,7 @@ public enum NetworkTaskEvent: Codable, Sendable {
         }
     }
 
-    public var taskMetric: TaskMetric {
+    public var metric: TaskMetric {
         switch self {
         case let .created(metric): return metric
         case let .progressUpdated(metric): return metric

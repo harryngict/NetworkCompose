@@ -11,7 +11,7 @@ final class NetworkMockHandler {
     private let mockerStrategy: MockerStrategy
     private var storageService: StorageService?
 
-    init(_ mockerStrategy: MockerStrategy, executeQueue _: NetworkDispatchQueue) {
+    init(_ mockerStrategy: MockerStrategy, executeQueue _: DispatchQueueType) {
         self.mockerStrategy = mockerStrategy
         if case let .localStorage(strategy) = mockerStrategy {
             storageService = StorageServiceProvider(strategy)

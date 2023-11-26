@@ -10,11 +10,11 @@ import Foundation
 public class NetworkSettings<SessionType: NetworkSession> {
     var baseURL: URL
     var session: SessionType
-    var sslPinningPolicy: NetworkSSLPinningPolicy?
-    var metricInterceptor: NetworkMetricInterceptor?
+    var sslPinningPolicy: SSLPinningPolicy?
+    var metricInterceptor: MetricInterceptor?
     var networkReachability: NetworkReachability = NetworkReachabilityImp.shared
-    var executeQueue: NetworkDispatchQueue = DefaultNetworkDispatchQueue.executeQueue
-    var observeQueue: NetworkDispatchQueue = DefaultNetworkDispatchQueue.observeQueue
+    var executeQueue: DispatchQueueType = DefaultNetworkDispatchQueue.executeQueue
+    var observeQueue: DispatchQueueType = DefaultNetworkDispatchQueue.observeQueue
     /// The strategy for mocking network events.
     var mockerStrategy: MockerStrategy?
     /// The strategy for handling storable network events.
@@ -32,7 +32,7 @@ public class NetworkSettings<SessionType: NetworkSession> {
     /// - Returns: The builder instance for method chaining.
     ///
     /// - Throws: A `NetworkError` if the session cannot be created.
-    public func setSSLPinningPolicy(_ sslPinningPolicy: NetworkSSLPinningPolicy) throws -> Self {
+    public func setSSLPinningPolicy(_ sslPinningPolicy: SSLPinningPolicy) throws -> Self {
         self.sslPinningPolicy = sslPinningPolicy
         session = try createNetworkSession()
         return self
@@ -44,7 +44,7 @@ public class NetworkSettings<SessionType: NetworkSession> {
     /// - Returns: The builder instance for method chaining.
     ///
     /// - Throws: A `NetworkError` if the session cannot be created.
-    public func setMetricInterceptor(_ metricInterceptor: NetworkMetricInterceptor) throws -> Self {
+    public func setMetricInterceptor(_ metricInterceptor: MetricInterceptor) throws -> Self {
         self.metricInterceptor = metricInterceptor
         session = try createNetworkSession()
         return self
@@ -63,7 +63,7 @@ public class NetworkSettings<SessionType: NetworkSession> {
     ///
     /// - Parameter executeQueue: The custom dispatch queue for executing network requests.
     /// - Returns: The builder instance for method chaining.
-    public func setExecuteQueue(_ executeQueue: NetworkDispatchQueue) -> Self {
+    public func setExecuteQueue(_ executeQueue: DispatchQueueType) -> Self {
         self.executeQueue = executeQueue
         return self
     }
@@ -72,7 +72,7 @@ public class NetworkSettings<SessionType: NetworkSession> {
     ///
     /// - Parameter observeQueue: The custom dispatch queue for observing and handling network events.
     /// - Returns: The builder instance for method chaining.
-    public func setObserveQueue(_ observeQueue: NetworkDispatchQueue) -> Self {
+    public func setObserveQueue(_ observeQueue: DispatchQueueType) -> Self {
         self.observeQueue = observeQueue
         return self
     }
@@ -123,10 +123,10 @@ private extension NetworkSettings {
     /// - Throws: A `NetworkError` if the session cannot be created.
     func createNetworkSession() throws -> SessionType {
         do {
-            let delegate = NetworkSessionProxyDelegate(sslPinningPolicy: sslPinningPolicy,
-                                                       metricInterceptor: metricInterceptor)
+            let delegate = SessionProxyDelegate(sslPinningPolicy: sslPinningPolicy,
+                                                metricInterceptor: metricInterceptor)
 
-            guard let session = URLSession(configuration: NetworkSessionConfiguration.default,
+            guard let session = URLSession(configuration: SessionConfiguration.default,
                                            delegate: delegate,
                                            delegateQueue: nil) as? SessionType
             else {

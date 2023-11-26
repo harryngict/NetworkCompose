@@ -1,5 +1,5 @@
 //
-//  NetworkSessionProxyDelegate.swift
+//  SessionProxyDelegate.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 23/11/23.
@@ -7,27 +7,27 @@
 
 import Foundation
 
-final class NetworkSessionProxyDelegate: NSObject, URLSessionTaskDelegate, URLSessionDataDelegate {
-    private var metricsCollector: NetworkMetricsCollector?
+final class SessionProxyDelegate: NSObject, URLSessionTaskDelegate, URLSessionDataDelegate {
+    private var metricsCollector: MetricsCollector?
     private var sslPinningProcessor: SSLPinningProcessor?
 
     /// Initializes the `NetworkSessionProxyDelegate` with optional metrics collector and security trust.
     ///
     /// - Parameters:
-    ///   - sslPinningPolicy: An optional `NetworkSSLPinningPolicy` for SSL pinning.
-    ///   - metricInterceptor: An optional `NetworkMetricInterceptor` for collecting network metrics.
+    ///   - sslPinningPolicy: An optional `SSLPinningPolicy` for SSL pinning.
+    ///   - metricInterceptor: An optional `MetricInterceptor` for collecting network metrics.
     /// - Returns: A new instance of `NetworkSessionProxyDelegate`.
-    init(sslPinningPolicy: NetworkSSLPinningPolicy?,
-         metricInterceptor: NetworkMetricInterceptor?)
+    init(sslPinningPolicy: SSLPinningPolicy?,
+         metricInterceptor: MetricInterceptor?)
     {
         if let sslPinningPolicy = sslPinningPolicy {
-            let securityTrust = NetworkSecurityTrustImp(sslPinnings: sslPinningPolicy.sslPinnings)
+            let securityTrust = SecurityTrustImp(sslPinnings: sslPinningPolicy.sslPinnings)
             sslPinningProcessor = SSLPinningProcessorImp(sslPinningPolicy: sslPinningPolicy,
                                                          securityTrust: securityTrust)
         }
 
         if let metricInterceptor = metricInterceptor {
-            metricsCollector = NetworkMetricsCollectorImp(metricInterceptor: metricInterceptor)
+            metricsCollector = MetricsCollectorImp(metricInterceptor: metricInterceptor)
         }
     }
 
