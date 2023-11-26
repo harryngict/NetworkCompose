@@ -1,5 +1,5 @@
 //
-//  NetworkQueueBuilder.swift
+//  NetworkCompose.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 24/11/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class NetworkQueueBuilder<SessionType: NetworkSession>: NetworkBuilderBase<SessionType> {
+public class NetworkCompose<SessionType: NetworkSession>: NetworkSettings<SessionType> {
     private var reAuthService: ReAuthenticationService?
     private var operationQueue: OperationQueueManager = DefaultOperationQueueManager.serialOperationQueue
 
@@ -27,6 +27,15 @@ public class NetworkQueueBuilder<SessionType: NetworkSession>: NetworkBuilderBas
         return self
     }
 
+    /// Sets the operation-queue service for the builder.
+    ///
+    /// - Parameter operationQueue: The queue run re-authentication operation
+    /// - Returns: The builder instance for method chaining.
+    public func setOperationQueue(_ operationQueue: OperationQueueManager) -> Self {
+        self.operationQueue = operationQueue
+        return self
+    }
+
     /// Resets the configuration of the network builder and its related properties to their default state.
     ///
     /// This method clears any custom re-authentication service, operation queue, SSL pinning policy,
@@ -41,9 +50,9 @@ public class NetworkQueueBuilder<SessionType: NetworkSession>: NetworkBuilderBas
         return self
     }
 
-    public func build() -> NetworkQueueInterface {
+    public func build() -> NetworkProxyInterface {
         guard let strategy = strategy, case let .mocker(provider) = strategy else {
-            return NetworkQueue(
+            return NetworkProxy(
                 baseURL: baseURL,
                 session: session,
                 reAuthService: reAuthService,
@@ -53,7 +62,7 @@ public class NetworkQueueBuilder<SessionType: NetworkSession>: NetworkBuilderBas
                 observeQueue: observeQueue
             )
         }
-        return NetworkQueueDecorator(
+        return NetworkMocker(
             baseURL: baseURL,
             session: session,
             reAuthService: reAuthService,

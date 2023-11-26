@@ -1,5 +1,5 @@
 //
-//  NetworkInterface.swift
+//  NetworkCoreInterface.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 11/11/23.
@@ -7,24 +7,7 @@
 
 import Foundation
 
-public protocol NetworkInterface: AnyObject {
-    /// Asynchronously sends a network request and returns the result.
-    ///
-    /// - Parameters:
-    ///   - request: The network request to be performed.
-    ///   - headers: Additional headers to be included in the request.
-    ///   - retryPolicy: The retry policy for the network request.
-    /// - Returns: A task representing the asynchronous operation.
-    /// - Throws: An error if the network request fails.
-    ///
-    /// - Note: This method is available starting from iOS 15.0.
-    @available(iOS 15.0, *)
-    func request<RequestType: NetworkRequestInterface>(
-        _ request: RequestType,
-        andHeaders headers: [String: String],
-        retryPolicy: NetworkRetryPolicy
-    ) async throws -> RequestType.SuccessType
-
+public protocol NetworkCoreInterface: AnyObject {
     /// Sends a network request and executes the completion handler with the result.
     ///
     /// - Parameters:
@@ -49,7 +32,7 @@ public protocol NetworkInterface: AnyObject {
     ///   - fileURL: The URL of the file to be uploaded.
     ///   - retryPolicy: The retry policy for the network request.
     ///   - completion: The completion handler to be called with the result.
-    func uploadFile<RequestType: NetworkRequestInterface>(
+    func upload<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String],
         fromFile fileURL: URL,
@@ -64,26 +47,15 @@ public protocol NetworkInterface: AnyObject {
     ///   - headers: Additional headers to be included in the request.
     ///   - retryPolicy: The retry policy for the network request.
     ///   - completion: The completion handler to be called with the result.
-    func downloadFile<RequestType: NetworkRequestInterface>(
+    func download<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String],
         retryPolicy: NetworkRetryPolicy,
-        completion: @escaping (Result<URL, NetworkError>) -> Void
+        completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     )
 }
 
-public extension NetworkInterface {
-    @available(iOS 15.0, *)
-    func request<RequestType: NetworkRequestInterface>(
-        _ request: RequestType,
-        andHeaders headers: [String: String] = [:],
-        retryPolicy: NetworkRetryPolicy = .none
-    ) async throws -> RequestType.SuccessType {
-        try await self.request(request,
-                               andHeaders: headers,
-                               retryPolicy: retryPolicy)
-    }
-
+public extension NetworkCoreInterface {
     func request<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
@@ -96,29 +68,29 @@ public extension NetworkInterface {
                      completion: completion)
     }
 
-    func uploadFile<RequestType: NetworkRequestInterface>(
+    func upload<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
         fromFile fileURL: URL,
         retryPolicy: NetworkRetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) {
-        uploadFile(request,
-                   andHeaders: headers,
-                   fromFile: fileURL,
-                   retryPolicy: retryPolicy,
-                   completion: completion)
+        upload(request,
+               andHeaders: headers,
+               fromFile: fileURL,
+               retryPolicy: retryPolicy,
+               completion: completion)
     }
 
-    func downloadFile<RequestType: NetworkRequestInterface>(
+    func download<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
-        andHeaders headers: [String: String],
-        retryPolicy: NetworkRetryPolicy,
-        completion: @escaping (Result<URL, NetworkError>) -> Void
+        andHeaders headers: [String: String] = [:],
+        retryPolicy: NetworkRetryPolicy = .none,
+        completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) {
-        downloadFile(request,
-                     andHeaders: headers,
-                     retryPolicy: retryPolicy,
-                     completion: completion)
+        download(request,
+                 andHeaders: headers,
+                 retryPolicy: retryPolicy,
+                 completion: completion)
     }
 }

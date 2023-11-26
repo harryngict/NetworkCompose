@@ -1,5 +1,5 @@
 //
-//  Network.swift
+//  NetworkCore.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 11/11/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class Network<SessionType: NetworkSession>: NetworkInterface {
+final class NetworkCore<SessionType: NetworkSession>: NetworkCoreInterface {
     private let session: SessionType
     private let baseURL: URL
     public let networkReachability: NetworkReachability
@@ -34,39 +34,6 @@ final class Network<SessionType: NetworkSession>: NetworkInterface {
         self.executeQueue = executeQueue
         self.observeQueue = observeQueue
         self.networkReachability.startMonitoring(completion: { _ in })
-    }
-
-    @available(iOS 15.0, *)
-    func request<RequestType>(
-        _ request: RequestType,
-        andHeaders headers: [String: String] = [:],
-        retryPolicy: NetworkRetryPolicy = .none
-    ) async throws -> RequestType.SuccessType where RequestType: NetworkRequestInterface {
-        guard networkReachability.isInternetAvailable else {
-            throw NetworkError.lostInternetConnection
-        }
-        var currentRetry = 0
-
-        func performRequest() async throws -> RequestType.SuccessType {
-            do {
-                let networkRequest = try buildNetworkRequest(for: request, andHeaders: headers)
-                let response = try await session.beginRequest(networkRequest)
-                return try handleSuccessResponse(response, for: request)
-            } catch {
-                currentRetry += 1
-                let shouldRetry = retryPolicy.shouldRetry(currentRetry: currentRetry)
-                if shouldRetry {
-                    if let delay = retryPolicy.retryDelay(currentRetry: currentRetry) {
-                        try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000)) // Convert seconds to nanoseconds
-                    }
-                    return try await performRequest()
-                } else {
-                    throw error
-                }
-            }
-        }
-
-        return try await performRequest()
     }
 
     func request<RequestType>(
@@ -114,7 +81,7 @@ final class Network<SessionType: NetworkSession>: NetworkInterface {
         }
     }
 
-    func uploadFile<RequestType>(
+    func upload<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
         fromFile fileURL: URL,
@@ -161,11 +128,11 @@ final class Network<SessionType: NetworkSession>: NetworkInterface {
         }
     }
 
-    func downloadFile<RequestType>(
+    func download<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
         retryPolicy: NetworkRetryPolicy = .none,
-        completion: @escaping (Result<URL, NetworkError>) -> Void
+        completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: NetworkRequestInterface {
         guard networkReachability.isInternetAvailable else {
             observeQueue.async {
@@ -179,18 +146,20 @@ final class Network<SessionType: NetworkSession>: NetworkInterface {
             do {
                 let networkRequest = try buildNetworkRequest(for: request, andHeaders: headers)
                 session.beginDownloadTask(networkRequest) { result in
-                    switch result {
-                    case let .success(url):
-                        self.observeQueue.async {
-                            completion(.success(url))
+                    self.handleResult(result, for: request) { result in
+                        switch result {
+                        case let .success(model):
+                            self.observeQueue.async {
+                                completion(.success(model))
+                            }
+                        case let .failure(error):
+                            currentRetry += 1
+                            self.retryIfNeeded(currentRetry: currentRetry,
+                                               retryPolicy: retryPolicy,
+                                               error: error,
+                                               performRequest: performRequest,
+                                               completion: completion)
                         }
-                    case let .failure(error):
-                        currentRetry += 1
-                        self.retryIfNeeded(currentRetry: currentRetry,
-                                           retryPolicy: retryPolicy,
-                                           error: error,
-                                           performRequest: performRequest,
-                                           completion: completion)
                     }
                 }
             } catch {
@@ -248,38 +217,6 @@ final class Network<SessionType: NetworkSession>: NetworkInterface {
     }
 
     private func retryIfNeeded<SuccessType>(
-        currentRetry: Int,
-        retryPolicy: NetworkRetryPolicy,
-        error: NetworkError,
-        performRequest: @escaping () -> Void,
-        completion: @escaping (Result<SuccessType, NetworkError>) -> Void
-    ) where SuccessType: Decodable {
-        retryIfNeededInternal(
-            currentRetry: currentRetry,
-            retryPolicy: retryPolicy,
-            error: error,
-            performRequest: performRequest,
-            completion: completion
-        )
-    }
-
-    private func retryIfNeeded(
-        currentRetry: Int,
-        retryPolicy: NetworkRetryPolicy,
-        error: NetworkError,
-        performRequest: @escaping () -> Void,
-        completion: @escaping (Result<URL, NetworkError>) -> Void
-    ) {
-        retryIfNeededInternal(
-            currentRetry: currentRetry,
-            retryPolicy: retryPolicy,
-            error: error,
-            performRequest: performRequest,
-            completion: completion
-        )
-    }
-
-    private func retryIfNeededInternal<SuccessType>(
         currentRetry: Int,
         retryPolicy: NetworkRetryPolicy,
         error: NetworkError,

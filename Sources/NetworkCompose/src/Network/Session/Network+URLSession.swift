@@ -1,5 +1,5 @@
 //
-//  URLSession+Network.swift
+//  Network+URLSession.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 11/11/23.
@@ -35,19 +35,6 @@ extension URLSession: NetworkSession {
         return urlRequest
     }
 
-    @available(iOS 15.0, *)
-    public func beginRequest(
-        _ request: URLRequest
-    ) async throws -> NetworkResponse {
-        let (data, response) = try await self.data(for: request)
-
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw NetworkError.invalidResponse
-        }
-
-        return NetworkResponseImp(statusCode: httpResponse.statusCode, data: data)
-    }
-
     public func beginRequest(
         _ request: URLRequest,
         completion: @escaping ((Result<NetworkResponse, NetworkError>) -> Void)
@@ -75,7 +62,7 @@ extension URLSession: NetworkSession {
 
     public func beginDownloadTask(
         _ request: URLRequest,
-        completion: @escaping ((Result<URL, NetworkError>) -> Void)
+        completion: @escaping ((Result<NetworkResponse, NetworkError>) -> Void)
     ) -> NetworkTask {
         let task = downloadTask(with: request) { tempURL, response, error in
             self.handleDownloadResponse(tempURL: tempURL, response: response, error: error, completion: completion)
@@ -111,7 +98,7 @@ private extension URLSession {
         tempURL: URL?,
         response: URLResponse?,
         error: Error?,
-        completion: @escaping (Result<URL, NetworkError>) -> Void
+        completion: @escaping (Result<NetworkResponse, NetworkError>) -> Void
     ) {
         if let error = error {
             completion(.failure(NetworkError.error(nil, error.localizedDescription)))
@@ -122,8 +109,9 @@ private extension URLSession {
             return
         }
 
-        if let tempURL = tempURL {
-            completion(.success(tempURL))
+        if let tempURL = tempURL, let urlData = try? Data(contentsOf: tempURL) {
+            let response = NetworkResponseImp(statusCode: 200, data: urlData)
+            completion(.success(response))
         } else {
             completion(.failure(NetworkError.downloadResponseTempURLNil))
         }

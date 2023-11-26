@@ -23,16 +23,6 @@ public protocol NetworkSession: AnyObject {
         andHeaders headers: [String: String]
     ) throws -> NetworkRequestType
 
-    /// Asynchronously performs a network request.
-    /// - Parameters:
-    ///   - request: The network request to be performed.
-    /// - Returns: A task representing the asynchronous operation.
-    @available(iOS 15.0, *)
-    @discardableResult
-    func beginRequest(
-        _ request: NetworkRequestType
-    ) async throws -> NetworkResponse
-
     /// Performs a network request and executes the completion handler with the result.
     /// - Parameters:
     ///   - request: The network request to be performed.
@@ -68,6 +58,6 @@ public protocol NetworkSession: AnyObject {
     @discardableResult
     func beginDownloadTask(
         _ request: NetworkRequestType,
-        completion: @escaping ((Result<URL, NetworkError>) -> Void)
+        completion: @escaping ((Result<NetworkResponse, NetworkError>) -> Void)
     ) -> NetworkTask
 }

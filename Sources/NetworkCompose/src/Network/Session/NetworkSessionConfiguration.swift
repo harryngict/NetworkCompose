@@ -6,8 +6,8 @@
 //
 
 import Foundation
-
-public enum NetworkSessionConfiguration: Sendable {
+ 
+enum NetworkSessionConfiguration: Sendable {
     public static var `default`: URLSessionConfiguration {
         let sessionConfig = URLSessionConfiguration.ephemeral
         sessionConfig.waitsForConnectivity = true

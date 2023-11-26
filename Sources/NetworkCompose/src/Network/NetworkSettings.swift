@@ -1,5 +1,5 @@
 //
-//  NetworkBuilderBase.swift
+//  NetworkSettings.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 24/11/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class NetworkBuilderBase<SessionType: NetworkSession> {
+public class NetworkSettings<SessionType: NetworkSession> {
     var baseURL: URL
     var session: SessionType
     var sslPinningPolicy: NetworkSSLPinningPolicy?
@@ -104,7 +104,7 @@ public class NetworkBuilderBase<SessionType: NetworkSession> {
     }
 }
 
-private extension NetworkBuilderBase {
+private extension NetworkSettings {
     func createNetworkSession() throws -> SessionType {
         do {
             let delegate = NetworkSessionProxyDelegate(sslPinningPolicy: sslPinningPolicy,

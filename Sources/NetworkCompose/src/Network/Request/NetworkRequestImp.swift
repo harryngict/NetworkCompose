@@ -1,5 +1,5 @@
 //
-//  NetworkRequest.swift
+//  NetworkRequestImp.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 20/11/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct NetworkRequest<T: Codable>: NetworkRequestInterface {
+public struct NetworkRequestImp<T: Codable>: NetworkRequestInterface {
     /// The type representing the successful response, conforming to `Codable`.
     public typealias SuccessType = T
 
