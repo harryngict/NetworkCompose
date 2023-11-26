@@ -7,7 +7,14 @@
 
 import Foundation
 
-public protocol SSLPinning {
-    var host: String { get }
-    var hashKeys: Set<String> { get }
+public struct SSLPinning: SSLPinningInterface, Sendable {
+    public var host: String
+    public var hashKeys: Set<String>
+
+    public init(host: String,
+                hashKeys: Set<String>)
+    {
+        self.host = host
+        self.hashKeys = hashKeys
+    }
 }

@@ -22,6 +22,7 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkSettings<Sessio
     ///
     /// - Parameter reAuthService: The service responsible for re-authentication.
     /// - Returns: The builder instance for method chaining.
+    @discardableResult
     public func setReAuthService(_ reAuthService: ReAuthenticationService?) -> Self {
         self.reAuthService = reAuthService
         return self
@@ -31,6 +32,7 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkSettings<Sessio
     ///
     /// - Parameter operationQueue: The queue run re-authentication operation
     /// - Returns: The builder instance for method chaining.
+    @discardableResult
     public func setOperationQueue(_ operationQueue: OperationQueueManager) -> Self {
         self.operationQueue = operationQueue
         return self
@@ -43,6 +45,7 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkSettings<Sessio
     /// and network reachability.
     ///
     /// - Returns: The modified instance of the network builder with the default configuration.
+    @discardableResult
     override public func setDefaultConfiguration() -> Self {
         reAuthService = nil
         operationQueue = DefaultOperationQueueManager.serialOperationQueue

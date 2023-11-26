@@ -8,15 +8,10 @@
 import Foundation
 
 final class SSLPinningProcessorImp: SSLPinningProcessor {
-    private let securityTrust: SecurityTrust
-
     var sslPinningPolicy: SSLPinningPolicy
 
-    init(sslPinningPolicy: SSLPinningPolicy,
-         securityTrust: SecurityTrust)
-    {
+    init(sslPinningPolicy: SSLPinningPolicy) {
         self.sslPinningPolicy = sslPinningPolicy
-        self.securityTrust = securityTrust
     }
 
     func validateAuthentication(_ protectionSpace: URLProtectionSpace) -> AuthChallengeDecision {
@@ -26,7 +21,51 @@ final class SSLPinningProcessorImp: SSLPinningProcessor {
             return AuthChallengeDecision(authChallengeDisposition: .performDefaultHandling, urlCredential: nil)
         }
 
-        let decision = securityTrust.verifyServerTrust(with: protectionSpace)
+        let decision = verifyServerTrust(with: protectionSpace)
         return decision
+    }
+
+    func verifyServerTrust(with protectionSpace: URLProtectionSpace) -> AuthChallengeDecision {
+        guard case let .trust(sslPinnings) = sslPinningPolicy else {
+            return AuthChallengeDecision(authChallengeDisposition: .performDefaultHandling, urlCredential: nil)
+        }
+
+        guard let serverTrust: SecTrust = protectionSpace.serverTrust else {
+            return AuthChallengeDecision(authChallengeDisposition: .performDefaultHandling,
+                                         urlCredential: nil)
+        }
+
+        let policies: [SecPolicy] = [SecPolicyCreateSSL(true, protectionSpace.host as CFString?)]
+        SecTrustSetPolicies(serverTrust, policies as CFTypeRef)
+
+        var result = SecTrustResultType.invalid
+        SecTrustEvaluate(serverTrust, &result)
+
+        guard SecTrustGetCertificateCount(serverTrust) > 0 else {
+            return AuthChallengeDecision(authChallengeDisposition: .cancelAuthenticationChallenge,
+                                         urlCredential: nil)
+        }
+
+        guard let certificate = SecTrustGetCertificateAtIndex(serverTrust, 0) else {
+            return AuthChallengeDecision(authChallengeDisposition: .cancelAuthenticationChallenge,
+                                         urlCredential: nil)
+        }
+
+        guard let serverKey = certificate.publicKey?.publicKeyData else {
+            return AuthChallengeDecision(authChallengeDisposition: .cancelAuthenticationChallenge,
+                                         urlCredential: nil)
+        }
+
+        let hash = serverKey.addRSAHeaderBase64EncodedString()
+
+        if let sslPinning = sslPinnings.first(where: { $0.host == protectionSpace.host }), sslPinning.hashKeys.contains(hash) {
+            debugPrint("🤝 NetworkCompose trust: \(protectionSpace.host)")
+            return AuthChallengeDecision(authChallengeDisposition: .useCredential,
+                                         urlCredential: URLCredential(trust: serverTrust))
+        } else {
+            debugPrint("🚫 NetworkCompose doest not trust: \(protectionSpace.host)")
+        }
+
+        return AuthChallengeDecision(authChallengeDisposition: .cancelAuthenticationChallenge, urlCredential: nil)
     }
 }

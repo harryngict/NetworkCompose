@@ -92,8 +92,8 @@ final class ClientDemoNetwork {
         completion: @escaping (Result<[Article], NetworkError>) -> Void
     ) {
         do {
-            let sslPinningHosts = [SSLPinningImp(host: "jsonplaceholder.typicode.com",
-                                                 hashKeys: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])]
+            let sslPinningHosts = [SSLPinning(host: "jsonplaceholder.typicode.com",
+                                              hashKeys: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])]
 
             let request = NetworkRequest<Article>(path: "/posts/1", method: .PUT)
                 .setQueryParameters(["title": "foo",

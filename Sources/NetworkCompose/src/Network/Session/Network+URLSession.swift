@@ -67,6 +67,7 @@ extension URLSession: NetworkSession {
         let task = downloadTask(with: request) { tempURL, response, error in
             self.handleDownloadResponse(tempURL: tempURL, response: response, error: error, completion: completion)
         }
+        // TODO: Can set `earliestBeginDate`, `countOfBytesClientExpectsToSend` and `countOfBytesClientExpectsToReceive`
         task.resume()
         return task
     }

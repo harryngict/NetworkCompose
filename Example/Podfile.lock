@@ -1,5 +1,5 @@
 PODS:
-  - NetworkCompose (0.0.3)
+  - NetworkCompose (0.0.5)
 
 DEPENDENCIES:
   - NetworkCompose (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  NetworkCompose: e64048f1458c7b77c7624c9873a5744794b3bc50
+  NetworkCompose: a1b72b5696549e8a17c48f4e4db2fa2c30b5b40c
 
 PODFILE CHECKSUM: 50068ea64c6af0a5f32a1128a6adbac48d60f588
 

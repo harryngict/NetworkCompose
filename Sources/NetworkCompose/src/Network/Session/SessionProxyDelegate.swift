@@ -21,9 +21,7 @@ final class SessionProxyDelegate: NSObject, URLSessionTaskDelegate, URLSessionDa
          metricInterceptor: MetricInterceptor?)
     {
         if let sslPinningPolicy = sslPinningPolicy {
-            let securityTrust = SecurityTrustImp(sslPinnings: sslPinningPolicy.sslPinnings)
-            sslPinningProcessor = SSLPinningProcessorImp(sslPinningPolicy: sslPinningPolicy,
-                                                         securityTrust: securityTrust)
+            sslPinningProcessor = SSLPinningProcessorImp(sslPinningPolicy: sslPinningPolicy)
         }
 
         if let metricInterceptor = metricInterceptor {
