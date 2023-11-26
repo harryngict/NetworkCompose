@@ -1,5 +1,5 @@
 //
-//  NetworkDispatchQueue.swift
+//  DispatchQueueType.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 23/11/23.
@@ -7,12 +7,12 @@
 
 import Foundation
 
-public protocol NetworkDispatchQueue {
+public protocol DispatchQueueType {
     func async(work: @escaping () -> Void)
     func asyncAfter(deadline: DispatchTime, work: @escaping () -> Void)
 }
 
-extension DispatchQueue: NetworkDispatchQueue {
+extension DispatchQueue: DispatchQueueType {
     public func async(work: @escaping () -> Void) {
         async(execute: work)
     }
@@ -23,6 +23,6 @@ extension DispatchQueue: NetworkDispatchQueue {
 }
 
 public enum DefaultNetworkDispatchQueue: Sendable {
-    public static let executeQueue: NetworkDispatchQueue = DispatchQueue(label: "com.NetworkCompose.NetworkDispatchQueue", qos: .userInitiated)
-    public static let observeQueue: NetworkDispatchQueue = DispatchQueue.main
+    public static let executeQueue: DispatchQueueType = DispatchQueue(label: "com.NetworkCompose.DispatchQueueType", qos: .userInitiated)
+    public static let observeQueue: DispatchQueueType = DispatchQueue.main
 }

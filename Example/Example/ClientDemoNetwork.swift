@@ -15,11 +15,11 @@ final class ClientDemoNetwork {
 
     static let shared = ClientDemoNetwork()
 
-    private let network: NetworkCompose<URLSession>
+    private let network: NetworkBuilder<URLSession>
 
     private init() {
         let baseURL = URL(string: Constant.baseURL)!
-        network = NetworkCompose(baseURL: baseURL)
+        network = NetworkBuilder(baseURL: baseURL)
     }
 
     func makeRequest(
@@ -50,12 +50,13 @@ final class ClientDemoNetwork {
     private func performCompletionRequest(
         completion: @escaping (Result<[Article], NetworkError>) -> Void
     ) {
-        let request = NetworkRequest<[Article]>(path: "/comments", method: .GET)
+        let request = NetworkRequest<[Article]>(path: "/posts", method: .GET)
             .setQueryParameters(["postId": "1"])
             .build()
 
         network
             .setDefaultConfiguration() //  reset all configurations
+            .setStorageStrategy(.fileSystem) // Store reponse for automation testing
             .build()
             .request(request) { (result: Result<[Article], NetworkError>) in
                 switch result {
@@ -91,8 +92,8 @@ final class ClientDemoNetwork {
         completion: @escaping (Result<[Article], NetworkError>) -> Void
     ) {
         do {
-            let sslPinningHosts = [NetworkSSLPinningImp(host: "jsonplaceholder.typicode.com",
-                                                        hashKeys: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])]
+            let sslPinningHosts = [SSLPinningImp(host: "jsonplaceholder.typicode.com",
+                                                 hashKeys: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])]
 
             let request = NetworkRequest<Article>(path: "/posts/1", method: .PUT)
                 .setQueryParameters(["title": "foo",
@@ -123,7 +124,7 @@ final class ClientDemoNetwork {
 
         try? network
             .setDefaultConfiguration() //  reset all configurations
-            .setMetricInterceptor(DefaultNetworkMetricInterceptor { event in // setMetricInterceptor to report metric
+            .setMetricInterceptor(DefaultMetricInterceptor { event in // setMetricInterceptor to report metric
                 DispatchQueue.main.async { self.showMessageForMetricEvent(event) }
             })
             .build()
@@ -143,10 +144,10 @@ final class ClientDemoNetwork {
             .build()
 
         // exponential retry
-        let retryPolicy: NetworkRetryPolicy = .exponentialRetry(count: 4,
-                                                                initialDelay: 1,
-                                                                multiplier: 3.0,
-                                                                maxDelay: 30.0)
+        let retryPolicy: RetryPolicy = .exponentialRetry(count: 4,
+                                                         initialDelay: 1,
+                                                         multiplier: 3.0,
+                                                         maxDelay: 30.0)
         network
             .setDefaultConfiguration() //  reset all configurations
             .build()
@@ -161,17 +162,17 @@ final class ClientDemoNetwork {
     private func performRequestDemoAutomation(
         completion: @escaping (Result<[Article], NetworkError>) -> Void
     ) {
-        let request = NetworkRequest<Article>(path: "/posts", method: .GET)
+        let request = NetworkRequest<[Article]>(path: "/posts", method: .GET)
             .build()
 
         network
             .setDefaultConfiguration() //  reset all configurations
-            .setNetworkStrategy(.mocker(self)) // setNetworkStrategy is mocker
+            .setMockerStrategy(.localStorage(.fileSystem)) // set datasource for automation tesing
             .build()
-            .request(request) { (result: Result<Article, NetworkError>) in
+            .request(request) { (result: Result<[Article], NetworkError>) in
                 switch result {
                 case let .failure(error): completion(.failure(error))
-                case let .success(user): completion(.success([user]))
+                case let .success(users): completion(.success(users))
                 }
             }
     }
@@ -186,26 +187,28 @@ extension ClientDemoNetwork: ReAuthenticationService {
     }
 }
 
-// MARK: NetworkExpectationProvider
+// MARK: NetworkMockerProvider
 
-extension ClientDemoNetwork: NetworkExpectationProvider {
-    public var networkExpectations: [NetworkExpectation] {
-        let getPostAPIExpectation = NetworkExpectation(name: "get-posts-api",
-                                                       path: "/posts",
-                                                       method: .GET,
-                                                       response: .successResponse(Article(id: 1,
-                                                                                          title: "Automation",
-                                                                                          name: "Hoang")))
-        return [getPostAPIExpectation]
+extension ClientDemoNetwork: EndpointExpectationProvider {
+    func getExpectaion(path _: String, method _: NetworkCompose.NetworkMethod) -> NetworkCompose.EndpointExpectation {
+        let getPostAPIExpectation = EndpointExpectation(name: "get-posts-api",
+                                                        path: "/posts",
+                                                        method: .GET,
+                                                        response: .successResponse(Article(id: 1,
+                                                                                           title: "Automation",
+                                                                                           name: "Hoang")))
+        return getPostAPIExpectation
     }
 }
 
+// MARK: Helper for demo
+
 private extension ClientDemoNetwork {
-    func showMessageForMetricEvent(_ event: NetworkTaskEvent) {
+    func showMessageForMetricEvent(_ event: TaskMetricEvent) {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
         encoder.dateEncodingStrategy = .iso8601
-        let metricReport = try? String(data: encoder.encode(event.taskMetric), encoding: .utf8)
+        let metricReport = try? String(data: encoder.encode(event.metric), encoding: .utf8)
         showAlert(event.name, message: metricReport ?? "")
     }
 

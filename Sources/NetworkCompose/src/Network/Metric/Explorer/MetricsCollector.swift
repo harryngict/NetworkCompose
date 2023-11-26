@@ -1,5 +1,5 @@
 //
-//  URLSession+Metric.swift
+//  MetricsCollector.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 23/11/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol NetworkMetricsCollector: AnyObject {
+protocol MetricsCollector: AnyObject {
     /// Informs the collector that a network task has been created.
     ///
     /// - Parameter task: The network task that was created.

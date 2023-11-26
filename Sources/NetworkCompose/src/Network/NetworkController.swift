@@ -1,5 +1,5 @@
 //
-//  NetworkCore.swift
+//  NetworkController.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 11/11/23.
@@ -7,12 +7,13 @@
 
 import Foundation
 
-final class NetworkCore<SessionType: NetworkSession>: NetworkCoreInterface {
+final class NetworkController<SessionType: NetworkSession>: NetworkControllerInterface {
     private let session: SessionType
     private let baseURL: URL
     public let networkReachability: NetworkReachability
-    private let executeQueue: NetworkDispatchQueue
-    private let observeQueue: NetworkDispatchQueue
+    private let executeQueue: DispatchQueueType
+    private let observeQueue: DispatchQueueType
+    private var storageService: StorageService?
 
     /// Initializes the `Network` with the specified configuration.
     ///
@@ -22,24 +23,27 @@ final class NetworkCore<SessionType: NetworkSession>: NetworkCoreInterface {
     ///   - networkReachability: The network reachability object.
     ///   - executeQueue: The dispatch queue for executing network requests.
     ///   - observeQueue: The dispatch queue for observing and handling network events.
+    ///   - storageService: An optional storage service for handling persistent data.
     init(baseURL: URL,
          session: SessionType,
          networkReachability: NetworkReachability,
-         executeQueue: NetworkDispatchQueue,
-         observeQueue: NetworkDispatchQueue)
+         executeQueue: DispatchQueueType,
+         observeQueue: DispatchQueueType,
+         storageService: StorageService?)
     {
         self.baseURL = baseURL
         self.session = session
         self.networkReachability = networkReachability
         self.executeQueue = executeQueue
         self.observeQueue = observeQueue
+        self.storageService = storageService
         self.networkReachability.startMonitoring(completion: { _ in })
     }
 
     func request<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
-        retryPolicy: NetworkRetryPolicy = .none,
+        retryPolicy: RetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: NetworkRequestInterface {
         guard networkReachability.isInternetAvailable else {
@@ -85,7 +89,7 @@ final class NetworkCore<SessionType: NetworkSession>: NetworkCoreInterface {
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
         fromFile fileURL: URL,
-        retryPolicy: NetworkRetryPolicy = .none,
+        retryPolicy: RetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: NetworkRequestInterface {
         guard networkReachability.isInternetAvailable else {
@@ -131,7 +135,7 @@ final class NetworkCore<SessionType: NetworkSession>: NetworkCoreInterface {
     func download<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
-        retryPolicy: NetworkRetryPolicy = .none,
+        retryPolicy: RetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: NetworkRequestInterface {
         guard networkReachability.isInternetAvailable else {
@@ -188,7 +192,15 @@ final class NetworkCore<SessionType: NetworkSession>: NetworkCoreInterface {
         guard (200 ... 299).contains(response.statusCode) else {
             throw NetworkError.error(response.statusCode, nil)
         }
-        return try request.responseDecoder.decode(RequestType.SuccessType.self, from: response.data)
+        let model = try request.responseDecoder.decode(RequestType.SuccessType.self, from: response.data)
+
+        /// Store object for automation testing.
+        if let storageService = storageService {
+            try storageService.storeResponse(request,
+                                             data: response.data,
+                                             model: model)
+        }
+        return model
     }
 
     private func handleResult<RequestType>(
@@ -218,7 +230,7 @@ final class NetworkCore<SessionType: NetworkSession>: NetworkCoreInterface {
 
     private func retryIfNeeded<SuccessType>(
         currentRetry: Int,
-        retryPolicy: NetworkRetryPolicy,
+        retryPolicy: RetryPolicy,
         error: NetworkError,
         performRequest: @escaping () -> Void,
         completion: @escaping (Result<SuccessType, NetworkError>) -> Void

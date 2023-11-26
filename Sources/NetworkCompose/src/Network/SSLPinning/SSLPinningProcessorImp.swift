@@ -8,12 +8,12 @@
 import Foundation
 
 final class SSLPinningProcessorImp: SSLPinningProcessor {
-    private let securityTrust: NetworkSecurityTrust
+    private let securityTrust: SecurityTrust
 
-    var sslPinningPolicy: NetworkSSLPinningPolicy
+    var sslPinningPolicy: SSLPinningPolicy
 
-    init(sslPinningPolicy: NetworkSSLPinningPolicy,
-         securityTrust: NetworkSecurityTrust)
+    init(sslPinningPolicy: SSLPinningPolicy,
+         securityTrust: SecurityTrust)
     {
         self.sslPinningPolicy = sslPinningPolicy
         self.securityTrust = securityTrust
