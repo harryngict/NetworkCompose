@@ -189,15 +189,15 @@ extension ClientDemoNetwork: ReAuthenticationService {
 
 // MARK: NetworkMockerProvider
 
-extension ClientDemoNetwork: NetworkMockerProvider {
-    public var expectations: [EndpointExpectation] {
+extension ClientDemoNetwork: EndpointExpectationProvider {
+    func getExpectaion(path _: String, method _: NetworkCompose.NetworkMethod) -> NetworkCompose.EndpointExpectation {
         let getPostAPIExpectation = EndpointExpectation(name: "get-posts-api",
                                                         path: "/posts",
                                                         method: .GET,
                                                         response: .successResponse(Article(id: 1,
                                                                                            title: "Automation",
                                                                                            name: "Hoang")))
-        return [getPostAPIExpectation]
+        return getPostAPIExpectation
     }
 }
 

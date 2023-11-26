@@ -64,14 +64,14 @@
 		BB086276C286D2B4309E2F058BC9420D /* NetworkTaskEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B949ADA292BD7CD6E44B14CE32E3D9 /* NetworkTaskEvent.swift */; };
 		BB928ED038858BBB72C54E737123C342 /* StorageStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136083E802C137B8BA086866133246F9 /* StorageStrategy.swift */; };
 		BF5ABB47E723B79DFBE08080BB49627A /* RequestMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B097DFBD336809ED5CD17C2CDDE1854 /* RequestMetric.swift */; };
-		BF8B4E4352702301F136BC03DB70D472 /* NetworkMockerProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA4E600E727F5522BC4926B57ACAFB6 /* NetworkMockerProvider.swift */; };
+		BF8B4E4352702301F136BC03DB70D472 /* EndpointExpectationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA4E600E727F5522BC4926B57ACAFB6 /* EndpointExpectationProvider.swift */; };
 		C09B8BB9E095B09F4702554E7822E037 /* NetworkRequestInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8DFFB519260EC3FF0D96B5182ED688 /* NetworkRequestInterface.swift */; };
 		C244104933DF965E4153D6D747BE0E9F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
 		C3C3F96A902C25A8836C2EB970FF746D /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D36ED28F040E63644B3325D38C60D95 /* NetworkController.swift */; };
 		C4C147B2BA4A1BF313265B8E34D5CABB /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAFB3CF78714596FB16EBB89493AB9E /* StorageService.swift */; };
 		C785A51365F1D00ED69ED0A28EF13A76 /* UniqueKeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD6DF94019E2C0EF616AFBCBD21BD0C /* UniqueKeyPath.swift */; };
 		CAE8DCA94788DEE69B774A9BD0C5DF84 /* DefaultNetworkMetricInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2324350B7586FACF7A8183D719CBCCDF /* DefaultNetworkMetricInterceptor.swift */; };
-		CBCD6F4C3E253C472FF32D74E5F47CA7 /* NetworkMockerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6B29E1A61D01602B87471A6D0693B9 /* NetworkMockerHandler.swift */; };
+		CBCD6F4C3E253C472FF32D74E5F47CA7 /* NetworkMockHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6B29E1A61D01602B87471A6D0693B9 /* NetworkMockHandler.swift */; };
 		CCC86F4C9AB38051A24E1F50D635D3F5 /* NetworkTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ECFCD31ABED1DBA2F47CB591ED5FD9 /* NetworkTask.swift */; };
 		CF198A82578A9919C7DECD43C0DC1338 /* ContentTypeMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = C827E14CCD5651B2F5A6EA30C9B78D05 /* ContentTypeMetric.swift */; };
 		DB9BDA05ED8FFFC5101E5DB9D14E57A5 /* TaskCompletedMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E626977574FD6BE54DB878FBDF8ED9 /* TaskCompletedMetric.swift */; };
@@ -98,7 +98,7 @@
 		038CD45977AF01C567CB0B2469AFDE6F /* NetworkSessionConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkSessionConfiguration.swift; sourceTree = "<group>"; };
 		05F4AB9FC4A79FE6B63C8B022800E3FF /* ClosureCustomOperation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ClosureCustomOperation.swift; sourceTree = "<group>"; };
 		0AA8A3909295223A4D6BDA1DD9736CEA /* NetworkRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkRequest.swift; sourceTree = "<group>"; };
-		0E6B29E1A61D01602B87471A6D0693B9 /* NetworkMockerHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkMockerHandler.swift; sourceTree = "<group>"; };
+		0E6B29E1A61D01602B87471A6D0693B9 /* NetworkMockHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkMockHandler.swift; sourceTree = "<group>"; };
 		10F66DFDCAF9222B96323CC9DF77DEBA /* Pods-ExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		11C93DD69B160E704ECD3BD58BD288E0 /* CustomOperation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CustomOperation.swift; sourceTree = "<group>"; };
 		136083E802C137B8BA086866133246F9 /* StorageStrategy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StorageStrategy.swift; sourceTree = "<group>"; };
@@ -191,7 +191,7 @@
 		FB0B1A85528F983F1215245A3C5E4B17 /* Pods-Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		FC69D6675A6E45055F2A457855FE55CF /* ResponseErrorMetric.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ResponseErrorMetric.swift; sourceTree = "<group>"; };
 		FCA00A1978BD994361257459A88DF644 /* NetworkResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkResponse.swift; sourceTree = "<group>"; };
-		FDA4E600E727F5522BC4926B57ACAFB6 /* NetworkMockerProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkMockerProvider.swift; sourceTree = "<group>"; };
+		FDA4E600E727F5522BC4926B57ACAFB6 /* EndpointExpectationProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EndpointExpectationProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -307,8 +307,8 @@
 			children = (
 				9AB70FFA083B512CB7E57DD849E983D4 /* EndpointExpectation.swift */,
 				75AE7E048752E95AC5FB27DB3F199879 /* MockerStrategy.swift */,
-				0E6B29E1A61D01602B87471A6D0693B9 /* NetworkMockerHandler.swift */,
-				FDA4E600E727F5522BC4926B57ACAFB6 /* NetworkMockerProvider.swift */,
+				0E6B29E1A61D01602B87471A6D0693B9 /* NetworkMockHandler.swift */,
+				FDA4E600E727F5522BC4926B57ACAFB6 /* EndpointExpectationProvider.swift */,
 				5A7C00B2A52141F39DB6EC1433AD87C4 /* ParserExpectationHelper.swift */,
 				A9FC4830C8008E6291288E3C892600FD /* Storage */,
 			);
@@ -738,8 +738,8 @@
 				7ECC832B15F9791F0605357FB2C31621 /* NetworkMetricsCollector.swift in Sources */,
 				701DE2625DC7A1611891F6F86331BD54 /* NetworkMetricsCollectorImp.swift in Sources */,
 				2B9A33BEB5DBD3ADB77FCE3F7C0C3C63 /* NetworkMockerCoordinator.swift in Sources */,
-				CBCD6F4C3E253C472FF32D74E5F47CA7 /* NetworkMockerHandler.swift in Sources */,
-				BF8B4E4352702301F136BC03DB70D472 /* NetworkMockerProvider.swift in Sources */,
+				CBCD6F4C3E253C472FF32D74E5F47CA7 /* NetworkMockHandler.swift in Sources */,
+				BF8B4E4352702301F136BC03DB70D472 /* EndpointExpectationProvider.swift in Sources */,
 				40163475E0BD888EEE8548D82C2A3D5A /* NetworkReachability.swift in Sources */,
 				227A8D91A3D8ADCD3415EBE416BC2F8E /* NetworkReachabilityImp.swift in Sources */,
 				6CAA1E3B7E6BFE8745E0B82010B5131A /* NetworkRequest.swift in Sources */,

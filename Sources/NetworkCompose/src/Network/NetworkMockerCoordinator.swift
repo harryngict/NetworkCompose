@@ -11,7 +11,7 @@ final class NetworkMockerCoordinator<SessionType: NetworkSession>: NetworkCoordi
     var reAuthService: ReAuthenticationService?
 
     private let observeQueue: NetworkDispatchQueue
-    private let mockerHanlder: NetworkMockerHandler
+    private let mockHanlder: NetworkMockHandler
 
     init(baseURL _: URL,
          session _: SessionType = URLSession.shared,
@@ -22,8 +22,8 @@ final class NetworkMockerCoordinator<SessionType: NetworkSession>: NetworkCoordi
     {
         self.reAuthService = reAuthService
         self.observeQueue = observeQueue
-        mockerHanlder = NetworkMockerHandler(mockerStrategy,
-                                             executeQueue: executeQueue)
+        mockHanlder = NetworkMockHandler(mockerStrategy,
+                                         executeQueue: executeQueue)
     }
 
     func request<RequestType>(
@@ -61,7 +61,7 @@ extension NetworkMockerCoordinator {
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: NetworkRequestInterface {
         do {
-            let result = try mockerHanlder.getRequestResponse(request)
+            let result = try mockHanlder.getRequestResponse(request)
             observeQueue.async {
                 completion(.success(result))
             }

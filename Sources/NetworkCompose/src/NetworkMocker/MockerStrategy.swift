@@ -8,6 +8,6 @@
 import Foundation
 
 public enum MockerStrategy {
-    case custom(NetworkMockerProvider)
+    case custom(EndpointExpectationProvider)
     case localStorage(StorageStrategy)
 }

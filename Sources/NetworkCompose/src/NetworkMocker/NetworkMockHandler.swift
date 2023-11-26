@@ -1,5 +1,5 @@
 //
-//  NetworkMockerHandler.swift
+//  NetworkMockHandler.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 25/11/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class NetworkMockerHandler {
+final class NetworkMockHandler {
     private let mockerStrategy: MockerStrategy
     private var storageService: StorageService?
 
@@ -23,11 +23,12 @@ final class NetworkMockerHandler {
     ) throws -> RequestType.SuccessType where RequestType: NetworkRequestInterface {
         switch mockerStrategy {
         case let .custom(provider):
-            guard let expectation = provider.expectations.first(where: { $0.isSameRequest(request) }) else {
+            let clientExpection = provider.getExpectaion(path: request.path, method: request.method)
+            guard clientExpection.isSameRequest(request) else {
                 throw NetworkError.automation(.requestNotSameAsExepectation(method: request.method.rawValue,
                                                                             path: request.path))
             }
-            return try expectation.getResponse(request)
+            return try clientExpection.getResponse(request)
         case .localStorage:
             guard let storageService else {
                 throw NetworkError.automation(.storageServiceNonExist)
