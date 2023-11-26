@@ -4,12 +4,20 @@ NetworkCompose simplifies and enhances network-related tasks by providing a flex
  
 ## I. Features
 
-- **Simple Request API:** Make network requests with ease using a straightforward API.
+- **Simple Request API:** Make network requests effortlessly using a straightforward and intuitive API.
+
 - **Re-authentication Support:** Seamlessly handle scenarios that require re-authentication by implementing the `ReAuthenticationService` protocol.
-- **SSL Pinning:** Enhance security with SSL pinning by configuring trusted hosts and corresponding hash keys.
-- **Network Metrics Reporting:** Collect and report network metrics with the `DefaultNetworkMetricInterceptor`.
-- **Smart Retry Mechanism:** Implement smart retry policies for resilient network operations.
-- **Automation Support:** Simplify automated testing with the ability to mock network responses using the `NetworkStrategy`.
+
+- **SSL Pinning:** Enhance security with SSL pinning. Configure trusted hosts and corresponding hash keys to ensure a secure communication channel.
+
+- **Network Metrics Reporting:** Collect and report comprehensive network metrics with the `DefaultNetworkMetricInterceptor`. Gain insights into your network performance.
+
+- **Smart Retry Mechanism:** Implement smart retry policies for resilient network operations. Enhance the reliability of your app by intelligently handling network issues.
+
+- **Automation Support:**
+  - **Mocking with FileSystem:** Simulate network responses effortlessly during automated testing by mocking responses from a local file system.
+  - **Mocking with UserDefaults:** Streamline your automated testing with the ability to mock network responses stored in UserDefaults.
+  - **Customized Automation with Expectations:** Tailor your automated testing by customizing network response mocking with specific expectations.
 
 ## II. Testability
 
