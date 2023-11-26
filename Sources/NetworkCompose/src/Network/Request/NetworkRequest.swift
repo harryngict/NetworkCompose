@@ -1,5 +1,5 @@
 //
-//  NetworkRequestBuilder.swift
+//  NetworkRequest.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 22/11/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class NetworkRequestBuilder<T: Codable> {
+public class NetworkRequest<T: Codable> {
     private var path: String
     private var method: NetworkMethod
     private var queryParameters: [String: Any]?
@@ -97,8 +97,8 @@ public class NetworkRequestBuilder<T: Codable> {
         return self
     }
 
-    public func build() -> NetworkRequest<T> {
-        return NetworkRequest(
+    public func build() -> NetworkRequestImp<T> {
+        return NetworkRequestImp(
             path: path,
             method: method,
             queryParameters: queryParameters,

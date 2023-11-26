@@ -10,10 +10,9 @@ import SwiftUI
 struct MainView: View {
     @State private var selectedType: DemoScenario?
 
-    let types: [DemoScenario] = [.asyncWait, .completion,
-                                 .reAuthentication, .enabledSSLPinning,
-                                 .networkMetricReport, .smartRetry,
-                                 .supportAutomationTest]
+    let types: [DemoScenario] = [.defaultRequest, .reAuthentication,
+                                 .enabledSSLPinning, .networkMetricReport,
+                                 .smartRetry, .supportAutomationTest]
 
     var body: some View {
         NavigationView {

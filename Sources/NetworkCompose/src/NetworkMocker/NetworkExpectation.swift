@@ -16,7 +16,6 @@ public struct NetworkExpectation {
     public enum Response {
         case failure(NetworkError)
         case successResponse(Codable)
-        case downLoadSuccessResponse(URL)
     }
 
     public init(name: String,
@@ -37,11 +36,8 @@ public struct NetworkExpectation {
     }
 
     public func getResponse<RequestType>(
-        _ request: RequestType
+        _: RequestType
     ) throws -> RequestType.SuccessType where RequestType: NetworkRequestInterface {
-        guard isSameRequest(request) else {
-            throw NetworkError.requestNotSameAsExepectation(method: request.method.rawValue, path: request.path)
-        }
         switch response {
         case let .failure(error):
             throw error
@@ -50,24 +46,6 @@ public struct NetworkExpectation {
                 throw NetworkError.responseTypeNotSameAsExpectation(modeType: String(describing: RequestType.SuccessType.self))
             }
             return response
-        case .downLoadSuccessResponse:
-            throw NetworkError.responseTypeNotSameAsExpectation(modeType: String(describing: RequestType.SuccessType.self))
-        }
-    }
-
-    public func getDownloadResponse<RequestType>(
-        _ request: RequestType
-    ) throws -> URL where RequestType: NetworkRequestInterface {
-        guard isSameRequest(request) else {
-            throw NetworkError.requestNotSameAsExepectation(method: request.method.rawValue, path: request.path)
-        }
-        switch response {
-        case let .failure(error):
-            throw error
-        case .successResponse:
-            throw NetworkError.responseTypeNotSameAsExpectation(modeType: String(describing: RequestType.SuccessType.self))
-        case let .downLoadSuccessResponse(url):
-            return url
         }
     }
 }

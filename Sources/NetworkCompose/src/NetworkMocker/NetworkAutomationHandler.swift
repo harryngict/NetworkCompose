@@ -26,13 +26,4 @@ final class NetworkAutomationHandler {
         }
         return try expectation.getResponse(request)
     }
-
-    func getDownloadResponse<RequestType>(
-        _ request: RequestType
-    ) throws -> URL where RequestType: NetworkRequestInterface {
-        guard let expectation = expectations.first(where: { $0.isSameRequest(request) }) else {
-            throw NetworkError.requestNotSameAsExepectation(method: request.method.rawValue, path: request.path)
-        }
-        return try expectation.getDownloadResponse(request)
-    }
 }

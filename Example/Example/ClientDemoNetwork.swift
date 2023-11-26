@@ -8,38 +8,18 @@
 import Foundation
 import NetworkCompose
 
-typealias Network = NetworkBuilder<URLSession>
-typealias NetworkQueue = NetworkQueueBuilder<URLSession>
-
-final class NetworkHubProvider {
+final class ClientDemoNetwork {
     enum Constant {
         static let baseURL: String = "https://jsonplaceholder.typicode.com"
     }
 
-    let network: Network
+    static let shared = ClientDemoNetwork()
 
-    let networkQueue: NetworkQueue
-
-    static let shared = NetworkHubProvider()
+    private let network: NetworkCompose<URLSession>
 
     private init() {
         let baseURL = URL(string: Constant.baseURL)!
-        network = NetworkBuilder(baseURL: baseURL)
-        networkQueue = NetworkQueueBuilder(baseURL: baseURL)
-    }
-}
-
-final class ClientDemoNetwork {
-    static let shared = ClientDemoNetwork()
-
-    private let network: Network
-    private let networkQueue: NetworkQueue
-
-    private init(network: Network = NetworkHubProvider.shared.network,
-                 networkQueue: NetworkQueue = NetworkHubProvider.shared.networkQueue)
-    {
-        self.network = network
-        self.networkQueue = networkQueue
+        network = NetworkCompose(baseURL: baseURL)
     }
 
     func makeRequest(
@@ -47,10 +27,7 @@ final class ClientDemoNetwork {
         completion: @escaping (Result<[Article], NetworkError>) -> Void
     ) {
         switch scenario {
-        case .asyncWait:
-            performAsyncAwaitRequest(completion: completion)
-
-        case .completion:
+        case .defaultRequest:
             performCompletionRequest(completion: completion)
 
         case .reAuthentication:
@@ -70,30 +47,10 @@ final class ClientDemoNetwork {
         }
     }
 
-    private func performAsyncAwaitRequest(
-        completion: @escaping (Result<[Article], NetworkError>) -> Void
-    ) {
-        if #available(iOS 15.0, *) {
-            Task {
-                do {
-                    let request = NetworkRequestBuilder<[Article]>(path: "/posts", method: .GET)
-                        .build()
-
-                    let users: [Article] = try await network
-                        .setDefaultConfiguration() //  reset all configurations
-                        .build().request(request)
-                    completion(.success(users))
-                } catch {
-                    completion(.failure(NetworkError.error(nil, error.localizedDescription)))
-                }
-            }
-        }
-    }
-
     private func performCompletionRequest(
         completion: @escaping (Result<[Article], NetworkError>) -> Void
     ) {
-        let request = NetworkRequestBuilder<[Article]>(path: "/comments", method: .GET)
+        let request = NetworkRequest<[Article]>(path: "/comments", method: .GET)
             .setQueryParameters(["postId": "1"])
             .build()
 
@@ -111,14 +68,14 @@ final class ClientDemoNetwork {
     private func performReAuthentication(
         completion: @escaping (Result<[Article], NetworkError>) -> Void
     ) {
-        let request = NetworkRequestBuilder<Article>(path: "/posts", method: .POST)
+        let request = NetworkRequest<Article>(path: "/posts", method: .POST)
             .setQueryParameters(["title": "foo",
                                  "body": "bar",
                                  "userId": 1])
             .setRequiresReAuthentication(true)
             .build()
 
-        networkQueue
+        network
             .setDefaultConfiguration() //  reset all configurations
             .setReAuthService(self) // setReAuthService to enable re authentication
             .build()
@@ -137,7 +94,7 @@ final class ClientDemoNetwork {
             let sslPinningHosts = [NetworkSSLPinningImp(host: "jsonplaceholder.typicode.com",
                                                         hashKeys: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])]
 
-            let request = NetworkRequestBuilder<Article>(path: "/posts/1", method: .PUT)
+            let request = NetworkRequest<Article>(path: "/posts/1", method: .PUT)
                 .setQueryParameters(["title": "foo",
                                      "body": "bar",
                                      "userId": 1])
@@ -161,7 +118,7 @@ final class ClientDemoNetwork {
     private func performCollectNetworkMetric(
         completion: @escaping (Result<[Article], NetworkError>) -> Void
     ) {
-        let request = NetworkRequestBuilder<[Article]>(path: "/posts", method: .GET)
+        let request = NetworkRequest<[Article]>(path: "/posts", method: .GET)
             .build()
 
         try? network
@@ -181,7 +138,7 @@ final class ClientDemoNetwork {
     private func performRequestWithSmartRetry(
         completion: @escaping (Result<[Article], NetworkError>) -> Void
     ) {
-        let request = NetworkRequestBuilder<Article>(path: "/posts/1/retry", method: .PUT)
+        let request = NetworkRequest<Article>(path: "/posts/1/retry", method: .PUT)
             .setQueryParameters(["title": "foo"])
             .build()
 
@@ -204,7 +161,7 @@ final class ClientDemoNetwork {
     private func performRequestDemoAutomation(
         completion: @escaping (Result<[Article], NetworkError>) -> Void
     ) {
-        let request = NetworkRequestBuilder<Article>(path: "/posts", method: .GET)
+        let request = NetworkRequest<Article>(path: "/posts", method: .GET)
             .build()
 
         network
@@ -232,7 +189,7 @@ extension ClientDemoNetwork: ReAuthenticationService {
 // MARK: NetworkExpectationProvider
 
 extension ClientDemoNetwork: NetworkExpectationProvider {
-    public var networkExpectations: [NetworkCompose.NetworkExpectation] {
+    public var networkExpectations: [NetworkExpectation] {
         let getPostAPIExpectation = NetworkExpectation(name: "get-posts-api",
                                                        path: "/posts",
                                                        method: .GET,
