@@ -75,7 +75,7 @@
 		CCC86F4C9AB38051A24E1F50D635D3F5 /* NetworkTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ECFCD31ABED1DBA2F47CB591ED5FD9 /* NetworkTask.swift */; };
 		CF198A82578A9919C7DECD43C0DC1338 /* ContentTypeMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = C827E14CCD5651B2F5A6EA30C9B78D05 /* ContentTypeMetric.swift */; };
 		DB9BDA05ED8FFFC5101E5DB9D14E57A5 /* TaskCompletedMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E626977574FD6BE54DB878FBDF8ED9 /* TaskCompletedMetric.swift */; };
-		DD569E42E0FFC55BD86FD4B7C2517687 /* SessionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CD45977AF01C567CB0B2469AFDE6F /* SessionConfiguration.swift */; };
+		DD569E42E0FFC55BD86FD4B7C2517687 /* SessionConfigurationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038CD45977AF01C567CB0B2469AFDE6F /* SessionConfigurationProvider.swift */; };
 		E0B06E1034469A530FA63DDBDEA7390C /* SecurityTrustImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFE31D58C65BAA3ABF424E0C4E3715C /* SecurityTrustImp.swift */; };
 		E7E9A5D70B050592050E6361822F6804 /* EndpointExpectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB70FFA083B512CB7E57DD849E983D4 /* EndpointExpectation.swift */; };
 		F0E6D1835CC62F4A9104FC9E907C94F1 /* CustomOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C93DD69B160E704ECD3BD58BD288E0 /* CustomOperation.swift */; };
@@ -95,7 +95,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		038CD45977AF01C567CB0B2469AFDE6F /* SessionConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SessionConfiguration.swift; sourceTree = "<group>"; };
+		038CD45977AF01C567CB0B2469AFDE6F /* SessionConfigurationProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SessionConfigurationProvider.swift; sourceTree = "<group>"; };
 		05F4AB9FC4A79FE6B63C8B022800E3FF /* ClosureCustomOperation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ClosureCustomOperation.swift; sourceTree = "<group>"; };
 		0AA8A3909295223A4D6BDA1DD9736CEA /* NetworkRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkRequest.swift; sourceTree = "<group>"; };
 		0E6B29E1A61D01602B87471A6D0693B9 /* NetworkMockHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkMockHandler.swift; sourceTree = "<group>"; };
@@ -521,7 +521,7 @@
 			children = (
 				BCE30A85EE2FABE6476F01C61EFD2B68 /* Network+URLSession.swift */,
 				51A6CB41AFAF38E4C375217AFE7DA3E3 /* NetworkSession.swift */,
-				038CD45977AF01C567CB0B2469AFDE6F /* SessionConfiguration.swift */,
+				038CD45977AF01C567CB0B2469AFDE6F /* SessionConfigurationProvider.swift */,
 				C18CEA15D366592B038B96B142994D0C /* SessionProxyDelegate.swift */,
 				BBF7C116BDA537ABD1BD148D25712074 /* URLSession+BodyStream.swift */,
 			);
@@ -751,7 +751,7 @@
 				5745D91A7911E5A5D0F3072AD8A56407 /* SecurityTrust.swift in Sources */,
 				E0B06E1034469A530FA63DDBDEA7390C /* SecurityTrustImp.swift in Sources */,
 				222C5C4058E1D3C7850C1DF93EDD8E39 /* NetworkSession.swift in Sources */,
-				DD569E42E0FFC55BD86FD4B7C2517687 /* SessionConfiguration.swift in Sources */,
+				DD569E42E0FFC55BD86FD4B7C2517687 /* SessionConfigurationProvider.swift in Sources */,
 				4B98DD6074892EF0A734D564DBD7B088 /* SessionProxyDelegate.swift in Sources */,
 				B217A812F3E1A096119DEA0B8C2EF1AD /* NetworkSettings.swift in Sources */,
 				027B25879958BF0045701BA1E07B6E77 /* SSLPinning.swift in Sources */,
