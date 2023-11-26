@@ -15,8 +15,7 @@ public enum NetworkError: Error, Sendable, Equatable, Hashable {
     case downloadResponseTempURLNil
     case lostInternetConnection
     case decodingFailed(modeType: String, context: String)
-    case requestNotSameAsExepectation(method: String, path: String) // for automation testing
-    case responseTypeNotSameAsExpectation(modeType: String) // for automation testing
+    case automation(AutomationError) // FOR AUTOMATION TESTING
     case error(Int?, String?)
 
     public var errorCode: Int {
@@ -28,9 +27,8 @@ public enum NetworkError: Error, Sendable, Equatable, Hashable {
         case .downloadResponseTempURLNil: return -105
         case .lostInternetConnection: return -106
         case .decodingFailed: return -107
-        case .requestNotSameAsExepectation: return -108
-        case .responseTypeNotSameAsExpectation: return -109
-        case let .error(code, _): return code ?? -110
+        case let .automation(error): return error.errorCode
+        case let .error(code, _): return code ?? -112
         }
     }
 
@@ -44,11 +42,37 @@ public enum NetworkError: Error, Sendable, Equatable, Hashable {
         case .lostInternetConnection: return "The network connection was lost"
         case let .decodingFailed(modeType, context):
             return "\(modeType) decoding failed error: \(context)"
+        case let .automation(error): return error.localizedDescription
+        case let .error(_, msg): return msg ?? "Network error with code: \(errorCode)"
+        }
+    }
+}
+
+public enum AutomationError: Error, Sendable, Equatable, Hashable {
+    case requestNotSameAsExepectation(method: String, path: String)
+    case responseTypeNotSameAsExpectation(modeType: String)
+    case notFoundHomeDirectory
+    case storageServiceNonExist
+
+    public var errorCode: Int {
+        switch self {
+        case .requestNotSameAsExepectation: return -301
+        case .responseTypeNotSameAsExpectation: return -302
+        case .notFoundHomeDirectory: return -303
+        case .storageServiceNonExist: return -304
+        }
+    }
+
+    public var localizedDescription: String {
+        switch self {
         case let .requestNotSameAsExepectation(method, path):
             return "Aumation: The request is not same with expectation. Please check: \(method) \(path)"
         case let .responseTypeNotSameAsExpectation(modeType):
             return "Automation: The reponse is not same with expectation. Please check: \(modeType)"
-        case let .error(_, msg): return msg ?? "Network error with code: \(errorCode)"
+        case .notFoundHomeDirectory:
+            return "Automation: we do not find the home directory data for automation testing"
+        case .storageServiceNonExist:
+            return "Automation: Storage service non exist for automation testing"
         }
     }
 }

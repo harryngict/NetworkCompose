@@ -50,12 +50,13 @@ final class ClientDemoNetwork {
     private func performCompletionRequest(
         completion: @escaping (Result<[Article], NetworkError>) -> Void
     ) {
-        let request = NetworkRequest<[Article]>(path: "/comments", method: .GET)
+        let request = NetworkRequest<[Article]>(path: "/posts", method: .GET)
             .setQueryParameters(["postId": "1"])
             .build()
 
         network
             .setDefaultConfiguration() //  reset all configurations
+            .setStorageStrategy(.fileSystem) // Store reponse for automation testing
             .build()
             .request(request) { (result: Result<[Article], NetworkError>) in
                 switch result {
@@ -161,17 +162,17 @@ final class ClientDemoNetwork {
     private func performRequestDemoAutomation(
         completion: @escaping (Result<[Article], NetworkError>) -> Void
     ) {
-        let request = NetworkRequest<Article>(path: "/posts", method: .GET)
+        let request = NetworkRequest<[Article]>(path: "/posts", method: .GET)
             .build()
 
         network
             .setDefaultConfiguration() //  reset all configurations
-            .setNetworkStrategy(.mocker(self)) // setNetworkStrategy is mocker
+            .setMockerStrategy(.localStorage(.fileSystem)) // set datasource for automation tesing
             .build()
-            .request(request) { (result: Result<Article, NetworkError>) in
+            .request(request) { (result: Result<[Article], NetworkError>) in
                 switch result {
                 case let .failure(error): completion(.failure(error))
-                case let .success(user): completion(.success([user]))
+                case let .success(users): completion(.success(users))
                 }
             }
     }
@@ -186,16 +187,16 @@ extension ClientDemoNetwork: ReAuthenticationService {
     }
 }
 
-// MARK: NetworkExpectationProvider
+// MARK: NetworkMockerProvider
 
-extension ClientDemoNetwork: NetworkExpectationProvider {
-    public var networkExpectations: [NetworkExpectation] {
-        let getPostAPIExpectation = NetworkExpectation(name: "get-posts-api",
-                                                       path: "/posts",
-                                                       method: .GET,
-                                                       response: .successResponse(Article(id: 1,
-                                                                                          title: "Automation",
-                                                                                          name: "Hoang")))
+extension ClientDemoNetwork: NetworkMockerProvider {
+    public var expectations: [EndpointExpectation] {
+        let getPostAPIExpectation = EndpointExpectation(name: "get-posts-api",
+                                                        path: "/posts",
+                                                        method: .GET,
+                                                        response: .successResponse(Article(id: 1,
+                                                                                           title: "Automation",
+                                                                                           name: "Hoang")))
         return [getPostAPIExpectation]
     }
 }
