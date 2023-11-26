@@ -12,7 +12,6 @@ public enum TaskType: Codable, CaseIterable, Sendable {
     case downloadTask
     case uploadTask
 
-
     public init(task: URLSessionTask) {
         switch task {
         case is URLSessionUploadTask: self = .uploadTask

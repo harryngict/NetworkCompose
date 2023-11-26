@@ -8,7 +8,6 @@
 import Foundation
 
 extension URLRequest {
-
     func httpBodyStreamData() -> Data? {
         guard let bodyStream = httpBodyStream else {
             return nil

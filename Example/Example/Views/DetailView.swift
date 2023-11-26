@@ -5,11 +5,13 @@
 //  Created by Hoang Nguyen on 20/11/23.
 //
 
+import NetworkCompose
 import SwiftUI
 
 struct DetailView: View {
     let type: DemoScenario
-    @State private var result: String = ""
+    @State private var artcles: [Article] = []
+    @State private var errorMessage: String?
     @State private var isLoading: Bool = true
 
     var body: some View {
@@ -19,18 +21,31 @@ struct DetailView: View {
                     .padding()
                 Text("Loading...")
             } else {
-                Text(result)
+                if let errorMessage = errorMessage {
+                    Text(errorMessage)
+                        .foregroundColor(.red)
+                        .padding()
+                } else {
+                    List(artcles, id: \.id) { article in
+                        let value = article.name ?? article.title ?? ""
+                        Text(value)
+                    }
                     .navigationBarTitle(type.rawValue)
                     .padding()
+                }
             }
         }
         .onAppear {
-            ClientDemoNetwork
-                .shared
-                .makeRequest(for: type) { receivedResult in
-                    result = receivedResult
+            ClientDemoNetwork.shared.makeRequest(for: type) { result in
+                switch result {
+                case let .success(receivedUsers):
+                    artcles = receivedUsers
+                    isLoading = false
+                case let .failure(error):
+                    errorMessage = "\(error.localizedDescription)"
                     isLoading = false
                 }
+            }
         }
     }
 }

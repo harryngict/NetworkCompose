@@ -9,7 +9,7 @@ import Foundation
 
 final class NetworkMetricsCollectorImp: NetworkMetricsCollector {
     private let metricsAnalyzer: NetworkMetricsAnalyzer
-  
+
     init(metricInterceptor: NetworkMetricInterceptor) {
         metricsAnalyzer = NetworkMetricsAnalyzer(metricInterceptor: metricInterceptor)
     }

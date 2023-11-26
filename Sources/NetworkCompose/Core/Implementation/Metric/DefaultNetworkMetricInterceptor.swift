@@ -1,5 +1,5 @@
 //
-//  DebugNetworkMetricInterceptor.swift
+//  DefaultNetworkMetricInterceptor.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 24/11/23.
@@ -7,23 +7,21 @@
 
 import Foundation
 
-public struct DebugNetworkMetricInterceptor: NetworkMetricInterceptor {
-    public init() {}
+public typealias MetricReportHandler = (_ event: NetworkTaskEvent) -> Void
+
+public struct DefaultNetworkMetricInterceptor: NetworkMetricInterceptor {
+    var reportHandler: MetricReportHandler
+
+    public init(_ reportHandler: @escaping MetricReportHandler) {
+        self.reportHandler = reportHandler
+    }
 
     public func sendEvent(_ event: NetworkTaskEvent) {
-        var taskMetric: TaskMetric
-        switch event {
-        case let .created(metric):
-            taskMetric = metric
-        case let .progressUpdated(metric):
-            taskMetric = metric
+        /// Throw report to app incase use default
+        reportHandler(event)
 
-        case let .completed(metric):
-            taskMetric = metric
-
-        case let .didFinishCollecting(metric):
-            taskMetric = metric
-        }
+        /// Noted: Here is local print
+        let taskMetric: TaskMetric = event.taskMetric
 
         do {
             print("==============METRIC_REPORT_START==============")

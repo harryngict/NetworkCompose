@@ -22,7 +22,7 @@ final class NetworkAutomationHandler {
         _ request: RequestType
     ) throws -> RequestType.SuccessType where RequestType: NetworkRequestInterface {
         guard let expectation = expectations.first(where: { $0.isSameRequest(request) }) else {
-            throw NetworkError.invalidResponse
+            throw NetworkError.notSameExpectedRequest(method: request.method.rawValue, path: request.path)
         }
         return try expectation.getResponse(request)
     }
@@ -31,7 +31,7 @@ final class NetworkAutomationHandler {
         _ request: RequestType
     ) throws -> URL where RequestType: NetworkRequestInterface {
         guard let expectation = expectations.first(where: { $0.isSameRequest(request) }) else {
-            throw NetworkError.invalidResponse
+            throw NetworkError.notSameExpectedRequest(method: request.method.rawValue, path: request.path)
         }
         return try expectation.getDownloadResponse(request)
     }

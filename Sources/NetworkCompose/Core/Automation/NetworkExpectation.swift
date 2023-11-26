@@ -40,18 +40,20 @@ public struct NetworkExpectation {
         _ request: RequestType
     ) throws -> RequestType.SuccessType where RequestType: NetworkRequestInterface {
         guard isSameRequest(request) else {
-            throw NetworkError.invalidResponse
+            throw NetworkError.notSameExpectedRequest(method: request.method.rawValue, path: request.path)
         }
         switch response {
         case let .failure(error):
             throw error
         case let .successResponse(response):
             guard let response = response as? RequestType.SuccessType else {
-                throw NetworkError.invalidResponse
+                throw NetworkError.decodingFailed(modeType: String(describing: RequestType.SuccessType.self),
+                                                  context: "typeMismatch")
             }
             return response
         case .downLoadSuccessResponse:
-            throw NetworkError.invalidResponse
+            throw NetworkError.decodingFailed(modeType: String(describing: RequestType.SuccessType.self),
+                                              context: "typeMismatch to downLoadSuccessResponse")
         }
     }
 
@@ -59,13 +61,14 @@ public struct NetworkExpectation {
         _ request: RequestType
     ) throws -> URL where RequestType: NetworkRequestInterface {
         guard isSameRequest(request) else {
-            throw NetworkError.invalidResponse
+            throw NetworkError.notSameExpectedRequest(method: request.method.rawValue, path: request.path)
         }
         switch response {
         case let .failure(error):
             throw error
         case .successResponse:
-            throw NetworkError.invalidResponse
+            throw NetworkError.decodingFailed(modeType: String(describing: RequestType.SuccessType.self),
+                                              context: "typeMismatch to successResponse")
         case let .downLoadSuccessResponse(url):
             return url
         }

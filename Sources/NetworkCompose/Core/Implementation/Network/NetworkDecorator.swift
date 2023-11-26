@@ -103,7 +103,7 @@ extension NetworkDecorator {
             }
         } catch {
             observeQueue.async {
-                let networkError = NetworkError.networkError(nil, error.localizedDescription)
+                let networkError = NetworkError.error(nil, error.localizedDescription)
                 completion(.failure(networkError))
             }
         }
@@ -127,7 +127,7 @@ extension NetworkDecorator {
             }
         } catch {
             observeQueue.async {
-                let networkError = NetworkError.networkError(nil, error.localizedDescription)
+                let networkError = NetworkError.error(nil, error.localizedDescription)
                 completion(.failure(networkError))
             }
         }

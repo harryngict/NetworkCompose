@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol TaskMetric: Codable, Sendable {}
+public protocol TaskMetric: Codable, Sendable {}
 
 public struct TaskDidFinishCollectingMetric: TaskMetric {
     public var taskType: TaskType

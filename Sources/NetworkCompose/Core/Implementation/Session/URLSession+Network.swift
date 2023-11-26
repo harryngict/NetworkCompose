@@ -9,7 +9,6 @@ import Foundation
 import Network
 
 extension URLSession: NetworkSession {
-
     public func build<RequestType>(
         _ request: RequestType,
         withBaseURL baseURL: URL,
@@ -89,7 +88,6 @@ extension URLSession: NetworkSession {
 // MARK: Helper
 
 private extension URLSession {
-  
     func handleResponse(
         data: Data?,
         response: URLResponse?,
@@ -97,7 +95,7 @@ private extension URLSession {
         completion: @escaping (Result<NetworkResponse, NetworkError>) -> Void
     ) {
         if let error = error {
-            completion(.failure(NetworkError.networkError(nil, error.localizedDescription)))
+            completion(.failure(NetworkError.error(nil, error.localizedDescription)))
             return
         }
         guard let httpResponse = response as? HTTPURLResponse, let data = data else {
@@ -116,7 +114,7 @@ private extension URLSession {
         completion: @escaping (Result<URL, NetworkError>) -> Void
     ) {
         if let error = error {
-            completion(.failure(NetworkError.networkError(nil, error.localizedDescription)))
+            completion(.failure(NetworkError.error(nil, error.localizedDescription)))
             return
         }
         guard response is HTTPURLResponse else {
@@ -127,7 +125,7 @@ private extension URLSession {
         if let tempURL = tempURL {
             completion(.success(tempURL))
         } else {
-            completion(.failure(NetworkError.invalidResponse))
+            completion(.failure(NetworkError.downloadResponseTempURLNil))
         }
     }
 }

@@ -8,7 +8,6 @@
 import Foundation
 
 public protocol NetworkQueueInterface: AnyObject {
-
     var reAuthService: ReAuthenticationService? { get }
 
     /// Handles a network request.

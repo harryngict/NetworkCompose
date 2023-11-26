@@ -59,7 +59,6 @@ final class NetworkQueue<SessionType: NetworkSession>: NetworkQueueInterface {
         }
     }
 
-
     /// Creates an operation to handle re-authentication and execute the specified request.
     ///
     /// - Parameters:
@@ -130,7 +129,7 @@ final class NetworkQueue<SessionType: NetworkSession>: NetworkQueueInterface {
         }
     }
 
-  private func cancelAllOperations() {
+    private func cancelAllOperations() {
         guard let operations = operationQueue.operationQueue.operations as? [ClosureCustomOperation] else {
             return
         }

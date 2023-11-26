@@ -25,7 +25,7 @@ public struct ContentTypeMetric: Hashable, ExpressibleByStringLiteral {
     }
 
     public static let any = ContentTypeMetric(rawValue: "*/*")!
-  
+
     public init(stringLiteral value: String) {
         self = ContentTypeMetric(rawValue: value) ?? .any
     }

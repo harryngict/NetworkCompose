@@ -8,7 +8,6 @@
 import Foundation
 
 protocol NetworkMetricsCollector: AnyObject {
-  
     /// Informs the collector that a network task has been created.
     ///
     /// - Parameter task: The network task that was created.

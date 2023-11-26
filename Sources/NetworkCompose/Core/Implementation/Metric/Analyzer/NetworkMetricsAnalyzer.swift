@@ -38,7 +38,6 @@ final class NetworkMetricsAnalyzer {
                                                  responseBody: nil)))
     }
 
-
     func trackTaskDidUpdateProgress(_ task: URLSessionTask, didUpdateProgress progress: (completed: Int64, total: Int64)) {
         sendEvent(.progressUpdated(TaskProgressUpdatedMetric(taskType: TaskType(task: task),
                                                              createdAt: Date(),

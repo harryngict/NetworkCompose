@@ -9,13 +9,12 @@ import Foundation
 import Network
 
 public final class NetworkReachabilityImp: NetworkReachability {
-  
     public static let shared = NetworkReachabilityImp()
-  
+
     private let monitor = NWPathMonitor()
-  
+
     public var isInternetAvailable: Bool
-  
+
     private init() {
         isInternetAvailable = true
     }

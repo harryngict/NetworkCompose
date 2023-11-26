@@ -8,7 +8,6 @@
 import Foundation
 
 public class NetworkBuilder<SessionType: NetworkSession>: NetworkBuilderBase<SessionType> {
-  
     public required init(baseURL: URL,
                          session: SessionType = URLSession.shared)
     {

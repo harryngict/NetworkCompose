@@ -14,5 +14,5 @@ enum DemoScenario: String {
     case enabledSSLPinning = "Demo enabled SSL Pinning request"
     case networkMetricReport = "Demo collect metric report"
     case smartRetry = "Demo smart retry request"
-    case supportAutomationTest = "Demo suppport Automation/Unit"
+    case supportAutomationTest = "Demo suppport automation testing"
 }

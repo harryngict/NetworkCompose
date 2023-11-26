@@ -13,12 +13,21 @@ public enum NetworkTaskEvent: Codable, Sendable {
     case completed(_ metric: TaskCompletedMetric)
     case didFinishCollecting(_ metric: TaskDidFinishCollectingMetric)
 
-    var name: String {
+    public var name: String {
         switch self {
         case .created: return "TaskCreated"
         case .progressUpdated: return "TaskProgressUpdated"
         case .completed: return "TaskCompleted"
         case .didFinishCollecting: return "TaskDidFinishCollecting"
+        }
+    }
+
+    public var taskMetric: TaskMetric {
+        switch self {
+        case let .created(metric): return metric
+        case let .progressUpdated(metric): return metric
+        case let .completed(metric): return metric
+        case let .didFinishCollecting(metric): return metric
         }
     }
 }

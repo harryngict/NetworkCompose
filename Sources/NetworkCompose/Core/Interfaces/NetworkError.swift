@@ -7,15 +7,16 @@
 
 import Foundation
 
-
 public enum NetworkError: Error, Sendable, Equatable, Hashable {
-  
     case badURL(URL, String)
     case badURLComponents(URLComponents)
     case invalidSession
     case invalidResponse
+    case downloadResponseTempURLNil
     case lostInternetConnection
-    case networkError(Int?, String?)
+    case decodingFailed(modeType: String, context: String)
+    case notSameExpectedRequest(method: String, path: String) // for automation testing
+    case error(Int?, String?)
 
     public var errorCode: Int {
         switch self {
@@ -23,8 +24,11 @@ public enum NetworkError: Error, Sendable, Equatable, Hashable {
         case .badURLComponents: return -102
         case .invalidSession: return -103
         case .invalidResponse: return -104
-        case .lostInternetConnection: return -105
-        case let .networkError(code, _): return code ?? -106
+        case .downloadResponseTempURLNil: return -105
+        case .lostInternetConnection: return -106
+        case .decodingFailed: return -107
+        case .notSameExpectedRequest: return -108
+        case let .error(code, _): return code ?? -109
         }
     }
 
@@ -34,8 +38,13 @@ public enum NetworkError: Error, Sendable, Equatable, Hashable {
         case let .badURLComponents(components): return "Bad URL components: \(components)"
         case .invalidSession: return "Invalid session"
         case .invalidResponse: return "Invalid response"
+        case .downloadResponseTempURLNil: return "Download response temp url is nill"
         case .lostInternetConnection: return "The network connection was lost"
-        case let .networkError(_, msg): return msg ?? "Network error with code: \(errorCode)"
+        case let .decodingFailed(modeType, context):
+            return "\(modeType) decoding failed error: \(context)"
+        case let .notSameExpectedRequest(method, path):
+            return "The request is not same with expectation. Please check: \(method) \(path)"
+        case let .error(_, msg): return msg ?? "Network error with code: \(errorCode)"
         }
     }
 }

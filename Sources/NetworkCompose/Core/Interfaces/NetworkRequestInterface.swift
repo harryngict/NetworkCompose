@@ -108,7 +108,6 @@ public extension NetworkRequestInterface {
 }
 
 private extension NetworkRequestInterface {
-  
     func encodeToJSON() -> Data? {
         guard let parameters = queryParameters else {
             return nil

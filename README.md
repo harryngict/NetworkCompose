@@ -122,7 +122,6 @@ networkQueue.setReAuthService(self) // setReAuthService to enable re-authenticat
 ```
 We have to conforms to the `ReAuthenticationService` protocol, which allows you to handle re-authentication.
 ``` swift
-/// Re-authenticates the user and provides a new token.
     public func reAuthen(completion: @escaping (Result<[String: String], NetworkError>) -> Void) {
         // For testing now. In fact, this value should get `newtoken` from the real service
         completion(.success(["jwt_token": "newtoken"]))
@@ -192,9 +191,15 @@ Report will show us the information of request, task, session, etc..
         .setQueryParameters(["title": "foo"])
         .build()
 
-    network.build()
-          .request(request, retryPolicy: .exponentialRetry(count: 3, initialDelay: 1, multiplier: 2.0, maxDelay: 30.0))
-    { (result: Result<User, NetworkError>) in
+// exponential retry
+let retryPolicy: NetworkRetryPolicy = .exponentialRetry(count: 4,
+                                                        initialDelay: 1,
+                                                        multiplier: 3.0,
+                                                        maxDelay: 30.0)
+network
+    .setDefaultConfiguration() //  reset all configurations
+    .build()
+    .request(request, retryPolicy: retryPolicy) { (result: Result<User, NetworkError>) in
         // Handler result here
     }
 ```
@@ -212,17 +217,12 @@ network.setNetworkStrategy(.mocker(self)) // setNetworkStrategy to mocker
 We have conforms to the `NetworkExpectationProvider` protocol, allowing you to provide network expectations for testing purposes.
 
 ```swift
-// MARK: NetworkExpectationProvider
-
-extension ClientDemoNetwork: NetworkExpectationProvider {
-    /// The network expectations provided by the factory for testing purposes.
-    public var networkExpectations: [NetworkCompose.NetworkExpectation] {
-        let apiOne = NetworkExpectation(name: "abc",
-                                        path: "/posts",
-                                        method: .GET,
-                                        response: .successResponse(User(id: 1)))
-        return [apiOne]
-    }
+public var networkExpectations: [NetworkCompose.NetworkExpectation] {
+      let apiExpectation = NetworkExpectation(name: "abc",
+                                              path: "/posts",
+                                              method: .GET,
+                                              response: .successResponse(User(id: 1)))
+      return [apiExpectation]
 }
 ```
 ### 5.8. setDefaultConfiguration

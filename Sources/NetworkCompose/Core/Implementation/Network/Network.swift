@@ -73,7 +73,6 @@ final class Network<SessionType: NetworkSession>: NetworkInterface {
         return try await performRequest()
     }
 
-
     func request<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
@@ -100,17 +99,11 @@ final class Network<SessionType: NetworkSession>: NetworkInterface {
                             }
                         case let .failure(error):
                             currentRetry += 1
-                            let shouldRetry = retryPolicy.shouldRetry(currentRetry: currentRetry)
-                            if shouldRetry {
-                                let delay = retryPolicy.retryDelay(currentRetry: currentRetry) ?? 0
-                                self.executeQueue.asyncAfter(deadline: .now() + delay) {
-                                    performRequest()
-                                }
-                            } else {
-                                self.observeQueue.async {
-                                    completion(.failure(error))
-                                }
-                            }
+                            self.retryIfNeeded(currentRetry: currentRetry,
+                                               retryPolicy: retryPolicy,
+                                               error: error,
+                                               performRequest: performRequest,
+                                               completion: completion)
                         }
                     }
                 }
@@ -124,7 +117,6 @@ final class Network<SessionType: NetworkSession>: NetworkInterface {
             performRequest()
         }
     }
-
 
     func uploadFile<RequestType>(
         _ request: RequestType,
@@ -153,17 +145,11 @@ final class Network<SessionType: NetworkSession>: NetworkInterface {
                             }
                         case let .failure(error):
                             currentRetry += 1
-                            let shouldRetry = retryPolicy.shouldRetry(currentRetry: currentRetry)
-                            if shouldRetry {
-                                let delay = retryPolicy.retryDelay(currentRetry: currentRetry) ?? 0
-                                self.executeQueue.asyncAfter(deadline: .now() + delay) {
-                                    performRequest()
-                                }
-                            } else {
-                                self.observeQueue.async {
-                                    completion(.failure(error))
-                                }
-                            }
+                            self.retryIfNeeded(currentRetry: currentRetry,
+                                               retryPolicy: retryPolicy,
+                                               error: error,
+                                               performRequest: performRequest,
+                                               completion: completion)
                         }
                     }
                 }
@@ -179,12 +165,12 @@ final class Network<SessionType: NetworkSession>: NetworkInterface {
         }
     }
 
-    func downloadFile<RequestType: NetworkRequestInterface>(
+    func downloadFile<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
         retryPolicy: NetworkRetryPolicy = .none,
         completion: @escaping (Result<URL, NetworkError>) -> Void
-    ) {
+    ) where RequestType: NetworkRequestInterface {
         guard networkReachability.isInternetAvailable else {
             observeQueue.async {
                 completion(.failure(NetworkError.lostInternetConnection))
@@ -204,17 +190,11 @@ final class Network<SessionType: NetworkSession>: NetworkInterface {
                         }
                     case let .failure(error):
                         currentRetry += 1
-                        let shouldRetry = retryPolicy.shouldRetry(currentRetry: currentRetry)
-                        if shouldRetry {
-                            let delay = retryPolicy.retryDelay(currentRetry: currentRetry) ?? 0
-                            self.executeQueue.asyncAfter(deadline: .now() + delay) {
-                                performRequest()
-                            }
-                        } else {
-                            self.observeQueue.async {
-                                completion(.failure(error))
-                            }
-                        }
+                        self.retryIfNeeded(currentRetry: currentRetry,
+                                           retryPolicy: retryPolicy,
+                                           error: error,
+                                           performRequest: performRequest,
+                                           completion: completion)
                     }
                 }
             } catch {
@@ -241,7 +221,7 @@ final class Network<SessionType: NetworkSession>: NetworkInterface {
         for request: RequestType
     ) throws -> RequestType.SuccessType {
         guard (200 ... 299).contains(response.statusCode) else {
-            throw NetworkError.networkError(response.statusCode, nil)
+            throw NetworkError.error(response.statusCode, nil)
         }
         return try request.responseDecoder.decode(RequestType.SuccessType.self, from: response.data)
     }
@@ -259,13 +239,67 @@ final class Network<SessionType: NetworkSession>: NetworkInterface {
             } catch {
                 if let error = error as? NetworkError {
                     completion(.failure(error))
-
+                } else if let decodingError = error as? DecodingError {
+                    completion(.failure(NetworkError.decodingFailed(modeType: String(describing: RequestType.SuccessType.self),
+                                                                    context: decodingError.localizedDescription)))
                 } else {
-                    completion(.failure(NetworkError.networkError(nil, error.localizedDescription)))
+                    completion(.failure(NetworkError.error(nil, error.localizedDescription)))
                 }
             }
         case let .failure(error):
             completion(.failure(error))
+        }
+    }
+
+    private func retryIfNeeded<SuccessType>(
+        currentRetry: Int,
+        retryPolicy: NetworkRetryPolicy,
+        error: NetworkError,
+        performRequest: @escaping () -> Void,
+        completion: @escaping (Result<SuccessType, NetworkError>) -> Void
+    ) where SuccessType: Decodable {
+        retryIfNeededInternal(
+            currentRetry: currentRetry,
+            retryPolicy: retryPolicy,
+            error: error,
+            performRequest: performRequest,
+            completion: completion
+        )
+    }
+
+    private func retryIfNeeded(
+        currentRetry: Int,
+        retryPolicy: NetworkRetryPolicy,
+        error: NetworkError,
+        performRequest: @escaping () -> Void,
+        completion: @escaping (Result<URL, NetworkError>) -> Void
+    ) {
+        retryIfNeededInternal(
+            currentRetry: currentRetry,
+            retryPolicy: retryPolicy,
+            error: error,
+            performRequest: performRequest,
+            completion: completion
+        )
+    }
+
+    private func retryIfNeededInternal<SuccessType>(
+        currentRetry: Int,
+        retryPolicy: NetworkRetryPolicy,
+        error: NetworkError,
+        performRequest: @escaping () -> Void,
+        completion: @escaping (Result<SuccessType, NetworkError>) -> Void
+    ) where SuccessType: Decodable {
+        let shouldRetry = retryPolicy.shouldRetry(currentRetry: currentRetry)
+        if shouldRetry {
+            let delay = retryPolicy.retryDelay(currentRetry: currentRetry) ?? 0
+            executeQueue.asyncAfter(deadline: .now() + delay) {
+                performRequest()
+            }
+        } else {
+            observeQueue.async {
+                completion(.failure(error))
+            }
         }
     }
 }
