@@ -258,5 +258,68 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CDCB34A0-0946-401F-B866-AA029171310A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Sources/NetworkCompose/src/Network/Storable/UserDefaultStorable/UserDefaultProvider.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "UserDefaultProvider"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "CDCB34A0-0946-401F-B866-AA029171310A - 1c8f705148762d69"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NetworkCompose.UserDefaultProvider.store&lt;&#x3c4;_0_0 where &#x3c4;_0_0: NetworkCompose.NetworkRequestInterface&gt;(_: &#x3c4;_0_0, data: Foundation.Data, model: &#x3c4;_0_0.SuccessType) -&gt; ()"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Storable/UserDefaultStorable/UserDefaultProvider.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "26"
+                  endingLineNumber = "26"
+                  offsetFromSymbolStart = "752">
+               </Location>
+               <Location
+                  uuid = "CDCB34A0-0946-401F-B866-AA029171310A - 1c8f705148762d69"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NetworkCompose.UserDefaultProvider.store&lt;&#x3c4;_0_0 where &#x3c4;_0_0: NetworkCompose.NetworkRequestInterface&gt;(_: &#x3c4;_0_0, data: Foundation.Data, model: &#x3c4;_0_0.SuccessType) -&gt; ()"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Storable/UserDefaultStorable/UserDefaultProvider.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "26"
+                  endingLineNumber = "26"
+                  offsetFromSymbolStart = "816">
+               </Location>
+               <Location
+                  uuid = "CDCB34A0-0946-401F-B866-AA029171310A - 1c8f705148762d48"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NetworkCompose.UserDefaultProvider.store&lt;&#x3c4;_0_0 where &#x3c4;_0_0: NetworkCompose.NetworkRequestInterface&gt;(_: &#x3c4;_0_0, data: Foundation.Data, model: &#x3c4;_0_0.SuccessType) -&gt; ()"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Storable/UserDefaultStorable/UserDefaultProvider.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "27"
+                  endingLineNumber = "27"
+                  offsetFromSymbolStart = "816">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

@@ -1,5 +1,5 @@
 //
-//  NetworkProxy.swift
+//  NetworkCoordinator.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 17/11/23.
@@ -7,8 +7,15 @@
 
 import Foundation
 
-final class NetworkProxy<SessionType: NetworkSession>: NetworkProxyInterface {
-    private let networkCore: NetworkCoreInterface
+/// A protocol representing a network coordinator with additional authentication features.
+/// Inherits from `NetworkControllerInterface` and includes a property for re-authentication service.
+public protocol NetworkCoordinatorInterface: NetworkControllerInterface {
+    /// An optional re-authentication service that can be used for refreshing authentication tokens.
+    var reAuthService: ReAuthenticationService? { get }
+}
+
+final class NetworkCoordinator<SessionType: NetworkSession>: NetworkCoordinatorInterface {
+    private let networkCore: NetworkControllerInterface
     private let operationQueue: OperationQueueManager
     public var reAuthService: ReAuthenticationService?
 
@@ -29,15 +36,17 @@ final class NetworkProxy<SessionType: NetworkSession>: NetworkProxyInterface {
         operationQueue: OperationQueueManager,
         networkReachability: NetworkReachability,
         executeQueue: NetworkDispatchQueue,
-        observeQueue: NetworkDispatchQueue
+        observeQueue: NetworkDispatchQueue,
+        storageService: StorageService?
     ) {
         self.reAuthService = reAuthService
         self.operationQueue = operationQueue
-        networkCore = NetworkCore(baseURL: baseURL,
-                                  session: session,
-                                  networkReachability: networkReachability,
-                                  executeQueue: executeQueue,
-                                  observeQueue: observeQueue)
+        networkCore = NetworkController(baseURL: baseURL,
+                                        session: session,
+                                        networkReachability: networkReachability,
+                                        executeQueue: executeQueue,
+                                        observeQueue: observeQueue,
+                                        storageService: storageService)
     }
 
     func request<RequestType: NetworkRequestInterface>(
@@ -118,7 +127,7 @@ final class NetworkProxy<SessionType: NetworkSession>: NetworkProxyInterface {
 
 // MARK: Request execution
 
-extension NetworkProxy {
+extension NetworkCoordinator {
     private func createRequestOperation<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String],
@@ -176,7 +185,7 @@ extension NetworkProxy {
 
 // MARK: Upload execution
 
-extension NetworkProxy {
+extension NetworkCoordinator {
     private func createUploadOperation<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String],
@@ -245,7 +254,7 @@ extension NetworkProxy {
 
 // MARK: Download execution
 
-extension NetworkProxy {
+extension NetworkCoordinator {
     private func createDownloadOperation<RequestType: NetworkRequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String],
