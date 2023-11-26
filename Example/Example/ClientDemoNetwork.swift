@@ -15,11 +15,11 @@ final class ClientDemoNetwork {
 
     static let shared = ClientDemoNetwork()
 
-    private let network: NetworkCompose<URLSession>
+    private let network: NetworkBuilder<URLSession>
 
     private init() {
         let baseURL = URL(string: Constant.baseURL)!
-        network = NetworkCompose(baseURL: baseURL)
+        network = NetworkBuilder(baseURL: baseURL)
     }
 
     func makeRequest(

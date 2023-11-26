@@ -51,7 +51,7 @@ swift package update
 ### 4.1. Initialization
 ```swift
 let baseURL = URL(string: "https://your-api-base-url.com")!
-let network = NetworkCompose(baseURL: baseURL)
+let network = NetworkBuilder(baseURL: baseURL)
 ```
 ### 4.2. Making a Request
 ```swift

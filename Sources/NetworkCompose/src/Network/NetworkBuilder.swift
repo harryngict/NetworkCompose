@@ -1,5 +1,5 @@
 //
-//  NetworkCompose.swift
+//  NetworkBuilder.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 24/11/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class NetworkCompose<SessionType: NetworkSession>: NetworkSettings<SessionType> {
+public class NetworkBuilder<SessionType: NetworkSession>: NetworkSettings<SessionType> {
     private var reAuthService: ReAuthenticationService?
     private var operationQueue: OperationQueueManager = DefaultOperationQueueManager.serialOperationQueue
 
