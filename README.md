@@ -4,12 +4,20 @@ NetworkCompose simplifies and enhances network-related tasks by providing a flex
  
 ## I. Features
 
-- **Simple Request API:** Make network requests with ease using a straightforward API.
+- **Simple Request API:** Make network requests effortlessly using a straightforward and intuitive API.
+
 - **Re-authentication Support:** Seamlessly handle scenarios that require re-authentication by implementing the `ReAuthenticationService` protocol.
-- **SSL Pinning:** Enhance security with SSL pinning by configuring trusted hosts and corresponding hash keys.
-- **Network Metrics Reporting:** Collect and report network metrics with the `DefaultNetworkMetricInterceptor`.
-- **Smart Retry Mechanism:** Implement smart retry policies for resilient network operations.
-- **Automation Support:** Simplify automated testing with the ability to mock network responses using the `NetworkStrategy`.
+
+- **SSL Pinning:** Enhance security with SSL pinning. Configure trusted hosts and corresponding hash keys to ensure a secure communication channel.
+
+- **Network Metrics Reporting:** Collect and report comprehensive network metrics. Gain insights into your network performance.
+
+- **Smart Retry Mechanism:** Implement smart retry policies for resilient network operations. Enhance the reliability of your app by intelligently handling network issues.
+
+- **Automation Support:**
+  - **Mocking with FileSystem:** Simulate network responses effortlessly during automated testing by mocking responses from a local file system.
+  - **Mocking with UserDefaults:** Streamline your automated testing with the ability to mock network responses stored in UserDefaults.
+  - **Customized Automation with Expectations:** Tailor your automated testing by customizing network response mocking with specific expectations.
 
 ## II. Testability
 
@@ -22,7 +30,7 @@ NetworkCompose simplifies and enhances network-related tasks by providing a flex
 To integrate NetworkCompose into your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ```ruby
-pod 'NetworkCompose', '~> 0.0.3'
+pod 'NetworkCompose', '~> 0.0.4'
 ```
 
 then run:
@@ -33,7 +41,7 @@ pod install
 To integrate NetworkCompose using Swift Package Manager, add the following to your Package.swift file:
 ```swift
 dependencies: [
-    .package(url: "https://github.com/harryngict/NetworkCompose.git", from: "0.0.3")
+    .package(url: "https://github.com/harryngict/NetworkCompose.git", from: "0.0.4")
 ],
 targets: [
     .target(
@@ -51,7 +59,7 @@ swift package update
 ### 4.1. Initialization
 ```swift
 let baseURL = URL(string: "https://your-api-base-url.com")!
-let network = NetworkCompose(baseURL: baseURL)
+let network = NetworkBuilder(baseURL: baseURL)
 ```
 ### 4.2. Making a Request
 ```swift
@@ -126,16 +134,16 @@ let request = NetworkRequest<ArticleResponse>(path: "/posts", method: .GET)
     .build()
 
 network
-    .setNetworkStrategy(.mocker(yourMocker))
+    .setMockerStrategy(yourMockerStrategy)
     .request(request) { result in
         // Handle the result
     }
 ```
 ### 4.8. Set default configuration
-The `func setDefaultSetting` is available to reset all configurations for `NetworkCompose`
+The `func setDefaultConfiguration` is available to reset all configurations for `NetworkCompose`
 
 ```swift
-network.setDefaultSetting()
+network.setDefaultConfiguration()
 ```
 Thats it!! `NetworkCompose` is successfully integrated and initialized in the project, and ready to use. 
 
