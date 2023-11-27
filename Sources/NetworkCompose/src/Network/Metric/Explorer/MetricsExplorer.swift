@@ -8,9 +8,9 @@
 import Foundation
 
 final class MetricsExplorer {
-    private let metricInterceptor: MetricInterceptor
+    private let metricInterceptor: MetricInterceptorInterface
 
-    init(metricInterceptor: MetricInterceptor) {
+    init(metricInterceptor: MetricInterceptorInterface) {
         self.metricInterceptor = metricInterceptor
     }
 

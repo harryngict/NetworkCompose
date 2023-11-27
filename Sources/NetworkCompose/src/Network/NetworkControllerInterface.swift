@@ -17,7 +17,7 @@ public protocol NetworkControllerInterface: AnyObject {
     ///   - completion: The completion handler to be called with the result.
     ///
     /// - Note: Use this method for non-async network requests or when compatibility with earlier iOS versions is required.
-    func request<RequestType: NetworkRequestInterface>(
+    func request<RequestType: RequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String],
         retryPolicy: RetryPolicy,
@@ -32,7 +32,7 @@ public protocol NetworkControllerInterface: AnyObject {
     ///   - fileURL: The URL of the file to be uploaded.
     ///   - retryPolicy: The retry policy for the network request.
     ///   - completion: The completion handler to be called with the result.
-    func upload<RequestType: NetworkRequestInterface>(
+    func upload<RequestType: RequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String],
         fromFile fileURL: URL,
@@ -47,7 +47,7 @@ public protocol NetworkControllerInterface: AnyObject {
     ///   - headers: Additional headers to be included in the request.
     ///   - retryPolicy: The retry policy for the network request.
     ///   - completion: The completion handler to be called with the result.
-    func download<RequestType: NetworkRequestInterface>(
+    func download<RequestType: RequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String],
         retryPolicy: RetryPolicy,
@@ -56,7 +56,7 @@ public protocol NetworkControllerInterface: AnyObject {
 }
 
 public extension NetworkControllerInterface {
-    func request<RequestType: NetworkRequestInterface>(
+    func request<RequestType: RequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
         retryPolicy: RetryPolicy = .none,
@@ -68,7 +68,7 @@ public extension NetworkControllerInterface {
                      completion: completion)
     }
 
-    func upload<RequestType: NetworkRequestInterface>(
+    func upload<RequestType: RequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
         fromFile fileURL: URL,
@@ -82,7 +82,7 @@ public extension NetworkControllerInterface {
                completion: completion)
     }
 
-    func download<RequestType: NetworkRequestInterface>(
+    func download<RequestType: RequestInterface>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
         retryPolicy: RetryPolicy = .none,

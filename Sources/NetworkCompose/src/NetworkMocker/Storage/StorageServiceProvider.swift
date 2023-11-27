@@ -10,24 +10,28 @@ import Foundation
 final class StorageServiceProvider: StorageService {
     private let storageService: StorageService
 
-    init(_ strategy: StorageStrategy) {
-        switch strategy {
-        case .fileSystem: storageService = FileSystemStorageService()
-        case .userDefault: storageService = UserDefaultStorageService()
-        }
+    init(loggerInterface: LoggerInterface?,
+         executionQueue: DispatchQueueType)
+    {
+        storageService = FileSystemStorageService(loggerInterface: loggerInterface,
+                                                  executionQueue: executionQueue)
     }
 
     func storeResponse<RequestType>(
         _ request: RequestType,
         data: Data,
         model: RequestType.SuccessType
-    ) throws where RequestType: NetworkRequestInterface {
+    ) throws where RequestType: RequestInterface {
         try storageService.storeResponse(request, data: data, model: model)
     }
 
     func getResponse<RequestType>(
         _ request: RequestType
-    ) throws -> RequestType.SuccessType where RequestType: NetworkRequestInterface {
+    ) throws -> RequestType.SuccessType where RequestType: RequestInterface {
         try storageService.getResponse(request)
+    }
+
+    func clearMockDataInDisk() throws {
+        try storageService.clearMockDataInDisk()
     }
 }

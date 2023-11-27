@@ -7,9 +7,9 @@
 
 import Foundation
 
-public class NetworkBuilder<SessionType: NetworkSession>: NetworkSettings<SessionType> {
+public class NetworkBuilder<SessionType: NetworkSession>: NetworkCommonSettings<SessionType> {
     private var reAuthService: ReAuthenticationService?
-    private var operationQueue: OperationQueueManager = DefaultOperationQueueManager.serialOperationQueue
+    private var operationQueue: OperationQueueManagerInterface = DefaultOperationQueueManager.serialOperationQueue
 
     public required init(baseURL: URL,
                          session: SessionType = URLSession.shared)
@@ -23,7 +23,7 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkSettings<Sessio
     /// - Parameter reAuthService: The service responsible for re-authentication.
     /// - Returns: The builder instance for method chaining.
     @discardableResult
-    public func setReAuthService(_ reAuthService: ReAuthenticationService?) -> Self {
+    public func reAuthenService(_ reAuthService: ReAuthenticationService?) -> Self {
         self.reAuthService = reAuthService
         return self
     }
@@ -33,7 +33,7 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkSettings<Sessio
     /// - Parameter operationQueue: The queue run re-authentication operation
     /// - Returns: The builder instance for method chaining.
     @discardableResult
-    public func setOperationQueue(_ operationQueue: OperationQueueManager) -> Self {
+    public func reAuthenOperationQueue(_ operationQueue: OperationQueueManagerInterface) -> Self {
         self.operationQueue = operationQueue
         return self
     }
@@ -46,36 +46,95 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkSettings<Sessio
     ///
     /// - Returns: The modified instance of the network builder with the default configuration.
     @discardableResult
-    override public func setDefaultConfiguration() -> Self {
+    override public func applyDefaultConfiguration() -> Self {
         reAuthService = nil
         operationQueue = DefaultOperationQueueManager.serialOperationQueue
-        _ = super.setDefaultConfiguration()
+        _ = super.applyDefaultConfiguration()
         return self
     }
 
-    public func build() -> NetworkCoordinatorInterface {
-        guard let mockerStrategy = mockerStrategy else {
+    /// Clears mock data in the disk storage.
+    ///
+    /// This method is used to remove any mock data stored in the disk storage. It creates a `StorageServiceProvider`
+    /// with the provided logger and executes the operation asynchronously on the specified queue.
+    ///
+    /// - Returns: An instance of the same type to support method chaining.
+    @discardableResult
+    public func clearMockDataInDisk() -> Self {
+        let provider = StorageServiceProvider(loggerInterface: createLogger(),
+                                              executionQueue: executionQueue)
+        try? provider.clearMockDataInDisk()
+        return self
+    }
+
+    /// Builds and returns an instance conforming to `NetworkCoordinatorInterface` based on the configured strategies.
+    ///
+    /// This method creates either a `NetworkCoordinator` or a `NetworkMocker` based on the specified strategies.
+    ///
+    /// - Returns: An instance conforming to `NetworkCoordinatorInterface`.
+    private func build() -> NetworkCoordinatorInterface {
+        guard case let .enabled(mockDataType) = automationMode else {
             var storageService: StorageService?
-            if let storageStrategy { storageService = StorageServiceProvider(storageStrategy) }
+
+            if case .enabled = recordResponseMode {
+                storageService = StorageServiceProvider(loggerInterface: createLogger(),
+                                                        executionQueue: executionQueue)
+            }
+            if let session = try? createNetworkSession() {
+                self.session = session
+            }
+
             return NetworkCoordinator(
                 baseURL: baseURL,
                 session: session,
                 reAuthService: reAuthService,
                 operationQueue: operationQueue,
                 networkReachability: networkReachability,
-                executeQueue: executeQueue,
-                observeQueue: observeQueue,
-                storageService: storageService
+                executionQueue: executionQueue,
+                observationQueue: observationQueue,
+                storageService: storageService,
+                loggerInterface: createLogger()
             )
         }
 
-        return NetworkMockerCoordinator(
+        return NetworkMocker(
             baseURL: baseURL,
             session: session,
             reAuthService: reAuthService,
-            executeQueue: executeQueue,
-            observeQueue: observeQueue,
-            mockerStrategy: mockerStrategy
+            executionQueue: executionQueue,
+            observationQueue: observationQueue,
+            loggerInterface: createLogger(),
+            mockDataType: mockDataType
         )
+    }
+}
+
+public extension NetworkBuilder {
+    func request<RequestType: RequestInterface>(
+        _ request: RequestType,
+        andHeaders headers: [String: String] = [:],
+        retryPolicy: RetryPolicy = .none,
+        completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
+    ) {
+        build().request(request, andHeaders: headers, retryPolicy: retryPolicy, completion: completion)
+    }
+
+    func upload<RequestType: RequestInterface>(
+        _ request: RequestType,
+        andHeaders headers: [String: String] = [:],
+        fromFile fileURL: URL,
+        retryPolicy: RetryPolicy = .none,
+        completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
+    ) {
+        build().upload(request, andHeaders: headers, fromFile: fileURL, retryPolicy: retryPolicy, completion: completion)
+    }
+
+    func download<RequestType: RequestInterface>(
+        _ request: RequestType,
+        andHeaders headers: [String: String] = [:],
+        retryPolicy: RetryPolicy = .none,
+        completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
+    ) {
+        build().download(request, andHeaders: headers, retryPolicy: retryPolicy, completion: completion)
     }
 }

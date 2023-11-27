@@ -1,5 +1,5 @@
 //
-//  NetworkRequest.swift
+//  RequestBuilder.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 22/11/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class NetworkRequest<T: Codable> {
+public class RequestBuilder<T: Codable> {
     private var path: String
     private var method: NetworkMethod
     private var queryParameters: [String: Any]?
@@ -39,7 +39,7 @@ public class NetworkRequest<T: Codable> {
     /// - Parameter parameters: The query parameters to include in the request.
     /// - Returns: The builder instance for method chaining.
     @discardableResult
-    public func setQueryParameters(_ parameters: [String: Any]?) -> Self {
+    public func queryParameters(_ parameters: [String: Any]?) -> Self {
         queryParameters = parameters
         return self
     }
@@ -49,7 +49,7 @@ public class NetworkRequest<T: Codable> {
     /// - Parameter headers: The headers to include in the request.
     /// - Returns: The builder instance for method chaining.
     @discardableResult
-    public func setHeaders(_ headers: [String: String]) -> Self {
+    public func headers(_ headers: [String: String]) -> Self {
         self.headers = headers
         return self
     }
@@ -59,7 +59,7 @@ public class NetworkRequest<T: Codable> {
     /// - Parameter bodyEncoding: The encoding type for the request body.
     /// - Returns: The builder instance for method chaining.
     @discardableResult
-    public func setBodyEncoding(_ bodyEncoding: BodyEncoding) -> Self {
+    public func bodyEncoding(_ bodyEncoding: BodyEncoding) -> Self {
         self.bodyEncoding = bodyEncoding
         return self
     }
@@ -69,7 +69,7 @@ public class NetworkRequest<T: Codable> {
     /// - Parameter timeoutInterval: The timeout interval for the request.
     /// - Returns: The builder instance for method chaining.
     @discardableResult
-    public func setTimeoutInterval(_ timeoutInterval: TimeInterval) -> Self {
+    public func timeoutInterval(_ timeoutInterval: TimeInterval) -> Self {
         self.timeoutInterval = timeoutInterval
         return self
     }
@@ -79,7 +79,7 @@ public class NetworkRequest<T: Codable> {
     /// - Parameter responseDecoder: The response decoder for parsing the network response.
     /// - Returns: The builder instance for method chaining.
     @discardableResult
-    public func setResponseDecoder(_ responseDecoder: ResponseDecoder) -> Self {
+    public func responseDecoder(_ responseDecoder: ResponseDecoder) -> Self {
         self.responseDecoder = responseDecoder
         return self
     }
@@ -89,7 +89,7 @@ public class NetworkRequest<T: Codable> {
     /// - Parameter cachePolicy: The cache policy for the request.
     /// - Returns: The builder instance for method chaining.
     @discardableResult
-    public func setCachePolicy(_ cachePolicy: NetworkCachePolicy) -> Self {
+    public func cachePolicy(_ cachePolicy: NetworkCachePolicy) -> Self {
         self.cachePolicy = cachePolicy
         return self
     }
@@ -99,13 +99,13 @@ public class NetworkRequest<T: Codable> {
     /// - Parameter requiresReAuthentication: A flag indicating whether the request requires re-authentication.
     /// - Returns: The builder instance for method chaining.
     @discardableResult
-    public func setRequiresReAuthentication(_ requiresReAuthentication: Bool) -> Self {
+    public func requiresReAuthentication(_ requiresReAuthentication: Bool) -> Self {
         self.requiresReAuthentication = requiresReAuthentication
         return self
     }
 
-    public func build() -> NetworkRequestImp<T> {
-        return NetworkRequestImp(
+    public func build() -> Request<T> {
+        return Request(
             path: path,
             method: method,
             queryParameters: queryParameters,

@@ -321,5 +321,213 @@
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "67A9EBCE-042F-476C-B0A9-4985AC019B75"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Sources/NetworkCompose/src/NetworkMocker/Storage/UserDefaultStorageService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "storeResponse(_:data:model:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "67A9EBCE-042F-476C-B0A9-4985AC019B75 - 6fabd0d586582b9a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NetworkCompose.UserDefaultStorageService.storeResponse&lt;&#x3c4;_0_0 where &#x3c4;_0_0: NetworkCompose.RequestInterface&gt;(_: &#x3c4;_0_0, data: Foundation.Data, model: &#x3c4;_0_0.SuccessType) throws -&gt; ()"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/Storage/UserDefaultStorageService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "592">
+               </Location>
+               <Location
+                  uuid = "67A9EBCE-042F-476C-B0A9-4985AC019B75 - 6fabd0d586582b7d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NetworkCompose.UserDefaultStorageService.storeResponse&lt;&#x3c4;_0_0 where &#x3c4;_0_0: NetworkCompose.RequestInterface&gt;(_: &#x3c4;_0_0, data: Foundation.Data, model: &#x3c4;_0_0.SuccessType) throws -&gt; ()"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/Storage/UserDefaultStorageService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "35"
+                  endingLineNumber = "35"
+                  offsetFromSymbolStart = "592">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CEFF234A-E46A-4A7E-821A-3947CDD9BFB2"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Sources/NetworkCompose/src/NetworkMocker/Storage/UserDefaultStorageService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "getResponse(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "CEFF234A-E46A-4A7E-821A-3947CDD9BFB2 - 94c88200a3d5aef9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NetworkCompose.UserDefaultStorageService.getResponse&lt;&#x3c4;_0_0 where &#x3c4;_0_0: NetworkCompose.RequestInterface&gt;(&#x3c4;_0_0) throws -&gt; &#x3c4;_0_0.SuccessType"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/Storage/UserDefaultStorageService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50"
+                  offsetFromSymbolStart = "1656">
+               </Location>
+               <Location
+                  uuid = "CEFF234A-E46A-4A7E-821A-3947CDD9BFB2 - 94c88200a3d5ad5a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NetworkCompose.UserDefaultStorageService.getResponse&lt;&#x3c4;_0_0 where &#x3c4;_0_0: NetworkCompose.RequestInterface&gt;(&#x3c4;_0_0) throws -&gt; &#x3c4;_0_0.SuccessType"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/Storage/UserDefaultStorageService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "53"
+                  endingLineNumber = "53"
+                  offsetFromSymbolStart = "1656">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "693AAE57-3EFF-411F-8569-64F278544389"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Sources/NetworkCompose/src/NetworkMocker/EndpointExpectation.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
+            landmarkName = "getResponse(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DBB8A20A-883B-4F4F-84B4-D15D7725E581"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Sources/NetworkCompose/src/NetworkMocker/EndpointExpectation.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "getResponse(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "63981F98-1C8F-4F77-9F6D-76E5AB9EA14D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Sources/NetworkCompose/src/NetworkMocker/EndpointExpectation.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "getResponse(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EB8AFA27-110C-4905-A94F-6A66F630311C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Sources/NetworkCompose/src/NetworkMocker/NetworkMockHandler.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "handleCustomProvider(_:request:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "EB8AFA27-110C-4905-A94F-6A66F630311C - 8896779768dd7b81"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NetworkCompose.NetworkMockHandler.handleCustomProvider&lt;&#x3c4;_0_0 where &#x3c4;_0_0: NetworkCompose.RequestInterface&gt;(_: NetworkCompose.EndpointExpectationProvider, request: &#x3c4;_0_0) throws -&gt; &#x3c4;_0_0.SuccessType"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/NetworkMockHandler.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "47"
+                  endingLineNumber = "47"
+                  offsetFromSymbolStart = "900">
+               </Location>
+               <Location
+                  uuid = "EB8AFA27-110C-4905-A94F-6A66F630311C - 8896779768dd7ba0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NetworkCompose.NetworkMockHandler.handleCustomProvider&lt;&#x3c4;_0_0 where &#x3c4;_0_0: NetworkCompose.RequestInterface&gt;(_: NetworkCompose.EndpointExpectationProvider, request: &#x3c4;_0_0) throws -&gt; &#x3c4;_0_0.SuccessType"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/NetworkMockHandler.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "48"
+                  endingLineNumber = "48"
+                  offsetFromSymbolStart = "900">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D3EED672-3D90-441A-816F-E86A03476BF2"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Example/NetworkComposeDemo.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "185"
+            endingLineNumber = "185"
+            landmarkName = "performRequestDemoAutomation(completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

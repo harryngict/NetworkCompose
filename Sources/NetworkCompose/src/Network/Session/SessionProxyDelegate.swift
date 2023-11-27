@@ -8,24 +8,28 @@
 import Foundation
 
 final class SessionProxyDelegate: NSObject, URLSessionTaskDelegate, URLSessionDataDelegate {
-    private var metricsCollector: MetricsCollector?
-    private var sslPinningProcessor: SSLPinningProcessor?
+    private var metricsCollector: MetricsCollectorInterface?
+    private let sslPinningProcessor: SSLPinningProcessorInterface
 
-    /// Initializes the `NetworkSessionProxyDelegate` with optional metrics collector and security trust.
+    /// Initializes a `SessionProxyDelegate` with SSL pinning, metric task reporting, and logging components.
+    ///
+    /// Use this initializer to create a `SessionProxyDelegate` with SSL pinning and optional metric task reporting and logging.
+    /// The SSL pinning policy is specified by `sslPinningPolicy`. Metric task reporting is controlled by `metricTaskReportStrategy`,
+    /// and the optional `loggerInterface` provides a custom logging implementation.
     ///
     /// - Parameters:
-    ///   - sslPinningPolicy: An optional `SSLPinningPolicy` for SSL pinning.
-    ///   - metricInterceptor: An optional `MetricInterceptor` for collecting network metrics.
-    /// - Returns: A new instance of `NetworkSessionProxyDelegate`.
-    init(sslPinningPolicy: SSLPinningPolicy?,
-         metricInterceptor: MetricInterceptor?)
+    ///   - sslPinningPolicy: The SSL pinning policy for secure network communication.
+    ///   - metricTaskReportStrategy: The strategy for reporting metrics related to network tasks.
+    ///   - loggerInterface: An optional logger interface for custom logging. Pass `nil` to disable logging.
+    init(sslPinningPolicy: SSLPinningPolicy,
+         reportMetricStrategy: ReportMetricStrategy,
+         loggerInterface: LoggerInterface?)
     {
-        if let sslPinningPolicy = sslPinningPolicy {
-            sslPinningProcessor = SSLPinningProcessorImp(sslPinningPolicy: sslPinningPolicy)
-        }
+        sslPinningProcessor = SSLPinningProcessor(sslPinningPolicy: sslPinningPolicy,
+                                                  loggerInterface: loggerInterface)
 
-        if let metricInterceptor = metricInterceptor {
-            metricsCollector = MetricsCollectorImp(metricInterceptor: metricInterceptor)
+        if case let .enabled(metricInterceptor) = reportMetricStrategy {
+            metricsCollector = MetricsCollector(metricInterceptor: metricInterceptor)
         }
     }
 
@@ -36,9 +40,7 @@ final class SessionProxyDelegate: NSObject, URLSessionTaskDelegate, URLSessionDa
                            didReceive challenge: URLAuthenticationChallenge,
                            completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void)
     {
-        guard let sslPinningProcessor = sslPinningProcessor,
-              case .trust = sslPinningProcessor.sslPinningPolicy
-        else {
+        guard case .trust = sslPinningProcessor.sslPinningPolicy else {
             completionHandler(.performDefaultHandling, nil)
             return
         }
