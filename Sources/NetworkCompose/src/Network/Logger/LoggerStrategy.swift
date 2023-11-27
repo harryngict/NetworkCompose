@@ -1,5 +1,5 @@
 //
-//  LogStrategy.swift
+//  LoggerStrategy.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 27/11/23.
@@ -8,7 +8,7 @@
 import Foundation
 
 /// Enumeration defining strategies for logging during network operations.
-public enum LogStrategy {
+public enum LoggerStrategy {
     /// Disables logging for network operations.
     case disabled
 

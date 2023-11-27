@@ -9,7 +9,7 @@ import Foundation
 
 public protocol NetworkSession: AnyObject {
     /// Associated type representing the network request type.
-    associatedtype NetworkRequestType
+    associatedtype SessionRequest
 
     /// Builds a network request based on the provided parameters.
     /// - Parameters:
@@ -17,11 +17,11 @@ public protocol NetworkSession: AnyObject {
     ///   - baseURL: The base URL for the request.
     ///   - headers: Additional headers to be included in the request.
     /// - Returns: The built network request.
-    func build<RequestType: RequestInterface>(
+    func build<RequestType>(
         _ request: RequestType,
         withBaseURL baseURL: URL,
         andHeaders headers: [String: String]
-    ) throws -> NetworkRequestType
+    ) throws -> SessionRequest where RequestType: RequestInterface
 
     /// Performs a network request and executes the completion handler with the result.
     /// - Parameters:
@@ -30,7 +30,7 @@ public protocol NetworkSession: AnyObject {
     /// - Returns: A task representing the asynchronous operation.
     @discardableResult
     func beginRequest(
-        _ request: NetworkRequestType,
+        _ request: SessionRequest,
         completion: @escaping ((Result<ResponseInterface, NetworkError>) -> Void)
     ) -> NetworkTask
 
@@ -45,10 +45,10 @@ public protocol NetworkSession: AnyObject {
     /// - Throws: A `NetworkError` if there is an issue with the network request or file upload.
     @discardableResult
     func beginUploadTask(
-        _ request: inout NetworkRequestType,
+        _ request: SessionRequest,
         fromFile: URL,
         completion: @escaping ((Result<ResponseInterface, NetworkError>) -> Void)
-    ) throws -> NetworkTask
+    ) -> NetworkTask
 
     /// Downloads a file using a network request and executes the completion handler with the result.
     /// - Parameters:
@@ -57,7 +57,7 @@ public protocol NetworkSession: AnyObject {
     /// - Returns: A task representing the asynchronous operation.
     @discardableResult
     func beginDownloadTask(
-        _ request: NetworkRequestType,
+        _ request: SessionRequest,
         completion: @escaping ((Result<ResponseInterface, NetworkError>) -> Void)
     ) -> NetworkTask
 }

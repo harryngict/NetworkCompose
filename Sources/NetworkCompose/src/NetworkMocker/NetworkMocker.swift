@@ -7,11 +7,12 @@
 
 import Foundation
 
-final class NetworkMocker<SessionType: NetworkSession>: NetworkCoordinatorInterface {
+final class NetworkMocker<SessionType: NetworkSession>: NetworkRouterInterface {
     var reAuthService: ReAuthenticationService?
 
     private let observationQueue: DispatchQueueType
-    private let mockHanlder: NetworkMockHandler
+    private let mockHandler: NetworkMockHandler
+    private let loggerInterface: LoggerInterface?
 
     init(baseURL _: URL,
          session _: SessionType = URLSession.shared,
@@ -23,7 +24,8 @@ final class NetworkMocker<SessionType: NetworkSession>: NetworkCoordinatorInterf
     {
         self.reAuthService = reAuthService
         self.observationQueue = observationQueue
-        mockHanlder = NetworkMockHandler(mockDataType,
+        self.loggerInterface = loggerInterface
+        mockHandler = NetworkMockHandler(mockDataType,
                                          loggerInterface: loggerInterface,
                                          executionQueue: executionQueue)
     }
@@ -34,6 +36,7 @@ final class NetworkMocker<SessionType: NetworkSession>: NetworkCoordinatorInterf
         retryPolicy _: RetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
+        loggerInterface?.log(.debug, request.debugDescription)
         requestMockResponse(request, completion: completion)
     }
 
@@ -44,6 +47,7 @@ final class NetworkMocker<SessionType: NetworkSession>: NetworkCoordinatorInterf
         retryPolicy _: RetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
+        loggerInterface?.log(.debug, request.debugDescription)
         requestMockResponse(request, completion: completion)
     }
 
@@ -53,7 +57,14 @@ final class NetworkMocker<SessionType: NetworkSession>: NetworkCoordinatorInterf
         retryPolicy _: RetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
+        loggerInterface?.log(.debug, request.debugDescription)
         requestMockResponse(request, completion: completion)
+    }
+
+    func cancelRequest<RequestType>(
+        _ request: RequestType
+    ) where RequestType: RequestInterface {
+        loggerInterface?.log(.debug, request.debugDescription)
     }
 }
 
@@ -63,7 +74,7 @@ private extension NetworkMocker {
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
         do {
-            let result = try mockHanlder.getRequestResponse(request)
+            let result = try mockHandler.getRequestResponse(request)
             observationQueue.async {
                 completion(.success(result))
             }

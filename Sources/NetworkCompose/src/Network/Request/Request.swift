@@ -7,8 +7,8 @@
 
 import Foundation
 
-public struct Request<T: Codable>: RequestInterface {
-    /// The type representing the successful response, conforming to `Codable`.
+public struct Request<T: Decodable>: RequestInterface {
+    /// The type representing the successful response, conforming to `Decodable`.
     public typealias SuccessType = T
 
     public var path: String

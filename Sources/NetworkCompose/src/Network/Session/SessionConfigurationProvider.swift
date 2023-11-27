@@ -12,12 +12,12 @@ public protocol SessionConfigurationProvider {
 }
 
 public enum DefaultSessionConfigurationProvider: SessionConfigurationProvider {
-    case normal
+    case ephemeral
     case background
 
     public var sessionConfig: URLSessionConfiguration {
         switch self {
-        case .normal:
+        case .ephemeral:
             let sessionConfig = URLSessionConfiguration.ephemeral
             sessionConfig.waitsForConnectivity = true
             sessionConfig.allowsCellularAccess = true

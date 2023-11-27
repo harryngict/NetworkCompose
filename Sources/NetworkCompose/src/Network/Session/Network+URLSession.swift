@@ -47,13 +47,13 @@ extension URLSession: NetworkSession {
     }
 
     public func beginUploadTask(
-        _ request: inout URLRequest,
+        _ request: URLRequest,
         fromFile: URL,
         completion: @escaping ((Result<ResponseInterface, NetworkError>) -> Void)
-    ) throws -> NetworkTask {
+    ) -> NetworkTask {
         var bodyStreamRequest = request
         bodyStreamRequest.httpBodyStream = createHttpBodyStream(fromFileURL: fromFile)
-        let task = dataTask(with: request) { data, response, error in
+        let task = dataTask(with: bodyStreamRequest) { data, response, error in
             self.handleResponse(data: data, response: response, error: error, completion: completion)
         }
         task.resume()
