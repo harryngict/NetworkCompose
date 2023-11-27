@@ -1,5 +1,5 @@
 //
-//  NetworkResponseImp.swift
+//  Response.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 11/11/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NetworkResponseImp: NetworkResponse, Sendable {
+struct Response: ResponseInterface, Sendable {
     let statusCode: Int
     let data: Data
 

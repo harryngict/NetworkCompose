@@ -7,30 +7,26 @@
 
 import Foundation
 
-protocol MetricsCollector: AnyObject {
-    /// Informs the collector that a network task has been created.
-    ///
-    /// - Parameter task: The network task that was created.
-    func taskCreated(_ task: URLSessionTask)
+final class MetricsCollector: MetricsCollectorInterface {
+    private let metricsExplorer: MetricsExplorer
 
-    /// Informs the collector that a network task has completed with an error.
-    ///
-    /// - Parameters:
-    ///   - task: The network task that completed.
-    ///   - error: An optional error indicating how the task completed, or `nil` if the task was successful.
-    func taskDidCompleteWithError(_ task: URLSessionTask, error: Error?)
+    init(metricInterceptor: MetricInterceptorInterface) {
+        metricsExplorer = MetricsExplorer(metricInterceptor: metricInterceptor)
+    }
 
-    /// Informs the collector that a network task has updated its progress.
-    ///
-    /// - Parameters:
-    ///   - task: The network task that updated its progress.
-    ///   - progress: A tuple containing the completed and total bytes of the task.
-    func taskDidUpdateProgress(_ task: URLSessionTask, progress: (completed: Int64, total: Int64))
+    func taskCreated(_ task: URLSessionTask) {
+        metricsExplorer.trackTaskCreated(task)
+    }
 
-    /// Informs the collector that a network task has finished collecting metrics.
-    ///
-    /// - Parameters:
-    ///   - task: The network task that finished collecting metrics.
-    ///   - metrics: The collected URLSessionTaskMetrics.
-    func taskDidFinishCollecting(_ task: URLSessionTask, metrics: URLSessionTaskMetrics)
+    func taskDidCompleteWithError(_ task: URLSessionTask, error: Error?) {
+        metricsExplorer.trackTaskDidCompleteWithError(task, didCompleteWithError: error)
+    }
+
+    func taskDidUpdateProgress(_ task: URLSessionTask, progress: (completed: Int64, total: Int64)) {
+        metricsExplorer.trackTaskDidUpdateProgress(task, didUpdateProgress: progress)
+    }
+
+    func taskDidFinishCollecting(_ task: URLSessionTask, metrics: URLSessionTaskMetrics) {
+        metricsExplorer.trackTaskDidFinishCollecting(task, metrics: metrics)
+    }
 }

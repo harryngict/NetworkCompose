@@ -1,5 +1,5 @@
 //
-//  NetworkRequestInterface.swift
+//  RequestInterface.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 11/11/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol NetworkRequestInterface {
+public protocol RequestInterface {
     var path: String { get }
     var method: NetworkMethod { get }
     var queryParameters: [String: Any]? { get }
@@ -20,7 +20,7 @@ public protocol NetworkRequestInterface {
     associatedtype SuccessType: Decodable
 }
 
-public extension NetworkRequestInterface {
+public extension RequestInterface {
     var requiresReAuthentication: Bool { return false }
 
     var description: String {
@@ -107,7 +107,7 @@ public extension NetworkRequestInterface {
     }
 }
 
-private extension NetworkRequestInterface {
+private extension RequestInterface {
     func encodeToJSON() -> Data? {
         guard let parameters = queryParameters else {
             return nil
