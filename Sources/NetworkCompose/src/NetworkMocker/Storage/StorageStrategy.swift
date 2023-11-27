@@ -8,6 +8,6 @@
 import Foundation
 
 public enum StorageStrategy {
-    case fileSystem
-    case userDefault
+    case disabled
+    case enabled
 }

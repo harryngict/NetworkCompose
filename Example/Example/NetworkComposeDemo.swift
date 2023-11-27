@@ -1,5 +1,5 @@
 //
-//  ClientDemoNetwork.swift
+//  NetworkComposeDemo.swift
 //  Example
 //
 //  Created by Hoang Nguyen on 18/11/23.
@@ -8,12 +8,12 @@
 import Foundation
 import NetworkCompose
 
-final class ClientDemoNetwork {
+final class NetworkComposeDemo {
     enum Constant {
         static let baseURL: String = "https://jsonplaceholder.typicode.com"
     }
 
-    static let shared = ClientDemoNetwork()
+    static let shared = NetworkComposeDemo()
 
     private let network: NetworkBuilder<URLSession>
 
@@ -56,7 +56,7 @@ final class ClientDemoNetwork {
 
         network
             .setDefaultConfiguration() //  reset all configurations
-            .setStorageStrategy(.fileSystem) // Store reponse for automation testing
+            .setStorageStrategy(.enabled) // Store reponse for automation testing
             .build()
             .request(request) { (result: Result<[Article], NetworkError>) in
                 switch result {
@@ -123,12 +123,18 @@ final class ClientDemoNetwork {
     ) {
         let request = RequestBuilder<[Article]>(path: "/posts", method: .GET)
             .build()
-
+        let metricInterceptor = MetricInterceptor { event in
+            let taskMetric: TaskMetric = event.metric
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = .prettyPrinted
+            encoder.dateEncodingStrategy = .iso8601
+            if let metricReport = try? String(data: encoder.encode(taskMetric), encoding: .utf8) {
+                DispatchQueue.main.async { self.showAlert(event.name, message: "\n\(metricReport)") }
+            }
+        }
         network
             .setDefaultConfiguration() //  reset all configurations
-            .setMetricInterceptor(DefaultMetricInterceptor { event in // setMetricInterceptor to report metric
-                DispatchQueue.main.async { self.showMessageForMetricEvent(event) }
-            })
+            .setMetricTaskReportStrategy(.enabled(metricInterceptor))
             .build()
             .request(request) { (result: Result<[Article], NetworkError>) in
                 switch result {
@@ -167,9 +173,14 @@ final class ClientDemoNetwork {
         let request = RequestBuilder<[Article]>(path: "/posts", method: .GET)
             .build()
 
+        let concurrentQueue = DispatchQueue(label: "com.NetworkCompose.NetworkComposeDemo",
+                                            qos: .userInitiated,
+                                            attributes: .concurrent)
         network
             .setDefaultConfiguration() //  reset all configurations
-            .setMockerStrategy(.localStorage(.fileSystem)) // set datasource for automation tesing
+            .setExecuteQueue(concurrentQueue)
+            .setMockerStrategy(.enabled(.local)) // set datasource for automation tesing
+            .setLoggingStrategy(.enabled)
             .build()
             .request(request) { (result: Result<[Article], NetworkError>) in
                 switch result {
@@ -182,7 +193,7 @@ final class ClientDemoNetwork {
 
 // MARK: ReAuthenticationService
 
-extension ClientDemoNetwork: ReAuthenticationService {
+extension NetworkComposeDemo: ReAuthenticationService {
     public func reAuthen(completion: @escaping (Result<[String: String], NetworkError>) -> Void) {
         // For testing now. In fact, this value should get `newtoken` from the real service
         completion(.success(["jwt_token": "newtoken"]))
@@ -191,7 +202,7 @@ extension ClientDemoNetwork: ReAuthenticationService {
 
 // MARK: NetworkMockerProvider
 
-extension ClientDemoNetwork: EndpointExpectationProvider {
+extension NetworkComposeDemo: EndpointExpectationProvider {
     func getExpectaion(path _: String, method _: NetworkCompose.NetworkMethod) -> NetworkCompose.EndpointExpectation {
         let getPostAPIExpectation = EndpointExpectation(name: "get-posts-api",
                                                         path: "/posts",
@@ -205,19 +216,30 @@ extension ClientDemoNetwork: EndpointExpectationProvider {
 
 // MARK: Helper for demo
 
-private extension ClientDemoNetwork {
-    func showMessageForMetricEvent(_ event: TaskMetricEvent) {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-        encoder.dateEncodingStrategy = .iso8601
-        let metricReport = try? String(data: encoder.encode(event.metric), encoding: .utf8)
-        showAlert(event.name, message: metricReport ?? "")
-    }
-
+private extension NetworkComposeDemo {
     func showAlert(_ eventName: String, message: String) {
         let alertController = UIAlertController(title: "Metric event: \(eventName)", message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
         let topViewController = UIApplication.topViewController()
         topViewController?.present(alertController, animated: true, completion: nil)
     }
+}
+
+struct Article: Codable, Hashable {
+    let id: Int
+    let title: String?
+    let name: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id, title, name
+    }
+}
+
+enum DemoScenario: String {
+    case defaultRequest = "Demo default request"
+    case reAuthentication = "Demo reauthentication request"
+    case enabledSSLPinning = "Demo enabled SSL Pinning request"
+    case networkMetricReport = "Demo collect metric report"
+    case smartRetry = "Demo smart retry request"
+    case supportAutomationTest = "Demo suppport automation testing"
 }

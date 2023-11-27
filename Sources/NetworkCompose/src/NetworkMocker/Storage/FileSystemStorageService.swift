@@ -14,15 +14,24 @@ protocol FileStorage {
     func createDirectory(at url: URL,
                          withIntermediateDirectories createIntermediates: Bool,
                          attributes: [FileAttributeKey: Any]?) throws
+    func contentsOfDirectory(atPath path: String) throws -> [String]
+    func removeItem(atPath path: String) throws
 }
 
 extension FileManager: FileStorage {}
 
 final class FileSystemStorageService: StorageService {
     private let service: FileStorage
+    private let executeQueue: DispatchQueueType
+    private var loggerInterface: LoggerInterface?
 
-    init(service: FileStorage = FileManager.default) {
+    init(service: FileStorage = FileManager.default,
+         loggerInterface: LoggerInterface?,
+         executeQueue: DispatchQueueType)
+    {
         self.service = service
+        self.loggerInterface = loggerInterface
+        self.executeQueue = executeQueue
     }
 
     private lazy var homeURL: URL = {
@@ -53,10 +62,22 @@ final class FileSystemStorageService: StorageService {
         }
     }
 
+    func clearMockDataInDisk() throws {
+        let path = homeURL.path
+        let files = try service.contentsOfDirectory(atPath: path)
+
+        for file in files {
+            let filePath = URL(fileURLWithPath: path).appendingPathComponent(file).path
+            try service.removeItem(atPath: filePath)
+            loggerInterface?.log(.infor, "removed file: \(filePath)")
+        }
+    }
+
     func hasHomeDirectory() throws -> Bool {
         guard service.fileExists(atPath: homeURL.path) == false else {
             return true
         }
+        loggerInterface?.log(.infor, "created folder: \(homeURL.path)")
         try service.createDirectory(at: homeURL, withIntermediateDirectories: true, attributes: nil)
         return true
     }

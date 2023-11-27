@@ -36,7 +36,7 @@ struct DetailView: View {
             }
         }
         .onAppear {
-            ClientDemoNetwork.shared.makeRequest(for: type) { result in
+            NetworkComposeDemo.shared.makeRequest(for: type) { result in
                 switch result {
                 case let .success(receivedUsers):
                     artcles = receivedUsers

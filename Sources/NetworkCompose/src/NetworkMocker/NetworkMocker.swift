@@ -18,11 +18,13 @@ final class NetworkMocker<SessionType: NetworkSession>: NetworkCoordinatorInterf
          reAuthService: ReAuthenticationService?,
          executeQueue: DispatchQueueType,
          observeQueue: DispatchQueueType,
-         mockerStrategy: MockerStrategy)
+         loggerInterface: LoggerInterface?,
+         mockerDataType: MockerStrategy.DataType)
     {
         self.reAuthService = reAuthService
         self.observeQueue = observeQueue
-        mockHanlder = NetworkMockHandler(mockerStrategy,
+        mockHanlder = NetworkMockHandler(mockerDataType,
+                                         loggerInterface: loggerInterface,
                                          executeQueue: executeQueue)
     }
 
@@ -55,7 +57,7 @@ final class NetworkMocker<SessionType: NetworkSession>: NetworkCoordinatorInterf
     }
 }
 
-extension NetworkMocker {
+private extension NetworkMocker {
     func requestMockResponse<RequestType>(
         _ request: RequestType,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void

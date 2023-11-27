@@ -241,7 +241,7 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
     ) where SuccessType: Decodable {
         let configuration = retryPolicy.retryConfiguration(forAttempt: currentRetry)
         if configuration.shouldRetry {
-            loggerInterface?.logInfo(.debug, "NetworkController retry count: \(currentRetry) time: \(configuration.delay)")
+            loggerInterface?.log(.debug, "NetworkController retry count: \(currentRetry) delay: \(configuration.delay)")
             executeQueue.asyncAfter(deadline: .now() + configuration.delay) {
                 performRequest()
             }

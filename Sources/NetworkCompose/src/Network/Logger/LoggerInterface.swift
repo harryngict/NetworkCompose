@@ -7,11 +7,12 @@
 
 import Foundation
 
-public enum LoggingLevel {
+public enum LoggingType {
     case error
     case debug
+    case infor
 }
 
 public protocol LoggerInterface {
-    func logInfo(_ level: LoggingLevel, _ message: String)
+    func log(_ type: LoggingType, _ message: String)
 }

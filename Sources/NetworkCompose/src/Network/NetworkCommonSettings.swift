@@ -16,10 +16,10 @@ public class NetworkCommonSettings<SessionType: NetworkSession> {
     var session: SessionType
 
     /// The SSL pinning policy to enhance security in network communication.
-    var sslPinningPolicy: SSLPinningPolicy?
+    var sslPinningPolicy: SSLPinningPolicy
 
-    /// Interceptor for capturing and measuring network metrics.
-    var metricInterceptor: MetricInterceptor?
+    /// The strategy for reporting metrics related to network tasks.
+    var metricTaskReportStrategy: MetricTaskReportStrategy
 
     /// Interface for monitoring network reachability.
     var networkReachability: NetworkReachabilityInterface
@@ -34,10 +34,10 @@ public class NetworkCommonSettings<SessionType: NetworkSession> {
     var sessionConfigurationProvider: SessionConfigurationProvider
 
     /// The strategy for mocking network events, useful for testing or simulating network behavior.
-    var mockerStrategy: MockerStrategy?
+    var mockerStrategy: MockerStrategy
 
     /// The strategy for handling storable network events, such as caching or persistent storage.
-    var storageStrategy: StorageStrategy?
+    var storageStrategy: StorageStrategy
 
     /// The strategy for logging network events and activities.
     var loggingStrategy: LoggingStrategy
@@ -47,10 +47,10 @@ public class NetworkCommonSettings<SessionType: NetworkSession> {
     {
         self.baseURL = baseURL
         self.session = session
-        sslPinningPolicy = nil
-        metricInterceptor = nil
-        mockerStrategy = nil
-        storageStrategy = nil
+        sslPinningPolicy = .disabled
+        metricTaskReportStrategy = .disabled
+        mockerStrategy = .disabled
+        storageStrategy = .disabled
         executeQueue = DefaultNetworkDispatchQueue.executeQueue
         observeQueue = DefaultNetworkDispatchQueue.observeQueue
         networkReachability = NetworkReachability.shared
@@ -67,20 +67,19 @@ public class NetworkCommonSettings<SessionType: NetworkSession> {
     @discardableResult
     public func setSSLPinningPolicy(_ sslPinningPolicy: SSLPinningPolicy) -> Self {
         self.sslPinningPolicy = sslPinningPolicy
-        if let session = try? createNetworkSession() { self.session = session }
         return self
     }
 
-    /// Sets the metrics collector for network metrics.
+    /// Sets the strategy for reporting metrics related to network tasks.
     ///
-    /// - Parameter metricInterceptor: The metrics collector object for collecting network metrics.
-    /// - Returns: The builder instance for method chaining.
+    /// Use this method to configure the strategy for reporting metrics associated with network tasks.
+    /// The provided `strategy` parameter defines how metrics should be reported.
     ///
-    /// - Throws: A `NetworkError` if the session cannot be created.
+    /// - Parameter strategy: The strategy for reporting metrics related to network tasks.
+    /// - Returns: An instance of the same type to support method chaining.
     @discardableResult
-    public func setMetricInterceptor(_ metricInterceptor: MetricInterceptor) -> Self {
-        self.metricInterceptor = metricInterceptor
-        if let session = try? createNetworkSession() { self.session = session }
+    public func setMetricTaskReportStrategy(_ strategy: MetricTaskReportStrategy) -> Self {
+        metricTaskReportStrategy = strategy
         return self
     }
 
@@ -143,7 +142,6 @@ public class NetworkCommonSettings<SessionType: NetworkSession> {
     @discardableResult
     public func setSessionConfigurationProvider(_ provider: SessionConfigurationProvider) -> Self {
         sessionConfigurationProvider = provider
-        if let session = try? createNetworkSession() { self.session = session }
         return self
     }
 
@@ -154,7 +152,6 @@ public class NetworkCommonSettings<SessionType: NetworkSession> {
     @discardableResult
     public func setLoggingStrategy(_ strategy: LoggingStrategy) -> Self {
         loggingStrategy = strategy
-        if let session = try? createNetworkSession() { self.session = session }
         return self
     }
 
@@ -166,10 +163,10 @@ public class NetworkCommonSettings<SessionType: NetworkSession> {
     /// - Returns: The modified instance of the network builder with the default configuration.
     @discardableResult
     public func setDefaultConfiguration() -> Self {
-        sslPinningPolicy = nil
-        metricInterceptor = nil
-        mockerStrategy = nil
-        storageStrategy = nil
+        sslPinningPolicy = .disabled
+        metricTaskReportStrategy = .disabled
+        mockerStrategy = .disabled
+        storageStrategy = .disabled
         executeQueue = DefaultNetworkDispatchQueue.executeQueue
         observeQueue = DefaultNetworkDispatchQueue.observeQueue
         networkReachability = NetworkReachability.shared
@@ -179,12 +176,13 @@ public class NetworkCommonSettings<SessionType: NetworkSession> {
         return self
     }
 
-    /// Creates a logger instance based on the specified logging strategy.
+    /// Creates a logger based on the configured logging strategy.
     ///
-    /// - Parameter strategy: The logging strategy to determine the type of logger to create.
-    /// - Returns: A logger instance conforming to `LoggerInterface` or `nil` if logging is disabled.
-    func createLogger(from strategy: LoggingStrategy) -> LoggerInterface? {
-        switch strategy {
+    /// - Returns: A `LoggerInterface` instance based on the logging strategy.
+    ///            Returns `nil` if logging is disabled, the shared default logger
+    ///            if logging is enabled, or a custom logger if provided.
+    func createLogger() -> LoggerInterface? {
+        switch loggingStrategy {
         case .disabled:
             return nil
         case .enabled:
@@ -193,20 +191,18 @@ public class NetworkCommonSettings<SessionType: NetworkSession> {
             return logger
         }
     }
-}
 
-private extension NetworkCommonSettings {
-    /// Creates a network session based on the specified configurations.
+    /// Creates and returns a network session conforming to `SessionType`.
     ///
-    /// - Note: If SSL pinning policy, metric interceptor, logging strategy, or session configuration provider changes,
-    ///   call this function to create a new session with the updated configurations.
+    /// This method initializes a URLSession with the provided configuration and a custom delegate (`SessionProxyDelegate`).
+    /// The delegate is responsible for handling SSL pinning, metric task reporting, and logging.
     ///
-    /// - Throws: A `NetworkError` if an invalid session is encountered during the creation process.
-    /// - Returns: A session conforming to `SessionType`.
+    /// - Throws: A `NetworkError` if the session cannot be created or if there is an issue with SSL pinning.
+    /// - Returns: An instance conforming to `SessionType`.
     func createNetworkSession() throws -> SessionType {
         let delegate = SessionProxyDelegate(sslPinningPolicy: sslPinningPolicy,
-                                            metricInterceptor: metricInterceptor,
-                                            loggerInterface: createLogger(from: loggingStrategy))
+                                            metricTaskReportStrategy: metricTaskReportStrategy,
+                                            loggerInterface: createLogger())
 
         guard let session = URLSession(configuration: sessionConfigurationProvider.sessionConfig,
                                        delegate: delegate,

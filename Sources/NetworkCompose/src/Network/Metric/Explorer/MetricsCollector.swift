@@ -10,7 +10,7 @@ import Foundation
 final class MetricsCollector: MetricsCollectorInterface {
     private let metricsExplorer: MetricsExplorer
 
-    init(metricInterceptor: MetricInterceptor) {
+    init(metricInterceptor: MetricInterceptorInterface) {
         metricsExplorer = MetricsExplorer(metricInterceptor: metricInterceptor)
     }
 

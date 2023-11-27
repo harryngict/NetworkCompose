@@ -144,10 +144,10 @@ final class NetworkCoordinator<SessionType: NetworkSession>: NetworkCoordinatorI
     ) where RequestType: RequestInterface {
         switch logCase {
         case .startRequest:
-            loggerInterface?.logInfo(.debug, request.debugDescription)
+            loggerInterface?.log(.debug, request.debugDescription)
         case .requestAutheticationExpired:
             loggerInterface?
-                .logInfo(.debug, "Token is expred for request: \(request.debugDescription), Authenticaiton action is triggered")
+                .log(.debug, "Token is expred for request: \(request.debugDescription), Authenticaiton action is triggered")
         }
     }
 }

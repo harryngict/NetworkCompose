@@ -63,11 +63,11 @@ final class SSLPinningProcessor: SSLPinningProcessorInterface {
         let hash = serverKey.addRSAHeader()
 
         if let sslPinning = sslPinnings.first(where: { $0.host == protectionSpace.host }), sslPinning.hashKeys.contains(hash) {
-            loggerInterface?.logInfo(.debug, "SSLPinningProcessor trust: \(protectionSpace.host)")
+            loggerInterface?.log(.debug, "SSLPinningProcessor trust: \(protectionSpace.host)")
             return AuthChallengeDecision(authChallengeDisposition: .useCredential,
                                          urlCredential: URLCredential(trust: serverTrust))
         } else {
-            loggerInterface?.logInfo(.error, "SSLPinningProcessor doest not trust: \(protectionSpace.host)")
+            loggerInterface?.log(.error, "SSLPinningProcessor doest not trust: \(protectionSpace.host)")
             return AuthChallengeDecision(authChallengeDisposition: .cancelAuthenticationChallenge,
                                          urlCredential: nil)
         }

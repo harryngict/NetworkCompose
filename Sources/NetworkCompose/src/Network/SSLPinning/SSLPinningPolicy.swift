@@ -8,11 +8,6 @@
 import Foundation
 
 public enum SSLPinningPolicy {
+    case disabled
     case trust([SSLPinningInterface])
-
-    var sslPinnings: [SSLPinningInterface] {
-        switch self {
-        case let .trust(pinnings): return pinnings
-        }
-    }
 }

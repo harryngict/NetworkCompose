@@ -16,7 +16,6 @@ NetworkCompose simplifies and enhances network-related tasks by providing a flex
 
 - **Automation Support:**
   - **Mocking with FileSystem:** Simulate network responses effortlessly during automated testing by mocking responses from a local file system.
-  - **Mocking with UserDefaults:** Streamline your automated testing with the ability to mock network responses stored in UserDefaults.
   - **Customized Automation with Expectations:** Tailor your automated testing by customizing network response mocking with specific expectations.
 
 ## II. Testability
@@ -67,10 +66,7 @@ let request = RequestBuilder<[ArticleResponse]>(path: "/posts", method: .GET)
     .build()
 
 network.request(request) { result in
-    switch result {
-    case let .success(articles): print("Received articles: \(articles)")
-    case let .failure(error): print("Error: \(error)")
-    }
+    // Handle the result
 }
 ```
 ### 4.3. Re-authentication
@@ -79,11 +75,10 @@ let request = RequestBuilder<ArticleResponse>(path: "/secure-endpoint", method: 
     .setRequiresReAuthentication(true)
     .build()
 
-network
-    .setReAuthService(yourReAuthService)
-    .request(request) { result in
-        // Handle the result
-    }
+network.setReAuthService(yourReAuthService)
+       .request(request) { result in
+           // Handle the result
+        }
 ```
 ### 4.4. SSL Pinning
 ```swift
@@ -93,25 +88,23 @@ let sslPinningHosts = [SSLPinning(host: "your-api-host.com",
 let request = RequestBuilder<ArticleResponse>(path: "/secure-endpoint", method: .GET)
     .build()
 
-try network
-    .setSSLPinningPolicy(.trust(sslPinningHosts))
-    .request(request) { result in
-        // Handle the result
-    }
+network.setSSLPinningPolicy(.trust(sslPinningHosts))
+       .request(request) { result in
+           // Handle the result
+        }
 ```
 
 ### 4.5. Network Metrics Reporting
 ```swift
-let request = RequestBuilder<[ArticleResponse]>(path: "/posts", method: .GET)
-    .build()
+let metricInterceptor = MetricInterceptor { event in
+    // report metric task event here
+}
 
-try? network
-    .setMetricInterceptor(DefaultMetricInterceptor { event in
-        // Handle the metric event
-    })
-    .request(request) { result in
-        // Handle the result
-    }
+network.setMetricTaskReportStrategy(.enabled(metricInterceptor))
+       .build()
+       .request(request) { (result: Result<[Article], NetworkError>) in
+            // Handle the result
+        }
 
 ```
 ### 4.6. Smart Retry Mechanism
@@ -122,10 +115,9 @@ let request = RequestBuilder<ArticleResponse>(path: "/posts", method: .GET)
 // Exponential retry policy
 let retryPolicy: RetryPolicy = .exponentialRetry(count: 4, initialDelay: 1, multiplier: 3.0, maxDelay: 30.0)
 
-network
-    .request(request, retryPolicy: retryPolicy) { result in
-        // Handle the result
-    }
+network.request(request, retryPolicy: retryPolicy) { result in
+   // Handle the result
+}
 ```
 
 ### 4.7. Automation Support
@@ -133,12 +125,17 @@ network
 let request = RequestBuilder<ArticleResponse>(path: "/posts", method: .GET)
     .build()
 
-network
-    .setMockerStrategy(yourMockerStrategy)
-    .request(request) { result in
-        // Handle the result
-    }
+network.setMockerStrategy(yourMockerStrategy)
+       .request(request) { result in
+           // Handle the result
+       }
 ```
+We also prodive `clearMockDataInDisk`. That is a handy utility for developers and testers. It quickly clears any stored mock data on disk, providing an efficient way to refresh or reset the library's mocked data during development and testing.
+
+```swift
+network.clearMockDataInDisk()
+```
+
 ### 4.8. Set default configuration
 The `func setDefaultConfiguration` is available to reset all configurations for `NetworkCompose`
 
@@ -147,7 +144,7 @@ network.setDefaultConfiguration()
 ```
 Thats it!! `NetworkCompose` is successfully integrated and initialized in the project, and ready to use. 
 
-For more detail please go to [Example project](https://github.com/harryngict/NetworkCompose/blob/develop/Example/Example/ClientDemoNetwork.swift).
+For more detail please go to [Example project](https://github.com/harryngict/NetworkCompose/blob/develop/Example/Example/NetworkComposeDemo.swift).
 
 ## V. Support
 Feel free to utilize [JSONPlaceholder](https://jsonplaceholder.typicode.com/guide/) for testing API in `NetworkCompose` examples. If you encounter any issues with `NetworkCompose` or need assistance with

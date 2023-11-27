@@ -53,10 +53,37 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkCommonSettings<
         return self
     }
 
+    /// Clears mock data in the disk storage.
+    ///
+    /// This method is used to remove any mock data stored in the disk storage. It creates a `StorageServiceProvider`
+    /// with the provided logger and executes the operation asynchronously on the specified queue.
+    ///
+    /// - Returns: An instance of the same type to support method chaining.
+    @discardableResult
+    public func clearMockDataInDisk() -> Self {
+        let provider = StorageServiceProvider(loggerInterface: createLogger(),
+                                              executeQueue: executeQueue)
+        try? provider.clearMockDataInDisk()
+        return self
+    }
+
+    /// Builds and returns an instance conforming to `NetworkCoordinatorInterface` based on the configured strategies.
+    ///
+    /// This method creates either a `NetworkCoordinator` or a `NetworkMocker` based on the specified strategies.
+    ///
+    /// - Returns: An instance conforming to `NetworkCoordinatorInterface`.
     public func build() -> NetworkCoordinatorInterface {
-        guard let mockerStrategy = mockerStrategy else {
+        guard case let .enabled(mockerDataType) = mockerStrategy else {
             var storageService: StorageService?
-            if let storageStrategy { storageService = StorageServiceProvider(storageStrategy) }
+
+            if case .enabled = storageStrategy {
+                storageService = StorageServiceProvider(loggerInterface: createLogger(),
+                                                        executeQueue: executeQueue)
+            }
+            if let session = try? createNetworkSession() {
+                self.session = session
+            }
+
             return NetworkCoordinator(
                 baseURL: baseURL,
                 session: session,
@@ -66,7 +93,7 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkCommonSettings<
                 executeQueue: executeQueue,
                 observeQueue: observeQueue,
                 storageService: storageService,
-                loggerInterface: createLogger(from: loggingStrategy)
+                loggerInterface: createLogger()
             )
         }
 
@@ -76,7 +103,8 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkCommonSettings<
             reAuthService: reAuthService,
             executeQueue: executeQueue,
             observeQueue: observeQueue,
-            mockerStrategy: mockerStrategy
+            loggerInterface: createLogger(),
+            mockerDataType: mockerDataType
         )
     }
 }

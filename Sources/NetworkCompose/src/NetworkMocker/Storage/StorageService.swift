@@ -17,4 +17,6 @@ protocol StorageService: AnyObject {
     func getResponse<RequestType>(
         _ request: RequestType
     ) throws -> RequestType.SuccessType where RequestType: RequestInterface
+
+    func clearMockDataInDisk() throws
 }
