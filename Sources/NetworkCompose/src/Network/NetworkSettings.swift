@@ -15,6 +15,7 @@ public class NetworkSettings<SessionType: NetworkSession> {
     var networkReachability: NetworkReachability = NetworkReachabilityImp.shared
     var executeQueue: DispatchQueueType = DefaultNetworkDispatchQueue.executeQueue
     var observeQueue: DispatchQueueType = DefaultNetworkDispatchQueue.observeQueue
+    var sessionConfigurationProvider: SessionConfigurationProvider = DefaultSessionConfigurationProvider.normal
     /// The strategy for mocking network events.
     var mockerStrategy: MockerStrategy?
     /// The strategy for handling storable network events.
@@ -32,6 +33,7 @@ public class NetworkSettings<SessionType: NetworkSession> {
     /// - Returns: The builder instance for method chaining.
     ///
     /// - Throws: A `NetworkError` if the session cannot be created.
+    @discardableResult
     public func setSSLPinningPolicy(_ sslPinningPolicy: SSLPinningPolicy) throws -> Self {
         self.sslPinningPolicy = sslPinningPolicy
         session = try createNetworkSession()
@@ -44,6 +46,7 @@ public class NetworkSettings<SessionType: NetworkSession> {
     /// - Returns: The builder instance for method chaining.
     ///
     /// - Throws: A `NetworkError` if the session cannot be created.
+    @discardableResult
     public func setMetricInterceptor(_ metricInterceptor: MetricInterceptor) throws -> Self {
         self.metricInterceptor = metricInterceptor
         session = try createNetworkSession()
@@ -54,6 +57,7 @@ public class NetworkSettings<SessionType: NetworkSession> {
     ///
     /// - Parameter reachability: The custom network reachability object.
     /// - Returns: The builder instance for method chaining.
+    @discardableResult
     public func setNetworkReachability(_ reachability: NetworkReachability) -> Self {
         networkReachability = reachability
         return self
@@ -63,6 +67,7 @@ public class NetworkSettings<SessionType: NetworkSession> {
     ///
     /// - Parameter executeQueue: The custom dispatch queue for executing network requests.
     /// - Returns: The builder instance for method chaining.
+    @discardableResult
     public func setExecuteQueue(_ executeQueue: DispatchQueueType) -> Self {
         self.executeQueue = executeQueue
         return self
@@ -72,6 +77,7 @@ public class NetworkSettings<SessionType: NetworkSession> {
     ///
     /// - Parameter observeQueue: The custom dispatch queue for observing and handling network events.
     /// - Returns: The builder instance for method chaining.
+    @discardableResult
     public func setObserveQueue(_ observeQueue: DispatchQueueType) -> Self {
         self.observeQueue = observeQueue
         return self
@@ -81,6 +87,7 @@ public class NetworkSettings<SessionType: NetworkSession> {
     ///
     /// - Parameter strategy: The mocker strategy to be set.
     /// - Returns: The modified object with the updated mocker strategy.
+    @discardableResult
     public func setMockerStrategy(_ strategy: MockerStrategy) -> Self {
         mockerStrategy = strategy
         return self
@@ -90,8 +97,21 @@ public class NetworkSettings<SessionType: NetworkSession> {
     ///
     /// - Parameter strategy: The Storable strategy to be set.
     /// - Returns: The builder instance for method chaining.
+    @discardableResult
     public func setStorageStrategy(_ strategy: StorageStrategy) -> Self {
         storageStrategy = strategy
+        return self
+    }
+
+    /// Sets the session configuration provider for the network.
+    ///
+    /// Use this method to provide a custom `SessionConfigurationProvider` to configure the network session.
+    ///
+    /// - Parameter provider: The session configuration provider.
+    /// - Returns: An instance of the network with the updated session configuration provider.
+    @discardableResult
+    public func setSessionConfigurationProvider(_ provider: SessionConfigurationProvider) -> Self {
+        sessionConfigurationProvider = provider
         return self
     }
 
@@ -101,6 +121,7 @@ public class NetworkSettings<SessionType: NetworkSession> {
     /// and sets default values for execution and observation queues, and network reachability.
     ///
     /// - Returns: The modified instance of the network builder with the default configuration.
+    @discardableResult
     public func setDefaultConfiguration() -> Self {
         sslPinningPolicy = nil
         metricInterceptor = nil
@@ -109,6 +130,7 @@ public class NetworkSettings<SessionType: NetworkSession> {
         executeQueue = DefaultNetworkDispatchQueue.executeQueue
         observeQueue = DefaultNetworkDispatchQueue.observeQueue
         networkReachability = NetworkReachabilityImp.shared
+        sessionConfigurationProvider = DefaultSessionConfigurationProvider.normal
         if let session = try? createNetworkSession() {
             self.session = session
         }
@@ -126,7 +148,7 @@ private extension NetworkSettings {
             let delegate = SessionProxyDelegate(sslPinningPolicy: sslPinningPolicy,
                                                 metricInterceptor: metricInterceptor)
 
-            guard let session = URLSession(configuration: SessionConfiguration.default,
+            guard let session = URLSession(configuration: sessionConfigurationProvider.sessionConfig,
                                            delegate: delegate,
                                            delegateQueue: nil) as? SessionType
             else {
