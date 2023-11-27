@@ -30,7 +30,7 @@ NetworkCompose simplifies and enhances network-related tasks by providing a flex
 To integrate NetworkCompose into your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ```ruby
-pod 'NetworkCompose', '~> 0.0.5'
+pod 'NetworkCompose', '~> 0.0.7'
 ```
 
 then run:
@@ -41,7 +41,7 @@ pod install
 To integrate NetworkCompose using Swift Package Manager, add the following to your Package.swift file:
 ```swift
 dependencies: [
-    .package(url: "https://github.com/harryngict/NetworkCompose.git", from: "0.0.5")
+    .package(url: "https://github.com/harryngict/NetworkCompose.git", from: "0.0.7")
 ],
 targets: [
     .target(
@@ -63,7 +63,7 @@ let network = NetworkBuilder(baseURL: baseURL)
 ```
 ### 4.2. Making a Request
 ```swift
-let request = NetworkRequest<[ArticleResponse]>(path: "/posts", method: .GET)
+let request = RequestBuilder<[ArticleResponse]>(path: "/posts", method: .GET)
     .build()
 
 network.request(request) { result in
@@ -75,7 +75,7 @@ network.request(request) { result in
 ```
 ### 4.3. Re-authentication
 ```swift
-let request = NetworkRequest<ArticleResponse>(path: "/secure-endpoint", method: .GET)
+let request = RequestBuilder<ArticleResponse>(path: "/secure-endpoint", method: .GET)
     .setRequiresReAuthentication(true)
     .build()
 
@@ -90,7 +90,7 @@ network
 let sslPinningHosts = [SSLPinning(host: "your-api-host.com",
                                   hashKeys: ["your-public-key-hash"])]
 
-let request = NetworkRequest<ArticleResponse>(path: "/secure-endpoint", method: .GET)
+let request = RequestBuilder<ArticleResponse>(path: "/secure-endpoint", method: .GET)
     .build()
 
 try network
@@ -102,7 +102,7 @@ try network
 
 ### 4.5. Network Metrics Reporting
 ```swift
-let request = NetworkRequest<[ArticleResponse]>(path: "/posts", method: .GET)
+let request = RequestBuilder<[ArticleResponse]>(path: "/posts", method: .GET)
     .build()
 
 try? network
@@ -116,7 +116,7 @@ try? network
 ```
 ### 4.6. Smart Retry Mechanism
 ```swift
-let request = NetworkRequest<ArticleResponse>(path: "/posts", method: .GET)
+let request = RequestBuilder<ArticleResponse>(path: "/posts", method: .GET)
     .build()
 
 // Exponential retry policy
@@ -130,7 +130,7 @@ network
 
 ### 4.7. Automation Support
 ```swift
-let request = NetworkRequest<ArticleResponse>(path: "/posts", method: .GET)
+let request = RequestBuilder<ArticleResponse>(path: "/posts", method: .GET)
     .build()
 
 network

@@ -7,9 +7,9 @@
 
 import Foundation
 
-public class NetworkBuilder<SessionType: NetworkSession>: NetworkSettings<SessionType> {
+public class NetworkBuilder<SessionType: NetworkSession>: NetworkCommonSettings<SessionType> {
     private var reAuthService: ReAuthenticationService?
-    private var operationQueue: OperationQueueManager = DefaultOperationQueueManager.serialOperationQueue
+    private var operationQueue: OperationQueueManagerInterface = DefaultOperationQueueManager.serialOperationQueue
 
     public required init(baseURL: URL,
                          session: SessionType = URLSession.shared)
@@ -33,7 +33,7 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkSettings<Sessio
     /// - Parameter operationQueue: The queue run re-authentication operation
     /// - Returns: The builder instance for method chaining.
     @discardableResult
-    public func setOperationQueue(_ operationQueue: OperationQueueManager) -> Self {
+    public func setOperationQueue(_ operationQueue: OperationQueueManagerInterface) -> Self {
         self.operationQueue = operationQueue
         return self
     }
@@ -65,11 +65,12 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkSettings<Sessio
                 networkReachability: networkReachability,
                 executeQueue: executeQueue,
                 observeQueue: observeQueue,
-                storageService: storageService
+                storageService: storageService,
+                loggerInterface: createLogger(from: loggingStrategy)
             )
         }
 
-        return NetworkMockerCoordinator(
+        return NetworkMocker(
             baseURL: baseURL,
             session: session,
             reAuthService: reAuthService,

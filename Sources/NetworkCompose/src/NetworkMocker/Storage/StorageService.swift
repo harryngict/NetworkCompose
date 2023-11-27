@@ -12,9 +12,9 @@ protocol StorageService: AnyObject {
         _ request: RequestType,
         data: Data,
         model: RequestType.SuccessType
-    ) throws where RequestType: NetworkRequestInterface
+    ) throws where RequestType: RequestInterface
 
     func getResponse<RequestType>(
         _ request: RequestType
-    ) throws -> RequestType.SuccessType where RequestType: NetworkRequestInterface
+    ) throws -> RequestType.SuccessType where RequestType: RequestInterface
 }

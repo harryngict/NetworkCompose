@@ -13,7 +13,7 @@ extension URLSession: NetworkSession {
         _ request: RequestType,
         withBaseURL baseURL: URL,
         andHeaders headers: [String: String]
-    ) throws -> URLRequest where RequestType: NetworkRequestInterface {
+    ) throws -> URLRequest where RequestType: RequestInterface {
         guard var components = URLComponents(url: baseURL.appendingPathComponent(request.path),
                                              resolvingAgainstBaseURL: false)
         else {
@@ -37,7 +37,7 @@ extension URLSession: NetworkSession {
 
     public func beginRequest(
         _ request: URLRequest,
-        completion: @escaping ((Result<NetworkResponse, NetworkError>) -> Void)
+        completion: @escaping ((Result<ResponseInterface, NetworkError>) -> Void)
     ) -> NetworkTask {
         let task = dataTask(with: request) { data, response, error in
             self.handleResponse(data: data, response: response, error: error, completion: completion)
@@ -49,7 +49,7 @@ extension URLSession: NetworkSession {
     public func beginUploadTask(
         _ request: inout URLRequest,
         fromFile: URL,
-        completion: @escaping ((Result<NetworkResponse, NetworkError>) -> Void)
+        completion: @escaping ((Result<ResponseInterface, NetworkError>) -> Void)
     ) throws -> NetworkTask {
         var bodyStreamRequest = request
         bodyStreamRequest.httpBodyStream = createHttpBodyStream(fromFileURL: fromFile)
@@ -62,7 +62,7 @@ extension URLSession: NetworkSession {
 
     public func beginDownloadTask(
         _ request: URLRequest,
-        completion: @escaping ((Result<NetworkResponse, NetworkError>) -> Void)
+        completion: @escaping ((Result<ResponseInterface, NetworkError>) -> Void)
     ) -> NetworkTask {
         let task = downloadTask(with: request) { tempURL, response, error in
             self.handleDownloadResponse(tempURL: tempURL, response: response, error: error, completion: completion)
@@ -80,7 +80,7 @@ private extension URLSession {
         data: Data?,
         response: URLResponse?,
         error: Error?,
-        completion: @escaping (Result<NetworkResponse, NetworkError>) -> Void
+        completion: @escaping (Result<ResponseInterface, NetworkError>) -> Void
     ) {
         if let error = error {
             completion(.failure(NetworkError.error(nil, error.localizedDescription)))
@@ -90,16 +90,14 @@ private extension URLSession {
             completion(.failure(NetworkError.invalidResponse))
             return
         }
-
-        let networkResponse = NetworkResponseImp(statusCode: httpResponse.statusCode, data: data)
-        completion(.success(networkResponse))
+        completion(.success(Response(statusCode: httpResponse.statusCode, data: data)))
     }
 
     func handleDownloadResponse(
         tempURL: URL?,
         response: URLResponse?,
         error: Error?,
-        completion: @escaping (Result<NetworkResponse, NetworkError>) -> Void
+        completion: @escaping (Result<ResponseInterface, NetworkError>) -> Void
     ) {
         if let error = error {
             completion(.failure(NetworkError.error(nil, error.localizedDescription)))
@@ -111,8 +109,7 @@ private extension URLSession {
         }
 
         if let tempURL = tempURL, let urlData = try? Data(contentsOf: tempURL) {
-            let response = NetworkResponseImp(statusCode: 200, data: urlData)
-            completion(.success(response))
+            completion(.success(Response(statusCode: 200, data: urlData)))
         } else {
             completion(.failure(NetworkError.downloadResponseTempURLNil))
         }

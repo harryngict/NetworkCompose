@@ -1,5 +1,5 @@
 //
-//  NetworkSettings.swift
+//  NetworkCommonSettings.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 24/11/23.
@@ -7,24 +7,55 @@
 
 import Foundation
 
-public class NetworkSettings<SessionType: NetworkSession> {
+/// Configuration settings for network operations using a specified network session type.
+public class NetworkCommonSettings<SessionType: NetworkSession> {
+    /// The base URL for the network requests.
     var baseURL: URL
+
+    /// The session used for network communication conforming to the specified session type.
     var session: SessionType
+
+    /// The SSL pinning policy to enhance security in network communication.
     var sslPinningPolicy: SSLPinningPolicy?
+
+    /// Interceptor for capturing and measuring network metrics.
     var metricInterceptor: MetricInterceptor?
-    var networkReachability: NetworkReachability = NetworkReachabilityImp.shared
-    var executeQueue: DispatchQueueType = DefaultNetworkDispatchQueue.executeQueue
-    var observeQueue: DispatchQueueType = DefaultNetworkDispatchQueue.observeQueue
-    var sessionConfigurationProvider: SessionConfigurationProvider = DefaultSessionConfigurationProvider.normal
-    /// The strategy for mocking network events.
+
+    /// Interface for monitoring network reachability.
+    var networkReachability: NetworkReachabilityInterface
+
+    /// The queue on which network operations are executed.
+    var executeQueue: DispatchQueueType
+
+    /// The queue on which network events are observed.
+    var observeQueue: DispatchQueueType
+
+    /// Provider for session configurations, allowing customization of network sessions.
+    var sessionConfigurationProvider: SessionConfigurationProvider
+
+    /// The strategy for mocking network events, useful for testing or simulating network behavior.
     var mockerStrategy: MockerStrategy?
-    /// The strategy for handling storable network events.
+
+    /// The strategy for handling storable network events, such as caching or persistent storage.
     var storageStrategy: StorageStrategy?
+
+    /// The strategy for logging network events and activities.
+    var loggingStrategy: LoggingStrategy
+
     public required init(baseURL: URL,
                          session: SessionType)
     {
         self.baseURL = baseURL
         self.session = session
+        sslPinningPolicy = nil
+        metricInterceptor = nil
+        mockerStrategy = nil
+        storageStrategy = nil
+        executeQueue = DefaultNetworkDispatchQueue.executeQueue
+        observeQueue = DefaultNetworkDispatchQueue.observeQueue
+        networkReachability = NetworkReachability.shared
+        sessionConfigurationProvider = DefaultSessionConfigurationProvider.normal
+        loggingStrategy = .disabled
     }
 
     /// Sets the security trust for SSL pinning.
@@ -34,9 +65,9 @@ public class NetworkSettings<SessionType: NetworkSession> {
     ///
     /// - Throws: A `NetworkError` if the session cannot be created.
     @discardableResult
-    public func setSSLPinningPolicy(_ sslPinningPolicy: SSLPinningPolicy) throws -> Self {
+    public func setSSLPinningPolicy(_ sslPinningPolicy: SSLPinningPolicy) -> Self {
         self.sslPinningPolicy = sslPinningPolicy
-        session = try createNetworkSession()
+        if let session = try? createNetworkSession() { self.session = session }
         return self
     }
 
@@ -47,9 +78,9 @@ public class NetworkSettings<SessionType: NetworkSession> {
     ///
     /// - Throws: A `NetworkError` if the session cannot be created.
     @discardableResult
-    public func setMetricInterceptor(_ metricInterceptor: MetricInterceptor) throws -> Self {
+    public func setMetricInterceptor(_ metricInterceptor: MetricInterceptor) -> Self {
         self.metricInterceptor = metricInterceptor
-        session = try createNetworkSession()
+        if let session = try? createNetworkSession() { self.session = session }
         return self
     }
 
@@ -58,7 +89,7 @@ public class NetworkSettings<SessionType: NetworkSession> {
     /// - Parameter reachability: The custom network reachability object.
     /// - Returns: The builder instance for method chaining.
     @discardableResult
-    public func setNetworkReachability(_ reachability: NetworkReachability) -> Self {
+    public func setNetworkReachability(_ reachability: NetworkReachabilityInterface) -> Self {
         networkReachability = reachability
         return self
     }
@@ -112,6 +143,18 @@ public class NetworkSettings<SessionType: NetworkSession> {
     @discardableResult
     public func setSessionConfigurationProvider(_ provider: SessionConfigurationProvider) -> Self {
         sessionConfigurationProvider = provider
+        if let session = try? createNetworkSession() { self.session = session }
+        return self
+    }
+
+    /// Sets the logging strategy for the logger.
+    ///
+    /// - Parameter strategy: The logging strategy to set.
+    /// - Returns: The logger instance with the updated logging strategy.
+    @discardableResult
+    public func setLoggingStrategy(_ strategy: LoggingStrategy) -> Self {
+        loggingStrategy = strategy
+        if let session = try? createNetworkSession() { self.session = session }
         return self
     }
 
@@ -129,35 +172,48 @@ public class NetworkSettings<SessionType: NetworkSession> {
         storageStrategy = nil
         executeQueue = DefaultNetworkDispatchQueue.executeQueue
         observeQueue = DefaultNetworkDispatchQueue.observeQueue
-        networkReachability = NetworkReachabilityImp.shared
+        networkReachability = NetworkReachability.shared
         sessionConfigurationProvider = DefaultSessionConfigurationProvider.normal
-        if let session = try? createNetworkSession() {
-            self.session = session
-        }
+        loggingStrategy = .disabled
+        if let session = try? createNetworkSession() { self.session = session }
         return self
+    }
+
+    /// Creates a logger instance based on the specified logging strategy.
+    ///
+    /// - Parameter strategy: The logging strategy to determine the type of logger to create.
+    /// - Returns: A logger instance conforming to `LoggerInterface` or `nil` if logging is disabled.
+    func createLogger(from strategy: LoggingStrategy) -> LoggerInterface? {
+        switch strategy {
+        case .disabled:
+            return nil
+        case .enabled:
+            return DefaultLogger.shared
+        case let .custom(logger):
+            return logger
+        }
     }
 }
 
-private extension NetworkSettings {
-    /// Creates a network session based on the current SSL pinning policy and metric interceptor.
+private extension NetworkCommonSettings {
+    /// Creates a network session based on the specified configurations.
     ///
-    /// - Returns: A network session instance.
-    /// - Throws: A `NetworkError` if the session cannot be created.
+    /// - Note: If SSL pinning policy, metric interceptor, logging strategy, or session configuration provider changes,
+    ///   call this function to create a new session with the updated configurations.
+    ///
+    /// - Throws: A `NetworkError` if an invalid session is encountered during the creation process.
+    /// - Returns: A session conforming to `SessionType`.
     func createNetworkSession() throws -> SessionType {
-        do {
-            let delegate = SessionProxyDelegate(sslPinningPolicy: sslPinningPolicy,
-                                                metricInterceptor: metricInterceptor)
+        let delegate = SessionProxyDelegate(sslPinningPolicy: sslPinningPolicy,
+                                            metricInterceptor: metricInterceptor,
+                                            loggerInterface: createLogger(from: loggingStrategy))
 
-            guard let session = URLSession(configuration: sessionConfigurationProvider.sessionConfig,
-                                           delegate: delegate,
-                                           delegateQueue: nil) as? SessionType
-            else {
-                throw NetworkError.invalidSession
-            }
-
-            return session
-        } catch {
+        guard let session = URLSession(configuration: sessionConfigurationProvider.sessionConfig,
+                                       delegate: delegate,
+                                       delegateQueue: nil) as? SessionType
+        else {
             throw NetworkError.invalidSession
         }
+        return session
     }
 }

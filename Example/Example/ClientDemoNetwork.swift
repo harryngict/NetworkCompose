@@ -50,7 +50,7 @@ final class ClientDemoNetwork {
     private func performCompletionRequest(
         completion: @escaping (Result<[Article], NetworkError>) -> Void
     ) {
-        let request = NetworkRequest<[Article]>(path: "/posts", method: .GET)
+        let request = RequestBuilder<[Article]>(path: "/posts", method: .GET)
             .setQueryParameters(["postId": "1"])
             .build()
 
@@ -69,18 +69,23 @@ final class ClientDemoNetwork {
     private func performReAuthentication(
         completion: @escaping (Result<[Article], NetworkError>) -> Void
     ) {
-        let request = NetworkRequest<Article>(path: "/posts", method: .POST)
+        let request = RequestBuilder<Article>(path: "/posts", method: .POST)
             .setQueryParameters(["title": "foo",
                                  "body": "bar",
                                  "userId": 1])
             .setRequiresReAuthentication(true)
             .build()
 
+        let retryPolicy: RetryPolicy = .exponentialRetry(count: 4,
+                                                         initialDelay: 1,
+                                                         multiplier: 3.0,
+                                                         maxDelay: 30.0)
         network
             .setDefaultConfiguration() //  reset all configurations
             .setReAuthService(self) // setReAuthService to enable re authentication
+            .setLoggingStrategy(.enabled)
             .build()
-            .request(request) { (result: Result<Article, NetworkError>) in
+            .request(request, retryPolicy: retryPolicy) { (result: Result<Article, NetworkError>) in
                 switch result {
                 case let .failure(error): completion(.failure(error))
                 case let .success(user): completion(.success([user]))
@@ -91,38 +96,35 @@ final class ClientDemoNetwork {
     private func performRequestWithEnabledSSLPinning(
         completion: @escaping (Result<[Article], NetworkError>) -> Void
     ) {
-        do {
-            let sslPinningHosts = [SSLPinning(host: "jsonplaceholder.typicode.com",
-                                              hashKeys: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])]
+        let sslPinningHosts = [SSLPinning(host: "jsonplaceholder.typicode.com",
+                                          hashKeys: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])]
 
-            let request = NetworkRequest<Article>(path: "/posts/1", method: .PUT)
-                .setQueryParameters(["title": "foo",
-                                     "body": "bar",
-                                     "userId": 1])
-                .build()
+        let request = RequestBuilder<Article>(path: "/posts/1", method: .PUT)
+            .setQueryParameters(["title": "foo",
+                                 "body": "bar",
+                                 "userId": 1])
+            .build()
 
-            try network
-                .setDefaultConfiguration() //  reset all configurations
-                .setSSLPinningPolicy(.trust(sslPinningHosts)) // setSSLPinningPolicy to enable SSLPinning
-                .build()
-                .request(request) { (result: Result<Article, NetworkError>) in
-                    switch result {
-                    case let .failure(error): completion(.failure(error))
-                    case let .success(user): completion(.success([user]))
-                    }
+        network
+            .setDefaultConfiguration() //  reset all configurations
+            .setSSLPinningPolicy(.trust(sslPinningHosts)) // setSSLPinningPolicy to enable SSLPinning
+            .setLoggingStrategy(.enabled)
+            .build()
+            .request(request) { (result: Result<Article, NetworkError>) in
+                switch result {
+                case let .failure(error): completion(.failure(error))
+                case let .success(user): completion(.success([user]))
                 }
-        } catch {
-            completion(.failure(NetworkError.error(nil, error.localizedDescription)))
-        }
+            }
     }
 
     private func performCollectNetworkMetric(
         completion: @escaping (Result<[Article], NetworkError>) -> Void
     ) {
-        let request = NetworkRequest<[Article]>(path: "/posts", method: .GET)
+        let request = RequestBuilder<[Article]>(path: "/posts", method: .GET)
             .build()
 
-        try? network
+        network
             .setDefaultConfiguration() //  reset all configurations
             .setMetricInterceptor(DefaultMetricInterceptor { event in // setMetricInterceptor to report metric
                 DispatchQueue.main.async { self.showMessageForMetricEvent(event) }
@@ -139,17 +141,17 @@ final class ClientDemoNetwork {
     private func performRequestWithSmartRetry(
         completion: @escaping (Result<[Article], NetworkError>) -> Void
     ) {
-        let request = NetworkRequest<Article>(path: "/posts/1/retry", method: .PUT)
+        let request = RequestBuilder<Article>(path: "/posts/1/retry", method: .PUT)
             .setQueryParameters(["title": "foo"])
             .build()
 
-        // exponential retry
         let retryPolicy: RetryPolicy = .exponentialRetry(count: 4,
                                                          initialDelay: 1,
                                                          multiplier: 3.0,
                                                          maxDelay: 30.0)
         network
             .setDefaultConfiguration() //  reset all configurations
+            .setLoggingStrategy(.enabled)
             .build()
             .request(request, retryPolicy: retryPolicy) { (result: Result<Article, NetworkError>) in
                 switch result {
@@ -162,7 +164,7 @@ final class ClientDemoNetwork {
     private func performRequestDemoAutomation(
         completion: @escaping (Result<[Article], NetworkError>) -> Void
     ) {
-        let request = NetworkRequest<[Article]>(path: "/posts", method: .GET)
+        let request = RequestBuilder<[Article]>(path: "/posts", method: .GET)
             .build()
 
         network

@@ -26,7 +26,7 @@ final class UserDefaultStorageService: StorageService {
         _ request: RequestType,
         data: Data,
         model _: RequestType.SuccessType
-    ) throws where RequestType: NetworkRequestInterface {
+    ) throws where RequestType: RequestInterface {
         let key = UniqueKeyPath(path: request.path,
                                 method: request.method.rawValue).key
         service.set(data, forKey: key)
@@ -35,7 +35,7 @@ final class UserDefaultStorageService: StorageService {
 
     func getResponse<RequestType>(
         _ request: RequestType
-    ) throws -> RequestType.SuccessType where RequestType: NetworkRequestInterface {
+    ) throws -> RequestType.SuccessType where RequestType: RequestInterface {
         let key = UniqueKeyPath(path: request.path,
                                 method: request.method.rawValue).key
         if let data = service.object(forKey: key) as? Data {

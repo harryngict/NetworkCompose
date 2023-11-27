@@ -35,14 +35,14 @@ final class FileSystemStorageService: StorageService {
         _ request: RequestType,
         data: Data,
         model _: RequestType.SuccessType
-    ) throws where RequestType: NetworkRequestInterface {
+    ) throws where RequestType: RequestInterface {
         let path = UniqueKeyPath(path: request.path, method: request.method.rawValue).key
         try storeDataToFile(data, forPath: path)
     }
 
     func getResponse<RequestType>(
         _ request: RequestType
-    ) throws -> RequestType.SuccessType where RequestType: NetworkRequestInterface {
+    ) throws -> RequestType.SuccessType where RequestType: RequestInterface {
         let path = UniqueKeyPath(path: request.path, method: request.method.rawValue).key
         let data = try getDataFromFile(atPath: path)
         do {

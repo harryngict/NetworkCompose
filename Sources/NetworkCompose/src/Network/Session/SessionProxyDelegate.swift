@@ -8,8 +8,8 @@
 import Foundation
 
 final class SessionProxyDelegate: NSObject, URLSessionTaskDelegate, URLSessionDataDelegate {
-    private var metricsCollector: MetricsCollector?
-    private var sslPinningProcessor: SSLPinningProcessor?
+    private var metricsCollector: MetricsCollectorInterface?
+    private var sslPinningProcessor: SSLPinningProcessorInterface?
 
     /// Initializes the `NetworkSessionProxyDelegate` with optional metrics collector and security trust.
     ///
@@ -18,14 +18,16 @@ final class SessionProxyDelegate: NSObject, URLSessionTaskDelegate, URLSessionDa
     ///   - metricInterceptor: An optional `MetricInterceptor` for collecting network metrics.
     /// - Returns: A new instance of `NetworkSessionProxyDelegate`.
     init(sslPinningPolicy: SSLPinningPolicy?,
-         metricInterceptor: MetricInterceptor?)
+         metricInterceptor: MetricInterceptor?,
+         loggerInterface: LoggerInterface?)
     {
         if let sslPinningPolicy = sslPinningPolicy {
-            sslPinningProcessor = SSLPinningProcessorImp(sslPinningPolicy: sslPinningPolicy)
+            sslPinningProcessor = SSLPinningProcessor(sslPinningPolicy: sslPinningPolicy,
+                                                      loggerInterface: loggerInterface)
         }
 
         if let metricInterceptor = metricInterceptor {
-            metricsCollector = MetricsCollectorImp(metricInterceptor: metricInterceptor)
+            metricsCollector = MetricsCollector(metricInterceptor: metricInterceptor)
         }
     }
 
