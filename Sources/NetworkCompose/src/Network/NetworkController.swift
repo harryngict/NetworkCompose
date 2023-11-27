@@ -10,7 +10,7 @@ import Foundation
 final class NetworkController<SessionType: NetworkSession>: NetworkControllerInterface {
     private let session: SessionType
     private let baseURL: URL
-    public let networkReachability: NetworkReachability
+    public let networkReachability: NetworkReachabilityInterface
     private let executeQueue: DispatchQueueType
     private let observeQueue: DispatchQueueType
     private var storageService: StorageService?
@@ -26,7 +26,7 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
     ///   - storageService: An optional storage service for handling persistent data.
     init(baseURL: URL,
          session: SessionType,
-         networkReachability: NetworkReachability,
+         networkReachability: NetworkReachabilityInterface,
          executeQueue: DispatchQueueType,
          observeQueue: DispatchQueueType,
          storageService: StorageService?)
@@ -45,7 +45,7 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
         andHeaders headers: [String: String] = [:],
         retryPolicy: RetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
-    ) where RequestType: NetworkRequestInterface {
+    ) where RequestType: RequestInterface {
         guard networkReachability.isInternetAvailable else {
             observeQueue.async {
                 completion(.failure(NetworkError.lostInternetConnection))
@@ -91,7 +91,7 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
         fromFile fileURL: URL,
         retryPolicy: RetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
-    ) where RequestType: NetworkRequestInterface {
+    ) where RequestType: RequestInterface {
         guard networkReachability.isInternetAvailable else {
             observeQueue.async {
                 completion(.failure(NetworkError.lostInternetConnection))
@@ -137,7 +137,7 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
         andHeaders headers: [String: String] = [:],
         retryPolicy: RetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
-    ) where RequestType: NetworkRequestInterface {
+    ) where RequestType: RequestInterface {
         guard networkReachability.isInternetAvailable else {
             observeQueue.async {
                 completion(.failure(NetworkError.lostInternetConnection))
@@ -178,17 +178,17 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
         }
     }
 
-    private func buildNetworkRequest<RequestType: NetworkRequestInterface>(
+    private func buildNetworkRequest<RequestType>(
         for request: RequestType,
         andHeaders headers: [String: String]
-    ) throws -> SessionType.NetworkRequestType {
+    ) throws -> SessionType.NetworkRequestType where RequestType: RequestInterface {
         return try session.build(request, withBaseURL: baseURL, andHeaders: headers)
     }
 
-    private func handleSuccessResponse<RequestType: NetworkRequestInterface>(
-        _ response: NetworkResponse,
+    private func handleSuccessResponse<RequestType>(
+        _ response: ResponseInterface,
         for request: RequestType
-    ) throws -> RequestType.SuccessType {
+    ) throws -> RequestType.SuccessType where RequestType: RequestInterface {
         guard (200 ... 299).contains(response.statusCode) else {
             throw NetworkError.error(response.statusCode, nil)
         }
@@ -204,10 +204,10 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
     }
 
     private func handleResult<RequestType>(
-        _ result: Result<NetworkResponse, NetworkError>,
+        _ result: Result<ResponseInterface, NetworkError>,
         for request: RequestType,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
-    ) where RequestType: NetworkRequestInterface {
+    ) where RequestType: RequestInterface {
         switch result {
         case let .success(response):
             do {

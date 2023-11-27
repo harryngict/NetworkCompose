@@ -17,7 +17,7 @@ public protocol NetworkSession: AnyObject {
     ///   - baseURL: The base URL for the request.
     ///   - headers: Additional headers to be included in the request.
     /// - Returns: The built network request.
-    func build<RequestType: NetworkRequestInterface>(
+    func build<RequestType: RequestInterface>(
         _ request: RequestType,
         withBaseURL baseURL: URL,
         andHeaders headers: [String: String]
@@ -31,7 +31,7 @@ public protocol NetworkSession: AnyObject {
     @discardableResult
     func beginRequest(
         _ request: NetworkRequestType,
-        completion: @escaping ((Result<NetworkResponse, NetworkError>) -> Void)
+        completion: @escaping ((Result<ResponseInterface, NetworkError>) -> Void)
     ) -> NetworkTask
 
     /// Uploads a file using a network request and executes the completion handler with the result.
@@ -47,7 +47,7 @@ public protocol NetworkSession: AnyObject {
     func beginUploadTask(
         _ request: inout NetworkRequestType,
         fromFile: URL,
-        completion: @escaping ((Result<NetworkResponse, NetworkError>) -> Void)
+        completion: @escaping ((Result<ResponseInterface, NetworkError>) -> Void)
     ) throws -> NetworkTask
 
     /// Downloads a file using a network request and executes the completion handler with the result.
@@ -58,6 +58,6 @@ public protocol NetworkSession: AnyObject {
     @discardableResult
     func beginDownloadTask(
         _ request: NetworkRequestType,
-        completion: @escaping ((Result<NetworkResponse, NetworkError>) -> Void)
+        completion: @escaping ((Result<ResponseInterface, NetworkError>) -> Void)
     ) -> NetworkTask
 }

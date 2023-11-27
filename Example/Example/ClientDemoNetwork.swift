@@ -50,7 +50,7 @@ final class ClientDemoNetwork {
     private func performCompletionRequest(
         completion: @escaping (Result<[Article], NetworkError>) -> Void
     ) {
-        let request = NetworkRequest<[Article]>(path: "/posts", method: .GET)
+        let request = RequestBuilder<[Article]>(path: "/posts", method: .GET)
             .setQueryParameters(["postId": "1"])
             .build()
 
@@ -69,7 +69,7 @@ final class ClientDemoNetwork {
     private func performReAuthentication(
         completion: @escaping (Result<[Article], NetworkError>) -> Void
     ) {
-        let request = NetworkRequest<Article>(path: "/posts", method: .POST)
+        let request = RequestBuilder<Article>(path: "/posts", method: .POST)
             .setQueryParameters(["title": "foo",
                                  "body": "bar",
                                  "userId": 1])
@@ -95,7 +95,7 @@ final class ClientDemoNetwork {
             let sslPinningHosts = [SSLPinning(host: "jsonplaceholder.typicode.com",
                                               hashKeys: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])]
 
-            let request = NetworkRequest<Article>(path: "/posts/1", method: .PUT)
+            let request = RequestBuilder<Article>(path: "/posts/1", method: .PUT)
                 .setQueryParameters(["title": "foo",
                                      "body": "bar",
                                      "userId": 1])
@@ -119,7 +119,7 @@ final class ClientDemoNetwork {
     private func performCollectNetworkMetric(
         completion: @escaping (Result<[Article], NetworkError>) -> Void
     ) {
-        let request = NetworkRequest<[Article]>(path: "/posts", method: .GET)
+        let request = RequestBuilder<[Article]>(path: "/posts", method: .GET)
             .build()
 
         try? network
@@ -139,7 +139,7 @@ final class ClientDemoNetwork {
     private func performRequestWithSmartRetry(
         completion: @escaping (Result<[Article], NetworkError>) -> Void
     ) {
-        let request = NetworkRequest<Article>(path: "/posts/1/retry", method: .PUT)
+        let request = RequestBuilder<Article>(path: "/posts/1/retry", method: .PUT)
             .setQueryParameters(["title": "foo"])
             .build()
 
@@ -162,7 +162,7 @@ final class ClientDemoNetwork {
     private func performRequestDemoAutomation(
         completion: @escaping (Result<[Article], NetworkError>) -> Void
     ) {
-        let request = NetworkRequest<[Article]>(path: "/posts", method: .GET)
+        let request = RequestBuilder<[Article]>(path: "/posts", method: .GET)
             .build()
 
         network

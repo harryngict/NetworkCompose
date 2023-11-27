@@ -9,7 +9,7 @@ import Foundation
 
 public class NetworkBuilder<SessionType: NetworkSession>: NetworkSettings<SessionType> {
     private var reAuthService: ReAuthenticationService?
-    private var operationQueue: OperationQueueManager = DefaultOperationQueueManager.serialOperationQueue
+    private var operationQueue: OperationQueueManagerInterface = DefaultOperationQueueManager.serialOperationQueue
 
     public required init(baseURL: URL,
                          session: SessionType = URLSession.shared)
@@ -33,7 +33,7 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkSettings<Sessio
     /// - Parameter operationQueue: The queue run re-authentication operation
     /// - Returns: The builder instance for method chaining.
     @discardableResult
-    public func setOperationQueue(_ operationQueue: OperationQueueManager) -> Self {
+    public func setOperationQueue(_ operationQueue: OperationQueueManagerInterface) -> Self {
         self.operationQueue = operationQueue
         return self
     }

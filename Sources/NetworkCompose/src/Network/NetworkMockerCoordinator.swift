@@ -31,7 +31,7 @@ final class NetworkMockerCoordinator<SessionType: NetworkSession>: NetworkCoordi
         andHeaders _: [String: String] = [:],
         retryPolicy _: RetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
-    ) where RequestType: NetworkRequestInterface {
+    ) where RequestType: RequestInterface {
         requestMockResponse(request, completion: completion)
     }
 
@@ -41,16 +41,16 @@ final class NetworkMockerCoordinator<SessionType: NetworkSession>: NetworkCoordi
         fromFile _: URL,
         retryPolicy _: RetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
-    ) where RequestType: NetworkRequestInterface {
+    ) where RequestType: RequestInterface {
         requestMockResponse(request, completion: completion)
     }
 
-    func download<RequestType: NetworkRequestInterface>(
+    func download<RequestType>(
         _ request: RequestType,
         andHeaders _: [String: String] = [:],
         retryPolicy _: RetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
-    ) {
+    ) where RequestType: RequestInterface {
         requestMockResponse(request, completion: completion)
     }
 }
@@ -59,7 +59,7 @@ extension NetworkMockerCoordinator {
     func requestMockResponse<RequestType>(
         _ request: RequestType,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
-    ) where RequestType: NetworkRequestInterface {
+    ) where RequestType: RequestInterface {
         do {
             let result = try mockHanlder.getRequestResponse(request)
             observeQueue.async {

@@ -12,7 +12,7 @@ public class NetworkSettings<SessionType: NetworkSession> {
     var session: SessionType
     var sslPinningPolicy: SSLPinningPolicy?
     var metricInterceptor: MetricInterceptor?
-    var networkReachability: NetworkReachability = NetworkReachabilityImp.shared
+    var networkReachability: NetworkReachabilityInterface = NetworkReachability.shared
     var executeQueue: DispatchQueueType = DefaultNetworkDispatchQueue.executeQueue
     var observeQueue: DispatchQueueType = DefaultNetworkDispatchQueue.observeQueue
     var sessionConfigurationProvider: SessionConfigurationProvider = DefaultSessionConfigurationProvider.normal
@@ -58,7 +58,7 @@ public class NetworkSettings<SessionType: NetworkSession> {
     /// - Parameter reachability: The custom network reachability object.
     /// - Returns: The builder instance for method chaining.
     @discardableResult
-    public func setNetworkReachability(_ reachability: NetworkReachability) -> Self {
+    public func setNetworkReachability(_ reachability: NetworkReachabilityInterface) -> Self {
         networkReachability = reachability
         return self
     }
@@ -129,7 +129,7 @@ public class NetworkSettings<SessionType: NetworkSession> {
         storageStrategy = nil
         executeQueue = DefaultNetworkDispatchQueue.executeQueue
         observeQueue = DefaultNetworkDispatchQueue.observeQueue
-        networkReachability = NetworkReachabilityImp.shared
+        networkReachability = NetworkReachability.shared
         sessionConfigurationProvider = DefaultSessionConfigurationProvider.normal
         if let session = try? createNetworkSession() {
             self.session = session
