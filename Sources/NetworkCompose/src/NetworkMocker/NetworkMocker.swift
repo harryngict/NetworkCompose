@@ -10,22 +10,22 @@ import Foundation
 final class NetworkMocker<SessionType: NetworkSession>: NetworkCoordinatorInterface {
     var reAuthService: ReAuthenticationService?
 
-    private let observeQueue: DispatchQueueType
+    private let observationQueue: DispatchQueueType
     private let mockHanlder: NetworkMockHandler
 
     init(baseURL _: URL,
          session _: SessionType = URLSession.shared,
          reAuthService: ReAuthenticationService?,
-         executeQueue: DispatchQueueType,
-         observeQueue: DispatchQueueType,
+         executionQueue: DispatchQueueType,
+         observationQueue: DispatchQueueType,
          loggerInterface: LoggerInterface?,
-         mockerDataType: MockerStrategy.DataType)
+         mockDataType: AutomationMode.DataType)
     {
         self.reAuthService = reAuthService
-        self.observeQueue = observeQueue
-        mockHanlder = NetworkMockHandler(mockerDataType,
+        self.observationQueue = observationQueue
+        mockHanlder = NetworkMockHandler(mockDataType,
                                          loggerInterface: loggerInterface,
-                                         executeQueue: executeQueue)
+                                         executionQueue: executionQueue)
     }
 
     func request<RequestType>(
@@ -64,11 +64,11 @@ private extension NetworkMocker {
     ) where RequestType: RequestInterface {
         do {
             let result = try mockHanlder.getRequestResponse(request)
-            observeQueue.async {
+            observationQueue.async {
                 completion(.success(result))
             }
         } catch {
-            observeQueue.async {
+            observationQueue.async {
                 let networkError = NetworkError.error(nil, error.localizedDescription)
                 completion(.failure(networkError))
             }

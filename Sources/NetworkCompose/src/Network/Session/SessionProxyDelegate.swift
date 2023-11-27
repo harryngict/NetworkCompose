@@ -22,13 +22,13 @@ final class SessionProxyDelegate: NSObject, URLSessionTaskDelegate, URLSessionDa
     ///   - metricTaskReportStrategy: The strategy for reporting metrics related to network tasks.
     ///   - loggerInterface: An optional logger interface for custom logging. Pass `nil` to disable logging.
     init(sslPinningPolicy: SSLPinningPolicy,
-         metricTaskReportStrategy: MetricTaskReportStrategy,
+         reportMetricStrategy: ReportMetricStrategy,
          loggerInterface: LoggerInterface?)
     {
         sslPinningProcessor = SSLPinningProcessor(sslPinningPolicy: sslPinningPolicy,
                                                   loggerInterface: loggerInterface)
 
-        if case let .enabled(metricInterceptor) = metricTaskReportStrategy {
+        if case let .enabled(metricInterceptor) = reportMetricStrategy {
             metricsCollector = MetricsCollector(metricInterceptor: metricInterceptor)
         }
     }

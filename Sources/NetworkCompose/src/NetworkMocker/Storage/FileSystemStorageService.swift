@@ -22,16 +22,16 @@ extension FileManager: FileStorage {}
 
 final class FileSystemStorageService: StorageService {
     private let service: FileStorage
-    private let executeQueue: DispatchQueueType
+    private let executionQueue: DispatchQueueType
     private var loggerInterface: LoggerInterface?
 
     init(service: FileStorage = FileManager.default,
          loggerInterface: LoggerInterface?,
-         executeQueue: DispatchQueueType)
+         executionQueue: DispatchQueueType)
     {
         self.service = service
         self.loggerInterface = loggerInterface
-        self.executeQueue = executeQueue
+        self.executionQueue = executionQueue
     }
 
     private lazy var homeURL: URL = {

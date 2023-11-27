@@ -29,7 +29,7 @@ NetworkCompose simplifies and enhances network-related tasks by providing a flex
 To integrate NetworkCompose into your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ```ruby
-pod 'NetworkCompose', '~> 0.0.7'
+pod 'NetworkCompose', '~> 0.0.8'
 ```
 
 then run:
@@ -40,7 +40,7 @@ pod install
 To integrate NetworkCompose using Swift Package Manager, add the following to your Package.swift file:
 ```swift
 dependencies: [
-    .package(url: "https://github.com/harryngict/NetworkCompose.git", from: "0.0.7")
+    .package(url: "https://github.com/harryngict/NetworkCompose.git", from: "0.0.8")
 ],
 targets: [
     .target(
@@ -66,16 +66,16 @@ let request = RequestBuilder<[ArticleResponse]>(path: "/posts", method: .GET)
     .build()
 
 network.request(request) { result in
-    // Handle the result
-}
+          // Handle the result
+      }
 ```
 ### 4.3. Re-authentication
 ```swift
 let request = RequestBuilder<ArticleResponse>(path: "/secure-endpoint", method: .GET)
-    .setRequiresReAuthentication(true)
+    .requiresReAuthentication(true)
     .build()
 
-network.setReAuthService(yourReAuthService)
+network.reAuthenService(yourReAuthService)
        .request(request) { result in
            // Handle the result
         }
@@ -88,7 +88,7 @@ let sslPinningHosts = [SSLPinning(host: "your-api-host.com",
 let request = RequestBuilder<ArticleResponse>(path: "/secure-endpoint", method: .GET)
     .build()
 
-network.setSSLPinningPolicy(.trust(sslPinningHosts))
+network.sslPinningPolicy(.trust(sslPinningHosts))
        .request(request) { result in
            // Handle the result
         }
@@ -100,8 +100,7 @@ let metricInterceptor = MetricInterceptor { event in
     // report metric task event here
 }
 
-network.setMetricTaskReportStrategy(.enabled(metricInterceptor))
-       .build()
+network.reportMetric(.enabled(metricInterceptor))
        .request(request) { (result: Result<[Article], NetworkError>) in
             // Handle the result
         }
@@ -116,7 +115,7 @@ let request = RequestBuilder<ArticleResponse>(path: "/posts", method: .GET)
 let retryPolicy: RetryPolicy = .exponentialRetry(count: 4, initialDelay: 1, multiplier: 3.0, maxDelay: 30.0)
 
 network.request(request, retryPolicy: retryPolicy) { result in
-   // Handle the result
+    // Handle the result
 }
 ```
 
@@ -125,7 +124,7 @@ network.request(request, retryPolicy: retryPolicy) { result in
 let request = RequestBuilder<ArticleResponse>(path: "/posts", method: .GET)
     .build()
 
-network.setMockerStrategy(yourMockerStrategy)
+network.automationMode(yourAutomationMode)
        .request(request) { result in
            // Handle the result
        }
@@ -137,10 +136,10 @@ network.clearMockDataInDisk()
 ```
 
 ### 4.8. Set default configuration
-The `func setDefaultConfiguration` is available to reset all configurations for `NetworkCompose`
+The `func applyDefaultConfiguration` is available to reset all configurations for `NetworkCompose`
 
 ```swift
-network.setDefaultConfiguration()
+network.applyDefaultConfiguration()
 ```
 Thats it!! `NetworkCompose` is successfully integrated and initialized in the project, and ready to use. 
 

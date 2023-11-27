@@ -51,13 +51,12 @@ final class NetworkComposeDemo {
         completion: @escaping (Result<[Article], NetworkError>) -> Void
     ) {
         let request = RequestBuilder<[Article]>(path: "/posts", method: .GET)
-            .setQueryParameters(["postId": "1"])
+            .queryParameters(["postId": "1"])
             .build()
 
         network
-            .setDefaultConfiguration() //  reset all configurations
-            .setStorageStrategy(.enabled) // Store reponse for automation testing
-            .build()
+            .applyDefaultConfiguration() //  reset all configurations
+            .recordResponseForTesting(.enabled) // Store reponse for automation testing
             .request(request) { (result: Result<[Article], NetworkError>) in
                 switch result {
                 case let .failure(error): completion(.failure(error))
@@ -70,10 +69,10 @@ final class NetworkComposeDemo {
         completion: @escaping (Result<[Article], NetworkError>) -> Void
     ) {
         let request = RequestBuilder<Article>(path: "/posts", method: .POST)
-            .setQueryParameters(["title": "foo",
-                                 "body": "bar",
-                                 "userId": 1])
-            .setRequiresReAuthentication(true)
+            .queryParameters(["title": "foo",
+                              "body": "bar",
+                              "userId": 1])
+            .requiresReAuthentication(true)
             .build()
 
         let retryPolicy: RetryPolicy = .exponentialRetry(count: 4,
@@ -81,10 +80,9 @@ final class NetworkComposeDemo {
                                                          multiplier: 3.0,
                                                          maxDelay: 30.0)
         network
-            .setDefaultConfiguration() //  reset all configurations
-            .setReAuthService(self) // setReAuthService to enable re authentication
-            .setLoggingStrategy(.enabled)
-            .build()
+            .applyDefaultConfiguration() //  reset all configurations
+            .reAuthenService(self) // reAuthenService to enable re authentication
+            .log(.enabled)
             .request(request, retryPolicy: retryPolicy) { (result: Result<Article, NetworkError>) in
                 switch result {
                 case let .failure(error): completion(.failure(error))
@@ -100,16 +98,15 @@ final class NetworkComposeDemo {
                                           hashKeys: ["JCmeBpzLgXemYfoqqEoVJlU/givddwcfIXpwyaBk52I="])]
 
         let request = RequestBuilder<Article>(path: "/posts/1", method: .PUT)
-            .setQueryParameters(["title": "foo",
-                                 "body": "bar",
-                                 "userId": 1])
+            .queryParameters(["title": "foo",
+                              "body": "bar",
+                              "userId": 1])
             .build()
 
         network
-            .setDefaultConfiguration() //  reset all configurations
-            .setSSLPinningPolicy(.trust(sslPinningHosts)) // setSSLPinningPolicy to enable SSLPinning
-            .setLoggingStrategy(.enabled)
-            .build()
+            .applyDefaultConfiguration() //  reset all configurations
+            .sslPinningPolicy(.trust(sslPinningHosts)) // setSSLPinningPolicy to enable SSLPinning
+            .log(.enabled)
             .request(request) { (result: Result<Article, NetworkError>) in
                 switch result {
                 case let .failure(error): completion(.failure(error))
@@ -133,9 +130,8 @@ final class NetworkComposeDemo {
             }
         }
         network
-            .setDefaultConfiguration() //  reset all configurations
-            .setMetricTaskReportStrategy(.enabled(metricInterceptor))
-            .build()
+            .applyDefaultConfiguration() //  reset all configurations
+            .reportMetric(.enabled(metricInterceptor))
             .request(request) { (result: Result<[Article], NetworkError>) in
                 switch result {
                 case let .failure(error): completion(.failure(error))
@@ -148,7 +144,7 @@ final class NetworkComposeDemo {
         completion: @escaping (Result<[Article], NetworkError>) -> Void
     ) {
         let request = RequestBuilder<Article>(path: "/posts/1/retry", method: .PUT)
-            .setQueryParameters(["title": "foo"])
+            .queryParameters(["title": "foo"])
             .build()
 
         let retryPolicy: RetryPolicy = .exponentialRetry(count: 4,
@@ -156,9 +152,8 @@ final class NetworkComposeDemo {
                                                          multiplier: 3.0,
                                                          maxDelay: 30.0)
         network
-            .setDefaultConfiguration() //  reset all configurations
-            .setLoggingStrategy(.enabled)
-            .build()
+            .applyDefaultConfiguration() //  reset all configurations
+            .log(.enabled)
             .request(request, retryPolicy: retryPolicy) { (result: Result<Article, NetworkError>) in
                 switch result {
                 case let .failure(error): completion(.failure(error))
@@ -177,11 +172,11 @@ final class NetworkComposeDemo {
                                             qos: .userInitiated,
                                             attributes: .concurrent)
         network
-            .setDefaultConfiguration() //  reset all configurations
-            .setExecuteQueue(concurrentQueue)
-            .setMockerStrategy(.enabled(.local)) // set datasource for automation tesing
-            .setLoggingStrategy(.enabled)
-            .build()
+            .applyDefaultConfiguration() //  reset all configurations
+            .execute(on: concurrentQueue)
+            .observe(on: concurrentQueue)
+            .automationMode(.enabled(.local)) // set datasource for automation tesing
+            .log(.enabled)
             .request(request) { (result: Result<[Article], NetworkError>) in
                 switch result {
                 case let .failure(error): completion(.failure(error))

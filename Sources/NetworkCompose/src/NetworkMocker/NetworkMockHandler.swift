@@ -8,15 +8,16 @@
 import Foundation
 
 final class NetworkMockHandler {
-    private let dataType: MockerStrategy.DataType
-    private let executeQueue: DispatchQueueType
+    private let dataType: AutomationMode.DataType
+    private let executionQueue: DispatchQueueType
     private var loggerInterface: LoggerInterface?
-    init(_ dataType: MockerStrategy.DataType,
+
+    init(_ dataType: AutomationMode.DataType,
          loggerInterface _: LoggerInterface?,
-         executeQueue: DispatchQueueType)
+         executionQueue: DispatchQueueType)
     {
         self.dataType = dataType
-        self.executeQueue = executeQueue
+        self.executionQueue = executionQueue
     }
 
     func getRequestResponse<RequestType>(
@@ -46,12 +47,12 @@ final class NetworkMockHandler {
         return try clientExpection.getResponse(request)
     }
 
-    private func getStorageService(_ dataType: MockerStrategy.DataType) -> StorageService? {
+    private func getStorageService(_ dataType: AutomationMode.DataType) -> StorageService? {
         var storageService: StorageService?
         switch dataType {
         case .local:
             storageService = StorageServiceProvider(loggerInterface: loggerInterface,
-                                                    executeQueue: executeQueue)
+                                                    executionQueue: executionQueue)
         default: break
         }
         return storageService
