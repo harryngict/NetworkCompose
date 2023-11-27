@@ -1,0 +1,4 @@
+module NetworkCompose {
+    header "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/NetworkCompose-Swift.h"
+    requires objc
+}

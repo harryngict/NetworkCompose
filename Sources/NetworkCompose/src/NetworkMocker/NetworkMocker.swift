@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class NetworkMocker<SessionType: NetworkSession>: NetworkCoordinatorInterface {
+final class NetworkMocker<SessionType: NetworkSession>: NetworkRouterInterface {
     var reAuthService: ReAuthenticationService?
 
     private let observationQueue: DispatchQueueType

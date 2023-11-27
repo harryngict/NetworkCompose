@@ -1,7 +1,12 @@
 # NetworkCompose
 
 NetworkCompose simplifies and enhances network-related tasks by providing a flexible and intuitive composition of network components. Reduce development effort and make your networking layer easy to maintain with seamless integration, SSL pinning, mocking, metric reporting, and smart retry mechanisms. It supports dynamic automation, making it a powerful tool for managing network operations in your Swift applications.
- 
+
+Here is the NetworkCompose archicture:
+
+![NetworkCompose-Architecure](/Documents/NetworkCompose-Architecture.png)
+
+
 ## I. Features
 
 - **Simple Request API:** Make network requests effortlessly using a straightforward and intuitive API.
@@ -17,6 +22,9 @@ NetworkCompose simplifies and enhances network-related tasks by providing a flex
 - **Automation Support:**
   - **Mocking with FileSystem:** Simulate network responses effortlessly during automated testing by mocking responses from a local file system.
   - **Customized Automation with Expectations:** Tailor your automated testing by customizing network response mocking with specific expectations.
+
+- **Multiple Calls with Priority:** Execute multiple network calls with priority for efficient handling. The calls will prioritize based on users' rules and creation dates. This feature is particularly useful when dealing with scenarios where certain network requests need to take precedence over others.
+
 
 ## II. Testability
 
@@ -55,99 +63,16 @@ swift package update
 ```
 
 ## IV. Usage
-### 4.1. Initialization
-```swift
-let baseURL = URL(string: "https://your-api-base-url.com")!
-let network = NetworkBuilder(baseURL: baseURL)
-```
-### 4.2. Making a Request
-```swift
-let request = RequestBuilder<[ArticleResponse]>(path: "/posts", method: .GET)
-    .build()
+Will update soon
 
-network.request(request) { result in
-          // Handle the result
-      }
-```
-### 4.3. Re-authentication
-```swift
-let request = RequestBuilder<ArticleResponse>(path: "/secure-endpoint", method: .GET)
-    .requiresReAuthentication(true)
-    .build()
 
-network.reAuthenService(yourReAuthService)
-       .request(request) { result in
-           // Handle the result
-        }
-```
-### 4.4. SSL Pinning
-```swift
-let sslPinningHosts = [SSLPinning(host: "your-api-host.com",
-                                  hashKeys: ["your-public-key-hash"])]
-
-let request = RequestBuilder<ArticleResponse>(path: "/secure-endpoint", method: .GET)
-    .build()
-
-network.sslPinningPolicy(.trust(sslPinningHosts))
-       .request(request) { result in
-           // Handle the result
-        }
-```
-
-### 4.5. Network Metrics Reporting
-```swift
-let metricInterceptor = MetricInterceptor { event in
-    // report metric task event here
-}
-
-network.reportMetric(.enabled(metricInterceptor))
-       .request(request) { (result: Result<[Article], NetworkError>) in
-            // Handle the result
-        }
-
-```
-### 4.6. Smart Retry Mechanism
-```swift
-let request = RequestBuilder<ArticleResponse>(path: "/posts", method: .GET)
-    .build()
-
-// Exponential retry policy
-let retryPolicy: RetryPolicy = .exponentialRetry(count: 4, initialDelay: 1, multiplier: 3.0, maxDelay: 30.0)
-
-network.request(request, retryPolicy: retryPolicy) { result in
-    // Handle the result
-}
-```
-
-### 4.7. Automation Support
-```swift
-let request = RequestBuilder<ArticleResponse>(path: "/posts", method: .GET)
-    .build()
-
-network.automationMode(yourAutomationMode)
-       .request(request) { result in
-           // Handle the result
-       }
-```
-We also prodive `clearMockDataInDisk`. That is a handy utility for developers and testers. It quickly clears any stored mock data on disk, providing an efficient way to refresh or reset the library's mocked data during development and testing.
-
-```swift
-network.clearMockDataInDisk()
-```
-
-### 4.8. Set default configuration
-The `func applyDefaultConfiguration` is available to reset all configurations for `NetworkCompose`
-
-```swift
-network.applyDefaultConfiguration()
-```
 Thats it!! `NetworkCompose` is successfully integrated and initialized in the project, and ready to use. 
 
-For more detail please go to [Example project](https://github.com/harryngict/NetworkCompose/blob/develop/Example/Example/NetworkComposeDemo.swift).
+For more detail please go to [Single request](/Example/Example/SingleRequest.swift) and [Multiple request with priority](/Example/Example/MultiplePriorityRequest.swift)
 
 ## V. Support
 Feel free to utilize [JSONPlaceholder](https://jsonplaceholder.typicode.com/guide/) for testing API in `NetworkCompose` examples. If you encounter any issues with `NetworkCompose` or need assistance with
 integration, please reach out to me at harryngict@gmail.com. I'm here to support you.
 
 ## VI. License
-NetworkCompose is available under the MIT license. See the [LICENSE](https://github.com/harryngict/NetworkCompose/blob/master/LICENSE) file for more information.
+NetworkCompose is available under the MIT license. See the [LICENSE](/LICENSE) file for more information.

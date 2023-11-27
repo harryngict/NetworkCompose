@@ -34,8 +34,10 @@ final class NetworkMockHandler {
             return try storageService.getResponse(request)
         }
     }
+}
 
-    private func handleCustomProvider<RequestType>(
+private extension NetworkMockHandler {
+    func handleCustomProvider<RequestType>(
         _ provider: EndpointExpectationProvider,
         request: RequestType
     ) throws -> RequestType.SuccessType where RequestType: RequestInterface {
@@ -47,7 +49,7 @@ final class NetworkMockHandler {
         return try clientExpection.getResponse(request)
     }
 
-    private func getStorageService(_ dataType: AutomationMode.DataType) -> StorageService? {
+    func getStorageService(_ dataType: AutomationMode.DataType) -> StorageService? {
         var storageService: StorageService?
         switch dataType {
         case .local:

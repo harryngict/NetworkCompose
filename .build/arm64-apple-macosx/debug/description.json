@@ -1,0 +1,1042 @@
+{
+  "builtTestProducts" : [
+    {
+      "binaryPath" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkComposePackageTests.xctest/Contents/MacOS/NetworkComposePackageTests",
+      "productName" : "NetworkComposePackageTests"
+    }
+  ],
+  "copyCommands" : {
+
+  },
+  "explicitTargetDependencyImportCheckingMode" : {
+    "none" : {
+
+    }
+  },
+  "generatedSourceTargetSet" : [
+
+  ],
+  "pluginDescriptions" : [
+
+  ],
+  "swiftCommands" : {
+    "C.NetworkCompose-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "importPath" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Logger/DefaultLogger.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Logger/LogStrategy.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Logger/LoggerInterface.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/Explorer/MetricsCollector.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/Explorer/MetricsCollectorInterface.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/Explorer/MetricsExplorer.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/Interceptor/MetricInterceptor.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/Interceptor/MetricInterceptorInterface.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/ReportMetricStrategy.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/RequestMetric/ContentTypeMetric.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/RequestMetric/RequestMetric.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/ResponseMetric/ResponseErrorMetric.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/ResponseMetric/ResponseMetric.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/TaskMetric/TaskCompletedMetric.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/TaskMetric/TaskCreatedMetric.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/TaskMetric/TaskDidFinishCollectingMetric.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/TaskMetric/TaskProgressUpdatedMetric.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/TaskMetric/TaskType.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/TaskMetricEvent.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/NetworkBuilder.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/NetworkBuilderSettings.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/NetworkPriorityDispatcher.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/NetworkRouter.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/NetworkRouterInterface.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/NetworkSessionExecutor.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/NetworkSessionExecutorInteface.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/OperationQueue/CustomOperation.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/OperationQueue/OperationQueueManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/OperationQueue/OperationQueueManagerInterface.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Priority.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/PriorityAction.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/ReAuthen/ReAuthenticationService.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Request/Request.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Request/RequestBuilder.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Request/RequestInterface.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Response/NetworkError.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Response/Response.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Response/ResponseDecoder.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Response/ResponseInterface.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Retry/RetryPolicy.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/SSLPinning/AuthChallengeDecision.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/SSLPinning/SSLPinning.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/SSLPinning/SSLPinningInterface.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/SSLPinning/SSLPinningPolicy.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/SSLPinning/SSLPinningProcessor.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/SSLPinning/SSLPinningProcessorInterface.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Session/Network+URLSession.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Session/NetworkSession.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Session/SessionConfigurationProvider.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Session/SessionProxyDelegate.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Session/URLSession+InputStream.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Task/NetworkTask.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/AutomationMode.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/EndpointExpectation.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/EndpointExpectationProvider.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/NetworkMockHandler.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/NetworkMocker.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/ParserExpectationHelper.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/Storage/FileSystemStorageService.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/Storage/RecordResponseMode.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/Storage/StorageService.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/Storage/StorageServiceProvider.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/Storage/UniqueKey.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Utility/Dictionary+Extensions.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Utility/DispatchQueueType.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Utility/Reachability/NetworkReachability.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Utility/Reachability/NetworkReachabilityInterface.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Utility/SecCertificate/Data+RSA.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Utility/SecCertificate/SecCertificate+Extensions.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Utility/URLRequest+Extensions.swift"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "NetworkCompose",
+      "moduleOutputPath" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.swiftmodule",
+      "objects" : [
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Logger/DefaultLogger.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Logger/LogStrategy.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Logger/LoggerInterface.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/Explorer/MetricsCollector.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/Explorer/MetricsCollectorInterface.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/Explorer/MetricsExplorer.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/Interceptor/MetricInterceptor.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/Interceptor/MetricInterceptorInterface.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/ReportMetricStrategy.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/RequestMetric/ContentTypeMetric.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/RequestMetric/RequestMetric.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/ResponseMetric/ResponseErrorMetric.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/ResponseMetric/ResponseMetric.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/TaskMetric/TaskCompletedMetric.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/TaskMetric/TaskCreatedMetric.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/TaskMetric/TaskDidFinishCollectingMetric.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/TaskMetric/TaskProgressUpdatedMetric.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/TaskMetric/TaskType.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/TaskMetricEvent.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/NetworkBuilder.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/NetworkBuilderSettings.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/NetworkPriorityDispatcher.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/NetworkRouter.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/NetworkRouterInterface.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/NetworkSessionExecutor.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/NetworkSessionExecutorInteface.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/OperationQueue/CustomOperation.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/OperationQueue/OperationQueueManager.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/OperationQueue/OperationQueueManagerInterface.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Priority.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/PriorityAction.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/ReAuthen/ReAuthenticationService.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Request/Request.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Request/RequestBuilder.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Request/RequestInterface.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Response/NetworkError.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Response/Response.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Response/ResponseDecoder.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Response/ResponseInterface.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Retry/RetryPolicy.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/SSLPinning/AuthChallengeDecision.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/SSLPinning/SSLPinning.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/SSLPinning/SSLPinningInterface.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/SSLPinning/SSLPinningPolicy.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/SSLPinning/SSLPinningProcessor.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/SSLPinning/SSLPinningProcessorInterface.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Session/Network+URLSession.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Session/NetworkSession.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Session/SessionConfigurationProvider.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Session/SessionProxyDelegate.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Session/URLSession+InputStream.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Task/NetworkTask.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/NetworkMocker/AutomationMode.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/NetworkMocker/EndpointExpectation.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/NetworkMocker/EndpointExpectationProvider.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/NetworkMocker/NetworkMockHandler.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/NetworkMocker/NetworkMocker.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/NetworkMocker/ParserExpectationHelper.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/NetworkMocker/Storage/FileSystemStorageService.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/NetworkMocker/Storage/RecordResponseMode.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/NetworkMocker/Storage/StorageService.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/NetworkMocker/Storage/StorageServiceProvider.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/NetworkMocker/Storage/UniqueKey.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Utility/Dictionary+Extensions.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Utility/DispatchQueueType.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Utility/Reachability/NetworkReachability.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Utility/Reachability/NetworkReachabilityInterface.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Utility/SecCertificate/Data+RSA.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Utility/SecCertificate/SecCertificate+Extensions.swift.o",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Utility/URLRequest+Extensions.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx10.13",
+        "-swift-version",
+        "5",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-g",
+        "-j10",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/NetworkCompose-Swift.h",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-fPIC"
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Logger/DefaultLogger.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Logger/LogStrategy.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Logger/LoggerInterface.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/Explorer/MetricsCollector.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/Explorer/MetricsCollectorInterface.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/Explorer/MetricsExplorer.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/Interceptor/MetricInterceptor.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/Interceptor/MetricInterceptorInterface.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/ReportMetricStrategy.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/RequestMetric/ContentTypeMetric.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/RequestMetric/RequestMetric.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/ResponseMetric/ResponseErrorMetric.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/ResponseMetric/ResponseMetric.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/TaskMetric/TaskCompletedMetric.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/TaskMetric/TaskCreatedMetric.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/TaskMetric/TaskDidFinishCollectingMetric.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/TaskMetric/TaskProgressUpdatedMetric.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/TaskMetric/TaskType.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Metric/TaskMetricEvent.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/NetworkBuilder.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/NetworkBuilderSettings.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/NetworkPriorityDispatcher.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/NetworkRouter.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/NetworkRouterInterface.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/NetworkSessionExecutor.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/NetworkSessionExecutorInteface.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/OperationQueue/CustomOperation.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/OperationQueue/OperationQueueManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/OperationQueue/OperationQueueManagerInterface.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Priority.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/PriorityAction.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/ReAuthen/ReAuthenticationService.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Request/Request.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Request/RequestBuilder.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Request/RequestInterface.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Response/NetworkError.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Response/Response.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Response/ResponseDecoder.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Response/ResponseInterface.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Retry/RetryPolicy.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/SSLPinning/AuthChallengeDecision.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/SSLPinning/SSLPinning.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/SSLPinning/SSLPinningInterface.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/SSLPinning/SSLPinningPolicy.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/SSLPinning/SSLPinningProcessor.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/SSLPinning/SSLPinningProcessorInterface.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Session/Network+URLSession.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Session/NetworkSession.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Session/SessionConfigurationProvider.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Session/SessionProxyDelegate.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Session/URLSession+InputStream.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Network/Task/NetworkTask.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/NetworkMocker/AutomationMode.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/NetworkMocker/EndpointExpectation.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/NetworkMocker/EndpointExpectationProvider.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/NetworkMocker/NetworkMockHandler.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/NetworkMocker/NetworkMocker.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/NetworkMocker/ParserExpectationHelper.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/NetworkMocker/Storage/FileSystemStorageService.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/NetworkMocker/Storage/RecordResponseMode.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/NetworkMocker/Storage/StorageService.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/NetworkMocker/Storage/StorageServiceProvider.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/NetworkMocker/Storage/UniqueKey.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Utility/Dictionary+Extensions.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Utility/DispatchQueueType.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Utility/Reachability/NetworkReachability.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Utility/Reachability/NetworkReachabilityInterface.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Utility/SecCertificate/Data+RSA.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Utility/SecCertificate/SecCertificate+Extensions.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/src/Utility/URLRequest+Extensions.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.swiftmodule"
+        }
+      ],
+      "sources" : [
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Logger/DefaultLogger.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Logger/LogStrategy.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Logger/LoggerInterface.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/Explorer/MetricsCollector.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/Explorer/MetricsCollectorInterface.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/Explorer/MetricsExplorer.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/Interceptor/MetricInterceptor.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/Interceptor/MetricInterceptorInterface.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/ReportMetricStrategy.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/RequestMetric/ContentTypeMetric.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/RequestMetric/RequestMetric.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/ResponseMetric/ResponseErrorMetric.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/ResponseMetric/ResponseMetric.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/TaskMetric/TaskCompletedMetric.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/TaskMetric/TaskCreatedMetric.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/TaskMetric/TaskDidFinishCollectingMetric.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/TaskMetric/TaskProgressUpdatedMetric.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/TaskMetric/TaskType.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/TaskMetricEvent.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/NetworkBuilder.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/NetworkBuilderSettings.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/NetworkPriorityDispatcher.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/NetworkRouter.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/NetworkRouterInterface.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/NetworkSessionExecutor.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/NetworkSessionExecutorInteface.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/OperationQueue/CustomOperation.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/OperationQueue/OperationQueueManager.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/OperationQueue/OperationQueueManagerInterface.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Priority.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/PriorityAction.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/ReAuthen/ReAuthenticationService.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Request/Request.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Request/RequestBuilder.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Request/RequestInterface.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Response/NetworkError.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Response/Response.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Response/ResponseDecoder.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Response/ResponseInterface.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Retry/RetryPolicy.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/SSLPinning/AuthChallengeDecision.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/SSLPinning/SSLPinning.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/SSLPinning/SSLPinningInterface.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/SSLPinning/SSLPinningPolicy.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/SSLPinning/SSLPinningProcessor.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/SSLPinning/SSLPinningProcessorInterface.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Session/Network+URLSession.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Session/NetworkSession.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Session/SessionConfigurationProvider.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Session/SessionProxyDelegate.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Session/URLSession+InputStream.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Task/NetworkTask.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/AutomationMode.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/EndpointExpectation.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/EndpointExpectationProvider.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/NetworkMockHandler.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/NetworkMocker.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/ParserExpectationHelper.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/Storage/FileSystemStorageService.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/Storage/RecordResponseMode.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/Storage/StorageService.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/Storage/StorageServiceProvider.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/Storage/UniqueKey.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Utility/Dictionary+Extensions.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Utility/DispatchQueueType.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Utility/Reachability/NetworkReachability.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Utility/Reachability/NetworkReachabilityInterface.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Utility/SecCertificate/Data+RSA.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Utility/SecCertificate/SecCertificate+Extensions.swift",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Utility/URLRequest+Extensions.swift"
+      ],
+      "tempsPath" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.NetworkComposeTests-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "importPath" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/Tests/NetworkComposeTests/NetworkComposeTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.swiftmodule"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "NetworkComposeTests",
+      "moduleOutputPath" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkComposeTests.swiftmodule",
+      "objects" : [
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkComposeTests.build/NetworkComposeTests.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx13.0",
+        "-swift-version",
+        "5",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-g",
+        "-j10",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-fPIC"
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkComposeTests.build/NetworkComposeTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkComposeTests.swiftmodule"
+        }
+      ],
+      "sources" : [
+        "/Users/harrynguyen/Documents/Resources/NetworkCompose/Tests/NetworkComposeTests/NetworkComposeTests.swift"
+      ],
+      "tempsPath" : "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkComposeTests.build",
+      "wholeModuleOptimization" : false
+    }
+  },
+  "swiftFrontendCommands" : {
+
+  },
+  "swiftTargetScanArgs" : {
+    "NetworkCompose" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "NetworkCompose",
+      "-incremental",
+      "-c",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Logger/DefaultLogger.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Logger/LogStrategy.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Logger/LoggerInterface.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/Explorer/MetricsCollector.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/Explorer/MetricsCollectorInterface.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/Explorer/MetricsExplorer.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/Interceptor/MetricInterceptor.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/Interceptor/MetricInterceptorInterface.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/ReportMetricStrategy.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/RequestMetric/ContentTypeMetric.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/RequestMetric/RequestMetric.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/ResponseMetric/ResponseErrorMetric.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/ResponseMetric/ResponseMetric.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/TaskMetric/TaskCompletedMetric.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/TaskMetric/TaskCreatedMetric.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/TaskMetric/TaskDidFinishCollectingMetric.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/TaskMetric/TaskProgressUpdatedMetric.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/TaskMetric/TaskType.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Metric/TaskMetricEvent.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/NetworkBuilder.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/NetworkBuilderSettings.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/NetworkPriorityDispatcher.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/NetworkRouter.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/NetworkRouterInterface.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/NetworkSessionExecutor.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/NetworkSessionExecutorInteface.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/OperationQueue/CustomOperation.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/OperationQueue/OperationQueueManager.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/OperationQueue/OperationQueueManagerInterface.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Priority.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/PriorityAction.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/ReAuthen/ReAuthenticationService.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Request/Request.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Request/RequestBuilder.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Request/RequestInterface.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Response/NetworkError.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Response/Response.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Response/ResponseDecoder.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Response/ResponseInterface.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Retry/RetryPolicy.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/SSLPinning/AuthChallengeDecision.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/SSLPinning/SSLPinning.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/SSLPinning/SSLPinningInterface.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/SSLPinning/SSLPinningPolicy.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/SSLPinning/SSLPinningProcessor.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/SSLPinning/SSLPinningProcessorInterface.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Session/Network+URLSession.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Session/NetworkSession.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Session/SessionConfigurationProvider.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Session/SessionProxyDelegate.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Session/URLSession+InputStream.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Task/NetworkTask.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/AutomationMode.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/EndpointExpectation.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/EndpointExpectationProvider.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/NetworkMockHandler.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/NetworkMocker.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/ParserExpectationHelper.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/Storage/FileSystemStorageService.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/Storage/RecordResponseMode.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/Storage/StorageService.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/Storage/StorageServiceProvider.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/Storage/UniqueKey.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Utility/Dictionary+Extensions.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Utility/DispatchQueueType.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Utility/Reachability/NetworkReachability.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Utility/Reachability/NetworkReachabilityInterface.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Utility/SecCertificate/Data+RSA.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Utility/SecCertificate/SecCertificate+Extensions.swift",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Utility/URLRequest+Extensions.swift",
+      "-I",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug",
+      "-target",
+      "arm64-apple-macosx10.13",
+      "-swift-version",
+      "5",
+      "-enable-batch-mode",
+      "-index-store-path",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-g",
+      "-j10",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-module-cache-path",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/NetworkCompose.build/NetworkCompose-Swift.h",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-fPIC",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ],
+    "NetworkComposeTests" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "NetworkComposeTests",
+      "-incremental",
+      "-c",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/Tests/NetworkComposeTests/NetworkComposeTests.swift",
+      "-I",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug",
+      "-target",
+      "arm64-apple-macosx13.0",
+      "-swift-version",
+      "5",
+      "-enable-batch-mode",
+      "-index-store-path",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-g",
+      "-j10",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-module-cache-path",
+      "/Users/harrynguyen/Documents/Resources/NetworkCompose/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-fPIC",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ]
+  },
+  "targetDependencyMap" : {
+    "NetworkCompose" : [
+
+    ],
+    "NetworkComposeTests" : [
+      "NetworkCompose"
+    ]
+  },
+  "testDiscoveryCommands" : {
+
+  },
+  "testEntryPointCommands" : {
+
+  }
+}
