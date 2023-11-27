@@ -30,14 +30,14 @@ public final class ParserExpectationHelper {
         from data: Data,
         responseDecoder: ResponseDecoder,
         type: Decodable.Type,
-        serviceName: String,
         path: String,
-        method: NetworkMethod
+        method: NetworkMethod,
+        queryParameters: [String: Any]? = nil
     ) throws -> EndpointExpectation {
         let model = try responseDecoder.decode(type, from: data)
-        return EndpointExpectation(name: serviceName,
-                                   path: path,
+        return EndpointExpectation(path: path,
                                    method: method,
+                                   queryParameters: queryParameters,
                                    response: .successResponse(model))
     }
 
@@ -58,16 +58,16 @@ public final class ParserExpectationHelper {
         from filePath: URL,
         responseDecoder: ResponseDecoder,
         type: Decodable.Type,
-        serviceName: String,
         path: String,
-        method: NetworkMethod
+        method: NetworkMethod,
+        queryParameters: [String: Any]? = nil
     ) throws -> EndpointExpectation {
         let data = try Data(contentsOf: filePath)
         return try parseExpections(from: data,
                                    responseDecoder: responseDecoder,
                                    type: type,
-                                   serviceName: serviceName,
                                    path: path,
-                                   method: method)
+                                   method: method,
+                                   queryParameters: queryParameters)
     }
 }

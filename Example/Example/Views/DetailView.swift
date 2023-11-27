@@ -10,7 +10,7 @@ import SwiftUI
 
 struct DetailView: View {
     let type: DemoScenario
-    @State private var artcles: [Article] = []
+    @State private var artcles: [Post] = []
     @State private var errorMessage: String?
     @State private var isLoading: Bool = true
 
@@ -27,7 +27,7 @@ struct DetailView: View {
                         .padding()
                 } else {
                     List(artcles, id: \.id) { article in
-                        let value = article.name ?? article.title ?? ""
+                        let value = article.title
                         Text(value)
                     }
                     .navigationBarTitle(type.rawValue)
@@ -36,14 +36,27 @@ struct DetailView: View {
             }
         }
         .onAppear {
-            NetworkComposeDemo.shared.makeRequest(for: type) { result in
-                switch result {
-                case let .success(receivedUsers):
-                    artcles = receivedUsers
-                    isLoading = false
-                case let .failure(error):
-                    errorMessage = "\(error.localizedDescription)"
-                    isLoading = false
+            if case .multipleRequetWithPriority = type {
+                MultiplePriorityRequest.shared.makeRequest(for: type) { result in
+                    switch result {
+                    case let .success(receivedUsers):
+                        artcles = receivedUsers
+                        isLoading = false
+                    case let .failure(error):
+                        errorMessage = "\(error.localizedDescription)"
+                        isLoading = false
+                    }
+                }
+            } else {
+                SingleRequest.shared.makeRequest(for: type) { result in
+                    switch result {
+                    case let .success(receivedUsers):
+                        artcles = receivedUsers
+                        isLoading = false
+                    case let .failure(error):
+                        errorMessage = "\(error.localizedDescription)"
+                        isLoading = false
+                    }
                 }
             }
         }

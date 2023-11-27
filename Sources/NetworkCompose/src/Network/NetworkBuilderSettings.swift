@@ -1,5 +1,5 @@
 //
-//  NetworkCommonSettings.swift
+//  NetworkBuilderSettings.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 24/11/23.
@@ -7,8 +7,15 @@
 
 import Foundation
 
-/// Configuration settings for network operations using a specified network session type.
-public class NetworkCommonSettings<SessionType: NetworkSession> {
+/// A base class for configuring common settings related to network communication.
+///
+/// This class provides a set of methods to customize various aspects of network communication, such as SSL pinning, metric reporting,
+/// network reachability, execution and observation queues, automation modes for testing, recording responses, session configuration,
+/// logging, and default configurations.
+///
+/// To use this class, create an instance and chain the desired configuration methods, then use the resulting configured instance
+/// to build and obtain a network session.
+public class NetworkBuilderSettings<SessionType: NetworkSession> {
     /// The base URL for the network requests.
     var baseURL: URL
 
@@ -40,8 +47,13 @@ public class NetworkCommonSettings<SessionType: NetworkSession> {
     var recordResponseMode: RecordResponseMode
 
     /// The strategy for logging network events and activities.
-    var logStrategy: LogStrategy
+    var loggerStrategy: LoggerStrategy
 
+    /// Initializes a new instance of `NetworkCommonSettings`.
+    ///
+    /// - Parameters:
+    ///   - baseURL: The base URL for network requests.
+    ///   - session: The network session to be used.
     public required init(baseURL: URL,
                          session: SessionType)
     {
@@ -51,11 +63,11 @@ public class NetworkCommonSettings<SessionType: NetworkSession> {
         reportMetricStrategy = .disabled
         automationMode = .disabled
         recordResponseMode = .disabled
-        logStrategy = .disabled
+        loggerStrategy = .disabled
         executionQueue = DefaultDispatchQueue.executionQueue
         observationQueue = DefaultDispatchQueue.observationQueue
         networkReachability = NetworkReachability.shared
-        sessionConfigurationProvider = DefaultSessionConfigurationProvider.normal
+        sessionConfigurationProvider = DefaultSessionConfigurationProvider.ephemeral
     }
 
     /// Sets the security trust for SSL pinning.
@@ -160,8 +172,8 @@ public class NetworkCommonSettings<SessionType: NetworkSession> {
     /// - Parameter strategy: The logging strategy to set.
     /// - Returns: The logger instance with the updated logging strategy.
     @discardableResult
-    public func log(_ strategy: LogStrategy) -> Self {
-        logStrategy = strategy
+    public func logger(_ strategy: LoggerStrategy) -> Self {
+        loggerStrategy = strategy
         return self
     }
 
@@ -177,11 +189,11 @@ public class NetworkCommonSettings<SessionType: NetworkSession> {
         reportMetricStrategy = .disabled
         automationMode = .disabled
         recordResponseMode = .disabled
-        logStrategy = .disabled
+        loggerStrategy = .disabled
         executionQueue = DefaultDispatchQueue.executionQueue
         observationQueue = DefaultDispatchQueue.observationQueue
         networkReachability = NetworkReachability.shared
-        sessionConfigurationProvider = DefaultSessionConfigurationProvider.normal
+        sessionConfigurationProvider = DefaultSessionConfigurationProvider.ephemeral
         if let session = try? createNetworkSession() { self.session = session }
         return self
     }
@@ -192,7 +204,7 @@ public class NetworkCommonSettings<SessionType: NetworkSession> {
     ///            Returns `nil` if logging is disabled, the shared default logger
     ///            if logging is enabled, or a custom logger if provided.
     func createLogger() -> LoggerInterface? {
-        switch logStrategy {
+        switch loggerStrategy {
         case .disabled:
             return nil
         case .enabled:

@@ -21,6 +21,12 @@ public protocol RequestInterface {
 }
 
 public extension RequestInterface {
+    var queryParameters: [String: Any]? { return nil }
+    var headers: [String: String] { return [:] }
+    var bodyEncoding: BodyEncoding { return .json }
+    var timeoutInterval: TimeInterval { return 60.0 }
+    var cachePolicy: NetworkCachePolicy { return .ignoreCache }
+    var responseDecoder: ResponseDecoder { return JSONDecoder() }
     var requiresReAuthentication: Bool { return false }
 
     var description: String {

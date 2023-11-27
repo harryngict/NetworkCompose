@@ -1,6 +1,18 @@
-# Ignore Xcode build artifacts
-build/
-DerivedData/
+# Xcode
+*.xcworkspace/
+*.xcodeproj/
 *.xcodeproj/xcuserdata/
 *.xcworkspace/xcuserdata/
 *.xcuserstate
+.DS_Store
+
+# Build products
+build/
+DerivedData/
+
+# User-specific files
+xcuserdata/
+
+# Swift Package Manager
+.Package.resolved
+.build/
