@@ -45,14 +45,14 @@ final class FileSystemStorageService: StorageService {
         data: Data,
         model _: RequestType.SuccessType
     ) throws where RequestType: RequestInterface {
-        let path = UniqueKeyPath(path: request.path, method: request.method.rawValue).key
+        let path = UniqueKey(path: request.path, method: request.method.rawValue).key
         try storeDataToFile(data, forPath: path)
     }
 
     func getResponse<RequestType>(
         _ request: RequestType
     ) throws -> RequestType.SuccessType where RequestType: RequestInterface {
-        let path = UniqueKeyPath(path: request.path, method: request.method.rawValue).key
+        let path = UniqueKey(path: request.path, method: request.method.rawValue).key
         let data = try getDataFromFile(atPath: path)
         do {
             let model = try request.responseDecoder.decode(RequestType.SuccessType.self, from: data)
@@ -72,6 +72,12 @@ final class FileSystemStorageService: StorageService {
             loggerInterface?.log(.infor, "removed file: \(filePath)")
         }
     }
+}
+
+private extension FileSystemStorageService {
+    enum Constant {
+        static let homeDirectoryTitle: String = "NetworkCompose-FileSystemStorageService"
+    }
 
     func hasHomeDirectory() throws -> Bool {
         guard service.fileExists(atPath: homeURL.path) == false else {
@@ -80,12 +86,6 @@ final class FileSystemStorageService: StorageService {
         loggerInterface?.log(.infor, "created folder: \(homeURL.path)")
         try service.createDirectory(at: homeURL, withIntermediateDirectories: true, attributes: nil)
         return true
-    }
-}
-
-extension FileSystemStorageService {
-    private enum Constant {
-        static let homeDirectoryTitle: String = "NetworkCompose-FileSystemStorageService"
     }
 
     func storeDataToFile(_ data: Data, forPath path: String) throws {

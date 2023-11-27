@@ -10,7 +10,7 @@ import Foundation
 public typealias MetricReportHandler = (_ event: TaskMetricEvent) -> Void
 
 public struct MetricInterceptor: MetricInterceptorInterface {
-    var reportHandler: MetricReportHandler
+    private let reportHandler: MetricReportHandler
 
     public init(reportHandler: @escaping MetricReportHandler) {
         self.reportHandler = reportHandler
