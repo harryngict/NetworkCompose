@@ -34,12 +34,14 @@ final class NetworkMockHandler {
             return try storageService.getResponse(request)
         }
     }
+}
 
-    private func handleCustomProvider<RequestType>(
+private extension NetworkMockHandler {
+    func handleCustomProvider<RequestType>(
         _ provider: EndpointExpectationProvider,
         request: RequestType
     ) throws -> RequestType.SuccessType where RequestType: RequestInterface {
-        let clientExpection = provider.getExpectaion(path: request.path, method: request.method)
+        let clientExpection = provider.expectation(for: request.path, method: request.method)
         guard clientExpection.isSameRequest(request) else {
             throw NetworkError.automation(.requestNotSameAsExepectation(method: request.method.rawValue,
                                                                         path: request.path))
@@ -47,7 +49,7 @@ final class NetworkMockHandler {
         return try clientExpection.getResponse(request)
     }
 
-    private func getStorageService(_ dataType: AutomationMode.DataType) -> StorageService? {
+    func getStorageService(_ dataType: AutomationMode.DataType) -> StorageService? {
         var storageService: StorageService?
         switch dataType {
         case .local:

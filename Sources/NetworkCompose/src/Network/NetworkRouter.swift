@@ -1,5 +1,5 @@
 //
-//  NetworkCoordinator.swift
+//  NetworkRouter.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 17/11/23.
@@ -7,15 +7,12 @@
 
 import Foundation
 
-/// A protocol representing a network coordinator with additional authentication features.
-/// Inherits from `NetworkControllerInterface` and includes a property for re-authentication service.
-public protocol NetworkCoordinatorInterface: NetworkControllerInterface {
-    /// An optional re-authentication service that can be used for refreshing authentication tokens.
-    var reAuthService: ReAuthenticationService? { get }
-}
-
-final class NetworkCoordinator<SessionType: NetworkSession>: NetworkCoordinatorInterface {
-    private let networkCore: NetworkControllerInterface
+/// A concrete implementation of the `NetworkRouterInterface` protocol.
+///
+/// This class coordinates network operations, including requests, uploads, and downloads.
+/// It handles re-authentication if necessary and utilizes an operation queue for serialization.
+final class NetworkRouter<SessionType: NetworkSession>: NetworkRouterInterface {
+    private let network: NetworkSessionExecutorInteface
     private let operationQueue: OperationQueueManagerInterface
     private var loggerInterface: LoggerInterface?
     public var reAuthService: ReAuthenticationService?
@@ -46,13 +43,13 @@ final class NetworkCoordinator<SessionType: NetworkSession>: NetworkCoordinatorI
         self.reAuthService = reAuthService
         self.operationQueue = operationQueue
         self.loggerInterface = loggerInterface
-        networkCore = NetworkController(baseURL: baseURL,
-                                        session: session,
-                                        networkReachability: networkReachability,
-                                        executionQueue: executionQueue,
-                                        observationQueue: observationQueue,
-                                        storageService: storageService,
-                                        loggerInterface: loggerInterface)
+        network = NetworkSessionExecutor(baseURL: baseURL,
+                                         session: session,
+                                         networkReachability: networkReachability,
+                                         executionQueue: executionQueue,
+                                         observationQueue: observationQueue,
+                                         storageService: storageService,
+                                         loggerInterface: loggerInterface)
     }
 
     func request<RequestType>(
@@ -154,7 +151,7 @@ final class NetworkCoordinator<SessionType: NetworkSession>: NetworkCoordinatorI
 
 // MARK: Request execution
 
-extension NetworkCoordinator {
+extension NetworkRouter {
     private func createRequestOperation<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String],
@@ -185,7 +182,7 @@ extension NetworkCoordinator {
         retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
-        networkCore.request(request, andHeaders: headers, retryPolicy: retryPolicy) { [weak self] result in
+        network.request(request, andHeaders: headers, retryPolicy: retryPolicy) { [weak self] result in
             switch result {
             case let .success(model):
                 completion(.success(model))
@@ -213,7 +210,7 @@ extension NetworkCoordinator {
 
 // MARK: Upload execution
 
-extension NetworkCoordinator {
+extension NetworkRouter {
     private func createUploadOperation<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String],
@@ -248,10 +245,10 @@ extension NetworkCoordinator {
         retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
-        networkCore.upload(request,
-                           andHeaders: headers,
-                           fromFile: fileURL,
-                           retryPolicy: retryPolicy)
+        network.upload(request,
+                       andHeaders: headers,
+                       fromFile: fileURL,
+                       retryPolicy: retryPolicy)
         { [weak self] result in
             switch result {
             case let .success(model):
@@ -283,7 +280,7 @@ extension NetworkCoordinator {
 
 // MARK: Download execution
 
-extension NetworkCoordinator {
+extension NetworkRouter {
     private func createDownloadOperation<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String],
@@ -314,7 +311,7 @@ extension NetworkCoordinator {
         retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
-        networkCore.download(request, andHeaders: headers, retryPolicy: retryPolicy) { [weak self] result in
+        network.download(request, andHeaders: headers, retryPolicy: retryPolicy) { [weak self] result in
             switch result {
             case let .success(model):
                 completion(.success(model))

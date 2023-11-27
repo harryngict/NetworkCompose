@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol EndpointExpectationProvider {
-    func getExpectaion(path: String, method: NetworkMethod) -> EndpointExpectation
+    func expectation(for path: String, method: NetworkMethod) -> EndpointExpectation
 }

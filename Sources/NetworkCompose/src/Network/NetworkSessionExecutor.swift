@@ -1,5 +1,5 @@
 //
-//  NetworkController.swift
+//  NetworkSessionExecutor.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 11/11/23.
@@ -7,16 +7,36 @@
 
 import Foundation
 
-final class NetworkController<SessionType: NetworkSession>: NetworkControllerInterface {
-    private let session: SessionType
+/// A controller class responsible for handling network requests, uploads, and downloads.
+///
+/// This class encapsulates the logic for making network requests using a specified network session. It provides methods for
+/// handling various types of network tasks, such as regular requests, file uploads, and file downloads. The class supports
+/// retry policies, network reachability checks, and error handling during network operations.
+///
+/// To use this class, create an instance with a configured network session and use its methods to perform different network tasks.
+final class NetworkSessionExecutor<SessionType: NetworkSession>: NetworkSessionExecutorInteface {
+    /// The base URL for network requests.
     private let baseURL: URL
+
+    /// The network session to use for requests.
+    private let session: SessionType
+
+    /// The network reachability object.
     public let networkReachability: NetworkReachabilityInterface
+
+    /// The dispatch queue for executing network requests.
     private let executionQueue: DispatchQueueType
+
+    /// The dispatch queue for observing and handling network events.
     private let observationQueue: DispatchQueueType
+
+    /// An optional storage service for handling persistent data.
     private var storageService: StorageService?
+
+    /// An optional logger interface for logging.
     private var loggerInterface: LoggerInterface?
 
-    /// Initializes the `Network` with the specified configuration.
+    /// Initializes the `NetworkSessionExecutor` with the specified configuration.
     ///
     /// - Parameters:
     ///   - baseURL: The base URL for network requests.
@@ -185,7 +205,7 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
     private func buildNetworkRequest<RequestType>(
         for request: RequestType,
         andHeaders headers: [String: String]
-    ) throws -> SessionType.NetworkRequestType where RequestType: RequestInterface {
+    ) throws -> SessionType.SessionRequest where RequestType: RequestInterface {
         return try session.build(request, withBaseURL: baseURL, andHeaders: headers)
     }
 
@@ -241,7 +261,7 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
     ) where SuccessType: Decodable {
         let configuration = retryPolicy.retryConfiguration(forAttempt: currentRetry)
         if configuration.shouldRetry {
-            loggerInterface?.log(.debug, "NetworkController retry count: \(currentRetry) delay: \(configuration.delay)")
+            loggerInterface?.log(.debug, "NetworkSessionExecutor retry count: \(currentRetry) delay: \(configuration.delay)")
             executionQueue.asyncAfter(deadline: .now() + configuration.delay) {
                 performRequest()
             }
