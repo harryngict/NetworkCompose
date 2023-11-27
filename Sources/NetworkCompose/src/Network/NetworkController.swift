@@ -11,8 +11,8 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
     private let session: SessionType
     private let baseURL: URL
     public let networkReachability: NetworkReachabilityInterface
-    private let executeQueue: DispatchQueueType
-    private let observeQueue: DispatchQueueType
+    private let executionQueue: DispatchQueueType
+    private let observationQueue: DispatchQueueType
     private var storageService: StorageService?
     private var loggerInterface: LoggerInterface?
 
@@ -22,23 +22,23 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
     ///   - baseURL: The base URL for network requests.
     ///   - session: The network session to use for requests.
     ///   - networkReachability: The network reachability object.
-    ///   - executeQueue: The dispatch queue for executing network requests.
-    ///   - observeQueue: The dispatch queue for observing and handling network events.
+    ///   - executionQueue: The dispatch queue for executing network requests.
+    ///   - observationQueue: The dispatch queue for observing and handling network events.
     ///   - storageService: An optional storage service for handling persistent data.
     ///   - loggerInterface: An optional logger interface for logging.
     init(baseURL: URL,
          session: SessionType,
          networkReachability: NetworkReachabilityInterface,
-         executeQueue: DispatchQueueType,
-         observeQueue: DispatchQueueType,
+         executionQueue: DispatchQueueType,
+         observationQueue: DispatchQueueType,
          storageService: StorageService?,
          loggerInterface: LoggerInterface?)
     {
         self.baseURL = baseURL
         self.session = session
         self.networkReachability = networkReachability
-        self.executeQueue = executeQueue
-        self.observeQueue = observeQueue
+        self.executionQueue = executionQueue
+        self.observationQueue = observationQueue
         self.storageService = storageService
         self.loggerInterface = loggerInterface
         self.networkReachability.startMonitoring(completion: { _ in })
@@ -51,7 +51,7 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
         guard networkReachability.isInternetAvailable else {
-            observeQueue.async {
+            observationQueue.async {
                 completion(.failure(NetworkError.lostInternetConnection))
             }
             return
@@ -65,7 +65,7 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
                     self?.handleResult(result, for: request) { result in
                         switch result {
                         case let .success(model):
-                            self?.observeQueue.async {
+                            self?.observationQueue.async {
                                 completion(.success(model))
                             }
                         case let .failure(error):
@@ -79,12 +79,12 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
                     }
                 }
             } catch {
-                observeQueue.async {
+                observationQueue.async {
                     completion(.failure(NetworkError.invalidSession))
                 }
             }
         }
-        executeQueue.async {
+        executionQueue.async {
             performRequest()
         }
     }
@@ -97,7 +97,7 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
         guard networkReachability.isInternetAvailable else {
-            observeQueue.async {
+            observationQueue.async {
                 completion(.failure(NetworkError.lostInternetConnection))
             }
             return
@@ -111,7 +111,7 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
                     self?.handleResult(result, for: request) { result in
                         switch result {
                         case let .success(model):
-                            self?.observeQueue.async {
+                            self?.observationQueue.async {
                                 completion(.success(model))
                             }
                         case let .failure(error):
@@ -125,13 +125,13 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
                     }
                 }
             } catch {
-                observeQueue.async {
+                observationQueue.async {
                     completion(.failure(NetworkError.invalidSession))
                 }
             }
         }
 
-        executeQueue.async {
+        executionQueue.async {
             performRequest()
         }
     }
@@ -143,7 +143,7 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
         guard networkReachability.isInternetAvailable else {
-            observeQueue.async {
+            observationQueue.async {
                 completion(.failure(NetworkError.lostInternetConnection))
             }
             return
@@ -157,7 +157,7 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
                     self?.handleResult(result, for: request) { result in
                         switch result {
                         case let .success(model):
-                            self?.observeQueue.async {
+                            self?.observationQueue.async {
                                 completion(.success(model))
                             }
                         case let .failure(error):
@@ -171,13 +171,13 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
                     }
                 }
             } catch {
-                observeQueue.async {
+                observationQueue.async {
                     completion(.failure(NetworkError.invalidSession))
                 }
             }
         }
 
-        executeQueue.async {
+        executionQueue.async {
             performRequest()
         }
     }
@@ -242,11 +242,11 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
         let configuration = retryPolicy.retryConfiguration(forAttempt: currentRetry)
         if configuration.shouldRetry {
             loggerInterface?.log(.debug, "NetworkController retry count: \(currentRetry) delay: \(configuration.delay)")
-            executeQueue.asyncAfter(deadline: .now() + configuration.delay) {
+            executionQueue.asyncAfter(deadline: .now() + configuration.delay) {
                 performRequest()
             }
         } else {
-            observeQueue.async {
+            observationQueue.async {
                 completion(.failure(error))
             }
         }

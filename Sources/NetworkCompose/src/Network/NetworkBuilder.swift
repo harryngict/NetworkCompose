@@ -23,7 +23,7 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkCommonSettings<
     /// - Parameter reAuthService: The service responsible for re-authentication.
     /// - Returns: The builder instance for method chaining.
     @discardableResult
-    public func setReAuthService(_ reAuthService: ReAuthenticationService?) -> Self {
+    public func reAuthenService(_ reAuthService: ReAuthenticationService?) -> Self {
         self.reAuthService = reAuthService
         return self
     }
@@ -33,7 +33,7 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkCommonSettings<
     /// - Parameter operationQueue: The queue run re-authentication operation
     /// - Returns: The builder instance for method chaining.
     @discardableResult
-    public func setOperationQueue(_ operationQueue: OperationQueueManagerInterface) -> Self {
+    public func reAuthenOperationQueue(_ operationQueue: OperationQueueManagerInterface) -> Self {
         self.operationQueue = operationQueue
         return self
     }
@@ -46,10 +46,10 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkCommonSettings<
     ///
     /// - Returns: The modified instance of the network builder with the default configuration.
     @discardableResult
-    override public func setDefaultConfiguration() -> Self {
+    override public func applyDefaultConfiguration() -> Self {
         reAuthService = nil
         operationQueue = DefaultOperationQueueManager.serialOperationQueue
-        _ = super.setDefaultConfiguration()
+        _ = super.applyDefaultConfiguration()
         return self
     }
 
@@ -62,7 +62,7 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkCommonSettings<
     @discardableResult
     public func clearMockDataInDisk() -> Self {
         let provider = StorageServiceProvider(loggerInterface: createLogger(),
-                                              executeQueue: executeQueue)
+                                              executionQueue: executionQueue)
         try? provider.clearMockDataInDisk()
         return self
     }
@@ -72,13 +72,13 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkCommonSettings<
     /// This method creates either a `NetworkCoordinator` or a `NetworkMocker` based on the specified strategies.
     ///
     /// - Returns: An instance conforming to `NetworkCoordinatorInterface`.
-    public func build() -> NetworkCoordinatorInterface {
-        guard case let .enabled(mockerDataType) = mockerStrategy else {
+    private func build() -> NetworkCoordinatorInterface {
+        guard case let .enabled(mockDataType) = automationMode else {
             var storageService: StorageService?
 
-            if case .enabled = storageStrategy {
+            if case .enabled = recordResponseMode {
                 storageService = StorageServiceProvider(loggerInterface: createLogger(),
-                                                        executeQueue: executeQueue)
+                                                        executionQueue: executionQueue)
             }
             if let session = try? createNetworkSession() {
                 self.session = session
@@ -90,8 +90,8 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkCommonSettings<
                 reAuthService: reAuthService,
                 operationQueue: operationQueue,
                 networkReachability: networkReachability,
-                executeQueue: executeQueue,
-                observeQueue: observeQueue,
+                executionQueue: executionQueue,
+                observationQueue: observationQueue,
                 storageService: storageService,
                 loggerInterface: createLogger()
             )
@@ -101,10 +101,40 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkCommonSettings<
             baseURL: baseURL,
             session: session,
             reAuthService: reAuthService,
-            executeQueue: executeQueue,
-            observeQueue: observeQueue,
+            executionQueue: executionQueue,
+            observationQueue: observationQueue,
             loggerInterface: createLogger(),
-            mockerDataType: mockerDataType
+            mockDataType: mockDataType
         )
+    }
+}
+
+public extension NetworkBuilder {
+    func request<RequestType: RequestInterface>(
+        _ request: RequestType,
+        andHeaders headers: [String: String] = [:],
+        retryPolicy: RetryPolicy = .none,
+        completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
+    ) {
+        build().request(request, andHeaders: headers, retryPolicy: retryPolicy, completion: completion)
+    }
+
+    func upload<RequestType: RequestInterface>(
+        _ request: RequestType,
+        andHeaders headers: [String: String] = [:],
+        fromFile fileURL: URL,
+        retryPolicy: RetryPolicy = .none,
+        completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
+    ) {
+        build().upload(request, andHeaders: headers, fromFile: fileURL, retryPolicy: retryPolicy, completion: completion)
+    }
+
+    func download<RequestType: RequestInterface>(
+        _ request: RequestType,
+        andHeaders headers: [String: String] = [:],
+        retryPolicy: RetryPolicy = .none,
+        completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
+    ) {
+        build().download(request, andHeaders: headers, retryPolicy: retryPolicy, completion: completion)
     }
 }

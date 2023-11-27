@@ -22,7 +22,7 @@ extension DispatchQueue: DispatchQueueType {
     }
 }
 
-public enum DefaultNetworkDispatchQueue: Sendable {
-    public static let executeQueue: DispatchQueueType = DispatchQueue(label: "com.NetworkCompose.DispatchQueueType", qos: .userInitiated, attributes: .concurrent)
-    public static let observeQueue: DispatchQueueType = DispatchQueue.main
+public enum DefaultDispatchQueue: Sendable {
+    public static let executionQueue: DispatchQueueType = DispatchQueue(label: "com.NetworkCompose.DispatchQueueType", qos: .userInitiated, attributes: .concurrent)
+    public static let observationQueue: DispatchQueueType = DispatchQueue.main
 }

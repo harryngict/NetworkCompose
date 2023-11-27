@@ -11,10 +11,10 @@ final class StorageServiceProvider: StorageService {
     private let storageService: StorageService
 
     init(loggerInterface: LoggerInterface?,
-         executeQueue: DispatchQueueType)
+         executionQueue: DispatchQueueType)
     {
         storageService = FileSystemStorageService(loggerInterface: loggerInterface,
-                                                  executeQueue: executeQueue)
+                                                  executionQueue: executionQueue)
     }
 
     func storeResponse<RequestType>(

@@ -18,7 +18,7 @@
 		33A12635F5D99BE678E4C8C1E525570D /* SessionProxyDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8877538774C11DB9562B90E05287D36 /* SessionProxyDelegate.swift */; };
 		349A682EEEB325D4D02CBF892F4A6055 /* NetworkControllerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6A75FDB0E48609EE89CDBD78A9B98C /* NetworkControllerInterface.swift */; };
 		36445A6642BCA9CA43FFAC8DF06CB978 /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98F8934D60F4B0F19C787A20CFEE659 /* NetworkController.swift */; };
-		3CE6FE357ECFF04C771244B891E53F1B /* LoggingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D726E5412CBA94EC80E7DF4947374A /* LoggingStrategy.swift */; };
+		3CE6FE357ECFF04C771244B891E53F1B /* LogStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D726E5412CBA94EC80E7DF4947374A /* LogStrategy.swift */; };
 		4283D329A5E217B5E78B980EA2763EE8 /* MetricsCollectorInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE97D3E52A3BFDA66A4C52E0DCB3260 /* MetricsCollectorInterface.swift */; };
 		42C8A1B55A26B7E4DB03BDE0A70B6473 /* UniqueKeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E6A39DAB1E309D09D58C6F376097AB /* UniqueKeyPath.swift */; };
 		468066C00D252CAAAA8DEAAE90A1422A /* NetworkReachabilityInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3B7A99BB4AC30310272B8DF5AEA22C /* NetworkReachabilityInterface.swift */; };
@@ -54,7 +54,7 @@
 		A3C295BE5D186E0B7909BD4639FD46BB /* TaskCompletedMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7925E137D105E490078FE88AF868021B /* TaskCompletedMetric.swift */; };
 		A3CD95986CF0701C5C74E33EB9CA2BF8 /* TaskProgressUpdatedMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF121EAC8AECBB23DF5425EED59908A3 /* TaskProgressUpdatedMetric.swift */; };
 		A461FBCFD84EB4B910BFDD5CCA9FD7AE /* Data+RSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E36FB8866A9486D9D8E09F17A2DCE1 /* Data+RSA.swift */; };
-		AA7D2A249BBD8B76DE08800291B482CE /* MockerStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1CE4760DE85F4CDE2C1533ED3CE70 /* MockerStrategy.swift */; };
+		AA7D2A249BBD8B76DE08800291B482CE /* AutomationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1CE4760DE85F4CDE2C1533ED3CE70 /* AutomationMode.swift */; };
 		B0725B4D78FF7865DC5302B0D37B865F /* OperationQueueManagerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A8DC24296523052DAA46542D9643BF /* OperationQueueManagerInterface.swift */; };
 		B1B9CB8A2CDD53424F93DA64DD5A77FA /* ClosureCustomOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B01EB0968FCAD048E831F8F9BEAFAE /* ClosureCustomOperation.swift */; };
 		B440F612ED33AC07246C9D5180A50D60 /* EndpointExpectationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5FAC3109DFDC20BD8BA259887013A3 /* EndpointExpectationProvider.swift */; };
@@ -64,12 +64,12 @@
 		B8687CBF731794C29AA9213341890709 /* ReAuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFA95271A1DB49BC4230F81D9445909 /* ReAuthenticationService.swift */; };
 		BABF5A317835BFD3E1829A34A74C5812 /* Network+URLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE480BBEF6657789B9359A4BE445F2B /* Network+URLSession.swift */; };
 		BDD083A47914D6ADF8269800DB737232 /* SSLPinningPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EDE75E678A2842D7240900C138884F /* SSLPinningPolicy.swift */; };
-		C2A5D4B0D864DA0FC752B61D0E0D4336 /* StorageStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E6035A7BD40CB7C67E83C0D5E02925 /* StorageStrategy.swift */; };
+		C2A5D4B0D864DA0FC752B61D0E0D4336 /* RecordResponseMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E6035A7BD40CB7C67E83C0D5E02925 /* RecordResponseMode.swift */; };
 		C3A1493B3788AAF198C99FB0B979DBF9 /* NetworkMocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EFB6580B8241BDBBBCF3A68CDCDADD /* NetworkMocker.swift */; };
 		D173330740969D135CAC5680AB4B3A7C /* SSLPinningInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8836B568F7009014C70D9FE7F3EB8515 /* SSLPinningInterface.swift */; };
 		D7D81643DABC4BD0806BFD81112B6168 /* ResponseMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCA7AAC858513B0DE2084F5ADA88EA9 /* ResponseMetric.swift */; };
 		D98A56204F5E7805DC511628D2017D76 /* ResponseInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196582DBC4429AA36E4C3B6EF5B2C008 /* ResponseInterface.swift */; };
-		DD4ABB202B14B36F0044D0EF /* MetricReportStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4ABB1F2B14B36F0044D0EF /* MetricReportStrategy.swift */; };
+		DD4ABB202B14B36F0044D0EF /* ReportMetricStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4ABB1F2B14B36F0044D0EF /* ReportMetricStrategy.swift */; };
 		DDB7E2543D28D300B1B57A0CF28A8D9E /* LoggerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA35E31AC5D588BE8B09C7962003CEB4 /* LoggerInterface.swift */; };
 		DED23A8F216B9F39D485031831634AFB /* EndpointExpectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62E81A44D14317322AE0BAC7968CF650 /* EndpointExpectation.swift */; };
 		E17FAB554C8654D8582A2E77116E3AE7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
@@ -121,7 +121,7 @@
 		3995E6D4062B6E7B811AF8C3EF1DAB92 /* TaskDidFinishCollectingMetric.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TaskDidFinishCollectingMetric.swift; sourceTree = "<group>"; };
 		3A2B69E9365B8AC57A5A54D7077B8975 /* NetworkCompose-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NetworkCompose-umbrella.h"; sourceTree = "<group>"; };
 		41BE1BD93F141ECA6A10911F08C6A202 /* MetricInterceptor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MetricInterceptor.swift; sourceTree = "<group>"; };
-		45D726E5412CBA94EC80E7DF4947374A /* LoggingStrategy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoggingStrategy.swift; sourceTree = "<group>"; };
+		45D726E5412CBA94EC80E7DF4947374A /* LogStrategy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LogStrategy.swift; sourceTree = "<group>"; };
 		474AEB9D0F8F6AFD262F51DD6E1B4FB8 /* NetworkCoordinator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkCoordinator.swift; sourceTree = "<group>"; };
 		488C0CCB76121646A6ABBDBD420FAA6C /* NetworkCommonSettings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkCommonSettings.swift; sourceTree = "<group>"; };
 		48BDB3781C6E1F9CE5FE897191AB171D /* Pods-ExampleTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ExampleTests-Info.plist"; sourceTree = "<group>"; };
@@ -134,7 +134,7 @@
 		5BE11D689A70011F88BC71D74F2B52DD /* Request.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		62E81A44D14317322AE0BAC7968CF650 /* EndpointExpectation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EndpointExpectation.swift; sourceTree = "<group>"; };
 		630CABE8F692FCDBFD1B122A2D0CE388 /* Pods-ExampleTests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-ExampleTests"; path = Pods_ExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		67E6035A7BD40CB7C67E83C0D5E02925 /* StorageStrategy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StorageStrategy.swift; sourceTree = "<group>"; };
+		67E6035A7BD40CB7C67E83C0D5E02925 /* RecordResponseMode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RecordResponseMode.swift; sourceTree = "<group>"; };
 		68452DC529DF9D87927BE260603817AD /* RequestInterface.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RequestInterface.swift; sourceTree = "<group>"; };
 		68635FB45B8DF2F08FA150CB5B94EB18 /* TaskCreatedMetric.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TaskCreatedMetric.swift; sourceTree = "<group>"; };
 		687B514EEBC2F799BD1DB36AA00BD93B /* Pods-Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Example-Info.plist"; sourceTree = "<group>"; };
@@ -152,7 +152,7 @@
 		8836B568F7009014C70D9FE7F3EB8515 /* SSLPinningInterface.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SSLPinningInterface.swift; sourceTree = "<group>"; };
 		8D30B609D2F069E5963F2E3D21D36C71 /* Pods-ExampleTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ExampleTests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		95A8DC24296523052DAA46542D9643BF /* OperationQueueManagerInterface.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OperationQueueManagerInterface.swift; sourceTree = "<group>"; };
-		9BA1CE4760DE85F4CDE2C1533ED3CE70 /* MockerStrategy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MockerStrategy.swift; sourceTree = "<group>"; };
+		9BA1CE4760DE85F4CDE2C1533ED3CE70 /* AutomationMode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AutomationMode.swift; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9F125F48AEA39CCEC2CD57196352A13C /* MetricsExplorer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MetricsExplorer.swift; sourceTree = "<group>"; };
 		9F3D372C8BB7B3328E77DD62D327B426 /* NetworkCompose-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NetworkCompose-prefix.pch"; sourceTree = "<group>"; };
@@ -178,7 +178,7 @@
 		D0B9FE19DA5F304809EEF0136D7E3011 /* StorageServiceProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StorageServiceProvider.swift; sourceTree = "<group>"; };
 		D4FA3655BCE6778CC3A226F640B52B00 /* FileSystemStorageService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FileSystemStorageService.swift; sourceTree = "<group>"; };
 		DCDA3864906D39374B7F802BD0190A84 /* ResponseErrorMetric.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ResponseErrorMetric.swift; sourceTree = "<group>"; };
-		DD4ABB1F2B14B36F0044D0EF /* MetricReportStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricReportStrategy.swift; sourceTree = "<group>"; };
+		DD4ABB1F2B14B36F0044D0EF /* ReportMetricStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportMetricStrategy.swift; sourceTree = "<group>"; };
 		DE249ABA208815BA03DD95189E36B096 /* Dictionary+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extensions.swift"; sourceTree = "<group>"; };
 		DF121EAC8AECBB23DF5425EED59908A3 /* TaskProgressUpdatedMetric.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TaskProgressUpdatedMetric.swift; sourceTree = "<group>"; };
 		DFD3C6565215F4ED88C354C9079E5C56 /* NetworkMockHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkMockHandler.swift; sourceTree = "<group>"; };
@@ -318,7 +318,7 @@
 		58736E45F176BCF51E79B45577903E49 /* Metric */ = {
 			isa = PBXGroup;
 			children = (
-				DD4ABB1F2B14B36F0044D0EF /* MetricReportStrategy.swift */,
+				DD4ABB1F2B14B36F0044D0EF /* ReportMetricStrategy.swift */,
 				E04F99F5A9F50CBE658A1D13926AF2B4 /* TaskMetricEvent.swift */,
 				616669FFE41B6603108124EFFE71EAAA /* Explorer */,
 				59E778C45E1623C24CBCC43EB29EF204 /* Interceptor */,
@@ -362,7 +362,7 @@
 				D4FA3655BCE6778CC3A226F640B52B00 /* FileSystemStorageService.swift */,
 				195D9FA01CEF4DDB00C4160D9810869C /* StorageService.swift */,
 				D0B9FE19DA5F304809EEF0136D7E3011 /* StorageServiceProvider.swift */,
-				67E6035A7BD40CB7C67E83C0D5E02925 /* StorageStrategy.swift */,
+				67E6035A7BD40CB7C67E83C0D5E02925 /* RecordResponseMode.swift */,
 				C7E6A39DAB1E309D09D58C6F376097AB /* UniqueKeyPath.swift */,
 			);
 			path = Storage;
@@ -412,7 +412,7 @@
 			children = (
 				F27A3CF93F9BC3AE563519ACEC9397B8 /* DefaultLogger.swift */,
 				BA35E31AC5D588BE8B09C7962003CEB4 /* LoggerInterface.swift */,
-				45D726E5412CBA94EC80E7DF4947374A /* LoggingStrategy.swift */,
+				45D726E5412CBA94EC80E7DF4947374A /* LogStrategy.swift */,
 			);
 			path = Logger;
 			sourceTree = "<group>";
@@ -432,7 +432,7 @@
 			children = (
 				62E81A44D14317322AE0BAC7968CF650 /* EndpointExpectation.swift */,
 				4A5FAC3109DFDC20BD8BA259887013A3 /* EndpointExpectationProvider.swift */,
-				9BA1CE4760DE85F4CDE2C1533ED3CE70 /* MockerStrategy.swift */,
+				9BA1CE4760DE85F4CDE2C1533ED3CE70 /* AutomationMode.swift */,
 				19EFB6580B8241BDBBBCF3A68CDCDADD /* NetworkMocker.swift */,
 				DFD3C6565215F4ED88C354C9079E5C56 /* NetworkMockHandler.swift */,
 				566EF7028521CF355DACF899CCC6FB4D /* ParserExpectationHelper.swift */,
@@ -734,18 +734,18 @@
 				E667ABCFA753D6764AECA1FC29057435 /* DefaultLogger.swift in Sources */,
 				499AF16D8CA02F0BFA81E516C1356F3D /* Dictionary+Extensions.swift in Sources */,
 				624A9230A9C4F0624E665F9F7F44BE67 /* DispatchQueueType.swift in Sources */,
-				DD4ABB202B14B36F0044D0EF /* MetricReportStrategy.swift in Sources */,
+				DD4ABB202B14B36F0044D0EF /* ReportMetricStrategy.swift in Sources */,
 				DED23A8F216B9F39D485031831634AFB /* EndpointExpectation.swift in Sources */,
 				B440F612ED33AC07246C9D5180A50D60 /* EndpointExpectationProvider.swift in Sources */,
 				04BB0A9EAAFD50D982D0733896D6752D /* FileSystemStorageService.swift in Sources */,
 				DDB7E2543D28D300B1B57A0CF28A8D9E /* LoggerInterface.swift in Sources */,
-				3CE6FE357ECFF04C771244B891E53F1B /* LoggingStrategy.swift in Sources */,
+				3CE6FE357ECFF04C771244B891E53F1B /* LogStrategy.swift in Sources */,
 				93BCE26AA22A426D645C3E5BBFA4F5EC /* MetricInterceptor.swift in Sources */,
 				62CF249C706C12E7C681A03249D56889 /* MetricInterceptorInterface.swift in Sources */,
 				80A2F508BCC2AA6228BB6B0BE4EE9369 /* MetricsCollector.swift in Sources */,
 				4283D329A5E217B5E78B980EA2763EE8 /* MetricsCollectorInterface.swift in Sources */,
 				882A268B80ACE90FF0D259F0A4D2060D /* MetricsExplorer.swift in Sources */,
-				AA7D2A249BBD8B76DE08800291B482CE /* MockerStrategy.swift in Sources */,
+				AA7D2A249BBD8B76DE08800291B482CE /* AutomationMode.swift in Sources */,
 				BABF5A317835BFD3E1829A34A74C5812 /* Network+URLSession.swift in Sources */,
 				9C55F829B4A06B00C43F4D3DE921DB41 /* NetworkBuilder.swift in Sources */,
 				B5D9FE37BE48819F8E38A5A125F314A9 /* NetworkCommonSettings.swift in Sources */,
@@ -784,7 +784,7 @@
 				5D608CE77C85169469B87CE9B246E8E3 /* SSLPinningProcessorInterface.swift in Sources */,
 				2557850A5F5D937CF2A94282133919C4 /* StorageService.swift in Sources */,
 				8BD3A0B7B94CF3C18173A01613D433D3 /* StorageServiceProvider.swift in Sources */,
-				C2A5D4B0D864DA0FC752B61D0E0D4336 /* StorageStrategy.swift in Sources */,
+				C2A5D4B0D864DA0FC752B61D0E0D4336 /* RecordResponseMode.swift in Sources */,
 				A3C295BE5D186E0B7909BD4639FD46BB /* TaskCompletedMetric.swift in Sources */,
 				7DDD21A7D249955399300FC50318523B /* TaskCreatedMetric.swift in Sources */,
 				4D143DC6AB1D6695E2E09F67B575522E /* TaskDidFinishCollectingMetric.swift in Sources */,

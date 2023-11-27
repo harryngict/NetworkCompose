@@ -28,8 +28,8 @@ final class NetworkCoordinator<SessionType: NetworkSession>: NetworkCoordinatorI
     ///   - reAuthService: The service responsible for re-authentication.
     ///   - operationQueue: The operation queue manager for serializing network operations. Default is `serialOperationQueue`.
     ///   - networkReachability: The network reachability object. Default is `NetworkReachabilityImp.shared`.
-    ///   - executeQueue: The dispatch queue for executing network requests.
-    ///   - observeQueue: The dispatch queue for observing and handling network events.
+    ///   - executionQueue: The dispatch queue for executing network requests.
+    ///   - observationQueue: The dispatch queue for observing and handling network events.
     ///   - storageService: The service for handling storage-related tasks.
     ///   - loggerInterface: The interface for logging network events.
     init(
@@ -38,8 +38,8 @@ final class NetworkCoordinator<SessionType: NetworkSession>: NetworkCoordinatorI
         reAuthService: ReAuthenticationService?,
         operationQueue: OperationQueueManagerInterface,
         networkReachability: NetworkReachabilityInterface,
-        executeQueue: DispatchQueueType,
-        observeQueue: DispatchQueueType,
+        executionQueue: DispatchQueueType,
+        observationQueue: DispatchQueueType,
         storageService: StorageService?,
         loggerInterface: LoggerInterface?
     ) {
@@ -49,8 +49,8 @@ final class NetworkCoordinator<SessionType: NetworkSession>: NetworkCoordinatorI
         networkCore = NetworkController(baseURL: baseURL,
                                         session: session,
                                         networkReachability: networkReachability,
-                                        executeQueue: executeQueue,
-                                        observeQueue: observeQueue,
+                                        executionQueue: executionQueue,
+                                        observationQueue: observationQueue,
                                         storageService: storageService,
                                         loggerInterface: loggerInterface)
     }

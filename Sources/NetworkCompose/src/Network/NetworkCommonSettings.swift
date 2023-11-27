@@ -19,28 +19,28 @@ public class NetworkCommonSettings<SessionType: NetworkSession> {
     var sslPinningPolicy: SSLPinningPolicy
 
     /// The strategy for reporting metrics related to network tasks.
-    var metricTaskReportStrategy: MetricTaskReportStrategy
+    var reportMetricStrategy: ReportMetricStrategy
 
     /// Interface for monitoring network reachability.
     var networkReachability: NetworkReachabilityInterface
 
     /// The queue on which network operations are executed.
-    var executeQueue: DispatchQueueType
+    var executionQueue: DispatchQueueType
 
     /// The queue on which network events are observed.
-    var observeQueue: DispatchQueueType
+    var observationQueue: DispatchQueueType
 
     /// Provider for session configurations, allowing customization of network sessions.
     var sessionConfigurationProvider: SessionConfigurationProvider
 
     /// The strategy for mocking network events, useful for testing or simulating network behavior.
-    var mockerStrategy: MockerStrategy
+    var automationMode: AutomationMode
 
-    /// The strategy for handling storable network events, such as caching or persistent storage.
-    var storageStrategy: StorageStrategy
+    /// The mode for recording responses during network operations.
+    var recordResponseMode: RecordResponseMode
 
     /// The strategy for logging network events and activities.
-    var loggingStrategy: LoggingStrategy
+    var logStrategy: LogStrategy
 
     public required init(baseURL: URL,
                          session: SessionType)
@@ -48,14 +48,14 @@ public class NetworkCommonSettings<SessionType: NetworkSession> {
         self.baseURL = baseURL
         self.session = session
         sslPinningPolicy = .disabled
-        metricTaskReportStrategy = .disabled
-        mockerStrategy = .disabled
-        storageStrategy = .disabled
-        executeQueue = DefaultNetworkDispatchQueue.executeQueue
-        observeQueue = DefaultNetworkDispatchQueue.observeQueue
+        reportMetricStrategy = .disabled
+        automationMode = .disabled
+        recordResponseMode = .disabled
+        logStrategy = .disabled
+        executionQueue = DefaultDispatchQueue.executionQueue
+        observationQueue = DefaultDispatchQueue.observationQueue
         networkReachability = NetworkReachability.shared
         sessionConfigurationProvider = DefaultSessionConfigurationProvider.normal
-        loggingStrategy = .disabled
     }
 
     /// Sets the security trust for SSL pinning.
@@ -65,7 +65,7 @@ public class NetworkCommonSettings<SessionType: NetworkSession> {
     ///
     /// - Throws: A `NetworkError` if the session cannot be created.
     @discardableResult
-    public func setSSLPinningPolicy(_ sslPinningPolicy: SSLPinningPolicy) -> Self {
+    public func sslPinningPolicy(_ sslPinningPolicy: SSLPinningPolicy) -> Self {
         self.sslPinningPolicy = sslPinningPolicy
         return self
     }
@@ -78,8 +78,8 @@ public class NetworkCommonSettings<SessionType: NetworkSession> {
     /// - Parameter strategy: The strategy for reporting metrics related to network tasks.
     /// - Returns: An instance of the same type to support method chaining.
     @discardableResult
-    public func setMetricTaskReportStrategy(_ strategy: MetricTaskReportStrategy) -> Self {
-        metricTaskReportStrategy = strategy
+    public func reportMetric(_ strategy: ReportMetricStrategy) -> Self {
+        reportMetricStrategy = strategy
         return self
     }
 
@@ -88,48 +88,58 @@ public class NetworkCommonSettings<SessionType: NetworkSession> {
     /// - Parameter reachability: The custom network reachability object.
     /// - Returns: The builder instance for method chaining.
     @discardableResult
-    public func setNetworkReachability(_ reachability: NetworkReachabilityInterface) -> Self {
+    public func networkReachability(_ reachability: NetworkReachabilityInterface) -> Self {
         networkReachability = reachability
         return self
     }
 
     /// Sets the custom dispatch queue for executing network requests.
     ///
-    /// - Parameter executeQueue: The custom dispatch queue for executing network requests.
+    /// - Parameter queue: The custom dispatch queue for executing network requests.
     /// - Returns: The builder instance for method chaining.
     @discardableResult
-    public func setExecuteQueue(_ executeQueue: DispatchQueueType) -> Self {
-        self.executeQueue = executeQueue
+    public func execute(on queue: DispatchQueueType) -> Self {
+        executionQueue = queue
         return self
     }
 
     /// Sets the custom dispatch queue for observing and handling network events.
     ///
-    /// - Parameter observeQueue: The custom dispatch queue for observing and handling network events.
+    /// - Parameter queue: The custom dispatch queue for observing and handling network events.
     /// - Returns: The builder instance for method chaining.
     @discardableResult
-    public func setObserveQueue(_ observeQueue: DispatchQueueType) -> Self {
-        self.observeQueue = observeQueue
+    public func observe(on queue: DispatchQueueType) -> Self {
+        observationQueue = queue
         return self
     }
 
-    /// Sets the mocker strategy for the object.
+    /// Configures the automation mode for mocking in tests.
     ///
-    /// - Parameter strategy: The mocker strategy to be set.
-    /// - Returns: The modified object with the updated mocker strategy.
+    /// - Parameter strategy: The mocking strategy to be applied for automation tests.
+    /// - Returns: The modified instance allowing method chaining.
+    ///
+    /// Use this method to set the mocking strategy specifically tailored for automation tests. The provided `strategy` parameter defines how responses are mocked during automated testing scenarios.
+    ///
+    /// - Note: This method supports method chaining, enabling the convenient configuration of the mocking strategy within a single line.
+    /// - SeeAlso: `AutomationMode` enum for available strategies tailored for automation testing.
     @discardableResult
-    public func setMockerStrategy(_ strategy: MockerStrategy) -> Self {
-        mockerStrategy = strategy
+    public func automationMode(_ strategy: AutomationMode) -> Self {
+        automationMode = strategy
         return self
     }
 
-    /// Sets the Storage strategy for handling network events.
+    /// Sets the storage strategy for handling network events and recording responses for automation testing.
     ///
-    /// - Parameter strategy: The Storable strategy to be set.
+    /// - Parameter mode: The record response mode to be set.
     /// - Returns: The builder instance for method chaining.
+    ///
+    /// Use this method to configure the storage strategy for handling network events and record responses for automation testing. The provided `mode` parameter determines how responses are recorded and later utilized in automated testing scenarios.
+    ///
+    /// - Note: This method supports method chaining, allowing you to conveniently set the storage strategy and perform additional configurations in a single line.
+    /// - SeeAlso: `RecordResponseMode` for available modes and customization options.
     @discardableResult
-    public func setStorageStrategy(_ strategy: StorageStrategy) -> Self {
-        storageStrategy = strategy
+    public func recordResponseForTesting(_ mode: RecordResponseMode) -> Self {
+        recordResponseMode = mode
         return self
     }
 
@@ -140,7 +150,7 @@ public class NetworkCommonSettings<SessionType: NetworkSession> {
     /// - Parameter provider: The session configuration provider.
     /// - Returns: An instance of the network with the updated session configuration provider.
     @discardableResult
-    public func setSessionConfigurationProvider(_ provider: SessionConfigurationProvider) -> Self {
+    public func sessionConfigurationProvider(_ provider: SessionConfigurationProvider) -> Self {
         sessionConfigurationProvider = provider
         return self
     }
@@ -150,8 +160,8 @@ public class NetworkCommonSettings<SessionType: NetworkSession> {
     /// - Parameter strategy: The logging strategy to set.
     /// - Returns: The logger instance with the updated logging strategy.
     @discardableResult
-    public func setLoggingStrategy(_ strategy: LoggingStrategy) -> Self {
-        loggingStrategy = strategy
+    public func log(_ strategy: LogStrategy) -> Self {
+        logStrategy = strategy
         return self
     }
 
@@ -162,16 +172,16 @@ public class NetworkCommonSettings<SessionType: NetworkSession> {
     ///
     /// - Returns: The modified instance of the network builder with the default configuration.
     @discardableResult
-    public func setDefaultConfiguration() -> Self {
+    public func applyDefaultConfiguration() -> Self {
         sslPinningPolicy = .disabled
-        metricTaskReportStrategy = .disabled
-        mockerStrategy = .disabled
-        storageStrategy = .disabled
-        executeQueue = DefaultNetworkDispatchQueue.executeQueue
-        observeQueue = DefaultNetworkDispatchQueue.observeQueue
+        reportMetricStrategy = .disabled
+        automationMode = .disabled
+        recordResponseMode = .disabled
+        logStrategy = .disabled
+        executionQueue = DefaultDispatchQueue.executionQueue
+        observationQueue = DefaultDispatchQueue.observationQueue
         networkReachability = NetworkReachability.shared
         sessionConfigurationProvider = DefaultSessionConfigurationProvider.normal
-        loggingStrategy = .disabled
         if let session = try? createNetworkSession() { self.session = session }
         return self
     }
@@ -182,7 +192,7 @@ public class NetworkCommonSettings<SessionType: NetworkSession> {
     ///            Returns `nil` if logging is disabled, the shared default logger
     ///            if logging is enabled, or a custom logger if provided.
     func createLogger() -> LoggerInterface? {
-        switch loggingStrategy {
+        switch logStrategy {
         case .disabled:
             return nil
         case .enabled:
@@ -201,7 +211,7 @@ public class NetworkCommonSettings<SessionType: NetworkSession> {
     /// - Returns: An instance conforming to `SessionType`.
     func createNetworkSession() throws -> SessionType {
         let delegate = SessionProxyDelegate(sslPinningPolicy: sslPinningPolicy,
-                                            metricTaskReportStrategy: metricTaskReportStrategy,
+                                            reportMetricStrategy: reportMetricStrategy,
                                             loggerInterface: createLogger())
 
         guard let session = URLSession(configuration: sessionConfigurationProvider.sessionConfig,
