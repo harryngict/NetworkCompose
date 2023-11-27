@@ -46,8 +46,6 @@ public enum RetryPolicy: Sendable {
         guard let delay = retryDelay(currentRetry: currentRetry), delay >= 0 else {
             return (false, TimeInterval())
         }
-
-        debugPrint("🔄 NetworkCompose retry count: \(currentRetry)")
         return (true, delay)
     }
 

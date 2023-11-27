@@ -17,6 +17,7 @@ public protocol NetworkCoordinatorInterface: NetworkControllerInterface {
 final class NetworkCoordinator<SessionType: NetworkSession>: NetworkCoordinatorInterface {
     private let networkCore: NetworkControllerInterface
     private let operationQueue: OperationQueueManagerInterface
+    private var loggerInterface: LoggerInterface?
     public var reAuthService: ReAuthenticationService?
 
     /// Initializes the `NetworkQueue` with the specified configuration.
@@ -29,6 +30,8 @@ final class NetworkCoordinator<SessionType: NetworkSession>: NetworkCoordinatorI
     ///   - networkReachability: The network reachability object. Default is `NetworkReachabilityImp.shared`.
     ///   - executeQueue: The dispatch queue for executing network requests.
     ///   - observeQueue: The dispatch queue for observing and handling network events.
+    ///   - storageService: The service for handling storage-related tasks.
+    ///   - loggerInterface: The interface for logging network events.
     init(
         baseURL: URL,
         session: SessionType,
@@ -37,16 +40,19 @@ final class NetworkCoordinator<SessionType: NetworkSession>: NetworkCoordinatorI
         networkReachability: NetworkReachabilityInterface,
         executeQueue: DispatchQueueType,
         observeQueue: DispatchQueueType,
-        storageService: StorageService?
+        storageService: StorageService?,
+        loggerInterface: LoggerInterface?
     ) {
         self.reAuthService = reAuthService
         self.operationQueue = operationQueue
+        self.loggerInterface = loggerInterface
         networkCore = NetworkController(baseURL: baseURL,
                                         session: session,
                                         networkReachability: networkReachability,
                                         executeQueue: executeQueue,
                                         observeQueue: observeQueue,
-                                        storageService: storageService)
+                                        storageService: storageService,
+                                        loggerInterface: loggerInterface)
     }
 
     func request<RequestType>(
@@ -55,6 +61,7 @@ final class NetworkCoordinator<SessionType: NetworkSession>: NetworkCoordinatorI
         retryPolicy: RetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
+        logRequest(request, .startRequest)
         guard request.requiresReAuthentication else {
             sendRequest(request,
                         andHeaders: headers,
@@ -77,6 +84,7 @@ final class NetworkCoordinator<SessionType: NetworkSession>: NetworkCoordinatorI
         retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
+        logRequest(request, .startRequest)
         guard request.requiresReAuthentication else {
             sendUploadRequest(request,
                               andHeaders: headers,
@@ -100,6 +108,7 @@ final class NetworkCoordinator<SessionType: NetworkSession>: NetworkCoordinatorI
         retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
+        logRequest(request, .startRequest)
         guard request.requiresReAuthentication else {
             sendDownloadRequest(request,
                                 andHeaders: headers,
@@ -121,6 +130,24 @@ final class NetworkCoordinator<SessionType: NetworkSession>: NetworkCoordinatorI
         }
         for operation in operations {
             operation.validOperation = false
+        }
+    }
+
+    private enum RequestLogCase {
+        case startRequest
+        case requestAutheticationExpired
+    }
+
+    private func logRequest<RequestType>(
+        _ request: RequestType,
+        _ logCase: RequestLogCase
+    ) where RequestType: RequestInterface {
+        switch logCase {
+        case .startRequest:
+            loggerInterface?.logInfo(.debug, request.debugDescription)
+        case .requestAutheticationExpired:
+            loggerInterface?
+                .logInfo(.debug, "Token is expred for request: \(request.debugDescription), Authenticaiton action is triggered")
         }
     }
 }
@@ -158,20 +185,21 @@ extension NetworkCoordinator {
         retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
-        networkCore.request(request, andHeaders: headers, retryPolicy: retryPolicy) { result in
+        networkCore.request(request, andHeaders: headers, retryPolicy: retryPolicy) { [weak self] result in
             switch result {
             case let .success(model):
                 completion(.success(model))
             case let .failure(error):
-                if error.errorCode == 401, allowReAuth, let reAuthService = self.reAuthService {
+                if error.errorCode == 401, allowReAuth, let reAuthService = self?.reAuthService {
+                    self?.logRequest(request, .requestAutheticationExpired)
                     reAuthService.reAuthen { reAuthResult in
                         switch reAuthResult {
                         case let .success(newHeaders):
-                            self.sendRequest(request, andHeaders: newHeaders, allowReAuth: false,
-                                             retryPolicy: retryPolicy,
-                                             completion: completion)
+                            self?.sendRequest(request, andHeaders: newHeaders, allowReAuth: false,
+                                              retryPolicy: retryPolicy,
+                                              completion: completion)
                         case let .failure(error):
-                            self.cancelAllOperations()
+                            self?.cancelAllOperations()
                             completion(.failure(error))
                         }
                     }
@@ -224,23 +252,24 @@ extension NetworkCoordinator {
                            andHeaders: headers,
                            fromFile: fileURL,
                            retryPolicy: retryPolicy)
-        { result in
+        { [weak self] result in
             switch result {
             case let .success(model):
                 completion(.success(model))
             case let .failure(error):
-                if error.errorCode == 401, allowReAuth, let reAuthService = self.reAuthService {
+                if error.errorCode == 401, allowReAuth, let reAuthService = self?.reAuthService {
+                    self?.logRequest(request, .requestAutheticationExpired)
                     reAuthService.reAuthen { reAuthResult in
                         switch reAuthResult {
                         case let .success(newHeaders):
-                            self.sendUploadRequest(request,
-                                                   andHeaders: newHeaders,
-                                                   fromFile: fileURL,
-                                                   allowReAuth: false,
-                                                   retryPolicy: retryPolicy,
-                                                   completion: completion)
+                            self?.sendUploadRequest(request,
+                                                    andHeaders: newHeaders,
+                                                    fromFile: fileURL,
+                                                    allowReAuth: false,
+                                                    retryPolicy: retryPolicy,
+                                                    completion: completion)
                         case let .failure(error):
-                            self.cancelAllOperations()
+                            self?.cancelAllOperations()
                             completion(.failure(error))
                         }
                     }
@@ -285,20 +314,21 @@ extension NetworkCoordinator {
         retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
-        networkCore.download(request, andHeaders: headers, retryPolicy: retryPolicy) { result in
+        networkCore.download(request, andHeaders: headers, retryPolicy: retryPolicy) { [weak self] result in
             switch result {
             case let .success(model):
                 completion(.success(model))
             case let .failure(error):
-                if error.errorCode == 401, allowReAuth, let reAuthService = self.reAuthService {
+                if error.errorCode == 401, allowReAuth, let reAuthService = self?.reAuthService {
+                    self?.logRequest(request, .requestAutheticationExpired)
                     reAuthService.reAuthen { reAuthResult in
                         switch reAuthResult {
                         case let .success(newHeaders):
-                            self.sendDownloadRequest(request, andHeaders: newHeaders, allowReAuth: false,
-                                                     retryPolicy: retryPolicy,
-                                                     completion: completion)
+                            self?.sendDownloadRequest(request, andHeaders: newHeaders, allowReAuth: false,
+                                                      retryPolicy: retryPolicy,
+                                                      completion: completion)
                         case let .failure(error):
-                            self.cancelAllOperations()
+                            self?.cancelAllOperations()
                             completion(.failure(error))
                         }
                     }

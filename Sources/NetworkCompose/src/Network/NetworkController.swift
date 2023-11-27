@@ -14,6 +14,7 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
     private let executeQueue: DispatchQueueType
     private let observeQueue: DispatchQueueType
     private var storageService: StorageService?
+    private var loggerInterface: LoggerInterface?
 
     /// Initializes the `Network` with the specified configuration.
     ///
@@ -29,7 +30,8 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
          networkReachability: NetworkReachabilityInterface,
          executeQueue: DispatchQueueType,
          observeQueue: DispatchQueueType,
-         storageService: StorageService?)
+         storageService: StorageService?,
+         loggerInterface: LoggerInterface?)
     {
         self.baseURL = baseURL
         self.session = session
@@ -37,6 +39,7 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
         self.executeQueue = executeQueue
         self.observeQueue = observeQueue
         self.storageService = storageService
+        self.loggerInterface = loggerInterface
         self.networkReachability.startMonitoring(completion: { _ in })
     }
 
@@ -57,20 +60,20 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
         func performRequest() {
             do {
                 let networkRequest = try buildNetworkRequest(for: request, andHeaders: headers)
-                session.beginRequest(networkRequest) { result in
-                    self.handleResult(result, for: request) { result in
+                session.beginRequest(networkRequest) { [weak self] result in
+                    self?.handleResult(result, for: request) { result in
                         switch result {
                         case let .success(model):
-                            self.observeQueue.async {
+                            self?.observeQueue.async {
                                 completion(.success(model))
                             }
                         case let .failure(error):
                             currentRetry += 1
-                            self.retryIfNeeded(currentRetry: currentRetry,
-                                               retryPolicy: retryPolicy,
-                                               error: error,
-                                               performRequest: performRequest,
-                                               completion: completion)
+                            self?.retryIfNeeded(currentRetry: currentRetry,
+                                                retryPolicy: retryPolicy,
+                                                error: error,
+                                                performRequest: performRequest,
+                                                completion: completion)
                         }
                     }
                 }
@@ -103,20 +106,20 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
         func performRequest() {
             do {
                 var networkRequest = try buildNetworkRequest(for: request, andHeaders: headers)
-                try session.beginUploadTask(&networkRequest, fromFile: fileURL) { result in
-                    self.handleResult(result, for: request) { result in
+                try session.beginUploadTask(&networkRequest, fromFile: fileURL) { [weak self] result in
+                    self?.handleResult(result, for: request) { result in
                         switch result {
                         case let .success(model):
-                            self.observeQueue.async {
+                            self?.observeQueue.async {
                                 completion(.success(model))
                             }
                         case let .failure(error):
                             currentRetry += 1
-                            self.retryIfNeeded(currentRetry: currentRetry,
-                                               retryPolicy: retryPolicy,
-                                               error: error,
-                                               performRequest: performRequest,
-                                               completion: completion)
+                            self?.retryIfNeeded(currentRetry: currentRetry,
+                                                retryPolicy: retryPolicy,
+                                                error: error,
+                                                performRequest: performRequest,
+                                                completion: completion)
                         }
                     }
                 }
@@ -149,20 +152,20 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
         func performRequest() {
             do {
                 let networkRequest = try buildNetworkRequest(for: request, andHeaders: headers)
-                session.beginDownloadTask(networkRequest) { result in
-                    self.handleResult(result, for: request) { result in
+                session.beginDownloadTask(networkRequest) { [weak self] result in
+                    self?.handleResult(result, for: request) { result in
                         switch result {
                         case let .success(model):
-                            self.observeQueue.async {
+                            self?.observeQueue.async {
                                 completion(.success(model))
                             }
                         case let .failure(error):
                             currentRetry += 1
-                            self.retryIfNeeded(currentRetry: currentRetry,
-                                               retryPolicy: retryPolicy,
-                                               error: error,
-                                               performRequest: performRequest,
-                                               completion: completion)
+                            self?.retryIfNeeded(currentRetry: currentRetry,
+                                                retryPolicy: retryPolicy,
+                                                error: error,
+                                                performRequest: performRequest,
+                                                completion: completion)
                         }
                     }
                 }
@@ -237,6 +240,7 @@ final class NetworkController<SessionType: NetworkSession>: NetworkControllerInt
     ) where SuccessType: Decodable {
         let configuration = retryPolicy.retryConfiguration(forAttempt: currentRetry)
         if configuration.shouldRetry {
+            loggerInterface?.logInfo(.debug, "NetworkController retry count: \(currentRetry) time: \(configuration.delay)")
             executeQueue.asyncAfter(deadline: .now() + configuration.delay) {
                 performRequest()
             }

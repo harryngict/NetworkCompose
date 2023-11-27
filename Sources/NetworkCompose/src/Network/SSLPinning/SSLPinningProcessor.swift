@@ -9,9 +9,13 @@ import Foundation
 
 final class SSLPinningProcessor: SSLPinningProcessorInterface {
     var sslPinningPolicy: SSLPinningPolicy
+    private let loggerInterface: LoggerInterface?
 
-    init(sslPinningPolicy: SSLPinningPolicy) {
+    init(sslPinningPolicy: SSLPinningPolicy,
+         loggerInterface: LoggerInterface?)
+    {
         self.sslPinningPolicy = sslPinningPolicy
+        self.loggerInterface = loggerInterface
     }
 
     func validateAuthentication(_ protectionSpace: URLProtectionSpace) -> AuthChallengeDecision {
@@ -59,11 +63,11 @@ final class SSLPinningProcessor: SSLPinningProcessorInterface {
         let hash = serverKey.addRSAHeader()
 
         if let sslPinning = sslPinnings.first(where: { $0.host == protectionSpace.host }), sslPinning.hashKeys.contains(hash) {
-            debugPrint("🤝 NetworkCompose trust: \(protectionSpace.host)")
+            loggerInterface?.logInfo(.debug, "SSLPinningProcessor trust: \(protectionSpace.host)")
             return AuthChallengeDecision(authChallengeDisposition: .useCredential,
                                          urlCredential: URLCredential(trust: serverTrust))
         } else {
-            debugPrint("🚫 NetworkCompose doest not trust: \(protectionSpace.host)")
+            loggerInterface?.logInfo(.error, "SSLPinningProcessor doest not trust: \(protectionSpace.host)")
         }
 
         return AuthChallengeDecision(authChallengeDisposition: .cancelAuthenticationChallenge, urlCredential: nil)

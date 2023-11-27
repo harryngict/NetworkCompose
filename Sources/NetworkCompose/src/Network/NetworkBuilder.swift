@@ -65,7 +65,8 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkSettings<Sessio
                 networkReachability: networkReachability,
                 executeQueue: executeQueue,
                 observeQueue: observeQueue,
-                storageService: storageService
+                storageService: storageService,
+                loggerInterface: createLogger(from: loggingStrategy)
             )
         }
 

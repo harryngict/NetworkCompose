@@ -18,10 +18,12 @@ final class SessionProxyDelegate: NSObject, URLSessionTaskDelegate, URLSessionDa
     ///   - metricInterceptor: An optional `MetricInterceptor` for collecting network metrics.
     /// - Returns: A new instance of `NetworkSessionProxyDelegate`.
     init(sslPinningPolicy: SSLPinningPolicy?,
-         metricInterceptor: MetricInterceptor?)
+         metricInterceptor: MetricInterceptor?,
+         loggerInterface: LoggerInterface?)
     {
         if let sslPinningPolicy = sslPinningPolicy {
-            sslPinningProcessor = SSLPinningProcessor(sslPinningPolicy: sslPinningPolicy)
+            sslPinningProcessor = SSLPinningProcessor(sslPinningPolicy: sslPinningPolicy,
+                                                      loggerInterface: loggerInterface)
         }
 
         if let metricInterceptor = metricInterceptor {
