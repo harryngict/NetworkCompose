@@ -31,13 +31,13 @@ public struct EndpointExpectation {
 
     public func isSameRequest<RequestType>(
         _ request: RequestType
-    ) -> Bool where RequestType: NetworkRequestInterface {
+    ) -> Bool where RequestType: RequestInterface {
         return path == request.path && method == request.method
     }
 
     public func getResponse<RequestType>(
         _: RequestType
-    ) throws -> RequestType.SuccessType where RequestType: NetworkRequestInterface {
+    ) throws -> RequestType.SuccessType where RequestType: RequestInterface {
         switch response {
         case let .failure(error):
             throw error

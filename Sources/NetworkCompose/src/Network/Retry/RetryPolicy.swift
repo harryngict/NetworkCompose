@@ -38,19 +38,26 @@ public enum RetryPolicy: Sendable {
         }
     }
 
-    func shouldRetry(currentRetry: Int) -> Bool {
+    func retryConfiguration(forAttempt currentRetry: Int) -> (shouldRetry: Bool, delay: TimeInterval) {
+        guard currentRetry <= retryCount else {
+            return (false, TimeInterval())
+        }
+
+        guard let delay = retryDelay(currentRetry: currentRetry), delay >= 0 else {
+            return (false, TimeInterval())
+        }
+
         debugPrint("🔄 NetworkCompose retry count: \(currentRetry)")
-        return currentRetry <= retryCount
+        return (true, delay)
     }
 
-    func retryDelay(currentRetry: Int) -> TimeInterval? {
+    private func retryDelay(currentRetry: Int) -> TimeInterval? {
         switch self {
         case .none:
             return nil
         case let .exponentialRetry(_, initialDelay, multiplier, maxDelay):
             let delay = initialDelay * pow(multiplier, Double(currentRetry - 1))
             return currentRetry > 0 ? min(maxDelay, delay) : nil
-
         case let .constant(_, delay):
             return delay
         }

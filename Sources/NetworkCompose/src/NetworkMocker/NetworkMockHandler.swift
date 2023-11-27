@@ -20,7 +20,7 @@ final class NetworkMockHandler {
 
     func getRequestResponse<RequestType>(
         _ request: RequestType
-    ) throws -> RequestType.SuccessType where RequestType: NetworkRequestInterface {
+    ) throws -> RequestType.SuccessType where RequestType: RequestInterface {
         switch mockerStrategy {
         case let .custom(provider):
             let clientExpection = provider.getExpectaion(path: request.path, method: request.method)

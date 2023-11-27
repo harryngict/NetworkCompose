@@ -21,13 +21,13 @@ final class StorageServiceProvider: StorageService {
         _ request: RequestType,
         data: Data,
         model: RequestType.SuccessType
-    ) throws where RequestType: NetworkRequestInterface {
+    ) throws where RequestType: RequestInterface {
         try storageService.storeResponse(request, data: data, model: model)
     }
 
     func getResponse<RequestType>(
         _ request: RequestType
-    ) throws -> RequestType.SuccessType where RequestType: NetworkRequestInterface {
+    ) throws -> RequestType.SuccessType where RequestType: RequestInterface {
         try storageService.getResponse(request)
     }
 }

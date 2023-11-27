@@ -16,7 +16,7 @@ public protocol NetworkCoordinatorInterface: NetworkControllerInterface {
 
 final class NetworkCoordinator<SessionType: NetworkSession>: NetworkCoordinatorInterface {
     private let networkCore: NetworkControllerInterface
-    private let operationQueue: OperationQueueManager
+    private let operationQueue: OperationQueueManagerInterface
     public var reAuthService: ReAuthenticationService?
 
     /// Initializes the `NetworkQueue` with the specified configuration.
@@ -33,8 +33,8 @@ final class NetworkCoordinator<SessionType: NetworkSession>: NetworkCoordinatorI
         baseURL: URL,
         session: SessionType,
         reAuthService: ReAuthenticationService?,
-        operationQueue: OperationQueueManager,
-        networkReachability: NetworkReachability,
+        operationQueue: OperationQueueManagerInterface,
+        networkReachability: NetworkReachabilityInterface,
         executeQueue: DispatchQueueType,
         observeQueue: DispatchQueueType,
         storageService: StorageService?
@@ -49,12 +49,12 @@ final class NetworkCoordinator<SessionType: NetworkSession>: NetworkCoordinatorI
                                         storageService: storageService)
     }
 
-    func request<RequestType: NetworkRequestInterface>(
+    func request<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
         retryPolicy: RetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
-    ) {
+    ) where RequestType: RequestInterface {
         guard request.requiresReAuthentication else {
             sendRequest(request,
                         andHeaders: headers,
@@ -70,13 +70,13 @@ final class NetworkCoordinator<SessionType: NetworkSession>: NetworkCoordinatorI
         operationQueue.enqueue(operation)
     }
 
-    func upload<RequestType: NetworkRequestInterface>(
+    func upload<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String],
         fromFile fileURL: URL,
         retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
-    ) {
+    ) where RequestType: RequestInterface {
         guard request.requiresReAuthentication else {
             sendUploadRequest(request,
                               andHeaders: headers,
@@ -94,12 +94,12 @@ final class NetworkCoordinator<SessionType: NetworkSession>: NetworkCoordinatorI
         operationQueue.enqueue(operation)
     }
 
-    func download<RequestType: NetworkRequestInterface>(
+    func download<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String],
         retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
-    ) {
+    ) where RequestType: RequestInterface {
         guard request.requiresReAuthentication else {
             sendDownloadRequest(request,
                                 andHeaders: headers,
@@ -128,12 +128,12 @@ final class NetworkCoordinator<SessionType: NetworkSession>: NetworkCoordinatorI
 // MARK: Request execution
 
 extension NetworkCoordinator {
-    private func createRequestOperation<RequestType: NetworkRequestInterface>(
+    private func createRequestOperation<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String],
         retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
-    ) -> CustomOperation {
+    ) -> CustomOperation where RequestType: RequestInterface {
         let asyncOperation = ClosureCustomOperation { operation in
             operation.state = .executing
             self.sendRequest(request, andHeaders: headers,
@@ -151,13 +151,13 @@ extension NetworkCoordinator {
         return asyncOperation
     }
 
-    private func sendRequest<RequestType: NetworkRequestInterface>(
+    private func sendRequest<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String],
         allowReAuth: Bool,
         retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
-    ) {
+    ) where RequestType: RequestInterface {
         networkCore.request(request, andHeaders: headers, retryPolicy: retryPolicy) { result in
             switch result {
             case let .success(model):
@@ -186,13 +186,13 @@ extension NetworkCoordinator {
 // MARK: Upload execution
 
 extension NetworkCoordinator {
-    private func createUploadOperation<RequestType: NetworkRequestInterface>(
+    private func createUploadOperation<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String],
         fromFile fileURL: URL,
         retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
-    ) -> CustomOperation {
+    ) -> CustomOperation where RequestType: RequestInterface {
         let asyncOperation = ClosureCustomOperation { operation in
             operation.state = .executing
             self.sendUploadRequest(request,
@@ -212,14 +212,14 @@ extension NetworkCoordinator {
         return asyncOperation
     }
 
-    private func sendUploadRequest<RequestType: NetworkRequestInterface>(
+    private func sendUploadRequest<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String],
         fromFile fileURL: URL,
         allowReAuth: Bool,
         retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
-    ) {
+    ) where RequestType: RequestInterface {
         networkCore.upload(request,
                            andHeaders: headers,
                            fromFile: fileURL,
@@ -255,12 +255,12 @@ extension NetworkCoordinator {
 // MARK: Download execution
 
 extension NetworkCoordinator {
-    private func createDownloadOperation<RequestType: NetworkRequestInterface>(
+    private func createDownloadOperation<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String],
         retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
-    ) -> CustomOperation {
+    ) -> CustomOperation where RequestType: RequestInterface {
         let asyncOperation = ClosureCustomOperation { operation in
             operation.state = .executing
             self.sendDownloadRequest(request, andHeaders: headers,
@@ -278,13 +278,13 @@ extension NetworkCoordinator {
         return asyncOperation
     }
 
-    private func sendDownloadRequest<RequestType: NetworkRequestInterface>(
+    private func sendDownloadRequest<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String],
         allowReAuth: Bool,
         retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
-    ) {
+    ) where RequestType: RequestInterface {
         networkCore.download(request, andHeaders: headers, retryPolicy: retryPolicy) { result in
             switch result {
             case let .success(model):
