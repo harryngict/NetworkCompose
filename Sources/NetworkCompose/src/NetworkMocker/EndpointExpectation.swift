@@ -31,8 +31,14 @@ public struct EndpointExpectation {
     ///   - method: The HTTP method of the network request.
     ///   - queryParameters: Optional query parameters for the network request. Default is `nil`.
     ///   - response: The expected response for the network request.
-    public init(path: String, method: NetworkMethod, queryParameters: [String: Any]? = nil, response: Response) {
-        uniqueKey = UniqueKey(path: path, method: method.rawValue, queryParameters: queryParameters)
+    public init(path: String,
+                method: NetworkMethod,
+                queryParameters: [String: Any]? = nil,
+                response: Response)
+    {
+        uniqueKey = UniqueKey(path: path,
+                              method: method,
+                              queryParameters: queryParameters)
         self.response = response
     }
 
@@ -40,9 +46,11 @@ public struct EndpointExpectation {
     ///
     /// - Parameter request: The network request to compare.
     /// - Returns: `true` if the requests are the same; otherwise, `false`.
-    public func isSameRequest<RequestType>(_ request: RequestType) -> Bool where RequestType: RequestInterface {
-        let compare = UniqueKey(path: request.path, method: request.method.rawValue, queryParameters: request.queryParameters)
-        return uniqueKey.key == compare.key
+    public func isSameRequest<RequestType>(
+        _ request: RequestType
+    ) -> Bool where RequestType: RequestInterface {
+        let identifier = UniqueKey(request: request)
+        return uniqueKey.key == identifier.key
     }
 
     /// Retrieves the expected success response for a given network request.
@@ -50,7 +58,9 @@ public struct EndpointExpectation {
     /// - Parameter request: The network request for which the response is expected.
     /// - Returns: The expected success response.
     /// - Throws: An error if the response type is not the same as the expected success type.
-    public func getResponse<RequestType>(_: RequestType) throws -> RequestType.SuccessType where RequestType: RequestInterface {
+    public func getResponse<RequestType>(
+        _: RequestType
+    ) throws -> RequestType.SuccessType where RequestType: RequestInterface {
         switch response {
         case let .failure(error):
             throw error

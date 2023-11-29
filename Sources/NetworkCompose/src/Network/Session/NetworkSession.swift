@@ -45,10 +45,10 @@ public protocol NetworkSession: AnyObject {
     /// - Throws: A `NetworkError` if there is an issue with the network request or file upload.
     @discardableResult
     func beginUploadTask(
-        _ request: inout SessionRequest,
+        _ request: SessionRequest,
         fromFile: URL,
         completion: @escaping ((Result<ResponseInterface, NetworkError>) -> Void)
-    ) throws -> NetworkTask
+    ) -> NetworkTask
 
     /// Downloads a file using a network request and executes the completion handler with the result.
     /// - Parameters:

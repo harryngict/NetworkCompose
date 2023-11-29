@@ -164,7 +164,9 @@ final class SingleRequest {
     private func performRequestDemoAutomation(
         completion: @escaping (Result<[Post], NetworkError>) -> Void
     ) {
-        let request = RequestBuilder<[Post]>(path: "/posts", method: .GET).build()
+        let request = RequestBuilder<[Post]>(path: "/posts", method: .GET)
+            .queryParameters(["postId": "1"])
+            .build()
 
         let concurrentQueue = DispatchQueue(label: "com.NetworkCompose.NetworkComposeDemo",
                                             qos: .userInitiated,
@@ -201,6 +203,7 @@ extension SingleRequest: EndpointExpectationProvider {
     func expectation(for _: String, method _: NetworkMethod) -> EndpointExpectation {
         let endpoint = EndpointExpectation(path: "/posts",
                                            method: .GET,
+                                           queryParameters: ["postId": "1"],
                                            response: .successResponse(Post(userId: 1,
                                                                            id: 1,
                                                                            title: "Hoang")))

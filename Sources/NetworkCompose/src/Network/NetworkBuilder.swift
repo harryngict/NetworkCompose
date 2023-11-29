@@ -12,9 +12,6 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkBuilderSettings
     /// The service responsible for re-authentication.
     private var reAuthService: ReAuthenticationService?
 
-    /// The queue used to run re-authentication operations.
-    private var operationQueue: OperationQueueManagerInterface = DefaultOperationQueueManager.serialOperationQueue
-
     /// Initializes a new instance of `NetworkBuilder`.
     ///
     /// - Parameters:
@@ -36,16 +33,6 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkBuilderSettings
         return self
     }
 
-    /// Sets the operation-queue service for the builder.
-    ///
-    /// - Parameter operationQueue: The queue to run re-authentication operations.
-    /// - Returns: The builder instance for method chaining.
-    @discardableResult
-    public func reAuthenOperationQueue(_ operationQueue: OperationQueueManagerInterface) -> Self {
-        self.operationQueue = operationQueue
-        return self
-    }
-
     /// Resets the configuration of the network builder and its related properties to their default state.
     ///
     /// This method clears any custom re-authentication service, operation queue, SSL pinning policy,
@@ -56,7 +43,6 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkBuilderSettings
     @discardableResult
     override public func applyDefaultConfiguration() -> Self {
         reAuthService = nil
-        operationQueue = DefaultOperationQueueManager.serialOperationQueue
         _ = super.applyDefaultConfiguration()
         return self
     }
@@ -102,7 +88,6 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkBuilderSettings
                 baseURL: baseURL,
                 session: session,
                 reAuthService: reAuthService,
-                operationQueue: operationQueue,
                 networkReachability: networkReachability,
                 executionQueue: executionQueue,
                 observationQueue: observationQueue,

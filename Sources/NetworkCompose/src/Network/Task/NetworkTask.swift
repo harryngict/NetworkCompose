@@ -7,6 +7,8 @@
 
 import Foundation
 
-public protocol NetworkTask: AnyObject {}
+public protocol NetworkTask: AnyObject {
+    func cancel()
+}
 
 extension URLSessionTask: NetworkTask {}

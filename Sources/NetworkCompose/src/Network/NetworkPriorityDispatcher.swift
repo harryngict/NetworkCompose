@@ -111,6 +111,24 @@ public final class NetworkPriorityDispatcher<SessionType: NetworkSession>: Netwo
         return self
     }
 
+    /// Cancels a network request with the specified type asynchronously.
+    ///
+    /// - Parameters:
+    ///   - request: The network request to cancel.
+    ///   - priority: The priority of the cancellation action. Default is `.medium`.
+    /// - Returns: An instance of `Self` for method chaining.
+    /// - Note: The cancellation action is executed based on the specified priority.
+    public func cancelRequest<RequestType>(
+        _ request: RequestType,
+        priority: Priority = .medium
+    ) -> Self where RequestType: RequestInterface {
+        addAction(priority: priority) { [weak self] actionCompletion in
+            self?.build().cancelRequest(request)
+            actionCompletion(())
+        }
+        return self
+    }
+
     /// Executes the composed network actions.
     ///
     /// - Parameter completion: A closure to be called upon completion of all network actions.
