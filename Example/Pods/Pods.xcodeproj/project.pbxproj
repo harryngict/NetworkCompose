@@ -7,84 +7,84 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00F0362F76B12A658B32746B2749A362 /* SSLPinning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68487C234ED972C80FCFCDB186381B91 /* SSLPinning.swift */; };
+		008630683B2C368E00DF64D41A20038D /* ResponseMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BFE8778939AC51F79255638B2EA82D /* ResponseMetric.swift */; };
+		012C3D614E205BB8ADBC5076B2D5E8BB /* Data+RSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AF40A9DC446DFBCF685F456CD01360 /* Data+RSA.swift */; };
 		015493E361617386AC1D8FE8C25916EF /* Pods-ExampleTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DCF22AD6CA93D3E57ECEE7D26CFD14 /* Pods-ExampleTests-dummy.m */; };
-		05E8F979EDD48AC15884F8345CB3E235 /* EndpointExpectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1254B2CDAA75EE32F5DAE592FE41E6F1 /* EndpointExpectation.swift */; };
-		06A213689BC38C8B6FBE4E60F1AFA535 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFAF0EB28407B92B33700D4B8A0A76F /* RequestBuilder.swift */; };
+		04906EA5F1D63E06E1AA02D1051B3929 /* RequestInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF93989DDFB75700DB6E987F93DBFAEF /* RequestInterface.swift */; };
+		06CC800148AFA9540983012BAD9C163A /* SSLPinningInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F97A6D44AC8ADA91CEFC38EE14C1D8 /* SSLPinningInterface.swift */; };
 		06E64B1B51F6DEBF5189BF4D0F3A5922 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		085308C46EE4D81305EA9219D3F051A4 /* EndpointExpectationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3B32A273282D08DD2304F4A9D09F2 /* EndpointExpectationProvider.swift */; };
-		0B884333DF5730C41573A90666F14F38 /* ResponseMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BFE8778939AC51F79255638B2EA82D /* ResponseMetric.swift */; };
-		0C6B7045700C87E311F29FBC123194F4 /* RequestMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80859D3BAE4EAC321C2FC4B0CEE5774E /* RequestMetric.swift */; };
-		0CB2B1F429A52F861025693546EFB6AE /* ReportMetricStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECFD538EB49A2F5D16E331D1577DA20 /* ReportMetricStrategy.swift */; };
-		0E931B495A76DCD976EDCABA7A1CB7B3 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B996DF3CCE704E933BB0F5B12EFC60 /* NetworkError.swift */; };
-		1123EF45272AE2B78777BA405C261B5E /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE7B70A40ABAF3593CFA4A174454F8C /* Priority.swift */; };
-		12216B2209091AA472FA27901CD969F1 /* NetworkMocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9CD40F5176BFABAA7C349ABEBC0A7E /* NetworkMocker.swift */; };
-		14329C7D97F155E79400E864DE04543F /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89ADB473B610255BB80789BC9AB92C78 /* StorageService.swift */; };
-		17678F12DD880EAF7828C7CA95BA7C5F /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABD0A9A1FC4B46CC3C351AD439A995F /* Request.swift */; };
-		17695B4B35CBEE286193F5C2D5089CDD /* SSLPinningProcessorInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932000D616184AE80F63D21A1F659066 /* SSLPinningProcessorInterface.swift */; };
-		18B8E9AFDB1837E8F1BC908AB4A521CA /* LogStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3120341A3801B27B9370881796C37 /* LogStrategy.swift */; };
+		0C3925C46EFC779E465D281DED4E9588 /* ReportMetricStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECFD538EB49A2F5D16E331D1577DA20 /* ReportMetricStrategy.swift */; };
+		0E4BBF538D3039FB0D7646F2ECF0B6ED /* URLSession+InputStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D832490DFD4086917780FE788A9F2F8 /* URLSession+InputStream.swift */; };
+		1101835B51B813C7719619203840AC56 /* NetworkSessionExecutorInteface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C283A5673784117655CB660373A94A9 /* NetworkSessionExecutorInteface.swift */; };
+		1825158CA20539E977B346F5EF9C8791 /* ResponseErrorMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0D635DBF144F2E3C44DEC1539D7D81 /* ResponseErrorMetric.swift */; };
 		1958F980DF3A3471154F31C737E05FC7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		1B8F9B01D437E95236766B5DD2D31049 /* TaskDidFinishCollectingMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6E25E950C6537A821398B11981C80D /* TaskDidFinishCollectingMetric.swift */; };
-		203B6ABC3F1D9D25183D5F34F7F7D473 /* TaskType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0334573263D820355D1ECA690164B06F /* TaskType.swift */; };
+		1BA4E2616D7C570BC13058D754866746 /* NetworkReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91FD26D42E24CD45EA93B342189B4543 /* NetworkReachability.swift */; };
+		1E31A9438792C8D4BF32026D73B1A50D /* RecordResponseMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DFC692E2FA803FEF8DBC9B40B83EA2 /* RecordResponseMode.swift */; };
+		2006D42A9CBD1E1C75A9938DDDE8FD66 /* MetricInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F55C12CB13019901D4C5ABB44FA84C5 /* MetricInterceptor.swift */; };
+		2044358BD79830510EF11DEAEF5FECBB /* NetworkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E093AE6F2AA2EB7CCE2871C3565B45D /* NetworkSession.swift */; };
 		21422C9199AB90804EBCB07F884E385A /* NetworkCompose-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 88AC6D47C2177B44E2D1C744F3FD585C /* NetworkCompose-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		26FB66C5F4A613D89DC1B29763A58483 /* RetryPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADF99BD60DCBFDB4848186AA7EB08AD /* RetryPolicy.swift */; };
-		28F988B1B978B0C280BF3F83E37B96CC /* MetricsExplorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B062F03C0DFC54DF79F3486E23E88DB6 /* MetricsExplorer.swift */; };
-		3DBB33546843678FD2BBAF80DBC7EA14 /* Network+URLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FA5E359E13C8B69A65500B7CA09DF4 /* Network+URLSession.swift */; };
-		44A6EA531F67720DB626ACA59A0F049D /* OperationQueueManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF17F7556E0E1B8B96A42B4F0C524626 /* OperationQueueManager.swift */; };
-		48F9EE65D56EAB9623F0F56FD0C4117B /* MetricsCollectorInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2187715C3E2706A54E1111390673EB1 /* MetricsCollectorInterface.swift */; };
+		25BF8788835977EA7B29CE1DEF3B4F4F /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B996DF3CCE704E933BB0F5B12EFC60 /* NetworkError.swift */; };
+		3308087BF73D2625BB4B279D3B36C86E /* NetworkMocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9CD40F5176BFABAA7C349ABEBC0A7E /* NetworkMocker.swift */; };
+		3E155CC3D26927550BDF3888C9C37AD2 /* Network+URLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FA5E359E13C8B69A65500B7CA09DF4 /* Network+URLSession.swift */; };
+		411EF592CFA319F7B7E9053F43045153 /* LoggerStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4ED8B72F03627B71CD5A7EFADC5FD3 /* LoggerStrategy.swift */; };
+		42AAEEFA2066882C6E50FAD0AB277AAD /* NetworkSessionExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144AF9AAFD70BC44E8EABB561125EEDD /* NetworkSessionExecutor.swift */; };
 		48FEE0F5530DD1BEBCC3E5B3803240C3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		513443E2BC40505FE918116B02023A0A /* AuthChallengeDecision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BE0F2BC83CC4BCFEB3C8025E5FFEB4 /* AuthChallengeDecision.swift */; };
-		5187F705452DE8A0338D63375F3A48D8 /* MetricInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F55C12CB13019901D4C5ABB44FA84C5 /* MetricInterceptor.swift */; };
-		54D3E04D904EC9E7D86F8BE5FD78C845 /* SecCertificate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8D9B93CBA07480A7B3F54F08541CFC /* SecCertificate+Extensions.swift */; };
-		59499BDE4FB4AF9E515ACC1896F2F76D /* NetworkReachabilityInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216CA7F5D276BA2AD2DBBA023BAB550B /* NetworkReachabilityInterface.swift */; };
-		59D057166682AE7ACE699515AF20916D /* StorageServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C798B23ADA1741347092517AA2BE60 /* StorageServiceProvider.swift */; };
-		5A6AC665FD9C83B7B448658CF45611BD /* ParserExpectationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E88F77684D19D8E15F795531DD69A /* ParserExpectationHelper.swift */; };
-		5BE602E5D77538127F72E8BD7943AB15 /* MetricsCollector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAD98D3167162DB92BDDE3B3D31D396 /* MetricsCollector.swift */; };
-		5C9D23E205E79691C59A1BA87834189D /* Dictionary+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CDACF2953A2D128B040B196E2D06B4 /* Dictionary+Extensions.swift */; };
-		5D934B8B971FA23947366C5CAB287B6D /* NetworkMockHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7400B65B43BB36F0AFE4F84233A9593 /* NetworkMockHandler.swift */; };
-		5DDCD20152F663AAB6A9DEE126D17E89 /* CustomOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6076161BD225DCD8CB08D6AA59E450 /* CustomOperation.swift */; };
-		60470AA1F8303685A6F1FC9EF974F945 /* NetworkTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC169C8B4BD26DC148D2807DCFA5B5 /* NetworkTask.swift */; };
-		6525137AE76770538322AE60EF3C8053 /* TaskMetricEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC74E3BD6C090155437912F2C7070680 /* TaskMetricEvent.swift */; };
-		66C021C2940301B7BFE0405EF12C08E2 /* Data+RSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AF40A9DC446DFBCF685F456CD01360 /* Data+RSA.swift */; };
-		6AA61EF600B313969EDA06E9E142C247 /* PriorityAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CAD409503635849D16035990B00EAF /* PriorityAction.swift */; };
-		77DCD404F4E63704476BA1A3A3C3C897 /* DefaultLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A240B1639A52931867D9DF281A36625 /* DefaultLogger.swift */; };
-		78B04A8EEC970184DD46C8CA7C82C561 /* FileSystemStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46703A0D90086630270F0BB6F26A0B9 /* FileSystemStorageService.swift */; };
-		7CC4F5958995AF5E9C8088DD87458F02 /* NetworkReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91FD26D42E24CD45EA93B342189B4543 /* NetworkReachability.swift */; };
-		80A786004A8A23DDC20423D5BEE0F398 /* ResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC429B44DA9B67FF5846390A6563CAB /* ResponseDecoder.swift */; };
-		8E2350ED732874E7C36B84F12B314E17 /* RequestInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF93989DDFB75700DB6E987F93DBFAEF /* RequestInterface.swift */; };
+		49183F6D5394AF3F167DA8E413D976A9 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFAF0EB28407B92B33700D4B8A0A76F /* RequestBuilder.swift */; };
+		49756227FA52FF2AC3965977ECB8EC9B /* MetricsCollector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAD98D3167162DB92BDDE3B3D31D396 /* MetricsCollector.swift */; };
+		49A3C5DD86B56F87BB9B99B345115F39 /* URLRequest+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FB84BB78DD9CB0F336753D6D003E24 /* URLRequest+Extensions.swift */; };
+		4AAF8E6ADABFEC7AEE93B17EB2A25CD2 /* DispatchQueueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E79C0242AAF33A30A5FF5707A7D268 /* DispatchQueueType.swift */; };
+		4B84F8E792963D4893534AF8D5A9EFEC /* Dictionary+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CDACF2953A2D128B040B196E2D06B4 /* Dictionary+Extensions.swift */; };
+		4F6F6E1EFAA083E172D7A1334BB36C55 /* MetricsExplorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B062F03C0DFC54DF79F3486E23E88DB6 /* MetricsExplorer.swift */; };
+		503B80F93FCCA12A70E5B8A3D21881E9 /* MetricInterceptorInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B891D16650D16ADDF3DA4BDF200C132 /* MetricInterceptorInterface.swift */; };
+		51329975DB6A8CDC9B83CD4BAE9E1D07 /* AuthChallengeDecision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BE0F2BC83CC4BCFEB3C8025E5FFEB4 /* AuthChallengeDecision.swift */; };
+		516238453B9C4F097E62C756419E9E5A /* TaskProgressUpdatedMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9E71E448FA9FBADE2DC774CC773124 /* TaskProgressUpdatedMetric.swift */; };
+		518F2E254B24D5366ED5C47FAF1B0455 /* FileSystemStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46703A0D90086630270F0BB6F26A0B9 /* FileSystemStorageService.swift */; };
+		52F13C9F5ECD691E84612D93FFFFB2CA /* NetworkReachabilityInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216CA7F5D276BA2AD2DBBA023BAB550B /* NetworkReachabilityInterface.swift */; };
+		54AB6DBAAE81EC956E705C1A9044F507 /* UniqueKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F743FD6B1868C080895EC7D94EB59E /* UniqueKey.swift */; };
+		54E49E37265DF2C3D5929513424D5399 /* SSLPinningProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707611192AA3FF0CE99F5E63DFE9485E /* SSLPinningProcessor.swift */; };
+		566B20BF5F79CD6AC5A87698DA26E57B /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE7B70A40ABAF3593CFA4A174454F8C /* Priority.swift */; };
+		566F8EE65C67C501E94AA943E9D7774A /* ResponseInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1212E0DA445EEF1C857AB29D0E75643 /* ResponseInterface.swift */; };
+		5D476821723572C531F9B38CD2271FA7 /* NetworkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A73EE231BBC4D3F165F264A42B5F582 /* NetworkRouter.swift */; };
+		62D1D1A2F1AAC4180790297FA3E9A332 /* PriorityAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CAD409503635849D16035990B00EAF /* PriorityAction.swift */; };
+		6658178D93F66884C4E7AEFE6C87A9F1 /* SSLPinningPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D61BAB9A8C36B6D07C4F5E62DD243A3 /* SSLPinningPolicy.swift */; };
+		66CCE65CD7C5E34DF53581EE13B5929C /* NetworkTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC169C8B4BD26DC148D2807DCFA5B5 /* NetworkTask.swift */; };
+		6755821FF4FD8302F63B840680020F54 /* MetricsCollectorInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2187715C3E2706A54E1111390673EB1 /* MetricsCollectorInterface.swift */; };
+		675C0D6AE3AFBB5D9A7491C2A5951127 /* DefaultLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439280B0818D76865CF53B8A59A5D1D5 /* DefaultLogger.swift */; };
+		693A0BC1554DAD6B825E455B3FC33718 /* RetryPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADF99BD60DCBFDB4848186AA7EB08AD /* RetryPolicy.swift */; };
+		6A5F1A7365FCEC11B04542C28EA29834 /* TaskCreatedMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E99FD39E2C6482622B9F8016B534D7 /* TaskCreatedMetric.swift */; };
+		6AB218477C7946147CB329E50C7A8203 /* TaskMetricEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC74E3BD6C090155437912F2C7070680 /* TaskMetricEvent.swift */; };
+		6C73BFD0B11E5BCD3D25519556A19EAA /* ContentTypeMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CEDE16A2AFB7A0860230B5E832487D /* ContentTypeMetric.swift */; };
+		75F93942A8ECF80B30AE8F62F336DDDA /* RequestMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80859D3BAE4EAC321C2FC4B0CEE5774E /* RequestMetric.swift */; };
+		791081D81D1D1D9AC3D38D603E46B179 /* NetworkCompose-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F306F907E71BECFF42E2C7F945EA885 /* NetworkCompose-dummy.m */; };
+		7D8AC3A7EB6A80522C022372A0486A2D /* LoggerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDFDF66579024D8DBC1F27AF2F5F0DD /* LoggerInterface.swift */; };
+		8BC124A252D4EAFA341C2630DEECD350 /* EndpointExpectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1254B2CDAA75EE32F5DAE592FE41E6F1 /* EndpointExpectation.swift */; };
 		8E8E2BA3F3D38FC07547F9EE60B485E4 /* Pods-Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C88809A0C1067F5AAE6740D18B88A4B4 /* Pods-Example-dummy.m */; };
-		91385535F183AEC1BC11DBF5C3A3EB33 /* SessionConfigurationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8192C430DC9398888DCDC77122E040 /* SessionConfigurationProvider.swift */; };
+		90BA46B26D45A39683D0C078B63E4324 /* SSLPinningProcessorInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932000D616184AE80F63D21A1F659066 /* SSLPinningProcessorInterface.swift */; };
 		9150448FFF96ECB8892D801888EDD336 /* Pods-Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D8EF441374A5ADCA27D61E5983D4F67 /* Pods-Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		965B7DCB6750A3DB996FAE790D9023E4 /* NetworkCompose-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F306F907E71BECFF42E2C7F945EA885 /* NetworkCompose-dummy.m */; };
-		9679FB32FD0F49C34ABE54F44CC006D2 /* SSLPinningInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F97A6D44AC8ADA91CEFC38EE14C1D8 /* SSLPinningInterface.swift */; };
-		99D70F04B1C7E4032E5A53360D9C7C0B /* URLRequest+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FB84BB78DD9CB0F336753D6D003E24 /* URLRequest+Extensions.swift */; };
-		9E09508C0FD0015C38B956C2D6A53260 /* MetricInterceptorInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B891D16650D16ADDF3DA4BDF200C132 /* MetricInterceptorInterface.swift */; };
-		A7B550A6D46FB4EE7F8387B6942B36FF /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18FCE17BDC068AFEDABDA8D4CCBDBF8 /* Response.swift */; };
-		A9045C3ADFE127DB31E2A5E269FFBEC9 /* NetworkSessionExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144AF9AAFD70BC44E8EABB561125EEDD /* NetworkSessionExecutor.swift */; };
-		ACD2658ADF7ADCDA20828B19EE813160 /* SSLPinningProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707611192AA3FF0CE99F5E63DFE9485E /* SSLPinningProcessor.swift */; };
-		AD9CA54219449912DE2D62E3F2E2B453 /* URLSession+InputStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D832490DFD4086917780FE788A9F2F8 /* URLSession+InputStream.swift */; };
-		B2ED7632FFDE1E97503C45683085BC04 /* TaskProgressUpdatedMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9E71E448FA9FBADE2DC774CC773124 /* TaskProgressUpdatedMetric.swift */; };
-		B35DDE71A03F677356830C0A6A60425E /* NetworkPriorityDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344C1DA7781F453DD2496314C4A5FD27 /* NetworkPriorityDispatcher.swift */; };
-		B36A45F75B55CB5D3866DFCE0A9CE9E7 /* AutomationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC702CCD695B748F5EE8A0F033DD0A24 /* AutomationMode.swift */; };
-		B460B48C7C2E51931EF788065CF339BB /* LoggerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC74A93A5E82CE562F27C4A6D928FA27 /* LoggerInterface.swift */; };
-		B6A5B6D97A7D9798222D10AA59BCDA1F /* DispatchQueueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E79C0242AAF33A30A5FF5707A7D268 /* DispatchQueueType.swift */; };
-		B70983A6EA7804D9F359898191169979 /* UniqueKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F743FD6B1868C080895EC7D94EB59E /* UniqueKey.swift */; };
-		B7DBFD7B2F520DDFB00A70FC081D6E50 /* TaskCreatedMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E99FD39E2C6482622B9F8016B534D7 /* TaskCreatedMetric.swift */; };
-		B92B2ED83615131A31AB134437D67C68 /* ResponseInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1212E0DA445EEF1C857AB29D0E75643 /* ResponseInterface.swift */; };
-		BA106977C92C55B2C69AC0EBBFA45499 /* NetworkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A73EE231BBC4D3F165F264A42B5F582 /* NetworkRouter.swift */; };
-		BFE2D40F959948C612A76DF28880613E /* ResponseErrorMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0D635DBF144F2E3C44DEC1539D7D81 /* ResponseErrorMetric.swift */; };
-		C57EA3172FAB22DCB8DC296EA13BD6F7 /* SSLPinningPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D61BAB9A8C36B6D07C4F5E62DD243A3 /* SSLPinningPolicy.swift */; };
-		C954E14CA2384A19BBF6462085F5828E /* TaskCompletedMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF23CF759917B39B6479D9DEF80491B7 /* TaskCompletedMetric.swift */; };
-		CBF6A5780A1F6D3F53A6CD55B49767A9 /* RecordResponseMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DFC692E2FA803FEF8DBC9B40B83EA2 /* RecordResponseMode.swift */; };
-		CE2B88965E6A5C220033F06E209D83F3 /* NetworkBuilderSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B655333F8F7D0A84D0951D22490858 /* NetworkBuilderSettings.swift */; };
-		D25381049625E5F2EB3AC90C080BD521 /* ReAuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272F9DAC2D32EABB6F8666B3E8258C81 /* ReAuthenticationService.swift */; };
-		D4FE3CCF0B0B8BE3E40045C7D2C203CA /* SessionProxyDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBC9FC7D14B08BC554A1DE5527DA4F4 /* SessionProxyDelegate.swift */; };
-		D53C446EC485020CBFB2E2852C76AA1C /* NetworkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E093AE6F2AA2EB7CCE2871C3565B45D /* NetworkSession.swift */; };
-		E773032A994E51FE39207333A1C1497C /* NetworkSessionExecutorInteface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C283A5673784117655CB660373A94A9 /* NetworkSessionExecutorInteface.swift */; };
-		F1EEC890DC07E4A419D0FDA455616E7E /* ContentTypeMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CEDE16A2AFB7A0860230B5E832487D /* ContentTypeMetric.swift */; };
-		F588D52E4A5CF7F1EC6E51E8D8DC52AE /* NetworkBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D05CD5B616470DD5EBEF8D1C9254525 /* NetworkBuilder.swift */; };
-		FAECB886E6061F84EE8A4665D6C767EA /* NetworkRouterInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31605B555E0CF5AC6398DD796A6161 /* NetworkRouterInterface.swift */; };
-		FFDE1C5687D1814B9FFF63E7EBA864AF /* OperationQueueManagerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C8613B5E76F02274851FFB0FD2A490 /* OperationQueueManagerInterface.swift */; };
+		93A70463CF0E841D8E49F71B1F63764D /* StorageServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C798B23ADA1741347092517AA2BE60 /* StorageServiceProvider.swift */; };
+		93D8FD29CA08D0C9DDAD159DCC132580 /* ParserExpectationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E88F77684D19D8E15F795531DD69A /* ParserExpectationHelper.swift */; };
+		952C78351C733F4EAFA30F13B4E60A20 /* NetworkBuilderSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B655333F8F7D0A84D0951D22490858 /* NetworkBuilderSettings.swift */; };
+		9545308FB86E052FB40CCED0F34D7D67 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18FCE17BDC068AFEDABDA8D4CCBDBF8 /* Response.swift */; };
+		95DA448597041C07D5E90770D1CEDA99 /* TaskCompletedMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF23CF759917B39B6479D9DEF80491B7 /* TaskCompletedMetric.swift */; };
+		A0830F32139EEA2DCB425CCDD47BF685 /* OperationQueueManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF17F7556E0E1B8B96A42B4F0C524626 /* OperationQueueManager.swift */; };
+		A26D73668E0A81FCA2B40A9EC771FD55 /* SSLPinning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68487C234ED972C80FCFCDB186381B91 /* SSLPinning.swift */; };
+		A58183393DD907D630AE3D792D4D1C0C /* OperationQueueManagerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C8613B5E76F02274851FFB0FD2A490 /* OperationQueueManagerInterface.swift */; };
+		A93C2B5B9CC4F0798D8C60C630A29619 /* ReAuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272F9DAC2D32EABB6F8666B3E8258C81 /* ReAuthenticationService.swift */; };
+		ACB3A777986FCA661ADA7CF47EAAEBBB /* SecCertificate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8D9B93CBA07480A7B3F54F08541CFC /* SecCertificate+Extensions.swift */; };
+		B4E2BEC308A67B73816D2CBEF09AA5F5 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89ADB473B610255BB80789BC9AB92C78 /* StorageService.swift */; };
+		B644BC5DDC8CA444A01D6FCD441BA860 /* SessionConfigurationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8192C430DC9398888DCDC77122E040 /* SessionConfigurationProvider.swift */; };
+		B88C369114CEAB63E7F1CA29B361BEB1 /* ResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC429B44DA9B67FF5846390A6563CAB /* ResponseDecoder.swift */; };
+		BAB2E97BCE340AB2D6028E7E147E243E /* NetworkPriorityDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344C1DA7781F453DD2496314C4A5FD27 /* NetworkPriorityDispatcher.swift */; };
+		C46EA1B79CB000C5CE0FBB5FACDBDA1B /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABD0A9A1FC4B46CC3C351AD439A995F /* Request.swift */; };
+		C6264E65D17EE97995932762BFD41115 /* CustomOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6076161BD225DCD8CB08D6AA59E450 /* CustomOperation.swift */; };
+		C826D84CDC050149705E412C1DB5B2FD /* NetworkBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D05CD5B616470DD5EBEF8D1C9254525 /* NetworkBuilder.swift */; };
+		D0BBDF089573D52759EC4183B2C18E60 /* AutomationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC702CCD695B748F5EE8A0F033DD0A24 /* AutomationMode.swift */; };
+		DC5EF3FF6EEB0F50CD1034E1243FD292 /* NetworkMockHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7400B65B43BB36F0AFE4F84233A9593 /* NetworkMockHandler.swift */; };
+		E4390EB9620E17A4B86D9D51E397004D /* NetworkRouterInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31605B555E0CF5AC6398DD796A6161 /* NetworkRouterInterface.swift */; };
+		F35BFBC2E337678E8FB5872859DC9528 /* SessionProxyDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBC9FC7D14B08BC554A1DE5527DA4F4 /* SessionProxyDelegate.swift */; };
+		F84739A82D00DF5F735AE4EB44E050FF /* EndpointExpectationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3B32A273282D08DD2304F4A9D09F2 /* EndpointExpectationProvider.swift */; };
+		F87653228A565AED0B3337918941817C /* TaskType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0334573263D820355D1ECA690164B06F /* TaskType.swift */; };
+		FF839786EA6DEFFEFF2A4ED7DF3E3716 /* TaskDidFinishCollectingMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6E25E950C6537A821398B11981C80D /* TaskDidFinishCollectingMetric.swift */; };
 		FFE3822AC8F14321BDA2DE131FCB010A /* Pods-ExampleTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5390B519E8A604741ACD8AD7BB7069DB /* Pods-ExampleTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -102,7 +102,6 @@
 		02CDACF2953A2D128B040B196E2D06B4 /* Dictionary+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extensions.swift"; sourceTree = "<group>"; };
 		0334573263D820355D1ECA690164B06F /* TaskType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TaskType.swift; sourceTree = "<group>"; };
 		03FB84BB78DD9CB0F336753D6D003E24 /* URLRequest+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "URLRequest+Extensions.swift"; sourceTree = "<group>"; };
-		0DC3120341A3801B27B9370881796C37 /* LogStrategy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LogStrategy.swift; sourceTree = "<group>"; };
 		10F66DFDCAF9222B96323CC9DF77DEBA /* Pods-ExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		1254B2CDAA75EE32F5DAE592FE41E6F1 /* EndpointExpectation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EndpointExpectation.swift; sourceTree = "<group>"; };
 		144AF9AAFD70BC44E8EABB561125EEDD /* NetworkSessionExecutor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkSessionExecutor.swift; sourceTree = "<group>"; };
@@ -122,8 +121,10 @@
 		3D832490DFD4086917780FE788A9F2F8 /* URLSession+InputStream.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "URLSession+InputStream.swift"; sourceTree = "<group>"; };
 		3E093AE6F2AA2EB7CCE2871C3565B45D /* NetworkSession.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkSession.swift; sourceTree = "<group>"; };
 		3E8D9B93CBA07480A7B3F54F08541CFC /* SecCertificate+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "SecCertificate+Extensions.swift"; sourceTree = "<group>"; };
+		439280B0818D76865CF53B8A59A5D1D5 /* DefaultLogger.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DefaultLogger.swift; sourceTree = "<group>"; };
 		48BDB3781C6E1F9CE5FE897191AB171D /* Pods-ExampleTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ExampleTests-Info.plist"; sourceTree = "<group>"; };
 		4A0399C0BCE53D9AB8AF641CAFAEAD58 /* NetworkCompose.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NetworkCompose.release.xcconfig; sourceTree = "<group>"; };
+		4BDFDF66579024D8DBC1F27AF2F5F0DD /* LoggerInterface.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoggerInterface.swift; sourceTree = "<group>"; };
 		4D8EF441374A5ADCA27D61E5983D4F67 /* Pods-Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Example-umbrella.h"; sourceTree = "<group>"; };
 		5390B519E8A604741ACD8AD7BB7069DB /* Pods-ExampleTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ExampleTests-umbrella.h"; sourceTree = "<group>"; };
 		54E99FD39E2C6482622B9F8016B534D7 /* TaskCreatedMetric.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TaskCreatedMetric.swift; sourceTree = "<group>"; };
@@ -142,10 +143,10 @@
 		707611192AA3FF0CE99F5E63DFE9485E /* SSLPinningProcessor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SSLPinningProcessor.swift; sourceTree = "<group>"; };
 		71DAFD7277292D9C23AD07A44D2A3AC5 /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
 		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		7A240B1639A52931867D9DF281A36625 /* DefaultLogger.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DefaultLogger.swift; sourceTree = "<group>"; };
 		7A73EE231BBC4D3F165F264A42B5F582 /* NetworkRouter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkRouter.swift; sourceTree = "<group>"; };
 		7B9CD40F5176BFABAA7C349ABEBC0A7E /* NetworkMocker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkMocker.swift; sourceTree = "<group>"; };
 		7EAD98D3167162DB92BDDE3B3D31D396 /* MetricsCollector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MetricsCollector.swift; sourceTree = "<group>"; };
+		7F4ED8B72F03627B71CD5A7EFADC5FD3 /* LoggerStrategy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoggerStrategy.swift; sourceTree = "<group>"; };
 		7F5DB920A643C385CC61F9208E6F18FF /* NetworkCompose.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NetworkCompose.debug.xcconfig; sourceTree = "<group>"; };
 		80859D3BAE4EAC321C2FC4B0CEE5774E /* RequestMetric.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RequestMetric.swift; sourceTree = "<group>"; };
 		80DFC692E2FA803FEF8DBC9B40B83EA2 /* RecordResponseMode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RecordResponseMode.swift; sourceTree = "<group>"; };
@@ -187,7 +188,6 @@
 		D74F68309C8E3114004388DA5660828B /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
 		D8C3B32A273282D08DD2304F4A9D09F2 /* EndpointExpectationProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EndpointExpectationProvider.swift; sourceTree = "<group>"; };
 		D8EC169C8B4BD26DC148D2807DCFA5B5 /* NetworkTask.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkTask.swift; sourceTree = "<group>"; };
-		DC74A93A5E82CE562F27C4A6D928FA27 /* LoggerInterface.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoggerInterface.swift; sourceTree = "<group>"; };
 		DC9E71E448FA9FBADE2DC774CC773124 /* TaskProgressUpdatedMetric.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TaskProgressUpdatedMetric.swift; sourceTree = "<group>"; };
 		DF17F7556E0E1B8B96A42B4F0C524626 /* OperationQueueManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OperationQueueManager.swift; sourceTree = "<group>"; };
 		E57E88F77684D19D8E15F795531DD69A /* ParserExpectationHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ParserExpectationHelper.swift; sourceTree = "<group>"; };
@@ -272,7 +272,7 @@
 				6C283A5673784117655CB660373A94A9 /* NetworkSessionExecutorInteface.swift */,
 				ABE7B70A40ABAF3593CFA4A174454F8C /* Priority.swift */,
 				66CAD409503635849D16035990B00EAF /* PriorityAction.swift */,
-				AE9312C4A74B4AE52CA505D03D386520 /* Logger */,
+				7BA3FE19C7C8091D2BA521BA443BA027 /* Logger */,
 				78A4D61D4B702A7CFBC856005C27D2F6 /* Metric */,
 				7710FDD85B3A45694ECBE6BBA9C8D0AA /* OperationQueue */,
 				74F8B8F1D84842DBA93C6993E22596CC /* ReAuthen */,
@@ -349,6 +349,17 @@
 			path = Metric;
 			sourceTree = "<group>";
 		};
+		7BA3FE19C7C8091D2BA521BA443BA027 /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				439280B0818D76865CF53B8A59A5D1D5 /* DefaultLogger.swift */,
+				4BDFDF66579024D8DBC1F27AF2F5F0DD /* LoggerInterface.swift */,
+				7F4ED8B72F03627B71CD5A7EFADC5FD3 /* LoggerStrategy.swift */,
+			);
+			name = Logger;
+			path = Logger;
+			sourceTree = "<group>";
+		};
 		7EE77F8673EDA15AFD0E2BFE49EBA74C /* SecCertificate */ = {
 			isa = PBXGroup;
 			children = (
@@ -415,17 +426,6 @@
 			);
 			name = TaskMetric;
 			path = TaskMetric;
-			sourceTree = "<group>";
-		};
-		AE9312C4A74B4AE52CA505D03D386520 /* Logger */ = {
-			isa = PBXGroup;
-			children = (
-				7A240B1639A52931867D9DF281A36625 /* DefaultLogger.swift */,
-				DC74A93A5E82CE562F27C4A6D928FA27 /* LoggerInterface.swift */,
-				0DC3120341A3801B27B9370881796C37 /* LogStrategy.swift */,
-			);
-			name = Logger;
-			path = Logger;
 			sourceTree = "<group>";
 		};
 		B27698507679A170B1FCBF424091009E /* Task */ = {
@@ -682,7 +682,7 @@
 			buildConfigurationList = A25FB4DF7F79D059042E78A920E3BCCB /* Build configuration list for PBXNativeTarget "NetworkCompose" */;
 			buildPhases = (
 				8B311A602B0F9A2DE8B6C97D0BFA0ECD /* Headers */,
-				139942022BF32678DF2FDC1245FACAB8 /* Sources */,
+				4263CF3043011A45F32DCAE1C3DF09F1 /* Sources */,
 				446E54DDA0C79603B0C24C89244EB8C0 /* Frameworks */,
 				025794176C31190CCB54B732A43AAA21 /* Resources */,
 			);
@@ -749,89 +749,89 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		139942022BF32678DF2FDC1245FACAB8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				513443E2BC40505FE918116B02023A0A /* AuthChallengeDecision.swift in Sources */,
-				B36A45F75B55CB5D3866DFCE0A9CE9E7 /* AutomationMode.swift in Sources */,
-				F1EEC890DC07E4A419D0FDA455616E7E /* ContentTypeMetric.swift in Sources */,
-				5DDCD20152F663AAB6A9DEE126D17E89 /* CustomOperation.swift in Sources */,
-				66C021C2940301B7BFE0405EF12C08E2 /* Data+RSA.swift in Sources */,
-				77DCD404F4E63704476BA1A3A3C3C897 /* DefaultLogger.swift in Sources */,
-				5C9D23E205E79691C59A1BA87834189D /* Dictionary+Extensions.swift in Sources */,
-				B6A5B6D97A7D9798222D10AA59BCDA1F /* DispatchQueueType.swift in Sources */,
-				05E8F979EDD48AC15884F8345CB3E235 /* EndpointExpectation.swift in Sources */,
-				085308C46EE4D81305EA9219D3F051A4 /* EndpointExpectationProvider.swift in Sources */,
-				78B04A8EEC970184DD46C8CA7C82C561 /* FileSystemStorageService.swift in Sources */,
-				B460B48C7C2E51931EF788065CF339BB /* LoggerInterface.swift in Sources */,
-				18B8E9AFDB1837E8F1BC908AB4A521CA /* LogStrategy.swift in Sources */,
-				5187F705452DE8A0338D63375F3A48D8 /* MetricInterceptor.swift in Sources */,
-				9E09508C0FD0015C38B956C2D6A53260 /* MetricInterceptorInterface.swift in Sources */,
-				5BE602E5D77538127F72E8BD7943AB15 /* MetricsCollector.swift in Sources */,
-				48F9EE65D56EAB9623F0F56FD0C4117B /* MetricsCollectorInterface.swift in Sources */,
-				28F988B1B978B0C280BF3F83E37B96CC /* MetricsExplorer.swift in Sources */,
-				3DBB33546843678FD2BBAF80DBC7EA14 /* Network+URLSession.swift in Sources */,
-				F588D52E4A5CF7F1EC6E51E8D8DC52AE /* NetworkBuilder.swift in Sources */,
-				CE2B88965E6A5C220033F06E209D83F3 /* NetworkBuilderSettings.swift in Sources */,
-				965B7DCB6750A3DB996FAE790D9023E4 /* NetworkCompose-dummy.m in Sources */,
-				0E931B495A76DCD976EDCABA7A1CB7B3 /* NetworkError.swift in Sources */,
-				12216B2209091AA472FA27901CD969F1 /* NetworkMocker.swift in Sources */,
-				5D934B8B971FA23947366C5CAB287B6D /* NetworkMockHandler.swift in Sources */,
-				B35DDE71A03F677356830C0A6A60425E /* NetworkPriorityDispatcher.swift in Sources */,
-				7CC4F5958995AF5E9C8088DD87458F02 /* NetworkReachability.swift in Sources */,
-				59499BDE4FB4AF9E515ACC1896F2F76D /* NetworkReachabilityInterface.swift in Sources */,
-				BA106977C92C55B2C69AC0EBBFA45499 /* NetworkRouter.swift in Sources */,
-				FAECB886E6061F84EE8A4665D6C767EA /* NetworkRouterInterface.swift in Sources */,
-				D53C446EC485020CBFB2E2852C76AA1C /* NetworkSession.swift in Sources */,
-				A9045C3ADFE127DB31E2A5E269FFBEC9 /* NetworkSessionExecutor.swift in Sources */,
-				E773032A994E51FE39207333A1C1497C /* NetworkSessionExecutorInteface.swift in Sources */,
-				60470AA1F8303685A6F1FC9EF974F945 /* NetworkTask.swift in Sources */,
-				44A6EA531F67720DB626ACA59A0F049D /* OperationQueueManager.swift in Sources */,
-				FFDE1C5687D1814B9FFF63E7EBA864AF /* OperationQueueManagerInterface.swift in Sources */,
-				5A6AC665FD9C83B7B448658CF45611BD /* ParserExpectationHelper.swift in Sources */,
-				1123EF45272AE2B78777BA405C261B5E /* Priority.swift in Sources */,
-				6AA61EF600B313969EDA06E9E142C247 /* PriorityAction.swift in Sources */,
-				D25381049625E5F2EB3AC90C080BD521 /* ReAuthenticationService.swift in Sources */,
-				CBF6A5780A1F6D3F53A6CD55B49767A9 /* RecordResponseMode.swift in Sources */,
-				0CB2B1F429A52F861025693546EFB6AE /* ReportMetricStrategy.swift in Sources */,
-				17678F12DD880EAF7828C7CA95BA7C5F /* Request.swift in Sources */,
-				06A213689BC38C8B6FBE4E60F1AFA535 /* RequestBuilder.swift in Sources */,
-				8E2350ED732874E7C36B84F12B314E17 /* RequestInterface.swift in Sources */,
-				0C6B7045700C87E311F29FBC123194F4 /* RequestMetric.swift in Sources */,
-				A7B550A6D46FB4EE7F8387B6942B36FF /* Response.swift in Sources */,
-				80A786004A8A23DDC20423D5BEE0F398 /* ResponseDecoder.swift in Sources */,
-				BFE2D40F959948C612A76DF28880613E /* ResponseErrorMetric.swift in Sources */,
-				B92B2ED83615131A31AB134437D67C68 /* ResponseInterface.swift in Sources */,
-				0B884333DF5730C41573A90666F14F38 /* ResponseMetric.swift in Sources */,
-				26FB66C5F4A613D89DC1B29763A58483 /* RetryPolicy.swift in Sources */,
-				54D3E04D904EC9E7D86F8BE5FD78C845 /* SecCertificate+Extensions.swift in Sources */,
-				91385535F183AEC1BC11DBF5C3A3EB33 /* SessionConfigurationProvider.swift in Sources */,
-				D4FE3CCF0B0B8BE3E40045C7D2C203CA /* SessionProxyDelegate.swift in Sources */,
-				00F0362F76B12A658B32746B2749A362 /* SSLPinning.swift in Sources */,
-				9679FB32FD0F49C34ABE54F44CC006D2 /* SSLPinningInterface.swift in Sources */,
-				C57EA3172FAB22DCB8DC296EA13BD6F7 /* SSLPinningPolicy.swift in Sources */,
-				ACD2658ADF7ADCDA20828B19EE813160 /* SSLPinningProcessor.swift in Sources */,
-				17695B4B35CBEE286193F5C2D5089CDD /* SSLPinningProcessorInterface.swift in Sources */,
-				14329C7D97F155E79400E864DE04543F /* StorageService.swift in Sources */,
-				59D057166682AE7ACE699515AF20916D /* StorageServiceProvider.swift in Sources */,
-				C954E14CA2384A19BBF6462085F5828E /* TaskCompletedMetric.swift in Sources */,
-				B7DBFD7B2F520DDFB00A70FC081D6E50 /* TaskCreatedMetric.swift in Sources */,
-				1B8F9B01D437E95236766B5DD2D31049 /* TaskDidFinishCollectingMetric.swift in Sources */,
-				6525137AE76770538322AE60EF3C8053 /* TaskMetricEvent.swift in Sources */,
-				B2ED7632FFDE1E97503C45683085BC04 /* TaskProgressUpdatedMetric.swift in Sources */,
-				203B6ABC3F1D9D25183D5F34F7F7D473 /* TaskType.swift in Sources */,
-				B70983A6EA7804D9F359898191169979 /* UniqueKey.swift in Sources */,
-				99D70F04B1C7E4032E5A53360D9C7C0B /* URLRequest+Extensions.swift in Sources */,
-				AD9CA54219449912DE2D62E3F2E2B453 /* URLSession+InputStream.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		2961B1232E3C51ADC4D304F187B113BB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				8E8E2BA3F3D38FC07547F9EE60B485E4 /* Pods-Example-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4263CF3043011A45F32DCAE1C3DF09F1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				51329975DB6A8CDC9B83CD4BAE9E1D07 /* AuthChallengeDecision.swift in Sources */,
+				D0BBDF089573D52759EC4183B2C18E60 /* AutomationMode.swift in Sources */,
+				6C73BFD0B11E5BCD3D25519556A19EAA /* ContentTypeMetric.swift in Sources */,
+				C6264E65D17EE97995932762BFD41115 /* CustomOperation.swift in Sources */,
+				012C3D614E205BB8ADBC5076B2D5E8BB /* Data+RSA.swift in Sources */,
+				675C0D6AE3AFBB5D9A7491C2A5951127 /* DefaultLogger.swift in Sources */,
+				4B84F8E792963D4893534AF8D5A9EFEC /* Dictionary+Extensions.swift in Sources */,
+				4AAF8E6ADABFEC7AEE93B17EB2A25CD2 /* DispatchQueueType.swift in Sources */,
+				8BC124A252D4EAFA341C2630DEECD350 /* EndpointExpectation.swift in Sources */,
+				F84739A82D00DF5F735AE4EB44E050FF /* EndpointExpectationProvider.swift in Sources */,
+				518F2E254B24D5366ED5C47FAF1B0455 /* FileSystemStorageService.swift in Sources */,
+				7D8AC3A7EB6A80522C022372A0486A2D /* LoggerInterface.swift in Sources */,
+				411EF592CFA319F7B7E9053F43045153 /* LoggerStrategy.swift in Sources */,
+				2006D42A9CBD1E1C75A9938DDDE8FD66 /* MetricInterceptor.swift in Sources */,
+				503B80F93FCCA12A70E5B8A3D21881E9 /* MetricInterceptorInterface.swift in Sources */,
+				49756227FA52FF2AC3965977ECB8EC9B /* MetricsCollector.swift in Sources */,
+				6755821FF4FD8302F63B840680020F54 /* MetricsCollectorInterface.swift in Sources */,
+				4F6F6E1EFAA083E172D7A1334BB36C55 /* MetricsExplorer.swift in Sources */,
+				3E155CC3D26927550BDF3888C9C37AD2 /* Network+URLSession.swift in Sources */,
+				C826D84CDC050149705E412C1DB5B2FD /* NetworkBuilder.swift in Sources */,
+				952C78351C733F4EAFA30F13B4E60A20 /* NetworkBuilderSettings.swift in Sources */,
+				791081D81D1D1D9AC3D38D603E46B179 /* NetworkCompose-dummy.m in Sources */,
+				25BF8788835977EA7B29CE1DEF3B4F4F /* NetworkError.swift in Sources */,
+				3308087BF73D2625BB4B279D3B36C86E /* NetworkMocker.swift in Sources */,
+				DC5EF3FF6EEB0F50CD1034E1243FD292 /* NetworkMockHandler.swift in Sources */,
+				BAB2E97BCE340AB2D6028E7E147E243E /* NetworkPriorityDispatcher.swift in Sources */,
+				1BA4E2616D7C570BC13058D754866746 /* NetworkReachability.swift in Sources */,
+				52F13C9F5ECD691E84612D93FFFFB2CA /* NetworkReachabilityInterface.swift in Sources */,
+				5D476821723572C531F9B38CD2271FA7 /* NetworkRouter.swift in Sources */,
+				E4390EB9620E17A4B86D9D51E397004D /* NetworkRouterInterface.swift in Sources */,
+				2044358BD79830510EF11DEAEF5FECBB /* NetworkSession.swift in Sources */,
+				42AAEEFA2066882C6E50FAD0AB277AAD /* NetworkSessionExecutor.swift in Sources */,
+				1101835B51B813C7719619203840AC56 /* NetworkSessionExecutorInteface.swift in Sources */,
+				66CCE65CD7C5E34DF53581EE13B5929C /* NetworkTask.swift in Sources */,
+				A0830F32139EEA2DCB425CCDD47BF685 /* OperationQueueManager.swift in Sources */,
+				A58183393DD907D630AE3D792D4D1C0C /* OperationQueueManagerInterface.swift in Sources */,
+				93D8FD29CA08D0C9DDAD159DCC132580 /* ParserExpectationHelper.swift in Sources */,
+				566B20BF5F79CD6AC5A87698DA26E57B /* Priority.swift in Sources */,
+				62D1D1A2F1AAC4180790297FA3E9A332 /* PriorityAction.swift in Sources */,
+				A93C2B5B9CC4F0798D8C60C630A29619 /* ReAuthenticationService.swift in Sources */,
+				1E31A9438792C8D4BF32026D73B1A50D /* RecordResponseMode.swift in Sources */,
+				0C3925C46EFC779E465D281DED4E9588 /* ReportMetricStrategy.swift in Sources */,
+				C46EA1B79CB000C5CE0FBB5FACDBDA1B /* Request.swift in Sources */,
+				49183F6D5394AF3F167DA8E413D976A9 /* RequestBuilder.swift in Sources */,
+				04906EA5F1D63E06E1AA02D1051B3929 /* RequestInterface.swift in Sources */,
+				75F93942A8ECF80B30AE8F62F336DDDA /* RequestMetric.swift in Sources */,
+				9545308FB86E052FB40CCED0F34D7D67 /* Response.swift in Sources */,
+				B88C369114CEAB63E7F1CA29B361BEB1 /* ResponseDecoder.swift in Sources */,
+				1825158CA20539E977B346F5EF9C8791 /* ResponseErrorMetric.swift in Sources */,
+				566F8EE65C67C501E94AA943E9D7774A /* ResponseInterface.swift in Sources */,
+				008630683B2C368E00DF64D41A20038D /* ResponseMetric.swift in Sources */,
+				693A0BC1554DAD6B825E455B3FC33718 /* RetryPolicy.swift in Sources */,
+				ACB3A777986FCA661ADA7CF47EAAEBBB /* SecCertificate+Extensions.swift in Sources */,
+				B644BC5DDC8CA444A01D6FCD441BA860 /* SessionConfigurationProvider.swift in Sources */,
+				F35BFBC2E337678E8FB5872859DC9528 /* SessionProxyDelegate.swift in Sources */,
+				A26D73668E0A81FCA2B40A9EC771FD55 /* SSLPinning.swift in Sources */,
+				06CC800148AFA9540983012BAD9C163A /* SSLPinningInterface.swift in Sources */,
+				6658178D93F66884C4E7AEFE6C87A9F1 /* SSLPinningPolicy.swift in Sources */,
+				54E49E37265DF2C3D5929513424D5399 /* SSLPinningProcessor.swift in Sources */,
+				90BA46B26D45A39683D0C078B63E4324 /* SSLPinningProcessorInterface.swift in Sources */,
+				B4E2BEC308A67B73816D2CBEF09AA5F5 /* StorageService.swift in Sources */,
+				93A70463CF0E841D8E49F71B1F63764D /* StorageServiceProvider.swift in Sources */,
+				95DA448597041C07D5E90770D1CEDA99 /* TaskCompletedMetric.swift in Sources */,
+				6A5F1A7365FCEC11B04542C28EA29834 /* TaskCreatedMetric.swift in Sources */,
+				FF839786EA6DEFFEFF2A4ED7DF3E3716 /* TaskDidFinishCollectingMetric.swift in Sources */,
+				6AB218477C7946147CB329E50C7A8203 /* TaskMetricEvent.swift in Sources */,
+				516238453B9C4F097E62C756419E9E5A /* TaskProgressUpdatedMetric.swift in Sources */,
+				F87653228A565AED0B3337918941817C /* TaskType.swift in Sources */,
+				54AB6DBAAE81EC956E705C1A9044F507 /* UniqueKey.swift in Sources */,
+				49A3C5DD86B56F87BB9B99B345115F39 /* URLRequest+Extensions.swift in Sources */,
+				0E4BBF538D3039FB0D7646F2ECF0B6ED /* URLSession+InputStream.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

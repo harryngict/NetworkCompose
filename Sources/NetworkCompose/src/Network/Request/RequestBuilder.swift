@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class RequestBuilder<T: Codable> {
+public class RequestBuilder<T: Decodable> {
     private var path: String
     private var method: NetworkMethod
     private var queryParameters: [String: Any]?
@@ -26,6 +26,7 @@ public class RequestBuilder<T: Codable> {
     public init(path: String, method: NetworkMethod) {
         self.path = path
         self.method = method
+        queryParameters = nil
         headers = [:]
         bodyEncoding = .json
         timeoutInterval = 60.0

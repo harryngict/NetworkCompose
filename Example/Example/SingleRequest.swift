@@ -52,7 +52,7 @@ final class SingleRequest {
         let network = NetworkBuilder<URLSession>(baseURL: baseURL)
         network
             .recordResponseForTesting(.enabled)
-            .log(.enabled)
+            .logger(.enabled)
             .build()
             .request(request) { (result: Result<[Post], NetworkError>) in
                 switch result {
@@ -75,7 +75,7 @@ final class SingleRequest {
         let network: NetworkBuilder<URLSession> = NetworkBuilder(baseURL: baseURL)
         network
             .reAuthenService(self)
-            .log(.enabled)
+            .logger(.enabled)
             .build()
             .request(request) { result in
                 switch result {
@@ -100,7 +100,7 @@ final class SingleRequest {
         let network: NetworkBuilder<URLSession> = NetworkBuilder(baseURL: baseURL)
         network
             .sslPinningPolicy(.trust(sslPinningHosts))
-            .log(.enabled)
+            .logger(.enabled)
             .build()
             .request(request) { result in
                 switch result {
@@ -129,7 +129,7 @@ final class SingleRequest {
         let network: NetworkBuilder<URLSession> = NetworkBuilder(baseURL: baseURL)
         network
             .reportMetric(.enabled(metricInterceptor))
-            .log(.enabled)
+            .logger(.enabled)
             .build()
             .request(request) { result in
                 switch result {
@@ -151,7 +151,7 @@ final class SingleRequest {
 
         let network: NetworkBuilder<URLSession> = NetworkBuilder(baseURL: baseURL)
         network
-            .log(.enabled)
+            .logger(.enabled)
             .build()
             .request(request, retryPolicy: retryPolicy) { result in
                 switch result {
@@ -175,7 +175,7 @@ final class SingleRequest {
             .execute(on: concurrentQueue)
             .observe(on: concurrentQueue)
             .automationMode(.enabled(.local))
-            .log(.enabled)
+            .logger(.enabled)
             .build()
             .request(request) { result in
                 switch result {

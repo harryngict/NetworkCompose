@@ -40,7 +40,7 @@ final class MultiplePriorityRequest {
 
         let network: NetworkPriorityDispatcher<URLSession> = NetworkPriorityDispatcher(baseURL: baseURL)
         network
-            .log(.enabled)
+            .logger(.enabled)
             .addRequest(request1, retryPolicy: retryPolicy, priority: .medium) { result in
                 switch result {
                 case .failure: debugPrint("Request1 error")

@@ -47,7 +47,7 @@ public class NetworkBuilderSettings<SessionType: NetworkSession> {
     var recordResponseMode: RecordResponseMode
 
     /// The strategy for logging network events and activities.
-    var logStrategy: LogStrategy
+    var loggerStrategy: LoggerStrategy
 
     /// Initializes a new instance of `NetworkCommonSettings`.
     ///
@@ -63,7 +63,7 @@ public class NetworkBuilderSettings<SessionType: NetworkSession> {
         reportMetricStrategy = .disabled
         automationMode = .disabled
         recordResponseMode = .disabled
-        logStrategy = .disabled
+        loggerStrategy = .disabled
         executionQueue = DefaultDispatchQueue.executionQueue
         observationQueue = DefaultDispatchQueue.observationQueue
         networkReachability = NetworkReachability.shared
@@ -172,8 +172,8 @@ public class NetworkBuilderSettings<SessionType: NetworkSession> {
     /// - Parameter strategy: The logging strategy to set.
     /// - Returns: The logger instance with the updated logging strategy.
     @discardableResult
-    public func log(_ strategy: LogStrategy) -> Self {
-        logStrategy = strategy
+    public func logger(_ strategy: LoggerStrategy) -> Self {
+        loggerStrategy = strategy
         return self
     }
 
@@ -189,7 +189,7 @@ public class NetworkBuilderSettings<SessionType: NetworkSession> {
         reportMetricStrategy = .disabled
         automationMode = .disabled
         recordResponseMode = .disabled
-        logStrategy = .disabled
+        loggerStrategy = .disabled
         executionQueue = DefaultDispatchQueue.executionQueue
         observationQueue = DefaultDispatchQueue.observationQueue
         networkReachability = NetworkReachability.shared
@@ -204,7 +204,7 @@ public class NetworkBuilderSettings<SessionType: NetworkSession> {
     ///            Returns `nil` if logging is disabled, the shared default logger
     ///            if logging is enabled, or a custom logger if provided.
     func createLogger() -> LoggerInterface? {
-        switch logStrategy {
+        switch loggerStrategy {
         case .disabled:
             return nil
         case .enabled:

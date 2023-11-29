@@ -1,29 +1,60 @@
 # NetworkCompose
 
-NetworkCompose simplifies and enhances network-related tasks by providing a flexible and intuitive composition of network components. Reduce development effort and make your networking layer easy to maintain with seamless integration, SSL pinning, mocking, metric reporting, and smart retry mechanisms. It supports dynamic automation, making it a powerful tool for managing network operations in your Swift applications.
 
-**Here is the NetworkCompose archicture:**
+## Purpose
+After several years of experience in iOS application development, I have identified some common pain points across many applications, particularly concerning API usage and network calls. The main issues I aim to address are:
+
+1. Automation Process
+2. Lack of Network Metrics
+3. Complex Retry Policy Implementation
+4. Support for Multiple Calls with Priority
+5. Re-Authentication for Seamless User Experience
+
+### Problem 1: Automation Process
+- **Challenge:** Dependency on the backend can lead to project delays when deadlines are not met.
+
+- **Solution Stage 1:** Introduce a mechanism for the mobile team to simulate backend responses based on predefined expectations. This allows continued development even when the backend is not ready.
+
+- **Solution Stage 2:** Implement a system to record successful API responses, facilitating automation in subsequent stages when the backend is available.
+
+### Problem 2: Lack of Network Metrics
+- **Challenge:** Although there are various tools for measuring network performance, they are not always effective when debugging.
+
+- **Solution:** Develop a system that provides detailed metrics such as task, session, request, response, and errors in real-time during the debugging process.
+
+
+### Problem 3: Complex Retry Policy Implementation
+- **Challenge:** The default URLSession lacks built-in support for a retry policy, resulting in the need for custom implementations or reliance on third-party libraries that can be complex to debug.
+
+- **Solution:** Design a simple and clear retry policy integrated into the network architecture to simplify the implementation process.
+
+### Problem 4: Support for Multiple Calls with Priority
+- **Challenge:** Design a library that supports multiple calls with varying priorities can be time-consuming.
+
+- **Solution:** Introduce a straightforward method for executing network calls with different priorities, ensuring clarity and ease of use for developers.
+
+### Problem 5: Re-Authentication for Seamless User Experience
+- **Challenge:** Achieving seamless user experiences often requires efficient re-authentication mechanisms.
+
+- **Solution:** Implement robust re-authentication processes to reduce disruptions in user experience and enhance overall application security and reliability.
+
+In summary, this project aims to enhance the efficiency of iOS application development by providing solutions to challenges related to automation, network metrics, retry policies, support for multiple calls with priority, and seamless user re-authentication.
+
+### The NetworkCompose archicture:
 
 ![NetworkCompose-Architecure](/Documents/NetworkCompose-Architecture.png)
 
 
 ## I. Features
+NetworkCompose offers a streamlined and enriched approach to handling network-related tasks, empowering developers with a flexible and intuitive composition of network components. By leveraging NetworkCompose, you can significantly minimize development effort and ensure the simplicity of maintaining networking layers. This robust solution seamlessly integrates various features, including SSL pinning, mocking, metric reporting, and retry mechanisms.
 
-- **Simple Request API:** Make network requests effortlessly using a straightforward and intuitive API.
+**Key Features:**
 
-- **SSL Pinning:** Enhance security with SSL pinning. Configure trusted hosts and corresponding hash keys to ensure a secure communication channel.
+1. Effort Reduction: By utilizing NetworkCompose, developers can reduce the overall effort involved in network-related tasks, making development processes more efficient and streamlining.
 
-- **Network Metrics Reporting:** Collect and report comprehensive network metrics. Gain insights into your network performance.
+2. Seamless Integration: Enjoy seamless integration with NetworkCompose, which effortlessly incorporates SSL pinning, mocking, metric reporting, and retry mechanisms into network operations.
 
-- **Retry Mechanism:** Implement retry policies for resilient network operations. Enhance the reliability of your app by intelligently handling network issues.
-
-- **Multiple Calls with Priority:** Execute multiple network calls with priority for efficient handling. The calls will prioritize based on users' rules and creation dates. This feature is particularly useful when dealing with scenarios where certain network requests need to take precedence over others.
-
-- **Re-authentication Support:** Effectively manage situations that necessitate the need for re-authentication.
-
-- **Automation Support:**
-  - **Mocking with FileSystem:** Simulate network responses effortlessly during automated testing by mocking responses from a local file system.
-  - **Customized Automation with Expectations:** Tailor your automated testing by customizing network response mocking with specific expectations.
+3. Dynamic Automation: With support for dynamic automation, NetworkCompose becomes a powerful tool for efficiently managing network operations in Swift applications, adapting to changing requirements seamlessly.
 
 
 ## II. Integration
@@ -33,7 +64,7 @@ NetworkCompose simplifies and enhances network-related tasks by providing a flex
 To integrate NetworkCompose into your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ```ruby
-pod 'NetworkCompose', '~> 0.0.9'
+pod 'NetworkCompose', '~> 0.1.0'
 ```
 
 then run:
@@ -44,7 +75,7 @@ pod install
 To integrate NetworkCompose using Swift Package Manager, add the following to your Package.swift file:
 ```swift
 dependencies: [
-    .package(url: "https://github.com/harryngict/NetworkCompose.git", from: "0.0.9")
+    .package(url: "https://github.com/harryngict/NetworkCompose.git", from: "0.1.0")
 ],
 targets: [
     .target(
@@ -59,7 +90,9 @@ swift package update
 ```
 
 ## III. Usage
-In the given diagram, there are two distinct classes designed to handle different types of requests: Regular Call (RC) and Multiple with Priority (MCP). The Regular Call functionality is implemented using the NetworkBuilder class, while the Multiple with Priority functionality relies on the NetworkPriorityDispatcher class. It's important to note that since the NetworkPriorityDispatcher class inherits from the NetworkBuilder class, it can also be employed for Regular Call scenarios.
+In the given diagram, there are two distinct classes designed to handle two different types of requests: Regular Call (RC) and Multiple with Priority (MCP). The Regular Call functionality is implemented using the NetworkBuilder class, while the Multiple with Priority relies on the NetworkPriorityDispatcher class. 
+
+**It's important to note that since the NetworkPriorityDispatcher class inherits from the NetworkBuilder class, it can also be employed for Regular Call scenarios.**
 
 ### 3.1 Initialization
 - Option 1: NetworkBuilder Initialization
@@ -73,28 +106,28 @@ let network: NetworkBuilder<URLSession> = NetworkBuilder(baseURL: baseURL)
 let baseURL = URL(string: "your base url string")
 let network: NetworkPriorityDispatcher<URLSession> = NetworkPriorityDispatcher(baseURL: baseURL)
 ```
-### 3.2 Configution options (optional)
+### 3.2 Configuration options (optional)
 
-### A. [SSLPinningPolicy](/Sources/NetworkCompose/src/Network/SSLPinning/SSLPinningPolicy.swift) configution
+### A. [SSLPinningPolicy](/Sources/NetworkCompose/src/Network/SSLPinning/SSLPinningPolicy.swift) configuration
 
-- Option 1: Enabled SSL Pinning by provide host and hash_key
+- Option 1: Enable SSL Pinning by providing host and hash_key
 ```swift
 let pinningHost = SSLPinning(host: "your_host", 
                              hashKeys: ["your_key"])
 network.sslPinningPolicy(.trust([pinningHost]))
 ```
-- Option 2: Disabled SSL Pinning
+- Option 2: Disable SSL Pinning
 ```swift
 network.sslPinningPolicy(.disabled)
 ```
 
-### B. [ReportMetricStrategy](/Sources/NetworkCompose/src/Network/Metric/ReportMetricStrategy.swift) configution
+### B. [ReportMetricStrategy](/Sources/NetworkCompose/src/Network/Metric/ReportMetricStrategy.swift) configuration
 
-- Option 1: Disabled Network Metrics Reporting
+- Option 1: Disable Network Metrics Reporting
 ```swift
 network.reportMetric(.disabled)
 ```
-- Option 2: Enabled with MetricInterceptor
+- Option 2: Enable with MetricInterceptor
 ```swift
 let metricInterceptor = MetricInterceptor { event in
     ///  Handle event here      
@@ -111,20 +144,20 @@ network.execute(on: concurrent)
        .observe(on: DispatchQueue.main)
 ```
 
-### D. [LogStrategy](/Sources/NetworkCompose/src/Network/Logger/LogStrategy.swift) configution
+### D. [LoggerStrategy](/Sources/NetworkCompose/src/Network/Logger/LoggerStrategy.swift) configuration
 
-- Option 1: Enabled Log Strategy
+- Option 1: Enable Log Strategy
 
 ```swift
-network.log(.enabled)
+network.logger(.enabled)
 ```
-- Option 2: Disabled Log Strategy
+- Option 2: Disable Log Strategy
 ```swift
-network.log(.disabled)
+network.logger(.disabled)
 ```
-- Option 3: Custom Log Strategy
+- Option 3: Customize Log Strategy
 ```swift
-network.log(.custom(YourLoggerInterface)). 
+network.logger(.custom(YourLoggerInterface)). 
 ```
 With option 3, you have the flexibility to customize the logging behavior by conforming to the `LoggerInterface` protocol.
 ```swift
@@ -133,7 +166,7 @@ public protocol LoggerInterface {
 }
 ```
 
-### E. [NetworkReachability](/Sources/NetworkCompose/src/Utility/Reachability/NetworkReachability.swift) configution
+### E. [NetworkReachability](/Sources/NetworkCompose/src/Utility/Reachability/NetworkReachability.swift) configuration
 ```swift
 network.networkReachability(NetworkReachabilityInterface)
 ```
@@ -150,38 +183,41 @@ public protocol NetworkReachabilityInterface: AnyObject {
 ```
 
 
-### F. [SessionConfiguration](/Sources/NetworkCompose/src/Network/Session/SessionConfigurationProvider.swift) configution
+### F. [SessionConfiguration](/Sources/NetworkCompose/src/Network/Session/SessionConfigurationProvider.swift) configuration
 
-- Option 1: Using the ephemeral option ensures that all data is stored in RAM, along with additional optimized configurations for better performance.
+- Option 1: Use the ephemeral option to ensure that all data is stored in RAM, along with additional optimized configurations for better performance.
 ```swift
 network.sessionConfigurationProvider(.ephemeral)
 ``````
-- Option 2: Using background configuration for Download Tasks
+- Option 2: Use background configuration for Download Tasks
 ```swift
 network.sessionConfigurationProvider(.background)
 ```
-Note: It's important to refrain from setting the background configuration for dataTask.
 
-### G. [RecordResponseMode](/Sources/NetworkCompose/src/NetworkMocker/Storage/RecordResponseMode.swift) configution
+**Note: It's important to refrain from setting the background configuration for dataTask.**
+
+### G. [RecordResponseMode](/Sources/NetworkCompose/src/NetworkMocker/Storage/RecordResponseMode.swift) configuration
 This option enables the module to record and save responses in FileManager during actual usage, facilitating reuse for automation testing in subsequent scenarios.
 
-- Opition 1: Enabled Record Response Mode
+- Opition 1: Enable Record Response Mode
 ```swift
 network.recordResponseForTesting(.enabled) 
 ```
 
-- Option 2: Disabled Record Response Mode
+- Option 2: Disable Record Response Mode
 ```swift
 network.recordResponseForTesting(.disabled) 
 ```
 
-Please be aware that we also offer the clearMockDataInDisk method, allowing you to delete all recorded data if necessary.
+**Please be aware that we also offer the clearMockDataInDisk method, allowing you to delete all recorded data if necessary.**
+
 ```swift
 network.clearMockDataInDisk()
 ```
 
-### H. [AutomationMode](/Sources/NetworkCompose/src/NetworkMocker/AutomationMode.swift) configution
-Option 1: Utilize locally stored data saved during the Record Response Mode.
+
+### H. [AutomationMode](/Sources/NetworkCompose/src/NetworkMocker/AutomationMode.swift) configuration
+- Option 1: Utilize locally stored data saved during the Record Response Mode.
 
 ```swift
 network.automationMode(.enabled(.local)) 
@@ -192,7 +228,7 @@ network.automationMode(.enabled(.local))
 network.automationMode(.enabled(.custom(self)))
 ```
 
-## Note: We will apply a default configuration to all settings if the client does not specify one.
+**Note: We will apply a default configuration to all settings if the client does not specify one.**
 ```swift
 network.applyDefaultConfiguration()
 ```
@@ -228,7 +264,7 @@ network.addRequest(request1, priority: .medium) { result in
            // Completed all request here
         }
 ```
-Noted that: `priority` is optional and it is `medium` by default.
+Note: `priority` is optional and it is `medium` by default.
 
 ### 3.5 Retry policy
 We've also introduced a Retry policy to implement retry strategies for robust network operations, thereby improving the overall reliability of your application in handling network issues.
@@ -279,14 +315,18 @@ extension SingleRequest: ReAuthenticationService {
     }
 }
 ```
+The default behavior for the Re-Authentication operation involves execution on a serial queue. However, we provide the flexibility to customize this by using the following:
+```swift
+ network.reAuthenOperationQueue(YourOperationQueue)
+```
+Please ensure that YourOperationQueue conforms to the [OperationQueueManagerInterface](/Sources/NetworkCompose/src/Network/OperationQueue/OperationQueueManagerInterface.swift)
 
 
-Thats it!! `NetworkCompose` is successfully integrated and initialized in the project, and ready to use. 
-For more detail please go to [SingleRequest](/Example/Example/SingleRequest.swift) and [MultipleRequestWithPriority](/Example/Example/MultiplePriorityRequest.swift)
+**That's it!! NetworkCompose is successfully integrated and initialized in the project, and ready to use. For more details, please go to [SingleRequest](/Example/Example/SingleRequest.swift) and [MultipleRequestWithPriority](/Example/Example/MultiplePriorityRequest.swift)**
 
 ## IV. Support
 Feel free to utilize [JSONPlaceholder](https://jsonplaceholder.typicode.com/guide/) for testing API in `NetworkCompose` examples. If you encounter any issues with `NetworkCompose` or need assistance with
-integration, please reach out to me at harryngict@gmail.com. I'm here to support you.
+integration, please reach out to me at harryngict@gmail.com. I'm happy to support you.
 
 ## V. License
 NetworkCompose is available under the MIT license. See the [LICENSE](https://github.com/harryngict/NetworkCompose/blob/master/LICENSE) file for more information.
