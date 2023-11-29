@@ -64,7 +64,7 @@ NetworkCompose offers a streamlined and enriched approach to handling network-re
 To integrate NetworkCompose into your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ```ruby
-pod 'NetworkCompose', '~> 0.1.0'
+pod 'NetworkCompose', '~> 0.1.1'
 ```
 
 then run:
@@ -75,7 +75,7 @@ pod install
 To integrate NetworkCompose using Swift Package Manager, add the following to your Package.swift file:
 ```swift
 dependencies: [
-    .package(url: "https://github.com/harryngict/NetworkCompose.git", from: "0.1.0")
+    .package(url: "https://github.com/harryngict/NetworkCompose.git", from: "0.1.1")
 ],
 targets: [
     .target(
@@ -315,14 +315,26 @@ extension SingleRequest: ReAuthenticationService {
     }
 }
 ```
-The default behavior for the Re-Authentication operation involves execution on a serial queue. However, we provide the flexibility to customize this by using the following:
+
+### 3.7 Request Cancellation
+We offer a function to make canceling requests a straightforward and simple process.
+
+1. NetworkBuilder Cancellation
 ```swift
- network.reAuthenOperationQueue(YourOperationQueue)
+let network: NetworkBuilder<URLSession> = NetworkBuilder(baseURL: baseURL)
+network.build().request(request) { result in }
+network.build().cancelRequest(request)
 ```
-Please ensure that YourOperationQueue conforms to the [OperationQueueManagerInterface](/Sources/NetworkCompose/src/Network/OperationQueue/OperationQueueManagerInterface.swift)
+2. NetworkPriorityDispatcher Cancellation
+```swift
+let network: NetworkPriorityDispatcher<URLSession> = NetworkPriorityDispatcher(baseURL: baseURL)
+network.cancelRequest(request).execute()
+```
+
+**Note: Please be aware that the cancellation may not be instantaneous. Handle the result appropriately within the completion block of the original request.**
 
 
-**That's it!! NetworkCompose is successfully integrated and initialized in the project, and ready to use. For more details, please go to [SingleRequest](/Example/Example/SingleRequest.swift) and [MultipleRequestWithPriority](/Example/Example/MultiplePriorityRequest.swift)**
+That's it!! NetworkCompose is successfully integrated and initialized in the project, and ready to use. For more details, please go to [SingleRequest](/Example/Example/SingleRequest.swift) and [MultipleRequestWithPriority](/Example/Example/MultiplePriorityRequest.swift)
 
 ## IV. Support
 Feel free to utilize [JSONPlaceholder](https://jsonplaceholder.typicode.com/guide/) for testing API in `NetworkCompose` examples. If you encounter any issues with `NetworkCompose` or need assistance with

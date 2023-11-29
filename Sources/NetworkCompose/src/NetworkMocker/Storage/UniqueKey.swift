@@ -18,15 +18,27 @@ public struct UniqueKey {
     ///   - path: The path of the network request.
     ///   - method: The HTTP method of the network request.
     ///   - queryParameters: Optional query parameters for the network request. Default is `nil`.
-    public init(path: String, method: String, queryParameters: [String: Any]? = nil) {
-        var value: String
+    public init(path: String,
+                method: NetworkMethod,
+                queryParameters: [String: Any]? = nil)
+    {
+        var components: [String] = [method.rawValue, path]
+
         if let queryParameters = queryParameters {
             let query = queryParameters.sortedKeyValueString()
-            value = "\(method)_\(path)_\(query)"
-        } else {
-            value = "\(method)_\(path)"
+            components.append(query)
         }
+
+        let value = components.joined(separator: "_")
         key = value.replacingOccurrences(of: "/", with: "_")
+    }
+
+    public init<RequestType>(
+        request: RequestType
+    ) where RequestType: RequestInterface {
+        self.init(path: request.path,
+                  method: request.method,
+                  queryParameters: request.queryParameters)
     }
 }
 

@@ -60,6 +60,12 @@ final class NetworkMocker<SessionType: NetworkSession>: NetworkRouterInterface {
         loggerInterface?.log(.debug, request.debugDescription)
         requestMockResponse(request, completion: completion)
     }
+
+    func cancelRequest<RequestType>(
+        _ request: RequestType
+    ) where RequestType: RequestInterface {
+        loggerInterface?.log(.debug, request.debugDescription)
+    }
 }
 
 private extension NetworkMocker {
