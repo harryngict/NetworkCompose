@@ -41,9 +41,9 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkBuilderSettings
     ///
     /// - Returns: The modified instance of the network builder with the default configuration.
     @discardableResult
-    override public func applyDefaultConfiguration() -> Self {
+    override public func setDefaultConfiguration() -> Self {
         reAuthService = nil
-        _ = super.applyDefaultConfiguration()
+        _ = super.setDefaultConfiguration()
         return self
     }
 
@@ -54,7 +54,7 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkBuilderSettings
     ///
     /// - Returns: An instance of the same type to support method chaining.
     @discardableResult
-    public func clearMockDataInDisk() -> Self {
+    public func clearStoredMockData() -> Self {
         let provider = StorageServiceProvider(loggerInterface: createLogger(),
                                               executionQueue: executionQueue)
         try? provider.clearMockDataInDisk()

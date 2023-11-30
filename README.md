@@ -64,7 +64,7 @@ NetworkCompose offers a streamlined and enriched approach to handling network-re
 To integrate NetworkCompose into your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ```ruby
-pod 'NetworkCompose', '~> 0.1.1'
+pod 'NetworkCompose', '~> 0.1.2'
 ```
 
 then run:
@@ -75,7 +75,7 @@ pod install
 To integrate NetworkCompose using Swift Package Manager, add the following to your Package.swift file:
 ```swift
 dependencies: [
-    .package(url: "https://github.com/harryngict/NetworkCompose.git", from: "0.1.1")
+    .package(url: "https://github.com/harryngict/NetworkCompose.git", from: "0.1.2")
 ],
 targets: [
     .target(
@@ -228,10 +228,16 @@ network.automationMode(.enabled(.local))
 network.automationMode(.enabled(.custom(self)))
 ```
 
-**Note: We will apply a default configuration to all settings if the client does not specify one.**
+### I. Default Configuration
+The network settings are initialized with a basic configuration by default. To apply or reset to the default configuration, use the
+`setDefaultConfiguration` method:
+
 ```swift
-network.applyDefaultConfiguration()
+network.setDefaultConfiguration()
 ```
+This method resets the network settings, clearing any custom configurations and applying default values for optimal use.
+
+**Note: If the client doesn't specify a custom configuration, the default settings are automatically applied during initialization.**
 
 ### 3.3 How to execute regular call by using NetworkBuilder
 
