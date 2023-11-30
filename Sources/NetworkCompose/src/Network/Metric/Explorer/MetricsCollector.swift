@@ -19,7 +19,7 @@ final class MetricsCollector: MetricsCollectorInterface {
     }
 
     func taskDidCompleteWithError(_ task: URLSessionTask, error: Error?) {
-        metricsExplorer.trackTaskDidCompleteWithError(task, didCompleteWithError: error)
+        metricsExplorer.trackTaskDidCompleted(task, didCompleteWithError: error)
     }
 
     func taskDidUpdateProgress(_ task: URLSessionTask, progress: (completed: Int64, total: Int64)) {
@@ -28,5 +28,9 @@ final class MetricsCollector: MetricsCollectorInterface {
 
     func taskDidFinishCollecting(_ task: URLSessionTask, metrics: URLSessionTaskMetrics) {
         metricsExplorer.trackTaskDidFinishCollecting(task, metrics: metrics)
+    }
+
+    func taskDidFinishDownloading(_ task: URLSessionDownloadTask) {
+        metricsExplorer.trackTaskDidCompleted(task, didCompleteWithError: nil)
     }
 }

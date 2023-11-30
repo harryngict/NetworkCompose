@@ -52,7 +52,7 @@ extension URLSession: NetworkSession {
         completion: @escaping ((Result<ResponseInterface, NetworkError>) -> Void)
     ) -> NetworkTask {
         var bodyStreamRequest = request
-        bodyStreamRequest.httpBodyStream = createHttpBodyStream(fromFileURL: fromFile)
+        bodyStreamRequest.httpBodyStream = createInputStream(fromFileURL: fromFile)
         let task = dataTask(with: bodyStreamRequest) { data, response, error in
             self.handleResponse(data: data, response: response, error: error, completion: completion)
         }
@@ -67,7 +67,6 @@ extension URLSession: NetworkSession {
         let task = downloadTask(with: request) { tempURL, response, error in
             self.handleDownloadResponse(tempURL: tempURL, response: response, error: error, completion: completion)
         }
-        // TODO: Can set `earliestBeginDate`, `countOfBytesClientExpectsToSend` and `countOfBytesClientExpectsToReceive`
         task.resume()
         return task
     }
@@ -113,5 +112,25 @@ private extension URLSession {
         } else {
             completion(.failure(NetworkError.downloadResponseTempURLNil))
         }
+    }
+
+    func createInputStream(fromFileURL fileURL: URL) -> InputStream? {
+        guard let inputStream = InputStream(url: fileURL) else {
+            return nil
+        }
+        inputStream.open()
+        var buffer = [UInt8](repeating: 0, count: 1024)
+        let data = NSMutableData()
+
+        while inputStream.hasBytesAvailable {
+            let bytesRead = inputStream.read(&buffer, maxLength: buffer.count)
+            if bytesRead > 0 {
+                data.append(buffer, length: bytesRead)
+            } else {
+                break
+            }
+        }
+        inputStream.close()
+        return InputStream(data: data as Data)
     }
 }

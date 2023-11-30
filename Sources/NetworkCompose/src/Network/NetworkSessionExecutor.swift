@@ -40,7 +40,7 @@ final class NetworkSessionExecutor<SessionType: NetworkSession>: NetworkSessionE
 
     // MARK: - Initialization
 
-    /// Initializes the `NetworkSessionExecutor` with the specified configuration.
+    /// Initializes a new instance of `NetworkSessionExecutor`.
     ///
     /// - Parameters:
     ///   - baseURL: The base URL for network requests.
@@ -48,8 +48,8 @@ final class NetworkSessionExecutor<SessionType: NetworkSession>: NetworkSessionE
     ///   - networkReachability: The network reachability object.
     ///   - executionQueue: The dispatch queue for executing network requests.
     ///   - observationQueue: The dispatch queue for observing and handling network events.
-    ///   - storageService: An optional storage service for handling persistent data.
-    ///   - loggerInterface: An optional logger interface for logging.
+    ///   - storageService: The service for handling storage-related tasks.
+    ///   - loggerInterface: The interface for logging network events.
     init(baseURL: URL,
          session: SessionType,
          networkReachability: NetworkReachabilityInterface,

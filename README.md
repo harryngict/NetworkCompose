@@ -183,18 +183,16 @@ public protocol NetworkReachabilityInterface: AnyObject {
 ```
 
 
-### F. [SessionConfiguration](/Sources/NetworkCompose/src/Network/Session/SessionConfigurationProvider.swift) configuration
+### F. [SessionConfigurationType](/Sources/NetworkCompose/src/Network/Session/SessionConfigurationType.swift) configuration
 
 - Option 1: Use the ephemeral option to ensure that all data is stored in RAM, along with additional optimized configurations for better performance.
 ```swift
-network.sessionConfigurationProvider(.ephemeral)
+network.sessionConfigurationType(.ephemeral)
 ``````
-- Option 2: Use background configuration for Download Tasks
+- Option 2: Use `default` configuration 
 ```swift
-network.sessionConfigurationProvider(.background)
+network.sessionConfigurationType(.default)
 ```
-
-**Note: It's important to refrain from setting the background configuration for dataTask.**
 
 ### G. [RecordResponseMode](/Sources/NetworkCompose/src/NetworkMocker/Storage/RecordResponseMode.swift) configuration
 This option enables the module to record and save responses in FileManager during actual usage, facilitating reuse for automation testing in subsequent scenarios.

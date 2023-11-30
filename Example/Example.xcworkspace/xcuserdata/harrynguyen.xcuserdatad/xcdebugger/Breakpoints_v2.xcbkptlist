@@ -14,13 +14,13 @@
             filePath = "Example/SingleRequest.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "204"
-            endingLineNumber = "204"
+            startingLineNumber = "267"
+            endingLineNumber = "267"
             landmarkName = "expectation(for:method:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "105F74D2-C64A-4120-8296-24926A23FAEB - 830c8dc23d21c339"
+                  uuid = "105F74D2-C64A-4120-8296-24926A23FAEB - 830c8dc23d21cb1a"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -30,12 +30,12 @@
                   urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkCompose/Example/Example/SingleRequest.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "204"
-                  endingLineNumber = "204"
-                  offsetFromSymbolStart = "264">
+                  startingLineNumber = "267"
+                  endingLineNumber = "267"
+                  offsetFromSymbolStart = "468">
                </Location>
                <Location
-                  uuid = "105F74D2-C64A-4120-8296-24926A23FAEB - 830c8dc23d21c339"
+                  uuid = "105F74D2-C64A-4120-8296-24926A23FAEB - 830c8dc23d21cbf9"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -45,11 +45,171 @@
                   urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkCompose/Example/Example/SingleRequest.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "204"
-                  endingLineNumber = "204"
-                  offsetFromSymbolStart = "240">
+                  startingLineNumber = "268"
+                  endingLineNumber = "268"
+                  offsetFromSymbolStart = "468">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FFD7389E-BFCA-472C-AE76-5435381B4AB8"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Sources/NetworkCompose/src/Network/Session/SessionProxyDelegate.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "144"
+            endingLineNumber = "144"
+            landmarkName = "urlSession(_:downloadTask:didWriteData:totalBytesWritten:totalBytesExpectedToWrite:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E97372D2-A9A5-460E-9A2E-FC44E07CF3A8"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Sources/NetworkCompose/src/Network/Session/SessionProxyDelegate.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "161"
+            endingLineNumber = "161"
+            landmarkName = "urlSession(_:downloadTask:didFinishDownloadingTo:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "99683566-5EC7-4857-ACAD-67C0B5A04AED"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Sources/NetworkCompose/src/Network/Session/SessionProxyDelegate.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "186"
+            endingLineNumber = "186"
+            landmarkName = "urlSession(_:task:didSendBodyData:totalBytesSent:totalBytesExpectedToSend:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "99683566-5EC7-4857-ACAD-67C0B5A04AED - c4eb658abc8df491"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NetworkCompose.SessionProxyDelegate.urlSession(_: __C.NSURLSession, task: __C.NSURLSessionTask, didSendBodyData: Swift.Int64, totalBytesSent: Swift.Int64, totalBytesExpectedToSend: Swift.Int64) -&gt; ()"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Session/SessionProxyDelegate.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "185"
+                  endingLineNumber = "185"
+                  offsetFromSymbolStart = "84">
+               </Location>
+               <Location
+                  uuid = "99683566-5EC7-4857-ACAD-67C0B5A04AED - c4eb658abc8df4b2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NetworkCompose.SessionProxyDelegate.urlSession(_: __C.NSURLSession, task: __C.NSURLSessionTask, didSendBodyData: Swift.Int64, totalBytesSent: Swift.Int64, totalBytesExpectedToSend: Swift.Int64) -&gt; ()"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Session/SessionProxyDelegate.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "186"
+                  endingLineNumber = "186"
+                  offsetFromSymbolStart = "184">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "77CAFB00-4823-4FE8-BBAB-511B4232F34D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Sources/NetworkCompose/src/Network/Session/SessionProxyDelegate.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "190"
+            endingLineNumber = "190"
+            landmarkName = "urlSession(_:task:didSendBodyData:totalBytesSent:totalBytesExpectedToSend:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "77CAFB00-4823-4FE8-BBAB-511B4232F34D - c4eb658abc8df41d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NetworkCompose.SessionProxyDelegate.urlSession(_: __C.NSURLSession, task: __C.NSURLSessionTask, didSendBodyData: Swift.Int64, totalBytesSent: Swift.Int64, totalBytesExpectedToSend: Swift.Int64) -&gt; ()"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Session/SessionProxyDelegate.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "189"
+                  endingLineNumber = "189"
+                  offsetFromSymbolStart = "208">
+               </Location>
+               <Location
+                  uuid = "77CAFB00-4823-4FE8-BBAB-511B4232F34D - c4eb658abc8df43e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NetworkCompose.SessionProxyDelegate.urlSession(_: __C.NSURLSession, task: __C.NSURLSessionTask, didSendBodyData: Swift.Int64, totalBytesSent: Swift.Int64, totalBytesExpectedToSend: Swift.Int64) -&gt; ()"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/Network/Session/SessionProxyDelegate.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "190"
+                  endingLineNumber = "190"
+                  offsetFromSymbolStart = "312">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2A9A9358-220B-4EDD-B296-876937223676"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Sources/NetworkCompose/src/Network/NetworkBuilderSettings.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "244"
+            endingLineNumber = "244"
+            landmarkName = "refreshSession()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AA4A4B78-0A67-46AA-8A02-215301F7378C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Sources/NetworkCompose/src/Network/NetworkBuilderSettings.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "249"
+            endingLineNumber = "249"
+            landmarkName = "refreshSession()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

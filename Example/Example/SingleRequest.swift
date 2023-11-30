@@ -36,6 +36,11 @@ final class SingleRequest {
 
         case .smartRetry:
             performRequestWithSmartRetry(completion: completion)
+        case .download:
+            download(completion: completion)
+
+        case .upload:
+            upload(completion: completion)
 
         case .supportAutomationTest:
             performRequestDemoAutomation(completion: completion)
@@ -154,6 +159,63 @@ final class SingleRequest {
             .logger(.enabled)
             .build()
             .request(request, retryPolicy: retryPolicy) { result in
+                switch result {
+                case let .failure(error): completion(.failure(error))
+                case let .success(post): completion(.success([post]))
+                }
+            }
+    }
+
+    private func download(
+        completion: @escaping (Result<[Post], NetworkError>) -> Void
+    ) {
+        let request = RequestBuilder<[Post]>(path: "/posts", method: .GET)
+            .build()
+        let sessionProxyDelegate = SessionProxyDelegate()
+        sessionProxyDelegate.downloadProgressHandler = { progress in
+            print("Download progress: \(progress)")
+        }
+        sessionProxyDelegate.completionHandler = { _, error in
+            print("Download finish: \(String(describing: error?.localizedDescription))")
+        }
+        let network: NetworkBuilder<URLSession> = try! NetworkBuilder<URLSession>(baseURL: baseURL,
+                                                                                  sessionProxyDelegate: sessionProxyDelegate,
+                                                                                  sessionConfigurationType: .ephemeral)
+        network.build()
+            .download(request) { result in
+                switch result {
+                case let .failure(error): completion(.failure(error))
+                case let .success(posts): completion(.success(posts))
+                }
+            }
+    }
+
+    private func upload(
+        completion: @escaping (Result<[Post], NetworkError>) -> Void
+    ) {
+        let request = RequestBuilder<Post>(path: "/posts", method: .POST)
+            .queryParameters(["title": "foo",
+                              "body": "bar",
+                              "userId": 1])
+            .requiresReAuthentication(true)
+            .build()
+
+        let file = URL(fileURLWithPath: "/Users/harrynguyen/Documents/Resources/NetworkCompose/Example/Example/747.png")
+        let sessionProxyDelegate = SessionProxyDelegate()
+        sessionProxyDelegate.uploadProgressHandler = { progress in
+            print("Upload progress: \(progress)")
+        }
+        sessionProxyDelegate.completionHandler = { _, error in
+            print("Upload finish: \(String(describing: error?.localizedDescription))")
+        }
+        let network: NetworkBuilder<URLSession> = try! NetworkBuilder<URLSession>(baseURL: baseURL,
+                                                                                  sessionProxyDelegate: sessionProxyDelegate,
+                                                                                  sessionConfigurationType: .ephemeral)
+        network
+            .reAuthenService(self)
+            .logger(.enabled)
+            .build()
+            .upload(request, fromFile: file) { result in
                 switch result {
                 case let .failure(error): completion(.failure(error))
                 case let .success(post): completion(.success([post]))
