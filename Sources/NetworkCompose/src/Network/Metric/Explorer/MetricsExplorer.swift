@@ -24,7 +24,7 @@ final class MetricsExplorer {
                                              currentRequest: task.currentRequest.map(RequestMetric.init))))
     }
 
-    func trackTaskDidCompleteWithError(_ task: URLSessionTask, didCompleteWithError error: Error?) {
+    func trackTaskDidCompleted(_ task: URLSessionTask, didCompleteWithError error: Error?) {
         guard let originalRequest = task.originalRequest else {
             return
         }

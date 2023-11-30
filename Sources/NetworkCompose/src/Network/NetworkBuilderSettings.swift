@@ -7,14 +7,10 @@
 
 import Foundation
 
-/// A base class for configuring common settings related to network communication.
+/// Builder settings for configuring network operations and communication.
 ///
-/// This class provides a set of methods to customize various aspects of network communication, such as SSL pinning, metric reporting,
-/// network reachability, execution and observation queues, automation modes for testing, recording responses, session configuration,
-/// logging, and default configurations.
-///
-/// To use this class, create an instance and chain the desired configuration methods, then use the resulting configured instance
-/// to build and obtain a network session.
+/// Use this class to customize the behavior and configuration of the network session and related components.
+/// After configuring the settings, create a `NetworkBuilder` instance to build the final network client.
 public class NetworkBuilderSettings<SessionType: NetworkSession> {
     /// The base URL for the network requests.
     var baseURL: URL
@@ -28,6 +24,15 @@ public class NetworkBuilderSettings<SessionType: NetworkSession> {
     /// The strategy for reporting metrics related to network tasks.
     var reportMetricStrategy: ReportMetricStrategy = .disabled
 
+    /// The strategy for logging network events.
+    var loggerStrategy: LoggerStrategy = .disabled
+
+    /// The delegate for handling network session events.
+    var sessionProxyDelegate: SessionProxyDelegate?
+
+    /// The type of session configuration to use.
+    var sessionConfigurationType: SessionConfigurationType = .ephemeral
+
     /// Interface for monitoring network reachability.
     var networkReachability: NetworkReachabilityInterface = NetworkReachability.shared
 
@@ -37,54 +42,45 @@ public class NetworkBuilderSettings<SessionType: NetworkSession> {
     /// The queue on which network events are observed.
     var observationQueue: DispatchQueueType = DefaultDispatchQueue.observationQueue
 
-    /// Provider for session configurations, allowing customization of network sessions.
-    var sessionConfigurationProvider: SessionConfigurationProvider = DefaultSessionConfigurationProvider.ephemeral
-
     /// The strategy for mocking network events, useful for testing or simulating network behavior.
     var automationMode: AutomationMode = .disabled
 
     /// The mode for recording responses during network operations.
     var recordResponseMode: RecordResponseMode = .disabled
 
-    /// The strategy for logging network events and activities.
-    var loggerStrategy: LoggerStrategy = .disabled
-
-    /// Initializes a new instance of `NetworkCommonSettings`.
+    /// Initializes a new instance of `NetworkBuilderSettings`.
     ///
     /// - Parameters:
     ///   - baseURL: The base URL for network requests.
-    ///   - session: The network session to be used.
-    public required init(baseURL: URL,
-                         session: SessionType)
+    ///   - session: The session used for network communication.
+    public init(baseURL: URL,
+                session: SessionType = URLSession.shared)
     {
         self.baseURL = baseURL
         self.session = session
-        setDefaultConfiguration()
     }
 
-    /// Sets the security trust for SSL pinning.
+    /// Convenience initializer for creating a `NetworkBuilderSettings` instance with a custom session configuration.
     ///
-    /// - Parameter sslPinningPolicy: The security trust object for SSL pinning.
-    /// - Returns: The builder instance for method chaining.
-    ///
-    /// - Throws: A `NetworkError` if the session cannot be created.
-    @discardableResult
-    public func sslPinningPolicy(_ sslPinningPolicy: SSLPinningPolicy) -> Self {
-        self.sslPinningPolicy = sslPinningPolicy
-        return self
-    }
+    /// - Parameters:
+    ///   - baseURL: The base URL for network requests.
+    ///   - sessionConfigurationType: The type of session configuration to use.
+    ///   - sessionProxyDelegate: The delegate to handle network session events.
+    /// - Throws: `NetworkError.invalidSession` if the session cannot be created.
+    public convenience init(baseURL: URL,
+                            sessionProxyDelegate: SessionProxyDelegate,
+                            sessionConfigurationType: SessionConfigurationType = .ephemeral) throws
+    {
+        guard let session = URLSession(configuration: sessionConfigurationType.sessionConfig,
+                                       delegate: sessionProxyDelegate,
+                                       delegateQueue: nil) as? SessionType
+        else {
+            throw NetworkError.invalidSession
+        }
 
-    /// Sets the strategy for reporting metrics related to network tasks.
-    ///
-    /// Use this method to configure the strategy for reporting metrics associated with network tasks.
-    /// The provided `strategy` parameter defines how metrics should be reported.
-    ///
-    /// - Parameter strategy: The strategy for reporting metrics related to network tasks.
-    /// - Returns: An instance of the same type to support method chaining.
-    @discardableResult
-    public func reportMetric(_ strategy: ReportMetricStrategy) -> Self {
-        reportMetricStrategy = strategy
-        return self
+        self.init(baseURL: baseURL, session: session)
+        self.sessionProxyDelegate = sessionProxyDelegate
+        self.sessionConfigurationType = sessionConfigurationType
     }
 
     /// Sets the custom network reachability object.
@@ -147,25 +143,54 @@ public class NetworkBuilderSettings<SessionType: NetworkSession> {
         return self
     }
 
-    /// Sets the session configuration provider for the network.
+    /// Sets the security trust for SSL pinning and refreshes the session accordingly.
     ///
-    /// Use this method to provide a custom `SessionConfigurationProvider` to configure the network session.
+    /// - Parameter sslPinningPolicy: The security trust object for SSL pinning.
+    /// - Returns: The builder instance for method chaining.
     ///
-    /// - Parameter provider: The session configuration provider.
-    /// - Returns: An instance of the network with the updated session configuration provider.
+    /// - Throws: A `NetworkError` if the session cannot be created.
     @discardableResult
-    public func sessionConfigurationProvider(_ provider: SessionConfigurationProvider) -> Self {
-        sessionConfigurationProvider = provider
+    public func sslPinningPolicy(_ sslPinningPolicy: SSLPinningPolicy) -> Self {
+        self.sslPinningPolicy = sslPinningPolicy
+        try? refreshSession()
         return self
     }
 
-    /// Sets the logging strategy for the logger.
+    /// Sets the strategy for reporting metrics related to network tasks and refreshes the session accordingly.
+    ///
+    /// Use this method to configure the strategy for reporting metrics associated with network tasks.
+    /// The provided `strategy` parameter defines how metrics should be reported.
+    ///
+    /// - Parameter strategy: The strategy for reporting metrics related to network tasks.
+    /// - Returns: An instance of the same type to support method chaining.
+    @discardableResult
+    public func reportMetric(_ strategy: ReportMetricStrategy) -> Self {
+        reportMetricStrategy = strategy
+        try? refreshSession()
+        return self
+    }
+
+    /// Sets the session configuration provider for the network and refreshes the session accordingly.
+    ///
+    /// Use this method to provide a custom `SessionConfigurationType` to configure the network session.
+    ///
+    /// - Parameter type: The session configuration provider.
+    /// - Returns: An instance of the network with the updated session configuration provider.
+    @discardableResult
+    public func sessionConfigurationType(_ type: SessionConfigurationType) -> Self {
+        sessionConfigurationType = type
+        try? refreshSession()
+        return self
+    }
+
+    /// Sets the logging strategy for the logger and refreshes the session accordingly.
     ///
     /// - Parameter strategy: The logging strategy to set.
     /// - Returns: The logger instance with the updated logging strategy.
     @discardableResult
     public func logger(_ strategy: LoggerStrategy) -> Self {
         loggerStrategy = strategy
+        try? refreshSession()
         return self
     }
 
@@ -185,8 +210,9 @@ public class NetworkBuilderSettings<SessionType: NetworkSession> {
         executionQueue = DefaultDispatchQueue.executionQueue
         observationQueue = DefaultDispatchQueue.observationQueue
         networkReachability = NetworkReachability.shared
-        sessionConfigurationProvider = DefaultSessionConfigurationProvider.ephemeral
-        if let session = try? createNetworkSession() { self.session = session }
+        sessionConfigurationType = .ephemeral
+        sessionProxyDelegate = nil
+        try? refreshSession()
         return self
     }
 
@@ -206,24 +232,30 @@ public class NetworkBuilderSettings<SessionType: NetworkSession> {
         }
     }
 
-    /// Creates and returns a network session conforming to `SessionType`.
+    /// Updates the network session with the latest configuration and options.
     ///
-    /// This method initializes a URLSession with the provided configuration and a custom delegate (`SessionProxyDelegate`).
-    /// The delegate is responsible for handling SSL pinning, metric task reporting, and logging.
+    /// If any of the following properties change: `sslPinningPolicy`, `reportMetricStrategy`, `loggerStrategy`
+    /// or `sessionConfigurationType` , it is necessary to call this method to apply the changes to the session.
     ///
-    /// - Throws: A `NetworkError` if the session cannot be created or if there is an issue with SSL pinning.
-    /// - Returns: An instance conforming to `SessionType`.
-    func createNetworkSession() throws -> SessionType {
-        let delegate = SessionProxyDelegate(sslPinningPolicy: sslPinningPolicy,
-                                            reportMetricStrategy: reportMetricStrategy,
-                                            loggerInterface: createLogger())
+    /// - Returns: An updated `SessionType` instance.
+    /// - Throws: `NetworkError.invalidSession` if the updated session cannot be created.
+    func refreshSession() throws {
+        if sessionProxyDelegate == nil {
+            sessionProxyDelegate = SessionProxyDelegate(sslPinningPolicy: sslPinningPolicy,
+                                                        reportMetricStrategy: reportMetricStrategy,
+                                                        loggerInterface: createLogger())
+        } else {
+            sessionProxyDelegate?.update(sslPinningPolicy: sslPinningPolicy,
+                                         reportMetricStrategy: reportMetricStrategy,
+                                         loggerInterface: createLogger())
+        }
 
-        guard let session = URLSession(configuration: sessionConfigurationProvider.sessionConfig,
-                                       delegate: delegate,
+        guard let session = URLSession(configuration: sessionConfigurationType.sessionConfig,
+                                       delegate: sessionProxyDelegate,
                                        delegateQueue: nil) as? SessionType
         else {
             throw NetworkError.invalidSession
         }
-        return session
+        self.session = session
     }
 }

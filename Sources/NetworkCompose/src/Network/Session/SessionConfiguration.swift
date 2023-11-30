@@ -1,5 +1,5 @@
 //
-//  SessionConfigurationProvider.swift
+//  SessionConfiguration.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 21/11/23.
@@ -7,15 +7,15 @@
 
 import Foundation
 
-public protocol SessionConfigurationProvider {
-    var sessionConfig: URLSessionConfiguration { get }
+// TODO: Current we do not support background session.
+// need to do in the future
+public enum SessionConfigurationType {
+    case `default`
+    case ephemeral
 }
 
-public enum DefaultSessionConfigurationProvider: SessionConfigurationProvider {
-    case ephemeral
-    case background
-
-    public var sessionConfig: URLSessionConfiguration {
+public extension SessionConfigurationType {
+    var sessionConfig: URLSessionConfiguration {
         switch self {
         case .ephemeral:
             let sessionConfig = URLSessionConfiguration.ephemeral
@@ -26,11 +26,8 @@ public enum DefaultSessionConfigurationProvider: SessionConfigurationProvider {
             sessionConfig.requestCachePolicy = .reloadRevalidatingCacheData
             sessionConfig.urlCache = URLCache.shared
             return sessionConfig
-        case .background:
-            let sessionConfig = URLSessionConfiguration.background(withIdentifier: "com.NetworkCompose.SessionConfiguration.background")
-            sessionConfig.isDiscretionary = true
-            sessionConfig.sessionSendsLaunchEvents = true
-            return sessionConfig
+        case .default:
+            return URLSessionConfiguration.default
         }
     }
 }
