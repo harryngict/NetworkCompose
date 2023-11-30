@@ -8,5 +8,8 @@
 import Foundation
 
 public protocol MetricInterceptorInterface {
+    /// Sends a task metric event to the interceptor.
+    ///
+    /// - Parameter event: The task metric event to be sent.
     func sendEvent(_ event: TaskMetricEvent)
 }

@@ -7,10 +7,6 @@
 
 import Foundation
 
-/// Builder settings for configuring network operations and communication.
-///
-/// Use this class to customize the behavior and configuration of the network session and related components.
-/// After configuring the settings, create a `NetworkBuilder` instance to build the final network client.
 public class NetworkBuilderSettings<SessionType: NetworkSession> {
     /// The base URL for the network requests.
     var baseURL: URL
@@ -118,8 +114,6 @@ public class NetworkBuilderSettings<SessionType: NetworkSession> {
     /// - Parameter strategy: The mocking strategy to be applied for automation tests.
     /// - Returns: The modified instance allowing method chaining.
     ///
-    /// Use this method to set the mocking strategy specifically tailored for automation tests. The provided `strategy` parameter defines how responses are mocked during automated testing scenarios.
-    ///
     /// - Note: This method supports method chaining, enabling the convenient configuration of the mocking strategy within a single line.
     /// - SeeAlso: `AutomationMode` enum for available strategies tailored for automation testing.
     @discardableResult
@@ -132,8 +126,6 @@ public class NetworkBuilderSettings<SessionType: NetworkSession> {
     ///
     /// - Parameter mode: The record response mode to be set.
     /// - Returns: The builder instance for method chaining.
-    ///
-    /// Use this method to configure the storage strategy for handling network events and record responses for automation testing. The provided `mode` parameter determines how responses are recorded and later utilized in automated testing scenarios.
     ///
     /// - Note: This method supports method chaining, allowing you to conveniently set the storage strategy and perform additional configurations in a single line.
     /// - SeeAlso: `RecordResponseMode` for available modes and customization options.
@@ -216,12 +208,10 @@ public class NetworkBuilderSettings<SessionType: NetworkSession> {
         return self
     }
 
-    /// Creates a logger based on the configured logging strategy.
+    /// Gets a logger based on the configured logging strategy.
     ///
     /// - Returns: A `LoggerInterface` instance based on the logging strategy.
-    ///            Returns `nil` if logging is disabled, the shared default logger
-    ///            if logging is enabled, or a custom logger if provided.
-    func createLogger() -> LoggerInterface? {
+    func getLogger() -> LoggerInterface? {
         switch loggerStrategy {
         case .disabled:
             return nil
@@ -243,11 +233,11 @@ public class NetworkBuilderSettings<SessionType: NetworkSession> {
         if sessionProxyDelegate == nil {
             sessionProxyDelegate = SessionProxyDelegate(sslPinningPolicy: sslPinningPolicy,
                                                         reportMetricStrategy: reportMetricStrategy,
-                                                        loggerInterface: createLogger())
+                                                        loggerInterface: getLogger())
         } else {
             sessionProxyDelegate?.update(sslPinningPolicy: sslPinningPolicy,
                                          reportMetricStrategy: reportMetricStrategy,
-                                         loggerInterface: createLogger())
+                                         loggerInterface: getLogger())
         }
 
         guard let session = URLSession(configuration: sessionConfigurationType.sessionConfig,

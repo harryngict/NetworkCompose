@@ -7,7 +7,6 @@
 
 import Foundation
 
-/// A class representing a prioritized network action.
 public class PriorityAction: Comparable {
     /// The priority level of the action.
     public let priority: Priority

@@ -7,7 +7,6 @@
 
 import Foundation
 
-/// The `MetricsCollectorInterface` protocol defines methods for collecting and reporting metrics related to network tasks.
 public protocol MetricsCollectorInterface: AnyObject {
     /// Informs the collector that a network task has been created.
     ///

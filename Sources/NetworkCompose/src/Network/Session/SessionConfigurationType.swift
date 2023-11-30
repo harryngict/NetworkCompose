@@ -7,8 +7,7 @@
 
 import Foundation
 
-// TODO: Current we do not support background session.
-// need to do in the future
+// TODO: Current we do not support background session
 public enum SessionConfigurationType {
     case `default`
     case ephemeral

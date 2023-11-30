@@ -25,7 +25,7 @@ public final class NetworkReachability: NetworkReachabilityInterface {
             this.isInternetAvailable = path.status == .satisfied
             completion(this.isInternetAvailable)
         }
-        let queue = DispatchQueue(label: "com.NetworkCompose.NetworkReachability")
+        let queue = DispatchQueue(label: "\(LibraryConstant.domain).NetworkReachability")
         monitor.start(queue: queue)
     }
 

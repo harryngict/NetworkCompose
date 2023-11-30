@@ -64,7 +64,7 @@ NetworkCompose offers a streamlined and enriched approach to handling network-re
 To integrate NetworkCompose into your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ```ruby
-pod 'NetworkCompose', '~> 0.1.3'
+pod 'NetworkCompose', '~> 0.1.4'
 ```
 
 then run:
@@ -75,7 +75,7 @@ pod install
 To integrate NetworkCompose using Swift Package Manager, add the following to your Package.swift file:
 ```swift
 dependencies: [
-    .package(url: "https://github.com/harryngict/NetworkCompose.git", from: "0.1.3")
+    .package(url: "https://github.com/harryngict/NetworkCompose.git", from: "0.1.4")
 ],
 targets: [
     .target(
@@ -137,7 +137,7 @@ network.reportMetric(.enabled(metricInterceptor))
 
 ### C. ExecutionQueue and ObservationQueue configution
 ```swift
-let concurrent = DispatchQueue(label: "com.NetworkCompose.NetworkComposeDemo",
+let concurrent = DispatchQueue(label: "com.NetworkCompose.Demo",
                                qos: .userInitiated,
                                attributes: .concurrent)
 network.execute(on: concurrent)

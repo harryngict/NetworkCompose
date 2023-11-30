@@ -8,7 +8,8 @@
 import Foundation
 
 public enum RetryPolicy: Sendable {
-    case none
+    /// Retry is disabled.
+    case disabled
 
     /// Constant retry policy with a fixed number of retry attempts and a constant delay between retries.
     ///
@@ -32,7 +33,7 @@ public enum RetryPolicy: Sendable {
 
     var retryCount: Int {
         switch self {
-        case .none: return 0
+        case .disabled: return 0
         case let .constant(count, _): return count
         case let .exponentialRetry(count, _, _, _): return count
         }
@@ -51,7 +52,7 @@ public enum RetryPolicy: Sendable {
 
     private func retryDelay(currentRetry: Int) -> TimeInterval? {
         switch self {
-        case .none:
+        case .disabled:
             return nil
         case let .exponentialRetry(_, initialDelay, multiplier, maxDelay):
             let delay = initialDelay * pow(multiplier, Double(currentRetry - 1))

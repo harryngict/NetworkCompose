@@ -20,17 +20,14 @@ protocol FileStorage {
 
 extension FileManager: FileStorage {}
 
-final class FileSystemStorageService: StorageService {
+final class FileSystemStorageService: StorageServiceInterface {
     private let service: FileStorage
     private let executionQueue: DispatchQueueType
-    private var loggerInterface: LoggerInterface?
 
     init(service: FileStorage = FileManager.default,
-         loggerInterface: LoggerInterface?,
          executionQueue: DispatchQueueType)
     {
         self.service = service
-        self.loggerInterface = loggerInterface
         self.executionQueue = executionQueue
     }
 
@@ -55,7 +52,8 @@ final class FileSystemStorageService: StorageService {
         let path = UniqueKey(request: request).key
         let data = try getDataFromFile(atPath: path)
         do {
-            let model = try request.responseDecoder.decode(RequestType.SuccessType.self, from: data)
+            let model = try request.responseDecoder.decode(RequestType.SuccessType.self,
+                                                           from: data)
             return model
         } catch {
             throw NetworkError.invalidResponse
@@ -69,7 +67,6 @@ final class FileSystemStorageService: StorageService {
         for file in files {
             let filePath = URL(fileURLWithPath: path).appendingPathComponent(file).path
             try service.removeItem(atPath: filePath)
-            loggerInterface?.log(.infor, "removed file: \(filePath)")
         }
     }
 }
@@ -83,12 +80,14 @@ private extension FileSystemStorageService {
         guard service.fileExists(atPath: homeURL.path) == false else {
             return true
         }
-        loggerInterface?.log(.infor, "created folder: \(homeURL.path)")
         try service.createDirectory(at: homeURL, withIntermediateDirectories: true, attributes: nil)
         return true
     }
 
-    func storeDataToFile(_ data: Data, forPath path: String) throws {
+    func storeDataToFile(
+        _ data: Data,
+        forPath path: String
+    ) throws {
         guard try hasHomeDirectory() else {
             throw NetworkError.automation(.notFoundHomeDirectory)
         }

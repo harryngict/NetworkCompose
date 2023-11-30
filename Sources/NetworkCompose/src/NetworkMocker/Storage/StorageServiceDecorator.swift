@@ -1,5 +1,5 @@
 //
-//  StorageServiceProvider.swift
+//  StorageServiceDecorator.swift
 //  NetworkCompose
 //
 //  Created by Hoang Nguyen on 26/11/23.
@@ -7,14 +7,15 @@
 
 import Foundation
 
-final class StorageServiceProvider: StorageService {
-    private let storageService: StorageService
+final class StorageServiceDecorator: StorageServiceInterface {
+    private let storageService: StorageServiceInterface
+    private var loggerInterface: LoggerInterface?
 
     init(loggerInterface: LoggerInterface?,
          executionQueue: DispatchQueueType)
     {
-        storageService = FileSystemStorageService(loggerInterface: loggerInterface,
-                                                  executionQueue: executionQueue)
+        self.loggerInterface = loggerInterface
+        storageService = FileSystemStorageService(executionQueue: executionQueue)
     }
 
     func storeResponse<RequestType>(
@@ -22,7 +23,9 @@ final class StorageServiceProvider: StorageService {
         data: Data,
         model: RequestType.SuccessType
     ) throws where RequestType: RequestInterface {
-        try storageService.storeResponse(request, data: data, model: model)
+        try storageService.storeResponse(request,
+                                         data: data,
+                                         model: model)
     }
 
     func getResponse<RequestType>(

@@ -7,9 +7,6 @@
 
 import Foundation
 
-/// An enumeration representing priority levels.
-///
-/// Priorities are comparable based on their ordering, with `high` being the highest priority.
 public enum Priority: Comparable {
     /// The high priority level.
     case high

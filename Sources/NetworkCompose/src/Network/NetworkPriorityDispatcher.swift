@@ -7,7 +7,6 @@
 
 import Foundation
 
-/// A class for composing and executing prioritized network actions.
 public final class NetworkPriorityDispatcher<SessionType: NetworkSession>: NetworkBuilder<SessionType> {
     /// An array to store the prioritized network actions.
     private var priorityActions: [PriorityAction] = []
@@ -34,7 +33,7 @@ public final class NetworkPriorityDispatcher<SessionType: NetworkSession>: Netwo
     public func addRequest<RequestType: RequestInterface, ResultType>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
-        retryPolicy: RetryPolicy = .none,
+        retryPolicy: RetryPolicy = .disabled,
         priority: Priority = .medium,
         completion: @escaping (Result<ResultType, NetworkError>) -> Void
     ) -> Self where RequestType.SuccessType == ResultType {
@@ -65,7 +64,7 @@ public final class NetworkPriorityDispatcher<SessionType: NetworkSession>: Netwo
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
         fromFile fileURL: URL,
-        retryPolicy: RetryPolicy = .none,
+        retryPolicy: RetryPolicy = .disabled,
         priority: Priority = .medium,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) -> Self where RequestType.SuccessType == ResultType {
@@ -95,7 +94,7 @@ public final class NetworkPriorityDispatcher<SessionType: NetworkSession>: Netwo
     public func addDownload<RequestType: RequestInterface, ResultType>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
-        retryPolicy: RetryPolicy = .none,
+        retryPolicy: RetryPolicy = .disabled,
         priority: Priority = .medium,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) -> Self where RequestType.SuccessType == ResultType {

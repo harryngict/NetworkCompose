@@ -7,7 +7,6 @@
 
 import Foundation
 
-/// Enumeration defining strategies for logging during network operations.
 public enum LoggerStrategy {
     /// Disables logging for network operations.
     case disabled

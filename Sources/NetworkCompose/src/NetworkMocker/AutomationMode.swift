@@ -7,7 +7,6 @@
 
 import Foundation
 
-/// Enumeration defining strategies for mocking responses in automation tests.
 public enum AutomationMode {
     /// Disables mocking for automation tests.
     case disabled

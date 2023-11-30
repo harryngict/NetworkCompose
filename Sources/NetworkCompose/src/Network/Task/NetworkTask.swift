@@ -8,6 +8,7 @@
 import Foundation
 
 public protocol NetworkTask: AnyObject {
+    /// Cancels the network task.
     func cancel()
 }
 

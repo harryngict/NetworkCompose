@@ -18,45 +18,82 @@ final class MetricsExplorer {
         guard let originalRequest = task.originalRequest else {
             return
         }
-        sendEvent(.created(TaskCreatedMetric(taskType: TaskType(task: task),
-                                             createdAt: Date(),
-                                             originalRequest: RequestMetric(originalRequest),
-                                             currentRequest: task.currentRequest.map(RequestMetric.init))))
+
+        let metric = TaskCreatedMetric(taskType: TaskType(task: task),
+                                       createdAt: Date(),
+                                       originalRequest: RequestMetric(originalRequest),
+                                       currentRequest: task.currentRequest.map(RequestMetric.init))
+        let event = TaskMetricEvent.created(metric)
+
+        sendEvent(event)
     }
 
     func trackTaskDidCompleted(_ task: URLSessionTask, didCompleteWithError error: Error?) {
         guard let originalRequest = task.originalRequest else {
             return
         }
-        sendEvent(.completed(TaskCompletedMetric(taskType: TaskType(task: task),
-                                                 createdAt: Date(),
-                                                 originalRequest: RequestMetric(originalRequest),
-                                                 currentRequest: task.currentRequest.map(RequestMetric.init),
-                                                 response: task.response.map(ResponseMetric.init),
-                                                 error: error.map(ResponseErrorMetric.init),
-                                                 requestBody: originalRequest.httpBody ?? originalRequest.httpBodyStreamData())))
+
+        let metric = TaskCompletedMetric(taskType: TaskType(task: task),
+                                         createdAt: Date(),
+                                         originalRequest: RequestMetric(originalRequest),
+                                         currentRequest: task.currentRequest.map(RequestMetric.init),
+                                         response: task.response.map(ResponseMetric.init),
+                                         error: error.map(ResponseErrorMetric.init),
+                                         requestBody: originalRequest.httpBody ?? httpBodyStreamData(originalRequest))
+
+        let event = TaskMetricEvent.completed(metric)
+
+        sendEvent(event)
     }
 
     func trackTaskDidUpdateProgress(_ task: URLSessionTask, didUpdateProgress progress: (completed: Int64, total: Int64)) {
-        sendEvent(.progressUpdated(TaskProgressUpdatedMetric(taskType: TaskType(task: task),
-                                                             createdAt: Date(),
-                                                             url: task.originalRequest?.url,
-                                                             completedUnitCount: progress.completed,
-                                                             totalUnitCount: progress.total)))
+        let metric = TaskProgressUpdatedMetric(taskType: TaskType(task: task),
+                                               createdAt: Date(),
+                                               url: task.originalRequest?.url,
+                                               completedUnitCount: progress.completed,
+                                               totalUnitCount: progress.total)
+        let event = TaskMetricEvent.progressUpdated(metric)
+
+        sendEvent(event)
     }
 
     func trackTaskDidFinishCollecting(_ task: URLSessionTask, metrics: URLSessionTaskMetrics) {
         let statusCode = (metrics.transactionMetrics.first?.response as? HTTPURLResponse)?.statusCode ?? -1
-        sendEvent(.didFinishCollecting(TaskDidFinishCollectingMetric(taskType: TaskType(task: task),
-                                                                     createdAt: Date(),
-                                                                     url: task.originalRequest?.url,
-                                                                     taskInterval: metrics.taskInterval,
-                                                                     countOfBytesReceived: task.countOfBytesReceived,
-                                                                     countOfBytesSent: task.countOfBytesSent,
-                                                                     statusCode: statusCode)))
+
+        let metric = TaskDidFinishCollectingMetric(taskType: TaskType(task: task),
+                                                   createdAt: Date(),
+                                                   url: task.originalRequest?.url,
+                                                   taskInterval: metrics.taskInterval,
+                                                   countOfBytesReceived: task.countOfBytesReceived,
+                                                   countOfBytesSent: task.countOfBytesSent,
+                                                   statusCode: statusCode)
+        let event = TaskMetricEvent.didFinishCollecting(metric)
+
+        sendEvent(event)
     }
 
     private func sendEvent(_ event: TaskMetricEvent) {
         metricInterceptor.sendEvent(event)
+    }
+
+    func httpBodyStreamData(_ request: URLRequest) -> Data? {
+        guard let bodyStream = request.httpBodyStream else {
+            return nil
+        }
+
+        let bufferSize = 1024
+        let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: bufferSize)
+        bodyStream.open()
+        defer {
+            buffer.deallocate()
+            bodyStream.close()
+        }
+
+        var bodyStreamData = Data()
+        while bodyStream.hasBytesAvailable {
+            let readData = bodyStream.read(buffer, maxLength: bufferSize)
+            bodyStreamData.append(buffer, count: readData)
+        }
+        return bodyStreamData
     }
 }

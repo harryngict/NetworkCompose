@@ -7,9 +7,7 @@
 
 import Foundation
 
-/// A struct representing a unique key for identifying network requests based on path, method, and query parameters.
 public struct UniqueKey {
-    /// The unique key generated based on the provided path, method, and optional query parameters.
     public let key: String
 
     /// Initializes a `UniqueKey` instance with the specified components.

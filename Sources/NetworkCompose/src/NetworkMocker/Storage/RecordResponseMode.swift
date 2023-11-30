@@ -8,6 +8,7 @@
 import Foundation
 
 public enum RecordResponseMode {
+    /// Recording is disabled.
     case disabled
 
     /// Enables recording responses for automation tests.

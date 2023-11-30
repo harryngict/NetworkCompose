@@ -7,7 +7,6 @@
 
 import Foundation
 
-/// A helper class for parsing data and creating service expectations.
 public final class ParserExpectationHelper {
     public static let shared = ParserExpectationHelper()
 

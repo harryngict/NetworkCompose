@@ -24,11 +24,8 @@ extension Dictionary where Key == String, Value == Any {
         guard !isEmpty else {
             return ""
         }
-
-        // Sort the keys alphabetically
         let sortedKeys = keys.sorted()
 
-        // Concatenate key-value pairs into a string
         let result = sortedKeys.map { key in
             guard let value = self[key] else { return "" }
             return "\(key)_\(value)"

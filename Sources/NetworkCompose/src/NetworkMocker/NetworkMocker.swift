@@ -20,12 +20,12 @@ final class NetworkMocker<SessionType: NetworkSession>: NetworkRouterInterface {
          executionQueue: DispatchQueueType,
          observationQueue: DispatchQueueType,
          loggerInterface: LoggerInterface?,
-         mockDataType: AutomationMode.DataType)
+         dataType: AutomationMode.DataType)
     {
         self.reAuthService = reAuthService
         self.observationQueue = observationQueue
         self.loggerInterface = loggerInterface
-        mockHandler = NetworkMockHandler(mockDataType,
+        mockHandler = NetworkMockHandler(dataType,
                                          loggerInterface: loggerInterface,
                                          executionQueue: executionQueue)
     }
@@ -33,7 +33,7 @@ final class NetworkMocker<SessionType: NetworkSession>: NetworkRouterInterface {
     func request<RequestType>(
         _ request: RequestType,
         andHeaders _: [String: String] = [:],
-        retryPolicy _: RetryPolicy = .none,
+        retryPolicy _: RetryPolicy = .disabled,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
         loggerInterface?.log(.debug, request.debugDescription)
@@ -44,7 +44,7 @@ final class NetworkMocker<SessionType: NetworkSession>: NetworkRouterInterface {
         _ request: RequestType,
         andHeaders _: [String: String] = [:],
         fromFile _: URL,
-        retryPolicy _: RetryPolicy = .none,
+        retryPolicy _: RetryPolicy = .disabled,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
         loggerInterface?.log(.debug, request.debugDescription)
@@ -54,7 +54,7 @@ final class NetworkMocker<SessionType: NetworkSession>: NetworkRouterInterface {
     func download<RequestType>(
         _ request: RequestType,
         andHeaders _: [String: String] = [:],
-        retryPolicy _: RetryPolicy = .none,
+        retryPolicy _: RetryPolicy = .disabled,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
         loggerInterface?.log(.debug, request.debugDescription)

@@ -7,10 +7,6 @@
 
 import Foundation
 
-/// A protocol defining the interface for a network controller.
-///
-/// This protocol declares methods for sending network requests, uploading files, and downloading files. Conform to this
-/// protocol to implement network controllers with specific behavior for handling different types of network tasks.
 public protocol NetworkSessionExecutorInteface: AnyObject {
     /// Sends a network request and executes the completion handler with the result.
     ///
@@ -85,7 +81,7 @@ public extension NetworkSessionExecutorInteface {
     func request<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
-        retryPolicy: RetryPolicy = .none,
+        retryPolicy: RetryPolicy = .disabled,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
         self.request(request,
@@ -106,7 +102,7 @@ public extension NetworkSessionExecutorInteface {
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
         fromFile fileURL: URL,
-        retryPolicy: RetryPolicy = .none,
+        retryPolicy: RetryPolicy = .disabled,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
         upload(request,
@@ -126,7 +122,7 @@ public extension NetworkSessionExecutorInteface {
     func download<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
-        retryPolicy: RetryPolicy = .none,
+        retryPolicy: RetryPolicy = .disabled,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
         download(request,

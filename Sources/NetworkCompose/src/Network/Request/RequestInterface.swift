@@ -8,15 +8,34 @@
 import Foundation
 
 public protocol RequestInterface {
+    /// The path of the request URL.
     var path: String { get }
+
+    /// The  method for the request.
     var method: NetworkMethod { get }
+
+    /// The query parameters to be included in the request URL, if any.
     var queryParameters: [String: Any]? { get }
+
+    /// The headers to be included in the request.
     var headers: [String: String] { get }
+
+    /// The body encoding method for the request.
     var bodyEncoding: BodyEncoding { get }
+
+    /// The timeout interval for the request.
     var timeoutInterval: TimeInterval { get }
+
+    /// The cache policy for the request.
     var cachePolicy: NetworkCachePolicy { get }
+
+    /// The response decoder used to decode the response data.
     var responseDecoder: ResponseDecoder { get }
+
+    /// A Boolean value indicating whether the request requires re-authentication.
     var requiresReAuthentication: Bool { get }
+
+    /// The type of the expected success response, conforming to `Decodable`.
     associatedtype SuccessType: Decodable
 }
 

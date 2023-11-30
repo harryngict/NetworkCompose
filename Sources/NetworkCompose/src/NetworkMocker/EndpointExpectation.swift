@@ -7,12 +7,8 @@
 
 import Foundation
 
-/// A struct representing an expectation for a network endpoint, including a unique key and the expected response.
 public struct EndpointExpectation {
-    /// The unique key associated with the network request.
     public let uniqueKey: UniqueKey
-
-    /// The expected response for the network request.
     public let response: Response
 
     /// The possible responses for the network request.

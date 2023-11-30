@@ -7,7 +7,6 @@
 
 import Foundation
 
-/// A class responsible for coordinating network operations, including requests, uploads, and downloads.
 final class NetworkRouter<SessionType: NetworkSession>: NetworkRouterInterface {
     /// The HTTP status code indicating unauthorized access.
     private let unauthorizedErrorCode = 401
@@ -45,7 +44,7 @@ final class NetworkRouter<SessionType: NetworkSession>: NetworkRouterInterface {
         networkReachability: NetworkReachabilityInterface,
         executionQueue: DispatchQueueType,
         observationQueue: DispatchQueueType,
-        storageService: StorageService?,
+        storageService: StorageServiceInterface?,
         loggerInterface: LoggerInterface? = nil
     ) {
         self.reAuthService = reAuthService
@@ -69,10 +68,9 @@ final class NetworkRouter<SessionType: NetworkSession>: NetworkRouterInterface {
     func request<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
-        retryPolicy: RetryPolicy = .none,
+        retryPolicy: RetryPolicy = .disabled,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
-        logRequest(request, .startRequest)
         executeOperation(request,
                          headers: headers,
                          allowReAuth: request.requiresReAuthentication,
@@ -101,7 +99,6 @@ final class NetworkRouter<SessionType: NetworkSession>: NetworkRouterInterface {
         retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
-        logRequest(request, .startRequest)
         executeOperation(request,
                          headers: headers,
                          allowReAuth: request.requiresReAuthentication,
@@ -129,7 +126,6 @@ final class NetworkRouter<SessionType: NetworkSession>: NetworkRouterInterface {
         retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
-        logRequest(request, .startRequest)
         executeOperation(request,
                          headers: headers,
                          allowReAuth: request.requiresReAuthentication,
@@ -202,7 +198,7 @@ private extension NetworkRouter {
         _ request: RequestType
     ) where RequestType: RequestInterface {
         isReAuthenticating = true
-        logRequest(request, .requestAutheticationExpired)
+        loggerInterface?.log(.debug, "Token expired at request: \(request.debugDescription)")
 
         guard let reAuthService = reAuthService else {
             completePendingRequests(result: .failure(NetworkError.authenticationError))
@@ -223,22 +219,5 @@ private extension NetworkRouter {
         isReAuthenticating = false
         pendingRequests.forEach { $0(result) }
         pendingRequests.removeAll()
-    }
-
-    func logRequest<RequestType>(
-        _ request: RequestType,
-        _ logCase: RequestLogCase
-    ) where RequestType: RequestInterface {
-        switch logCase {
-        case .startRequest:
-            loggerInterface?.log(.debug, request.debugDescription)
-        case .requestAutheticationExpired:
-            loggerInterface?.log(.debug, "Token expired for request: \(request.debugDescription)")
-        }
-    }
-
-    enum RequestLogCase {
-        case startRequest
-        case requestAutheticationExpired
     }
 }

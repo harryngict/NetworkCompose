@@ -7,7 +7,6 @@
 
 import Foundation
 
-/// A builder class responsible for configuring and creating network-related functionality.
 public class NetworkBuilder<SessionType: NetworkSession>: NetworkBuilderSettings<SessionType> {
     /// The service responsible for re-authentication.
     private var reAuthService: ReAuthenticationService?
@@ -44,8 +43,8 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkBuilderSettings
     /// - Returns: An instance of the same type to support method chaining.
     @discardableResult
     public func clearStoredMockData() -> Self {
-        let provider = StorageServiceProvider(loggerInterface: createLogger(),
-                                              executionQueue: executionQueue)
+        let provider = StorageServiceDecorator(loggerInterface: getLogger(),
+                                               executionQueue: executionQueue)
         try? provider.clearMockDataInDisk()
         return self
     }
@@ -56,22 +55,17 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkBuilderSettings
     ///
     /// - Returns: An instance conforming to `NetworkRouterInterface`.
     public func build() -> NetworkRouterInterface {
-        if case let .enabled(mockDataType) = automationMode {
+        if case let .enabled(dataType) = automationMode {
             return NetworkMocker(
                 baseURL: baseURL,
                 session: session,
                 reAuthService: reAuthService,
                 executionQueue: executionQueue,
                 observationQueue: observationQueue,
-                loggerInterface: createLogger(),
-                mockDataType: mockDataType
+                loggerInterface: getLogger(),
+                dataType: dataType
             )
         } else {
-            var storageService: StorageService?
-            if case .enabled = recordResponseMode {
-                storageService = StorageServiceProvider(loggerInterface: createLogger(),
-                                                        executionQueue: executionQueue)
-            }
             return NetworkRouter(
                 baseURL: baseURL,
                 session: session,
@@ -79,9 +73,20 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkBuilderSettings
                 networkReachability: networkReachability,
                 executionQueue: executionQueue,
                 observationQueue: observationQueue,
-                storageService: storageService,
-                loggerInterface: createLogger()
+                storageService: getStorageService(),
+                loggerInterface: getLogger()
             )
+        }
+    }
+}
+
+private extension NetworkBuilder {
+    func getStorageService() -> StorageServiceInterface? {
+        switch recordResponseMode {
+        case .disabled: return nil
+        case .enabled:
+            return StorageServiceDecorator(loggerInterface: getLogger(),
+                                           executionQueue: executionQueue)
         }
     }
 }

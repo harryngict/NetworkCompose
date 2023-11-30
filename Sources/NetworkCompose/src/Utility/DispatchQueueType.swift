@@ -23,6 +23,8 @@ extension DispatchQueue: DispatchQueueType {
 }
 
 public enum DefaultDispatchQueue: Sendable {
-    public static let executionQueue: DispatchQueueType = DispatchQueue(label: "com.NetworkCompose.DispatchQueueType", qos: .userInitiated, attributes: .concurrent)
+    public static let executionQueue: DispatchQueueType = DispatchQueue(label: "\(LibraryConstant.domain).DefaultDispatchQueue",
+                                                                        qos: .userInitiated,
+                                                                        attributes: .concurrent)
     public static let observationQueue: DispatchQueueType = DispatchQueue.main
 }

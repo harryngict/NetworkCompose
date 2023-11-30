@@ -7,10 +7,6 @@
 
 import Foundation
 
-/// This class encapsulates the logic for making network requests using a specified network session.
-/// It provides methods for handling various types of network tasks, such as regular requests,
-/// file uploads, and file downloads. The class supports retry policies, network reachability checks,
-/// and error handling during network operations.
 final class NetworkSessionExecutor<SessionType: NetworkSession>: NetworkSessionExecutorInteface {
     // MARK: - Properties
 
@@ -30,7 +26,7 @@ final class NetworkSessionExecutor<SessionType: NetworkSession>: NetworkSessionE
     private let observationQueue: DispatchQueueType
 
     /// An optional storage service for handling persistent data.
-    private var storageService: StorageService?
+    private var storageService: StorageServiceInterface?
 
     /// An optional logger interface for logging.
     private var loggerInterface: LoggerInterface?
@@ -55,7 +51,7 @@ final class NetworkSessionExecutor<SessionType: NetworkSession>: NetworkSessionE
          networkReachability: NetworkReachabilityInterface,
          executionQueue: DispatchQueueType,
          observationQueue: DispatchQueueType,
-         storageService: StorageService?,
+         storageService: StorageServiceInterface?,
          loggerInterface: LoggerInterface?)
     {
         self.baseURL = baseURL
@@ -71,9 +67,10 @@ final class NetworkSessionExecutor<SessionType: NetworkSession>: NetworkSessionE
     func request<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
-        retryPolicy: RetryPolicy = .none,
+        retryPolicy: RetryPolicy = .disabled,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
+        loggerInterface?.log(.debug, request.debugDescription)
         performNetworkTask(request,
                            headers: headers,
                            retryPolicy: retryPolicy,
@@ -88,9 +85,10 @@ final class NetworkSessionExecutor<SessionType: NetworkSession>: NetworkSessionE
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
         fromFile fileURL: URL,
-        retryPolicy: RetryPolicy = .none,
+        retryPolicy: RetryPolicy = .disabled,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
+        loggerInterface?.log(.debug, request.debugDescription)
         performNetworkTask(request,
                            headers: headers,
                            retryPolicy: retryPolicy,
@@ -105,9 +103,10 @@ final class NetworkSessionExecutor<SessionType: NetworkSession>: NetworkSessionE
     func download<RequestType>(
         _ request: RequestType,
         andHeaders headers: [String: String] = [:],
-        retryPolicy: RetryPolicy = .none,
+        retryPolicy: RetryPolicy = .disabled,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
+        loggerInterface?.log(.debug, request.debugDescription)
         performNetworkTask(request,
                            headers: headers,
                            retryPolicy: retryPolicy,

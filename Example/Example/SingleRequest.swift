@@ -147,7 +147,9 @@ final class SingleRequest {
     private func performRequestWithSmartRetry(
         completion: @escaping (Result<[Post], NetworkError>) -> Void
     ) {
-        let request = RequestBuilder<Post>(path: "/posts/1/retry", method: .PUT).queryParameters(["title": "foo"]).build()
+        let request = RequestBuilder<Post>(path: "/posts/1/retry", method: .PUT)
+            .queryParameters(["title": "foo"])
+            .build()
 
         let retryPolicy: RetryPolicy = .exponentialRetry(count: 4,
                                                          initialDelay: 1,
@@ -178,9 +180,12 @@ final class SingleRequest {
         sessionProxyDelegate.completionHandler = { _, error in
             print("Download finish: \(String(describing: error?.localizedDescription))")
         }
-        let network: NetworkBuilder<URLSession> = try! NetworkBuilder<URLSession>(baseURL: baseURL,
-                                                                                  sessionProxyDelegate: sessionProxyDelegate,
-                                                                                  sessionConfigurationType: .ephemeral)
+        guard let network: NetworkBuilder<URLSession> = try? NetworkBuilder<URLSession>(baseURL: baseURL,
+                                                                                        sessionProxyDelegate: sessionProxyDelegate,
+                                                                                        sessionConfigurationType: .ephemeral)
+        else {
+            return
+        }
         network.build()
             .download(request) { result in
                 switch result {
@@ -208,9 +213,12 @@ final class SingleRequest {
         sessionProxyDelegate.completionHandler = { _, error in
             print("Upload finish: \(String(describing: error?.localizedDescription))")
         }
-        let network: NetworkBuilder<URLSession> = try! NetworkBuilder<URLSession>(baseURL: baseURL,
-                                                                                  sessionProxyDelegate: sessionProxyDelegate,
-                                                                                  sessionConfigurationType: .ephemeral)
+        guard let network: NetworkBuilder<URLSession> = try? NetworkBuilder<URLSession>(baseURL: baseURL,
+                                                                                        sessionProxyDelegate: sessionProxyDelegate,
+                                                                                        sessionConfigurationType: .ephemeral)
+        else {
+            return
+        }
         network
             .reAuthenService(self)
             .logger(.enabled)
@@ -230,7 +238,7 @@ final class SingleRequest {
             .queryParameters(["postId": "1"])
             .build()
 
-        let concurrentQueue = DispatchQueue(label: "com.NetworkCompose.NetworkComposeDemo",
+        let concurrentQueue = DispatchQueue(label: "\(LibraryConstant.domain).SingleRequest",
                                             qos: .userInitiated,
                                             attributes: .concurrent)
 
@@ -262,7 +270,10 @@ extension SingleRequest: ReAuthenticationService {
 // MARK: NetworkMockerProvider
 
 extension SingleRequest: EndpointExpectationProvider {
-    func expectation(for _: String, method _: NetworkMethod) -> EndpointExpectation {
+    func expectation(for _: String,
+                     method _: NetworkCompose.NetworkMethod,
+                     queryParameters _: [String: Any]?) -> NetworkCompose.EndpointExpectation
+    {
         let endpoint = EndpointExpectation(path: "/posts",
                                            method: .GET,
                                            queryParameters: ["postId": "1"],

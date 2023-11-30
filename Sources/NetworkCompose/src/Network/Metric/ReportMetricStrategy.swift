@@ -7,7 +7,6 @@
 
 import Foundation
 
-/// Enumeration defining strategies for reporting metrics during network operations.
 public enum ReportMetricStrategy {
     /// Disables reporting metrics for network operations.
     case disabled

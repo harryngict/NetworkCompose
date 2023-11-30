@@ -16,7 +16,6 @@ public class DefaultLogger: LoggerInterface {
         switch type {
         case .debug: debugPrint("🤖 NetworkCompose \(message)")
         case .error: debugPrint("🚫 NetworkCompose \(message)")
-        case .infor: debugPrint("🚀 NetworkCompose \(message)")
         }
     }
 }
