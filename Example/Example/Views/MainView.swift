@@ -12,7 +12,8 @@ struct MainView: View {
 
     let types: [DemoScenario] = [.defaultRequest, .reAuthentication,
                                  .enabledSSLPinning, .networkMetricReport,
-                                 .smartRetry, .multipleRequetWithPriority,
+                                 .smartRetry, .download,
+                                 .upload, .multipleRequetWithPriority,
                                  .supportAutomationTest]
 
     var body: some View {

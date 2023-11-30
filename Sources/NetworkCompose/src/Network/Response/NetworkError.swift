@@ -15,6 +15,7 @@ public enum NetworkError: Error, Sendable, Equatable, Hashable {
     case downloadResponseTempURLNil
     case lostInternetConnection
     case decodingFailed(modeType: String, context: String)
+    case authenticationError
     case error(Int?, String?)
     case automation(AutomationError) // Support for automation testing
 
@@ -27,7 +28,8 @@ public enum NetworkError: Error, Sendable, Equatable, Hashable {
         case .downloadResponseTempURLNil: return -105
         case .lostInternetConnection: return -106
         case .decodingFailed: return -107
-        case let .error(code, _): return code ?? -108
+        case .authenticationError: return -108
+        case let .error(code, _): return code ?? -109
         case let .automation(error): return error.errorCode
         }
     }
@@ -38,10 +40,11 @@ public enum NetworkError: Error, Sendable, Equatable, Hashable {
         case let .badURLComponents(components): return "Bad URL components: \(components)"
         case .invalidSession: return "Invalid session"
         case .invalidResponse: return "Invalid response"
-        case .downloadResponseTempURLNil: return "Download response temp url is nill"
+        case .downloadResponseTempURLNil: return "Download response temp url is nil"
         case .lostInternetConnection: return "The network connection was lost"
         case let .decodingFailed(modeType, context):
             return "\(modeType) decoding failed error: \(context)"
+        case .authenticationError: return "Authentication error occurred"
         case let .automation(error): return error.localizedDescription
         case let .error(_, msg): return msg ?? "Network error with code: \(errorCode)"
         }

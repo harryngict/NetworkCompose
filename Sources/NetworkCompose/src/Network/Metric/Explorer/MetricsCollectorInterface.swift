@@ -7,7 +7,8 @@
 
 import Foundation
 
-protocol MetricsCollectorInterface: AnyObject {
+/// The `MetricsCollectorInterface` protocol defines methods for collecting and reporting metrics related to network tasks.
+public protocol MetricsCollectorInterface: AnyObject {
     /// Informs the collector that a network task has been created.
     ///
     /// - Parameter task: The network task that was created.
@@ -33,4 +34,9 @@ protocol MetricsCollectorInterface: AnyObject {
     ///   - task: The network task that finished collecting metrics.
     ///   - metrics: The collected URLSessionTaskMetrics.
     func taskDidFinishCollecting(_ task: URLSessionTask, metrics: URLSessionTaskMetrics)
+
+    /// Informs the collector that a network task has finished downloading.
+    ///
+    /// - Parameter task: The network task that finished downloading.
+    func taskDidFinishDownloading(_ task: URLSessionDownloadTask)
 }

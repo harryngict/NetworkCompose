@@ -7,102 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "183397A9-38DD-4F00-8B6C-3AEBBAB75634"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Sources/NetworkCompose/src/NetworkMocker/Storage/FileSystemStorageService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
-            landmarkName = "getResponse(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C5ED1FC6-A01B-4EE8-B58B-E55EB1B4EC44"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Sources/NetworkCompose/src/NetworkMocker/Storage/FileSystemStorageService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
-            landmarkName = "storeResponse(_:data:model:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "9FD733F3-4407-402E-AEA8-9231A86A3C92"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Sources/NetworkCompose/src/NetworkMocker/Storage/UniqueKey.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
-            landmarkName = "init(path:method:queryParameters:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "EA3FE36D-6119-4DE4-B575-1BA7FEFD22AA"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Sources/NetworkCompose/src/NetworkMocker/Storage/UniqueKey.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
-            landmarkName = "UniqueKey"
-            landmarkType = "14">
-            <Locations>
-               <Location
-                  uuid = "EA3FE36D-6119-4DE4-B575-1BA7FEFD22AA - bc32094113197afa"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "NetworkCompose.UniqueKey.init&lt;&#x3c4;_0_0 where &#x3c4;_0_0: NetworkCompose.RequestInterface&gt;(request: &#x3c4;_0_0) -&gt; NetworkCompose.UniqueKey"
-                  moduleName = "Example"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/Storage/UniqueKey.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "39"
-                  endingLineNumber = "39"
-                  offsetFromSymbolStart = "204">
-               </Location>
-               <Location
-                  uuid = "EA3FE36D-6119-4DE4-B575-1BA7FEFD22AA - bc32094113197afa"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "NetworkCompose.UniqueKey.init&lt;&#x3c4;_0_0 where &#x3c4;_0_0: NetworkCompose.RequestInterface&gt;(request: &#x3c4;_0_0) -&gt; NetworkCompose.UniqueKey"
-                  moduleName = "Example"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkCompose/Sources/NetworkCompose/src/NetworkMocker/Storage/UniqueKey.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "39"
-                  endingLineNumber = "39"
-                  offsetFromSymbolStart = "176">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "105F74D2-C64A-4120-8296-24926A23FAEB"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -110,13 +14,13 @@
             filePath = "Example/SingleRequest.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "204"
-            endingLineNumber = "204"
+            startingLineNumber = "267"
+            endingLineNumber = "267"
             landmarkName = "expectation(for:method:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "105F74D2-C64A-4120-8296-24926A23FAEB - 830c8dc23d21c339"
+                  uuid = "105F74D2-C64A-4120-8296-24926A23FAEB - 830c8dc23d21cb1a"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -126,12 +30,12 @@
                   urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkCompose/Example/Example/SingleRequest.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "204"
-                  endingLineNumber = "204"
-                  offsetFromSymbolStart = "264">
+                  startingLineNumber = "267"
+                  endingLineNumber = "267"
+                  offsetFromSymbolStart = "468">
                </Location>
                <Location
-                  uuid = "105F74D2-C64A-4120-8296-24926A23FAEB - 830c8dc23d21c339"
+                  uuid = "105F74D2-C64A-4120-8296-24926A23FAEB - 830c8dc23d21cbf9"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -141,9 +45,24 @@
                   urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkCompose/Example/Example/SingleRequest.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "204"
-                  endingLineNumber = "204"
-                  offsetFromSymbolStart = "240">
+                  startingLineNumber = "268"
+                  endingLineNumber = "268"
+                  offsetFromSymbolStart = "468">
+               </Location>
+               <Location
+                  uuid = "105F74D2-C64A-4120-8296-24926A23FAEB - 830c8dc23d21cbf9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Example.SingleRequest.expectation(for: Swift.String, method: NetworkCompose.NetworkMethod) -&gt; NetworkCompose.EndpointExpectation"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/harrynguyen/Documents/Resources/NetworkCompose/Example/Example/SingleRequest.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "268"
+                  endingLineNumber = "268"
+                  offsetFromSymbolStart = "264">
                </Location>
             </Locations>
          </BreakpointContent>

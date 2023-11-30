@@ -7,23 +7,32 @@
 
 import Foundation
 
-final class SessionProxyDelegate: NSObject, URLSessionTaskDelegate, URLSessionDataDelegate {
+/// `SessionProxyDelegate` is a class responsible for handling SSL pinning, metrics reporting, and logging in a network session.
+open class SessionProxyDelegate: NSObject, URLSessionTaskDelegate, URLSessionDataDelegate {
+    /// The SSL pinning processor for secure network communication.
+    private var sslPinningProcessor: SSLPinningProcessorInterface
+
+    /// The metrics collector for reporting metrics related to network tasks.
     private var metricsCollector: MetricsCollectorInterface?
-    private let sslPinningProcessor: SSLPinningProcessorInterface
+
+    /// A closure to handle upload progress updates.
+    public var uploadProgressHandler: ((Float) -> Void)?
+
+    /// A closure to handle download progress updates.
+    public var downloadProgressHandler: ((Float) -> Void)?
+
+    /// A closure to handle the completion of network tasks.
+    public var completionHandler: ((URLResponse?, Error?) -> Void)?
 
     /// Initializes a `SessionProxyDelegate` with SSL pinning, metric task reporting, and logging components.
     ///
-    /// Use this initializer to create a `SessionProxyDelegate` with SSL pinning and optional metric task reporting and logging.
-    /// The SSL pinning policy is specified by `sslPinningPolicy`. Metric task reporting is controlled by `metricTaskReportStrategy`,
-    /// and the optional `loggerInterface` provides a custom logging implementation.
-    ///
     /// - Parameters:
     ///   - sslPinningPolicy: The SSL pinning policy for secure network communication.
-    ///   - metricTaskReportStrategy: The strategy for reporting metrics related to network tasks.
+    ///   - reportMetricStrategy: The strategy for reporting metrics related to network tasks.
     ///   - loggerInterface: An optional logger interface for custom logging. Pass `nil` to disable logging.
-    init(sslPinningPolicy: SSLPinningPolicy,
-         reportMetricStrategy: ReportMetricStrategy,
-         loggerInterface: LoggerInterface?)
+    public required init(sslPinningPolicy: SSLPinningPolicy = .disabled,
+                         reportMetricStrategy: ReportMetricStrategy = .disabled,
+                         loggerInterface: LoggerInterface? = nil)
     {
         sslPinningProcessor = SSLPinningProcessor(sslPinningPolicy: sslPinningPolicy,
                                                   loggerInterface: loggerInterface)
@@ -33,12 +42,37 @@ final class SessionProxyDelegate: NSObject, URLSessionTaskDelegate, URLSessionDa
         }
     }
 
-    // MARK: URLSessionTaskDelegate
+    /// Updates SSL pinning policy, metric task reporting strategy, and logger interface.
+    ///
+    /// - Parameters:
+    ///   - sslPinningPolicy: The updated SSL pinning policy.
+    ///   - reportMetricStrategy: The updated strategy for reporting metrics related to network tasks.
+    ///   - loggerInterface: The updated logger interface. Pass `nil` to disable logging.
+    public func update(sslPinningPolicy: SSLPinningPolicy,
+                       reportMetricStrategy: ReportMetricStrategy,
+                       loggerInterface: LoggerInterface?)
+    {
+        sslPinningProcessor = SSLPinningProcessor(sslPinningPolicy: sslPinningPolicy,
+                                                  loggerInterface: loggerInterface)
 
+        if case let .enabled(metricInterceptor) = reportMetricStrategy {
+            self.metricsCollector = MetricsCollector(metricInterceptor: metricInterceptor)
+        }
+    }
+}
+
+// MARK: SSL
+
+public extension SessionProxyDelegate {
     /// Tells the delegate that the session task received an authentication challenge.
-    public func urlSession(_: URLSession,
-                           didReceive challenge: URLAuthenticationChallenge,
-                           completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void)
+    ///
+    /// - Parameters:
+    ///   - session: The session containing the task.
+    ///   - challenge: The authentication challenge.
+    ///   - completionHandler: A closure to call when the challenge is handled.
+    func urlSession(_: URLSession,
+                    didReceive challenge: URLAuthenticationChallenge,
+                    completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void)
     {
         guard case .trust = sslPinningProcessor.sslPinningPolicy else {
             completionHandler(.performDefaultHandling, nil)
@@ -47,43 +81,113 @@ final class SessionProxyDelegate: NSObject, URLSessionTaskDelegate, URLSessionDa
         let decision = sslPinningProcessor.validateAuthentication(challenge.protectionSpace)
         completionHandler(decision.authChallengeDisposition, decision.urlCredential)
     }
+}
 
+// MARK: URLSessionTaskDelegate
+
+public extension SessionProxyDelegate {
     /// Tells the delegate that the session task was just created.
-    public func urlSession(_: URLSession, didCreateTask task: URLSessionTask) {
+    ///
+    /// - Parameters:
+    ///   - session: The session containing the task.
+    ///   - task: The new task.
+    func urlSession(_: URLSession, didCreateTask task: URLSessionTask) {
         metricsCollector?.taskCreated(task)
     }
 
     /// Tells the delegate that the session task finished transferring data with an error.
-    public func urlSession(_: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+    ///
+    /// - Parameters:
+    ///   - session: The session containing the task.
+    ///   - task: The task whose transfer was complete.
+    ///   - error: An error that indicates why the transfer failed.
+    func urlSession(_: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         metricsCollector?.taskDidCompleteWithError(task, error: error)
-    }
 
-    /// Tells the delegate that the session task sent some body bytes.
-    public func urlSession(_: URLSession,
-                           task: URLSessionTask,
-                           didSendBodyData _: Int64,
-                           totalBytesSent: Int64,
-                           totalBytesExpectedToSend: Int64)
-    {
-        if task is URLSessionUploadTask {
-            metricsCollector?.taskDidUpdateProgress(task,
-                                                    progress: (completed: totalBytesSent, total: totalBytesExpectedToSend))
-        }
-    }
-
-    /// Tells the delegate that the download task has written data to the disk.
-    public func urlSession(_: URLSession,
-                           downloadTask: URLSessionDownloadTask,
-                           didWriteData _: Int64,
-                           totalBytesWritten: Int64,
-                           totalBytesExpectedToWrite: Int64)
-    {
-        metricsCollector?.taskDidUpdateProgress(downloadTask,
-                                                progress: (completed: totalBytesWritten, total: totalBytesExpectedToWrite))
+        downloadProgressHandler?(1.0)
+        uploadProgressHandler?(1.0)
+        completionHandler?(task.response, error)
     }
 
     /// Tells the delegate that the session task finished collecting metrics.
-    public func urlSession(_: URLSession, task: URLSessionTask, didFinishCollecting metrics: URLSessionTaskMetrics) {
+    ///
+    /// - Parameters:
+    ///   - session: The session containing the task.
+    ///   - task: The task whose metrics have been collected.
+    ///   - metrics: The collected metrics.
+    func urlSession(_: URLSession, task: URLSessionTask, didFinishCollecting metrics: URLSessionTaskMetrics) {
         metricsCollector?.taskDidFinishCollecting(task, metrics: metrics)
+
+        downloadProgressHandler?(1.0)
+        uploadProgressHandler?(1.0)
+        completionHandler?(task.response, nil)
+    }
+}
+
+// MARK: URLSessionDownloadTask
+
+public extension SessionProxyDelegate {
+    /// Tells the delegate that the download task has written data to the disk.
+    ///
+    /// - Parameters:
+    ///   - session: The session containing the task.
+    ///   - downloadTask: The task that writes data to the disk.
+    ///   - bytesWritten: The number of bytes written to the disk since the last time this delegate method was called.
+    ///   - totalBytesWritten: The total number of bytes written to the disk so far.
+    ///   - totalBytesExpectedToWrite: The expected length of the file, as provided by the Content-Length header.
+    func urlSession(_: URLSession,
+                    downloadTask: URLSessionDownloadTask,
+                    didWriteData _: Int64,
+                    totalBytesWritten: Int64,
+                    totalBytesExpectedToWrite: Int64)
+    {
+        metricsCollector?
+            .taskDidUpdateProgress(downloadTask,
+                                   progress: (completed: totalBytesWritten,
+                                              total: totalBytesExpectedToWrite))
+        downloadProgressHandler?(Float(totalBytesWritten) / Float(totalBytesExpectedToWrite))
+    }
+
+    /// Tells the delegate that the download task has finished downloading.
+    ///
+    /// - Parameters:
+    ///   - session: The session containing the task.
+    ///   - downloadTask: The task that finished downloading.
+    ///   - location: A file URL for the temporary file. Move this file to a permanent location within your app's sandbox container directory.
+    func urlSession(_: URLSession,
+                    downloadTask: URLSessionDownloadTask,
+                    didFinishDownloadingTo _: URL)
+    {
+        metricsCollector?.taskDidFinishDownloading(downloadTask)
+
+        downloadProgressHandler?(1.0)
+        completionHandler?(downloadTask.response, nil)
+    }
+}
+
+// MARK: URLSessionUploadTask
+
+public extension SessionProxyDelegate {
+    /// Tells the delegate that the session task sent some body bytes.
+    ///
+    /// - Parameters:
+    ///   - session: The session containing the task.
+    ///   - task: The task that sent some body bytes.
+    ///   - bytesSent: The number of bytes sent since the last time this delegate method was called.
+    ///   - totalBytesSent: The total number of bytes sent so far.
+    ///   - totalBytesExpectedToSend: The total number of bytes expected to be sent during the request.
+    func urlSession(_: URLSession,
+                    task: URLSessionTask,
+                    didSendBodyData _: Int64,
+                    totalBytesSent: Int64,
+                    totalBytesExpectedToSend: Int64)
+    {
+        metricsCollector?
+            .taskDidUpdateProgress(task,
+                                   progress: (completed: totalBytesSent,
+                                              total: totalBytesExpectedToSend))
+        if task is URLSessionUploadTask {
+            uploadProgressHandler?(Float(totalBytesSent) / Float(totalBytesExpectedToSend))
+        }
     }
 }

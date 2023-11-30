@@ -64,7 +64,7 @@ NetworkCompose offers a streamlined and enriched approach to handling network-re
 To integrate NetworkCompose into your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ```ruby
-pod 'NetworkCompose', '~> 0.1.1'
+pod 'NetworkCompose', '~> 0.1.3'
 ```
 
 then run:
@@ -75,7 +75,7 @@ pod install
 To integrate NetworkCompose using Swift Package Manager, add the following to your Package.swift file:
 ```swift
 dependencies: [
-    .package(url: "https://github.com/harryngict/NetworkCompose.git", from: "0.1.1")
+    .package(url: "https://github.com/harryngict/NetworkCompose.git", from: "0.1.3")
 ],
 targets: [
     .target(
@@ -183,18 +183,16 @@ public protocol NetworkReachabilityInterface: AnyObject {
 ```
 
 
-### F. [SessionConfiguration](/Sources/NetworkCompose/src/Network/Session/SessionConfigurationProvider.swift) configuration
+### F. [SessionConfigurationType](/Sources/NetworkCompose/src/Network/Session/SessionConfigurationType.swift) configuration
 
 - Option 1: Use the ephemeral option to ensure that all data is stored in RAM, along with additional optimized configurations for better performance.
 ```swift
-network.sessionConfigurationProvider(.ephemeral)
+network.sessionConfigurationType(.ephemeral)
 ``````
-- Option 2: Use background configuration for Download Tasks
+- Option 2: Use `default` configuration 
 ```swift
-network.sessionConfigurationProvider(.background)
+network.sessionConfigurationType(.default)
 ```
-
-**Note: It's important to refrain from setting the background configuration for dataTask.**
 
 ### G. [RecordResponseMode](/Sources/NetworkCompose/src/NetworkMocker/Storage/RecordResponseMode.swift) configuration
 This option enables the module to record and save responses in FileManager during actual usage, facilitating reuse for automation testing in subsequent scenarios.
@@ -209,10 +207,10 @@ network.recordResponseForTesting(.enabled)
 network.recordResponseForTesting(.disabled) 
 ```
 
-**Please be aware that we also offer the clearMockDataInDisk method, allowing you to delete all recorded data if necessary.**
+**Please be aware that we also offer the clearStoredMockData method, allowing you to delete all recorded data if necessary.**
 
 ```swift
-network.clearMockDataInDisk()
+network.clearStoredMockData()
 ```
 
 
@@ -228,10 +226,16 @@ network.automationMode(.enabled(.local))
 network.automationMode(.enabled(.custom(self)))
 ```
 
-**Note: We will apply a default configuration to all settings if the client does not specify one.**
+### I. Default Configuration
+The network settings are initialized with a basic configuration by default. To apply or reset to the default configuration, use the
+`setDefaultConfiguration` method:
+
 ```swift
-network.applyDefaultConfiguration()
+network.setDefaultConfiguration()
 ```
+This method resets the network settings, clearing any custom configurations and applying default values for optimal use.
+
+**Note: If the client doesn't specify a custom configuration, the default settings are automatically applied during initialization.**
 
 ### 3.3 How to execute regular call by using NetworkBuilder
 
