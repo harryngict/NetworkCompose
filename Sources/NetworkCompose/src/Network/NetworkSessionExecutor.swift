@@ -74,8 +74,13 @@ final class NetworkSessionExecutor<SessionType: NetworkSession>: NetworkSessionE
         retryPolicy: RetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
-        performNetworkTask(request, headers: headers, retryPolicy: retryPolicy, completion: completion) {
-            self.session.beginRequest($0, completion: $1)
+        performNetworkTask(request,
+                           headers: headers,
+                           retryPolicy: retryPolicy,
+                           completion: completion)
+        {
+            self.session.beginRequest($0,
+                                      completion: $1)
         }
     }
 
@@ -86,8 +91,14 @@ final class NetworkSessionExecutor<SessionType: NetworkSession>: NetworkSessionE
         retryPolicy: RetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
-        performNetworkTask(request, headers: headers, retryPolicy: retryPolicy, completion: completion) {
-            self.session.beginUploadTask($0, fromFile: fileURL, completion: $1)
+        performNetworkTask(request,
+                           headers: headers,
+                           retryPolicy: retryPolicy,
+                           completion: completion)
+        {
+            self.session.beginUploadTask($0,
+                                         fromFile: fileURL,
+                                         completion: $1)
         }
     }
 
@@ -97,8 +108,13 @@ final class NetworkSessionExecutor<SessionType: NetworkSession>: NetworkSessionE
         retryPolicy: RetryPolicy = .none,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
-        performNetworkTask(request, headers: headers, retryPolicy: retryPolicy, completion: completion) {
-            self.session.beginDownloadTask($0, completion: $1)
+        performNetworkTask(request,
+                           headers: headers,
+                           retryPolicy: retryPolicy,
+                           completion: completion)
+        {
+            self.session.beginDownloadTask($0,
+                                           completion: $1)
         }
     }
 
@@ -115,12 +131,13 @@ final class NetworkSessionExecutor<SessionType: NetworkSession>: NetworkSessionE
 }
 
 private extension NetworkSessionExecutor {
-    private func performNetworkTask<RequestType>(
+    func performNetworkTask<RequestType>(
         _ request: RequestType,
         headers: [String: String] = [:],
         retryPolicy: RetryPolicy,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void,
-        taskProvider: @escaping (SessionType.SessionRequest, @escaping (Result<ResponseInterface, NetworkError>) -> Void) throws -> NetworkTask
+        taskProvider: @escaping (SessionType.SessionRequest,
+                                 @escaping (Result<ResponseInterface, NetworkError>) -> Void) throws -> NetworkTask
     ) where RequestType: RequestInterface {
         guard networkReachability.isInternetAvailable else {
             observationQueue.async {
@@ -166,14 +183,34 @@ private extension NetworkSessionExecutor {
         }
     }
 
-    private func buildNetworkRequest<RequestType>(
+    func retryIfNeeded<SuccessType>(
+        currentRetry: Int,
+        retryPolicy: RetryPolicy,
+        error: NetworkError,
+        performRequest: @escaping () -> Void,
+        completion: @escaping (Result<SuccessType, NetworkError>) -> Void
+    ) where SuccessType: Decodable {
+        let configuration = retryPolicy.retryConfiguration(forAttempt: currentRetry)
+        if configuration.shouldRetry {
+            loggerInterface?.log(.debug, "NetworkSessionExecutor retry count: \(currentRetry) delay: \(configuration.delay)")
+            executionQueue.asyncAfter(deadline: .now() + configuration.delay) {
+                performRequest()
+            }
+        } else {
+            observationQueue.async {
+                completion(.failure(error))
+            }
+        }
+    }
+
+    func buildNetworkRequest<RequestType>(
         for request: RequestType,
         andHeaders headers: [String: String]
     ) throws -> SessionType.SessionRequest where RequestType: RequestInterface {
         return try session.build(request, withBaseURL: baseURL, andHeaders: headers)
     }
 
-    private func handleResult<RequestType>(
+    func handleResult<RequestType>(
         _ result: Result<ResponseInterface, NetworkError>,
         for request: RequestType,
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
@@ -198,7 +235,7 @@ private extension NetworkSessionExecutor {
         }
     }
 
-    private func handleSuccessResponse<RequestType>(
+    func handleSuccessResponse<RequestType>(
         _ response: ResponseInterface,
         for request: RequestType
     ) throws -> RequestType.SuccessType where RequestType: RequestInterface {
@@ -214,25 +251,5 @@ private extension NetworkSessionExecutor {
                                              model: model)
         }
         return model
-    }
-
-    private func retryIfNeeded<SuccessType>(
-        currentRetry: Int,
-        retryPolicy: RetryPolicy,
-        error: NetworkError,
-        performRequest: @escaping () -> Void,
-        completion: @escaping (Result<SuccessType, NetworkError>) -> Void
-    ) where SuccessType: Decodable {
-        let configuration = retryPolicy.retryConfiguration(forAttempt: currentRetry)
-        if configuration.shouldRetry {
-            loggerInterface?.log(.debug, "NetworkSessionExecutor retry count: \(currentRetry) delay: \(configuration.delay)")
-            executionQueue.asyncAfter(deadline: .now() + configuration.delay) {
-                performRequest()
-            }
-        } else {
-            observationQueue.async {
-                completion(.failure(error))
-            }
-        }
     }
 }
