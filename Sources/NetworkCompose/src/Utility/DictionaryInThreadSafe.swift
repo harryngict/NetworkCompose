@@ -16,7 +16,7 @@ public final class DictionaryInThreadSafe<Key: Hashable, Value> {
     private var threadUnsafeDict: [Key: Value]
 
     /// A concurrent queue to synchronize access to the underlying dictionary.
-    private let concurrentQueue = DispatchQueue(label: "com.example.DictionaryInThreadSafe", attributes: .concurrent)
+    private let concurrentQueue = DispatchQueue(label: "com.NetworkCompose.DictionaryInThreadSafe", attributes: .concurrent)
 
     /// Initializes a new instance of `DictionaryInThreadSafe` with an optional initial dictionary.
     ///

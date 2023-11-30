@@ -23,31 +23,31 @@ public class NetworkBuilderSettings<SessionType: NetworkSession> {
     var session: SessionType
 
     /// The SSL pinning policy to enhance security in network communication.
-    var sslPinningPolicy: SSLPinningPolicy
+    var sslPinningPolicy: SSLPinningPolicy = .disabled
 
     /// The strategy for reporting metrics related to network tasks.
-    var reportMetricStrategy: ReportMetricStrategy
+    var reportMetricStrategy: ReportMetricStrategy = .disabled
 
     /// Interface for monitoring network reachability.
-    var networkReachability: NetworkReachabilityInterface
+    var networkReachability: NetworkReachabilityInterface = NetworkReachability.shared
 
     /// The queue on which network operations are executed.
-    var executionQueue: DispatchQueueType
+    var executionQueue: DispatchQueueType = DefaultDispatchQueue.executionQueue
 
     /// The queue on which network events are observed.
-    var observationQueue: DispatchQueueType
+    var observationQueue: DispatchQueueType = DefaultDispatchQueue.observationQueue
 
     /// Provider for session configurations, allowing customization of network sessions.
-    var sessionConfigurationProvider: SessionConfigurationProvider
+    var sessionConfigurationProvider: SessionConfigurationProvider = DefaultSessionConfigurationProvider.ephemeral
 
     /// The strategy for mocking network events, useful for testing or simulating network behavior.
-    var automationMode: AutomationMode
+    var automationMode: AutomationMode = .disabled
 
     /// The mode for recording responses during network operations.
-    var recordResponseMode: RecordResponseMode
+    var recordResponseMode: RecordResponseMode = .disabled
 
     /// The strategy for logging network events and activities.
-    var loggerStrategy: LoggerStrategy
+    var loggerStrategy: LoggerStrategy = .disabled
 
     /// Initializes a new instance of `NetworkCommonSettings`.
     ///
@@ -59,15 +59,7 @@ public class NetworkBuilderSettings<SessionType: NetworkSession> {
     {
         self.baseURL = baseURL
         self.session = session
-        sslPinningPolicy = .disabled
-        reportMetricStrategy = .disabled
-        automationMode = .disabled
-        recordResponseMode = .disabled
-        loggerStrategy = .disabled
-        executionQueue = DefaultDispatchQueue.executionQueue
-        observationQueue = DefaultDispatchQueue.observationQueue
-        networkReachability = NetworkReachability.shared
-        sessionConfigurationProvider = DefaultSessionConfigurationProvider.ephemeral
+        setDefaultConfiguration()
     }
 
     /// Sets the security trust for SSL pinning.
@@ -184,7 +176,7 @@ public class NetworkBuilderSettings<SessionType: NetworkSession> {
     ///
     /// - Returns: The modified instance of the network builder with the default configuration.
     @discardableResult
-    public func applyDefaultConfiguration() -> Self {
+    public func setDefaultConfiguration() -> Self {
         sslPinningPolicy = .disabled
         reportMetricStrategy = .disabled
         automationMode = .disabled
