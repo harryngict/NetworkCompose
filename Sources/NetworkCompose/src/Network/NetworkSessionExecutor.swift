@@ -34,6 +34,9 @@ final class NetworkSessionExecutor<SessionType: NetworkSession>: NetworkSessionE
     /// Dictionary to store active network tasks.
     private var activeTasks = DictionaryInThreadSafe<UniqueKey, NetworkTask>()
 
+    /// The associated cookie storage for the network.
+    var cookieStorage: CookieStorage { return session.cookieStorage }
+
     // MARK: - Initialization
 
     /// Initializes a new instance of `NetworkSessionExecutor`.
@@ -241,7 +244,8 @@ private extension NetworkSessionExecutor {
         guard (200 ... 299).contains(response.statusCode) else {
             throw NetworkError.error(response.statusCode, nil)
         }
-        let model = try request.responseDecoder.decode(RequestType.SuccessType.self, from: response.data)
+        let model = try request.responseDecoder.decode(RequestType.SuccessType.self,
+                                                       from: response.data)
 
         /// Store object for automation testing.
         if let storageService = storageService {

@@ -12,10 +12,10 @@ public class DefaultLogger: LoggerInterface {
 
     private init() {}
 
-    public func log(_ type: LoggingType, _ message: String) {
+    public func log(_ type: LoggerType, _ message: String) {
         switch type {
-        case .debug: debugPrint("🤖 NetworkCompose \(message)")
-        case .error: debugPrint("🚫 NetworkCompose \(message)")
+        case .debug: debugPrint("🤖 \(LibraryConstant.domain) \(message)")
+        case .error: debugPrint("🚫 \(LibraryConstant.domain) \(message)")
         }
     }
 }

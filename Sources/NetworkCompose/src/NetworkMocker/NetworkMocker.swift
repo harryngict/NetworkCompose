@@ -8,20 +8,22 @@
 import Foundation
 
 final class NetworkMocker<SessionType: NetworkSession>: NetworkRouterInterface {
-    var reAuthService: ReAuthenticationService?
-
     private let observationQueue: DispatchQueueType
     private let mockHandler: NetworkMockHandler
     private let loggerInterface: LoggerInterface?
+    private let session: SessionType
+    var reAuthService: ReAuthenticationService?
+    var cookieStorage: CookieStorage { return session.cookieStorage }
 
     init(baseURL _: URL,
-         session _: SessionType = URLSession.shared,
+         session: SessionType = URLSession.shared,
          reAuthService: ReAuthenticationService?,
          executionQueue: DispatchQueueType,
          observationQueue: DispatchQueueType,
          loggerInterface: LoggerInterface?,
          dataType: AutomationMode.DataType)
     {
+        self.session = session
         self.reAuthService = reAuthService
         self.observationQueue = observationQueue
         self.loggerInterface = loggerInterface

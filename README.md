@@ -64,7 +64,7 @@ NetworkCompose offers a streamlined and enriched approach to handling network-re
 To integrate NetworkCompose into your Xcode project using CocoaPods, add the following to your `Podfile`:
 
 ```ruby
-pod 'NetworkCompose', '~> 0.1.4'
+pod 'NetworkCompose', '~> 0.1.5'
 ```
 
 then run:
@@ -75,7 +75,7 @@ pod install
 To integrate NetworkCompose using Swift Package Manager, add the following to your Package.swift file:
 ```swift
 dependencies: [
-    .package(url: "https://github.com/harryngict/NetworkCompose.git", from: "0.1.4")
+    .package(url: "https://github.com/harryngict/NetworkCompose.git", from: "0.1.5")
 ],
 targets: [
     .target(

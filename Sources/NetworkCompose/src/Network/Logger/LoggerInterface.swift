@@ -13,10 +13,10 @@ public protocol LoggerInterface {
     /// - Parameters:
     ///   - type: The type of logging, indicating the severity or purpose of the log message.
     ///   - message: The message to be logged.
-    func log(_ type: LoggingType, _ message: String)
+    func log(_ type: LoggerType, _ message: String)
 }
 
-public enum LoggingType {
+public enum LoggerType {
     /// Indicates an error logging type.
     case error
 
