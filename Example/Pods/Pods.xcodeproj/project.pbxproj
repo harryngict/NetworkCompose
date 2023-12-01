@@ -72,6 +72,7 @@
 		DAAC86F568369869012560D337741120 /* MetricInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE371DF54DCD1247AE4962FF6B3BB3CE /* MetricInterceptor.swift */; };
 		DC28269C5965725739348D20DD0EF2C9 /* NetworkReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247AAFDBEFC5C2793B89A5919325815D /* NetworkReachability.swift */; };
 		DC87D819F2BB2C79015B58409BC76D69 /* LoggerStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954BD35D9FEF7AF993D41306EDFCE1B7 /* LoggerStrategy.swift */; };
+		DD1374C82B1A39DD00DCF020 /* CookieStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1374C72B1A39DD00DCF020 /* CookieStorage.swift */; };
 		E17FAB554C8654D8582A2E77116E3AE7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
 		E41E607B91FC189880DA03E988E43A04 /* NetworkMocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E323E694822B56DE163FBE1DF41F2D40 /* NetworkMocker.swift */; };
 		E65626D48394804DD2F67A5A4B923D67 /* NetworkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E9029E4EE5D88544CBCFE291A077AB /* NetworkRouter.swift */; };
@@ -174,6 +175,7 @@
 		CD24A1A8089FCD974D36555E22FC02DE /* Data+RSA.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Data+RSA.swift"; sourceTree = "<group>"; };
 		CEB6B4A0B138568143A9AEF52866786C /* Response.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		DC1BD6BE6BC0724743662C0865584A4D /* NetworkBuilderSettings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkBuilderSettings.swift; sourceTree = "<group>"; };
+		DD1374C72B1A39DD00DCF020 /* CookieStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieStorage.swift; sourceTree = "<group>"; };
 		E323E694822B56DE163FBE1DF41F2D40 /* NetworkMocker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkMocker.swift; sourceTree = "<group>"; };
 		E3B286F00F12DD5D58B3F19F9A9C0C2A /* NetworkBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkBuilder.swift; sourceTree = "<group>"; };
 		E5CF361F7ED81841AACBCBE254FB2D51 /* TaskCompletedMetric.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TaskCompletedMetric.swift; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 				C1BEC11F96E82AC42740627B8D839CA3 /* NetworkSessionExecutorInteface.swift */,
 				076723A05630E8C42F94BBF9413C6291 /* Priority.swift */,
 				9DA19AB1BABDE5161BA0508B9F64DE80 /* PriorityAction.swift */,
+				DD1374C02B1A323000DCF020 /* Cookies */,
 				37DCAB3F27CC3551CED7815AC67DA1E6 /* Logger */,
 				D398D1850DFA0CB5D9DA3449E6A5761B /* Metric */,
 				0BBA28BD1CA387AD557B55925B467C98 /* ReAuthen */,
@@ -529,6 +532,14 @@
 			path = "Target Support Files/Pods-Example";
 			sourceTree = "<group>";
 		};
+		DD1374C02B1A323000DCF020 /* Cookies */ = {
+			isa = PBXGroup;
+			children = (
+				DD1374C72B1A39DD00DCF020 /* CookieStorage.swift */,
+			);
+			path = Cookies;
+			sourceTree = "<group>";
+		};
 		E7DC6F97E4E971C364FE1452C1A33028 /* Pod */ = {
 			isa = PBXGroup;
 			children = (
@@ -742,6 +753,7 @@
 				24648839396E4076B2912590F62798CB /* NetworkBuilderSettings.swift in Sources */,
 				4FEA8D324E5BF9BF22E3921C8D376962 /* NetworkCompose-dummy.m in Sources */,
 				814A2B64CDF28E327F586280034A1FEB /* NetworkError.swift in Sources */,
+				DD1374C82B1A39DD00DCF020 /* CookieStorage.swift in Sources */,
 				E41E607B91FC189880DA03E988E43A04 /* NetworkMocker.swift in Sources */,
 				BB3A25801CB35F8A8A517F745FEA617D /* NetworkMockHandler.swift in Sources */,
 				ED7E167DE8640532D5960316F11CB7FB /* NetworkPriorityDispatcher.swift in Sources */,

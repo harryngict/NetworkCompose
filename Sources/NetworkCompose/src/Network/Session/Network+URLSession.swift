@@ -9,6 +9,8 @@ import Foundation
 import Network
 
 extension URLSession: NetworkSession {
+    public var cookieStorage: CookieStorage { return HTTPCookieStorage.shared }
+
     public func build<RequestType>(
         _ request: RequestType,
         withBaseURL baseURL: URL,
@@ -81,15 +83,10 @@ private extension URLSession {
         error: Error?,
         completion: @escaping (Result<ResponseInterface, NetworkError>) -> Void
     ) {
-        if let error = error {
-            completion(.failure(NetworkError.error(nil, error.localizedDescription)))
-            return
-        }
-        guard let httpResponse = response as? HTTPURLResponse, let data = data else {
-            completion(.failure(NetworkError.invalidResponse))
-            return
-        }
-        completion(.success(Response(statusCode: httpResponse.statusCode, data: data)))
+        handleNetworkResponse(data: data,
+                              response: response,
+                              error: error,
+                              completion: completion)
     }
 
     func handleDownloadResponse(
@@ -98,20 +95,32 @@ private extension URLSession {
         error: Error?,
         completion: @escaping (Result<ResponseInterface, NetworkError>) -> Void
     ) {
+        guard let tempURL else {
+            completion(.failure(NetworkError.downloadResponseTempURLNil))
+            return
+        }
+        handleNetworkResponse(data: try? Data(contentsOf: tempURL),
+                              response: response,
+                              error: error,
+                              completion: completion)
+    }
+
+    func handleNetworkResponse(
+        data: Data?,
+        response: URLResponse?,
+        error: Error?,
+        completion: @escaping (Result<ResponseInterface, NetworkError>) -> Void
+    ) {
         if let error = error {
             completion(.failure(NetworkError.error(nil, error.localizedDescription)))
             return
         }
-        guard response is HTTPURLResponse else {
+        guard let httpResponse = response as? HTTPURLResponse, let data = data else {
             completion(.failure(NetworkError.invalidResponse))
             return
         }
-
-        if let tempURL = tempURL, let urlData = try? Data(contentsOf: tempURL) {
-            completion(.success(Response(statusCode: 200, data: urlData)))
-        } else {
-            completion(.failure(NetworkError.downloadResponseTempURLNil))
-        }
+        cookieStorage.addCookies(from: httpResponse)
+        completion(.success(Response(statusCode: httpResponse.statusCode, data: data)))
     }
 
     func createInputStream(fromFileURL fileURL: URL) -> InputStream? {

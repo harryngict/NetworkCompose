@@ -24,7 +24,10 @@ final class NetworkRouter<SessionType: NetworkSession>: NetworkRouterInterface {
     private var loggerInterface: LoggerInterface?
 
     /// The service responsible for re-authentication.
-    public var reAuthService: ReAuthenticationService?
+    var reAuthService: ReAuthenticationService?
+
+    /// Cookie storage associated with the network.
+    var cookieStorage: CookieStorage { return network.cookieStorage }
 
     /// Initializes the `NetworkRouter` with the specified configuration.
     ///

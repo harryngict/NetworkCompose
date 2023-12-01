@@ -54,19 +54,18 @@ public protocol NetworkSessionExecutorInteface: AnyObject {
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface
 
-    /// Cancels an ongoing network request.
+    /// Cancels an ongoing network request. Cancellation may not be immediate; handle the result in the original request's completion block.
     ///
     /// - Parameters:
-    ///   - request: The request object conforming to `RequestInterface` representing the network operation to be canceled.
+    ///   - request: The request conforming to `RequestInterface` to be canceled.
     ///
-    /// - Important: The cancellation may not take immediate effect. Handle the result appropriately in the original request's completion block.
-    ///
-    /// Example: `networkSessionExecutor.cancelRequest(myRequest)`
-    ///
-    /// - Note: Ensure the request object passed matches the one used to initiate the network request. Cancellation effectiveness depends on underlying network session support.
+    /// - Important: Ensure the passed request matches the one used for the network request. Cancellation effectiveness depends on underlying network session support.
     func cancelRequest<RequestType>(
         _ request: RequestType
     ) where RequestType: RequestInterface
+
+    /// The associated cookie storage for the network.
+    var cookieStorage: CookieStorage { get }
 }
 
 /// An extension providing default implementations for methods of the `NetworkSessionExecutorInteface` protocol.
