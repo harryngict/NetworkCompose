@@ -61,6 +61,6 @@ public protocol NetworkSession: AnyObject {
         completion: @escaping ((Result<ResponseInterface, NetworkError>) -> Void)
     ) -> NetworkTask
 
-  /// The associated cookie storage for the network.
+    /// The associated cookie storage for the network.
     var cookieStorage: CookieStorage { get }
 }
