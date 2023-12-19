@@ -1,46 +1,33 @@
+
 # NetworkCompose
+## Table of Contents
 
+1. [The NetworkCompose Architecture](#the-networkcompose-architecture)
+2. [Features](#i-features)
+3. [Integration](#ii-integration)
+   1. [Integration through CocoaPods](#21-integration-through-cocoapods)
+   2. [Integration through Swift Package Manager (SPM)](#22-integration-through-swift-package-manager-spm)
+4. [Usage](#iii-usage)
+   1. [Initialization](#31-initialization)
+   2. [Configuration Options (Optional)](#32-configuration-options-optional)
+      1. [SSLPinningPolicy Configuration](#a-sslpinningpolicy-configuration)
+      2. [ReportMetricStrategy Configuration](#b-reportmetricstrategy-configuration)
+      3. [ExecutionQueue and ObservationQueue Configuration](#c-executionqueue-and-observationqueue-configution)
+      4. [LoggerStrategy Configuration](#d-loggerstrategy-configuration)
+      5. [NetworkReachability Configuration](#e-networkreachability-configuration)
+      6. [SessionConfigurationType Configuration](#f-sessionconfigurationtype-configuration)
+      7. [RecordResponseMode Configuration](#g-recordresponsemode-configuration)
+      8. [AutomationMode Configuration](#h-automationmode-configuration)
+      9. [Default Configuration](#i-default-configuration)
+   3. [How to Execute Regular Call Using NetworkBuilder](#33-how-to-execute-regular-call-by-using-networkbuilder)
+   4. [How to Execute Multiple Calls with Priority Using NetworkPriorityDispatcher](#34-how-to-execute-multple-call-with-priority-by-using-networkprioritydispatcher)
+   5. [Retry Policy](#35-retry-policy)
+   6. [Re-Authentication](#36-re-authentication)
+   7. [Request Cancellation](#37-request-cancellation)
+5. [Support](#iv-support)
+6. [License](#v-license)
 
-## Purpose
-After several years of experience in iOS application development, I have identified some common pain points across many applications, particularly concerning API usage and network calls. The main issues I aim to address are:
-
-1. Automation Process
-2. Lack of Network Metrics
-3. Complex Retry Policy Implementation
-4. Support for Multiple Calls with Priority
-5. Re-Authentication for Seamless User Experience
-
-### Problem 1: Automation Process
-- **Challenge:** Dependency on the backend can lead to project delays when deadlines are not met.
-
-- **Solution Stage 1:** Introduce a mechanism for the mobile team to simulate backend responses based on predefined expectations. This allows continued development even when the backend is not ready.
-
-- **Solution Stage 2:** Implement a system to record successful API responses, facilitating automation in subsequent stages when the backend is available.
-
-### Problem 2: Lack of Network Metrics
-- **Challenge:** Although there are various tools for measuring network performance, they are not always effective when debugging.
-
-- **Solution:** Develop a system that provides detailed metrics such as task, session, request, response, and errors in real-time during the debugging process.
-
-
-### Problem 3: Complex Retry Policy Implementation
-- **Challenge:** The default URLSession lacks built-in support for a retry policy, resulting in the need for custom implementations or reliance on third-party libraries that can be complex to debug.
-
-- **Solution:** Design a simple and clear retry policy integrated into the network architecture to simplify the implementation process.
-
-### Problem 4: Support for Multiple Calls with Priority
-- **Challenge:** Design a library that supports multiple calls with varying priorities can be time-consuming.
-
-- **Solution:** Introduce a straightforward method for executing network calls with different priorities, ensuring clarity and ease of use for developers.
-
-### Problem 5: Re-Authentication for Seamless User Experience
-- **Challenge:** Achieving seamless user experiences often requires efficient re-authentication mechanisms.
-
-- **Solution:** Implement robust re-authentication processes to reduce disruptions in user experience and enhance overall application security and reliability.
-
-In summary, this project aims to enhance the efficiency of iOS application development by providing solutions to challenges related to automation, network metrics, retry policies, support for multiple calls with priority, and seamless user re-authentication.
-
-### The NetworkCompose archicture:
+## The NetworkCompose architecture:
 
 ![NetworkCompose-Architecure](/Documents/NetworkCompose-Architecture.png)
 
