@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  Example
 //
-//  Created by Hoang Nguyen on 28/10/23.
+//  Created by Hoang Nguyezn on 28/10/23.
 //
 
 import UIKit

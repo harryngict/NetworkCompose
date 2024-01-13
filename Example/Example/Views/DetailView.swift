@@ -2,7 +2,7 @@
 //  DetailView.swift
 //  Example
 //
-//  Created by Hoang Nguyen on 20/11/23.
+//  Created by Hoang Nguyezn on 20/11/23.
 //
 
 import NetworkCompose
