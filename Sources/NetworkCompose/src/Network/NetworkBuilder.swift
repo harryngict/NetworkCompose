@@ -69,6 +69,7 @@ public class NetworkBuilder<SessionType: NetworkSession>: NetworkBuilderSettings
             return NetworkRouter(
                 baseURL: baseURL,
                 session: session,
+                circuitBreaker: circuitBreaker,
                 reAuthService: reAuthService,
                 networkReachability: networkReachability,
                 executionQueue: executionQueue,

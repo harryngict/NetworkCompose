@@ -106,6 +106,7 @@ final class SingleRequest {
         network
             .sslPinningPolicy(.trust(sslPinningHosts))
             .logger(.enabled)
+            .circuitBreaker(CircuitBreaker(maxFailures: 10, resetTimeout: 60.0))
             .build()
             .request(request) { result in
                 switch result {

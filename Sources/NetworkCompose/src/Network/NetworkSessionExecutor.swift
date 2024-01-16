@@ -16,6 +16,9 @@ final class NetworkSessionExecutor<SessionType: NetworkSession>: NetworkSessionE
     /// The network session to use for requests.
     private let session: SessionType
 
+    /// The circuit breaker for managing network request retries and failures.
+    private let circuitBreaker: CircuitBreaker?
+
     /// The network reachability object.
     public let networkReachability: NetworkReachabilityInterface
 
@@ -44,6 +47,7 @@ final class NetworkSessionExecutor<SessionType: NetworkSession>: NetworkSessionE
     /// - Parameters:
     ///   - baseURL: The base URL for network requests.
     ///   - session: The network session to use for requests.
+    ///   - circuitBreaker: The circuit breaker for managing network request retries and failures.
     ///   - networkReachability: The network reachability object.
     ///   - executionQueue: The dispatch queue for executing network requests.
     ///   - observationQueue: The dispatch queue for observing and handling network events.
@@ -51,6 +55,7 @@ final class NetworkSessionExecutor<SessionType: NetworkSession>: NetworkSessionE
     ///   - loggerInterface: The interface for logging network events.
     init(baseURL: URL,
          session: SessionType,
+         circuitBreaker: CircuitBreaker?,
          networkReachability: NetworkReachabilityInterface,
          executionQueue: DispatchQueueType,
          observationQueue: DispatchQueueType,
@@ -59,6 +64,7 @@ final class NetworkSessionExecutor<SessionType: NetworkSession>: NetworkSessionE
     {
         self.baseURL = baseURL
         self.session = session
+        self.circuitBreaker = circuitBreaker
         self.networkReachability = networkReachability
         self.executionQueue = executionQueue
         self.observationQueue = observationQueue
@@ -74,13 +80,32 @@ final class NetworkSessionExecutor<SessionType: NetworkSession>: NetworkSessionE
         completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void
     ) where RequestType: RequestInterface {
         loggerInterface?.log(.debug, request.debugDescription)
-        performNetworkTask(request,
-                           headers: headers,
-                           retryPolicy: retryPolicy,
-                           completion: completion)
-        {
-            self.session.beginRequest($0,
-                                      completion: $1)
+
+        if let circuitBreaker = circuitBreaker {
+            circuitBreaker.run { [weak self] circuitBreakerCompletion in
+                guard let this = self else {
+                    completion(.failure(NetworkError.unknown))
+                    return
+                }
+                this.performNetworkTask(request,
+                                        headers: headers,
+                                        retryPolicy: retryPolicy,
+                                        completion: completion)
+                { sessionRequest, networkTaskCompletion in
+                    this.session.beginRequest(sessionRequest) { result in
+                        circuitBreakerCompletion(result)
+                        networkTaskCompletion(result)
+                    }
+                }
+            }
+        } else {
+            performNetworkTask(request,
+                               headers: headers,
+                               retryPolicy: retryPolicy,
+                               completion: completion)
+            { sessionRequest, networkTaskCompletion in
+                self.session.beginRequest(sessionRequest, completion: networkTaskCompletion)
+            }
         }
     }
 
