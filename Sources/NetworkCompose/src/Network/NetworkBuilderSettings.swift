@@ -44,6 +44,9 @@ public class NetworkBuilderSettings<SessionType: NetworkSession> {
     /// The mode for recording responses during network operations.
     var recordResponseMode: RecordResponseMode = .disabled
 
+    /// The circuit breaker for managing network request retries and failures.
+    var circuitBreaker: CircuitBreaker?
+
     /// Initializes a new instance of `NetworkBuilderSettings`.
     ///
     /// - Parameters:
@@ -186,6 +189,16 @@ public class NetworkBuilderSettings<SessionType: NetworkSession> {
         return self
     }
 
+    /// Configures the network session with a specific circuit breaker instance.
+    ///
+    /// - Parameter circuitBreaker: The circuit breaker instance to set.
+    /// - Returns: The network session instance with the updated circuit breaker configuration.
+    @discardableResult
+    public func circuitBreaker(_ circuitBreaker: CircuitBreaker) -> Self {
+        self.circuitBreaker = circuitBreaker
+        return self
+    }
+
     /// Resets the configuration of the network builder to its default state.
     ///
     /// This method clears any custom SSL pinning policy, metric interceptor, network strategy,
@@ -204,6 +217,7 @@ public class NetworkBuilderSettings<SessionType: NetworkSession> {
         networkReachability = NetworkReachability.shared
         sessionConfigurationType = .ephemeral
         sessionProxyDelegate = nil
+        circuitBreaker = nil
         try? refreshSession()
         return self
     }

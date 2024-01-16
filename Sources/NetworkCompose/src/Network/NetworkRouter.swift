@@ -34,6 +34,7 @@ final class NetworkRouter<SessionType: NetworkSession>: NetworkRouterInterface {
     /// - Parameters:
     ///   - baseURL: The base URL for network requests.
     ///   - session: The network session to use for requests.
+    ///   - circuitBreaker: The circuit breaker for managing network request retries and failures.
     ///   - reAuthService: The service responsible for re-authentication.
     ///   - networkReachability: The network reachability object. Default is `NetworkReachabilityImp.shared`.
     ///   - executionQueue: The dispatch queue for executing network requests.
@@ -43,6 +44,7 @@ final class NetworkRouter<SessionType: NetworkSession>: NetworkRouterInterface {
     init(
         baseURL: URL,
         session: SessionType,
+        circuitBreaker: CircuitBreaker? = nil,
         reAuthService: ReAuthenticationService? = nil,
         networkReachability: NetworkReachabilityInterface,
         executionQueue: DispatchQueueType,
@@ -54,6 +56,7 @@ final class NetworkRouter<SessionType: NetworkSession>: NetworkRouterInterface {
         self.loggerInterface = loggerInterface
         network = NetworkSessionExecutor(baseURL: baseURL,
                                          session: session,
+                                         circuitBreaker: circuitBreaker,
                                          networkReachability: networkReachability,
                                          executionQueue: executionQueue,
                                          observationQueue: observationQueue,
