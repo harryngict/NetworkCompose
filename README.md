@@ -39,7 +39,7 @@ NetworkCompose offers a streamlined and enriched approach to handling network-re
 
 1. Effort Reduction: By utilizing NetworkCompose, developers can reduce the overall effort involved in network-related tasks, making development processes more efficient and streamlining.
 
-2. Seamless Integration: Enjoy seamless integration with NetworkCompose, which effortlessly incorporates SSL pinning, mocking, metric reporting, and retry mechanisms into network operations.
+2. Seamless Integration: Enjoy seamless integration with NetworkCompose, which effortlessly incorporates SSL pinning, mocking, metric reporting, retry exponential back-off mechanisms and circuitBreaker to improve the stability and resilience into network operations.
 
 3. Dynamic Automation: With support for dynamic automation, NetworkCompose becomes a powerful tool for efficiently managing network operations in Swift applications, adapting to changing requirements seamlessly.
 

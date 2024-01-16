@@ -8,6 +8,7 @@
 import Foundation
 
 public enum NetworkError: Error, Sendable, Equatable, Hashable {
+    case unknown
     case badURL(URL, String)
     case badURLComponents(URLComponents)
     case invalidSession
@@ -21,21 +22,23 @@ public enum NetworkError: Error, Sendable, Equatable, Hashable {
 
     public var errorCode: Int {
         switch self {
-        case .badURL: return -101
-        case .badURLComponents: return -102
-        case .invalidSession: return -103
-        case .invalidResponse: return -104
-        case .downloadResponseTempURLNil: return -105
-        case .lostInternetConnection: return -106
-        case .decodingFailed: return -107
-        case .authenticationError: return -108
-        case let .error(code, _): return code ?? -109
+        case .unknown: return -101
+        case .badURL: return -102
+        case .badURLComponents: return -103
+        case .invalidSession: return -104
+        case .invalidResponse: return -105
+        case .downloadResponseTempURLNil: return -106
+        case .lostInternetConnection: return -107
+        case .decodingFailed: return -108
+        case .authenticationError: return -109
+        case let .error(code, _): return code ?? -110
         case let .automation(error): return error.errorCode
         }
     }
 
     public var localizedDescription: String {
         switch self {
+        case .unknown: return "Unknown issue"
         case let .badURL(url, path): return "Bad URL base: \(url) path: \(path)"
         case let .badURLComponents(components): return "Bad URL components: \(components)"
         case .invalidSession: return "Invalid session"
