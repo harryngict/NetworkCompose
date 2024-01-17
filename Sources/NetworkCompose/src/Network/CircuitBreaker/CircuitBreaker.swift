@@ -5,6 +5,8 @@
 //  Created by Hoang Nguyezn on 16/1/24.
 //
 
+import Foundation
+
 public final class CircuitBreaker {
     /// A typealias for the completion block used in network operations.
     public typealias TaskCompletion<T> = (@escaping (Result<T, NetworkError>) -> Void) -> Void
