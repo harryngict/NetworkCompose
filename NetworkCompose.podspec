@@ -14,4 +14,5 @@ Pod::Spec.new do |spec|
   spec.platform     = :ios, "12.0"
   spec.requires_arc = true
   spec.source_files  = "Sources/NetworkCompose/**/**/*.{swift}"
+  spec.vendored_frameworks = "NetworkCompose.xcframework"
 end
