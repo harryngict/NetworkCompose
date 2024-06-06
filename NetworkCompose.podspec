@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = "NetworkCompose"
-  spec.version      = "0.1.6"
+  spec.version      = "0.1.7"
   spec.summary      = "NetworkCompose is a versatile library simplifying powerful networking tasks."
   spec.description  = <<-DESC
                       NetworkCompose simplifies and enhances network-related tasks by providing a flexible and intuitive composition of network components. From seamless integration of URLSession to advanced features like SSL pinning, mocking, metric reporting, and smart retry mechanisms.
@@ -13,6 +13,5 @@ Pod::Spec.new do |spec|
   spec.swift_version = '5.0'
   spec.platform     = :ios, "12.0"
   spec.requires_arc = true
-  spec.static_framework = true
   spec.source_files  = "Sources/NetworkCompose/**/**/*.{swift}"
 end
