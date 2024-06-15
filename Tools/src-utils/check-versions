@@ -1,0 +1,18 @@
+#!/bin/bash
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+check_tools() {
+    echo -e "\n*** Checking installed tools ***\n"
+    local TOOLS=("mockolo" "swiftformat")
+    for TOOL in ${TOOLS[*]}; do
+        hash "$TOOL" 2>/dev/null || {
+            echo -e "${COLOR_RED}The script requires '$TOOL' to be installed. To resolve that, run './bootstrap' first.${COLOR_RESET}\n"
+            exit 1
+        }
+    done
+    echo -e "${COLOR_GREEN}All required tools installed.${COLOR_RESET}\n"
+}
+
+check_tools

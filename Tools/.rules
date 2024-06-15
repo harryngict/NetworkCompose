@@ -1,0 +1,206 @@
+# ===============
+# RULES WITHOUT OPTIONS
+# ===============
+
+--enable \
+    andOperator, \
+    anyObjectProtocol, \
+    blankLinesAroundMark, \
+    blankLinesAtEndOfScope, \
+    blankLinesAtStartOfScope, \
+    blankLinesBetweenScopes, \
+    consecutiveBlankLines, \
+    consecutiveSpaces, \
+    duplicateImports, \
+    emptyBraces, \
+    initCoderUnavailable, \
+    isEmpty, \
+    leadingDelimiters, \
+    linebreakAtEndOfFile, \
+    preferKeyPath, \
+    redundantBackticks, \
+    redundantBreak, \
+    redundantExtensionACL, \
+    redundantFileprivate, \
+    redundantGet, \
+    redundantInit, \
+    redundantLet, \
+    redundantLetError, \
+    redundantNilInit, \
+    redundantObjc, \
+    redundantParens, \
+    redundantPattern, \
+    redundantRawValues, \
+    redundantReturn, \
+    redundantVoidReturnType, \
+    sortedSwitchCases, \
+    spaceAroundBraces, \
+    spaceAroundBrackets, \
+    spaceAroundComments, \
+    spaceAroundGenerics, \
+    spaceAroundParens, \
+    spaceInsideBraces, \
+    spaceInsideBrackets, \
+    spaceInsideComments, \
+    spaceInsideGenerics, \
+    spaceInsideParens, \
+    strongOutlets, \
+    strongifiedSelf, \
+    todos, \
+    wrapEnumCases, \
+    wrapMultilineStatementBraces, \
+    wrapSwitchCases
+
+# ===============
+# DISABLED RULES
+# ===============
+
+--disable fileHeader
+
+# ===============
+# RULES WITH OPTIONS
+# ===============
+
+# RULE: braces
+--enable braces
+--allman false
+
+# RULE: wrap
+--enable wrap
+--assetliterals visual-width
+--nowrapoperators
+--maxwidth none
+
+# RULE: wrapAttributes
+--enable wrapAttributes
+--typeattributes prev-line
+--varattributes prev-line
+--funcattributes prev-line
+
+# RULE: organizeDeclarations
+--enable organizeDeclarations
+--beforemarks 
+--categorymark "MARK: %c"
+--classthreshold 0
+--extensionlength 0
+--enumthreshold 0
+--organizetypes class,enum,struct
+--lifecycle
+--structthreshold 0
+
+# RULE: numberFormatting
+--enable numberFormatting
+--binarygrouping none
+--decimalgrouping 3,6
+--hexgrouping none
+--hexliteralcase uppercase
+--octalgrouping none
+--exponentcase lowercase
+--exponentgrouping disabled
+--fractiongrouping disabled
+
+# RULE: wrapArguments
+--enable wrapArguments
+--closingparen same-line
+--wraparguments before-first
+--wrapcollections before-first
+--wrapconditions before-first
+--wrapparameters after-first
+--wrapreturntype if-multiline
+
+# RULE: trailingCommas
+--enable trailingCommas
+--commas always
+
+# RULE: elseOnSameLine
+--enable elseOnSameLine
+--elseposition same-line
+--guardelse same-line
+
+# RULE: enumNamespaces
+--enable enumNamespaces
+--extensionacl on-extension
+
+# RULE: markTypes
+--enable markTypes
+--extensionmark "MARK: - %t + %c"
+--groupedextension "MARK: %c"
+--markextensions always
+--marktypes always
+--typemark "MARK: - %t"
+
+# RULE: indent
+--enable indent
+--ifdef no-indent
+--indent 2
+--indentcase false
+--xcodeindentation disabled
+--smarttabs enabled
+--tabwidth unspecified
+
+# RULE: trailingClosures
+--enable trailingClosures
+--trailingclosures
+--nevertrailing
+
+# RULE: trailingSpace
+--enable trailingSpace
+--trimwhitespace always
+
+# RULE: sortedImports
+--enable sortedImports
+--importgrouping alpha
+
+# RULE: linebreaks
+--enable linebreaks
+--linebreaks lf
+
+# RULE: modifierOrder
+--enable modifierOrder
+--modifierorder
+
+# RULE: spaceAroundOperators
+--enable spaceAroundOperators
+--nospaceoperators
+--operatorfunc spaced
+--ranges spaced
+
+# RULE: redundantType
+--enable redundantType
+--redundanttype inferred
+
+# RULE: hoistPatternLet
+--enable hoistPatternLet
+--patternlet hoist
+
+# RULE: redundantSelf
+--enable redundantSelf
+--self remove
+--selfrequired
+
+# RULE: semicolons
+--enable semicolons
+--semicolons never
+
+# RULE: typeSugar
+--enable typeSugar
+--shortoptionals always
+
+# RULE: unusedArguments
+--enable unusedArguments
+--stripunusedargs closure-only
+
+# RULE: void
+--enable void
+--voidtype void
+
+# RULE: yodaConditions
+--enable yodaConditions
+--yodaswap always
+
+# ===============
+# OTHER OPTIONS
+# ===============
+
+--conflictmarkers reject
+--fragment false
