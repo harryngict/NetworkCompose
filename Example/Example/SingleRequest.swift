@@ -26,9 +26,6 @@ final class SingleRequest {
         case .defaultRequest:
             performCompletionRequest(completion: completion)
 
-        case .reAuthentication:
-            performReAuthentication(completion: completion)
-
         case .enabledSSLPinning:
             performRequestWithEnabledSSLPinning(completion: completion)
 
@@ -37,12 +34,7 @@ final class SingleRequest {
 
         case .smartRetry:
             performRequestWithSmartRetry(completion: completion)
-        case .download:
-            download(completion: completion)
-
-        case .upload:
-            upload(completion: completion)
-
+   
         case .supportAutomationTest:
             performRequestDemoAutomation(completion: completion)
 
@@ -57,7 +49,6 @@ final class SingleRequest {
 
         let network = NetworkBuilder<URLSession>(baseURL: baseURL)
         network
-            .recordResponseForTesting(.enabled)
             .logger(.enabled)
             .build()
             .request(request) { (result: Result<[Post], NetworkError>) in
@@ -68,28 +59,6 @@ final class SingleRequest {
             }
     }
 
-    private func performReAuthentication(
-        completion: @escaping (Result<[Post], NetworkError>) -> Void
-    ) {
-        let request = RequestBuilder<Post>(path: "/posts", method: .POST)
-            .queryParameters(["title": "foo",
-                              "body": "bar",
-                              "userId": 1])
-            .requiresReAuthentication(true)
-            .build()
-
-        let network: NetworkBuilder<URLSession> = NetworkBuilder(baseURL: baseURL)
-        network
-            .reAuthenService(self)
-            .logger(.enabled)
-            .build()
-            .request(request) { result in
-                switch result {
-                case let .failure(error): completion(.failure(error))
-                case let .success(post): completion(.success([post]))
-                }
-            }
-    }
 
     private func performRequestWithEnabledSSLPinning(
         completion: @escaping (Result<[Post], NetworkError>) -> Void
@@ -107,7 +76,6 @@ final class SingleRequest {
         network
             .sslPinningPolicy(.trust(sslPinningHosts))
             .logger(.enabled)
-            .circuitBreaker(CircuitBreaker(maxFailures: 10, resetTimeout: 60.0))
             .build()
             .request(request) { result in
                 switch result {
@@ -170,69 +138,6 @@ final class SingleRequest {
             }
     }
 
-    private func download(
-        completion: @escaping (Result<[Post], NetworkError>) -> Void
-    ) {
-        let request = RequestBuilder<[Post]>(path: "/posts", method: .GET)
-            .build()
-        let sessionProxyDelegate = SessionProxyDelegate()
-        sessionProxyDelegate.downloadProgressHandler = { progress in
-            print("Download progress: \(progress)")
-        }
-        sessionProxyDelegate.completionHandler = { _, error in
-            print("Download finish: \(String(describing: error?.localizedDescription))")
-        }
-        guard let network: NetworkBuilder<URLSession> = try? NetworkBuilder<URLSession>(baseURL: baseURL,
-                                                                                        sessionProxyDelegate: sessionProxyDelegate,
-                                                                                        sessionConfigurationType: .ephemeral)
-        else {
-            return
-        }
-        network.build()
-            .download(request) { result in
-                switch result {
-                case let .failure(error): completion(.failure(error))
-                case let .success(posts): completion(.success(posts))
-                }
-            }
-    }
-
-    private func upload(
-        completion: @escaping (Result<[Post], NetworkError>) -> Void
-    ) {
-        let request = RequestBuilder<Post>(path: "/posts", method: .POST)
-            .queryParameters(["title": "foo",
-                              "body": "bar",
-                              "userId": 1])
-            .requiresReAuthentication(true)
-            .build()
-
-        let file = URL(fileURLWithPath: "/Users/harrynguyen/Documents/Resources/NetworkCompose/Example/Example/747.png")
-        let sessionProxyDelegate = SessionProxyDelegate()
-        sessionProxyDelegate.uploadProgressHandler = { progress in
-            print("Upload progress: \(progress)")
-        }
-        sessionProxyDelegate.completionHandler = { _, error in
-            print("Upload finish: \(String(describing: error?.localizedDescription))")
-        }
-        guard let network: NetworkBuilder<URLSession> = try? NetworkBuilder<URLSession>(baseURL: baseURL,
-                                                                                        sessionProxyDelegate: sessionProxyDelegate,
-                                                                                        sessionConfigurationType: .ephemeral)
-        else {
-            return
-        }
-        network
-            .reAuthenService(self)
-            .logger(.enabled)
-            .build()
-            .upload(request, fromFile: file) { result in
-                switch result {
-                case let .failure(error): completion(.failure(error))
-                case let .success(post): completion(.success([post]))
-                }
-            }
-    }
-
     private func performRequestDemoAutomation(
         completion: @escaping (Result<[Post], NetworkError>) -> Void
     ) {
@@ -248,7 +153,6 @@ final class SingleRequest {
         network
             .execute(on: concurrentQueue)
             .observe(on: concurrentQueue)
-            .automationMode(.enabled(.local))
             .logger(.enabled)
             .build()
             .request(request) { result in
@@ -257,31 +161,5 @@ final class SingleRequest {
                 case let .success(posts): completion(.success(posts))
                 }
             }
-    }
-}
-
-// MARK: ReAuthenticationService
-
-extension SingleRequest: ReAuthenticationService {
-    public func reAuthen(completion: @escaping (Result<[String: String], NetworkError>) -> Void) {
-        // For testing now. In fact, this value should get `newtoken` from the real service
-        completion(.success(["jwt_token": "newtoken"]))
-    }
-}
-
-// MARK: NetworkMockerProvider
-
-extension SingleRequest: EndpointExpectationProvider {
-    func expectation(for _: String,
-                     method _: NetworkMethod,
-                     queryParameters _: [String: Any]?) -> EndpointExpectation
-    {
-        let endpoint = EndpointExpectation(path: "/posts",
-                                           method: .GET,
-                                           queryParameters: ["postId": "1"],
-                                           response: .successResponse(Post(userId: 1,
-                                                                           id: 1,
-                                                                           title: "Hoang")))
-        return endpoint
     }
 }

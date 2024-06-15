@@ -1,5 +1,5 @@
 //
-//  NetworkSessionExecutor.swift
+//  NetworkSessionExecutorImp.swift
 //  NetworkComposeImp
 //
 //  Created by Hoang Nguyezn on 11/11/23.
@@ -8,19 +8,18 @@
 import Foundation
 import NetworkCompose
 
-// MARK: - NetworkSessionExecutor
+// MARK: - NetworkSessionExecutorImp
 
-final class NetworkSessionExecutor<SessionType: NetworkSession>: NetworkSessionExecutorInteface {
+final class NetworkSessionExecutorImp<SessionType: NetworkSession>: NetworkSessionExecutor {
   // MARK: Lifecycle
 
   // MARK: - Initialization
 
-  /// Initializes a new instance of `NetworkSessionExecutor`.
+  /// Initializes a new instance of `NetworkSessionExecutorImp`.
   ///
   /// - Parameters:
   ///   - baseURL: The base URL for network requests.
   ///   - session: The network session to use for requests.
-  ///   - circuitBreaker: The circuit breaker for managing network request retries and failures.
   ///   - networkReachability: The network reachability object.
   ///   - executionQueue: The dispatch queue for executing network requests.
   ///   - observationQueue: The dispatch queue for observing and handling network events.
@@ -28,20 +27,18 @@ final class NetworkSessionExecutor<SessionType: NetworkSession>: NetworkSessionE
   ///   - loggerInterface: The interface for logging network events.
   init(baseURL: URL,
        session: SessionType,
-       circuitBreaker: CircuitBreaker?,
        networkReachability: NetworkReachabilityInterface,
        executionQueue: DispatchQueueType,
        observationQueue: DispatchQueueType,
-       storageService: StorageServiceInterface?,
+
        loggerInterface: LoggerInterface?)
   {
     self.baseURL = baseURL
     self.session = session
-    self.circuitBreaker = circuitBreaker
     self.networkReachability = networkReachability
     self.executionQueue = executionQueue
     self.observationQueue = observationQueue
-    self.storageService = storageService
+
     self.loggerInterface = loggerInterface
     self.networkReachability.startMonitoring(completion: { _ in })
   }
@@ -53,9 +50,6 @@ final class NetworkSessionExecutor<SessionType: NetworkSession>: NetworkSessionE
 
   // MARK: Internal
 
-  /// The associated cookie storage for the network.
-  var cookieStorage: CookieStorage { session.cookieStorage }
-
   func request<RequestType>(_ request: RequestType,
                             andHeaders headers: [String: String] = [:],
                             retryPolicy: RetryPolicy = .disabled,
@@ -63,71 +57,13 @@ final class NetworkSessionExecutor<SessionType: NetworkSession>: NetworkSessionE
   {
     loggerInterface?.log(.debug, request.debugDescription)
 
-    if let circuitBreaker {
-      circuitBreaker.run { [weak self] circuitBreakerCompletion in
-        guard let this = self else {
-          completion(.failure(NetworkError.unknown))
-          return
-        }
-        this.performNetworkTask(
-          request,
-          headers: headers,
-          retryPolicy: retryPolicy,
-          completion: completion)
-        { sessionRequest, networkTaskCompletion in
-          this.session.beginRequest(sessionRequest) { result in
-            circuitBreakerCompletion(result)
-            networkTaskCompletion(result)
-          }
-        }
-      }
-    } else {
-      performNetworkTask(
-        request,
-        headers: headers,
-        retryPolicy: retryPolicy,
-        completion: completion)
-      { sessionRequest, networkTaskCompletion in
-        self.session.beginRequest(sessionRequest, completion: networkTaskCompletion)
-      }
-    }
-  }
-
-  func upload<RequestType>(_ request: RequestType,
-                           andHeaders headers: [String: String] = [:],
-                           fromFile fileURL: URL,
-                           retryPolicy: RetryPolicy = .disabled,
-                           completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void) where RequestType: RequestInterface
-  {
-    loggerInterface?.log(.debug, request.debugDescription)
     performNetworkTask(
       request,
       headers: headers,
       retryPolicy: retryPolicy,
       completion: completion)
-    {
-      self.session.beginUploadTask(
-        $0,
-        fromFile: fileURL,
-        completion: $1)
-    }
-  }
-
-  func download<RequestType>(_ request: RequestType,
-                             andHeaders headers: [String: String] = [:],
-                             retryPolicy: RetryPolicy = .disabled,
-                             completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void) where RequestType: RequestInterface
-  {
-    loggerInterface?.log(.debug, request.debugDescription)
-    performNetworkTask(
-      request,
-      headers: headers,
-      retryPolicy: retryPolicy,
-      completion: completion)
-    {
-      self.session.beginDownloadTask(
-        $0,
-        completion: $1)
+    { sessionRequest, networkTaskCompletion in
+      self.session.beginRequest(sessionRequest, completion: networkTaskCompletion)
     }
   }
 
@@ -152,17 +88,11 @@ final class NetworkSessionExecutor<SessionType: NetworkSession>: NetworkSessionE
   /// The network session to use for requests.
   private let session: SessionType
 
-  /// The circuit breaker for managing network request retries and failures.
-  private let circuitBreaker: CircuitBreaker?
-
   /// The dispatch queue for executing network requests.
   private let executionQueue: DispatchQueueType
 
   /// The dispatch queue for observing and handling network events.
   private let observationQueue: DispatchQueueType
-
-  /// An optional storage service for handling persistent data.
-  private var storageService: StorageServiceInterface?
 
   /// An optional logger interface for logging.
   private var loggerInterface: LoggerInterface?
@@ -171,7 +101,7 @@ final class NetworkSessionExecutor<SessionType: NetworkSession>: NetworkSessionE
   private var activeTasks = DictionaryInThreadSafe<UniqueKey, NetworkTask>()
 }
 
-private extension NetworkSessionExecutor {
+private extension NetworkSessionExecutorImp {
   func performNetworkTask<RequestType>(_ request: RequestType,
                                        headers: [String: String] = [:],
                                        retryPolicy: RetryPolicy,
@@ -286,13 +216,6 @@ private extension NetworkSessionExecutor {
       RequestType.SuccessType.self,
       from: response.data)
 
-    /// Store object for automation testing.
-    if let storageService {
-      try storageService.storeResponse(
-        request,
-        data: response.data,
-        model: model)
-    }
     return model
   }
 }

@@ -1,5 +1,5 @@
 //
-//  NetworkBuilderSettings.swift
+//  NetworkBuilder.swift
 //  NetworkComposeImp
 //
 //  Created by Hoang Nguyezn on 24/11/23.
@@ -8,7 +8,7 @@
 import Foundation
 import NetworkCompose
 
-public class NetworkBuilderSettings<SessionType: NetworkSession> {
+public class NetworkBuilder<SessionType: NetworkSession> {
   // MARK: Lifecycle
 
   /// Initializes a new instance of `NetworkBuilderSettings`.
@@ -80,32 +80,6 @@ public class NetworkBuilderSettings<SessionType: NetworkSession> {
     return self
   }
 
-  /// Configures the automation mode for mocking in tests.
-  ///
-  /// - Parameter strategy: The mocking strategy to be applied for automation tests.
-  /// - Returns: The modified instance allowing method chaining.
-  ///
-  /// - Note: This method supports method chaining, enabling the convenient configuration of the mocking strategy within a single line.
-  /// - SeeAlso: `AutomationMode` enum for available strategies tailored for automation testing.
-  @discardableResult
-  public func automationMode(_ strategy: AutomationMode) -> Self {
-    automationMode = strategy
-    return self
-  }
-
-  /// Sets the storage strategy for handling network events and recording responses for automation testing.
-  ///
-  /// - Parameter mode: The record response mode to be set.
-  /// - Returns: The builder instance for method chaining.
-  ///
-  /// - Note: This method supports method chaining, allowing you to conveniently set the storage strategy and perform additional configurations in a single line.
-  /// - SeeAlso: `RecordResponseMode` for available modes and customization options.
-  @discardableResult
-  public func recordResponseForTesting(_ mode: RecordResponseMode) -> Self {
-    recordResponseMode = mode
-    return self
-  }
-
   /// Sets the security trust for SSL pinning and refreshes the session accordingly.
   ///
   /// - Parameter sslPinningPolicy: The security trust object for SSL pinning.
@@ -157,16 +131,6 @@ public class NetworkBuilderSettings<SessionType: NetworkSession> {
     return self
   }
 
-  /// Configures the network session with a specific circuit breaker instance.
-  ///
-  /// - Parameter circuitBreaker: The circuit breaker instance to set.
-  /// - Returns: The network session instance with the updated circuit breaker configuration.
-  @discardableResult
-  public func circuitBreaker(_ circuitBreaker: CircuitBreaker) -> Self {
-    self.circuitBreaker = circuitBreaker
-    return self
-  }
-
   /// Resets the configuration of the network builder to its default state.
   ///
   /// This method clears any custom SSL pinning policy, metric interceptor, network strategy,
@@ -177,17 +141,24 @@ public class NetworkBuilderSettings<SessionType: NetworkSession> {
   public func setDefaultConfiguration() -> Self {
     sslPinningPolicy = .disabled
     reportMetricStrategy = .disabled
-    automationMode = .disabled
-    recordResponseMode = .disabled
     loggerStrategy = .disabled
     executionQueue = DefaultDispatchQueue.executionQueue
     observationQueue = DefaultDispatchQueue.observationQueue
     networkReachability = NetworkReachability.shared
     sessionConfigurationType = .ephemeral
     sessionProxyDelegate = nil
-    circuitBreaker = nil
     try? refreshSession()
     return self
+  }
+
+  public func build() -> NetworkSessionExecutor {
+    NetworkSessionExecutorImp(
+      baseURL: baseURL,
+      session: session,
+      networkReachability: networkReachability,
+      executionQueue: executionQueue,
+      observationQueue: observationQueue,
+      loggerInterface: getLogger())
   }
 
   // MARK: Internal
@@ -221,15 +192,6 @@ public class NetworkBuilderSettings<SessionType: NetworkSession> {
 
   /// The queue on which network events are observed.
   var observationQueue: DispatchQueueType = DefaultDispatchQueue.observationQueue
-
-  /// The strategy for mocking network events, useful for testing or simulating network behavior.
-  var automationMode: AutomationMode = .disabled
-
-  /// The mode for recording responses during network operations.
-  var recordResponseMode: RecordResponseMode = .disabled
-
-  /// The circuit breaker for managing network request retries and failures.
-  var circuitBreaker: CircuitBreaker?
 
   /// Gets a logger based on the configured logging strategy.
   ///

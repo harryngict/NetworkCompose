@@ -9,7 +9,6 @@ import Foundation
 
 public enum TaskMetricEvent: Codable, Sendable {
   case created(_ metric: TaskCreatedMetric)
-  case progressUpdated(_ metric: TaskProgressUpdatedMetric)
   case completed(_ metric: TaskCompletedMetric)
   case didFinishCollecting(_ metric: TaskDidFinishCollectingMetric)
 
@@ -18,7 +17,6 @@ public enum TaskMetricEvent: Codable, Sendable {
   public var name: String {
     switch self {
     case .created: return "TaskCreated"
-    case .progressUpdated: return "TaskProgressUpdated"
     case .completed: return "TaskCompleted"
     case .didFinishCollecting: return "TaskDidFinishCollecting"
     }
@@ -27,7 +25,6 @@ public enum TaskMetricEvent: Codable, Sendable {
   public var metric: TaskMetric {
     switch self {
     case let .created(metric): return metric
-    case let .progressUpdated(metric): return metric
     case let .completed(metric): return metric
     case let .didFinishCollecting(metric): return metric
     }

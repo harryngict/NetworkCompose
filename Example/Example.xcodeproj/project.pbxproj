@@ -16,7 +16,6 @@
 		BE061ACB84576C8DDDDA7875 /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69D14C6CEE5F97D4A0C6129C /* Pods_Example.framework */; };
 		DD0B246D2B0094E10045023F /* ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0B246C2B0094E10045023F /* ExampleTests.swift */; };
 		DD0B26542B087E9B0045023F /* SingleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0B26532B087E9B0045023F /* SingleRequest.swift */; };
-		DD0EAB742B183F11005DF7A8 /* 747.png in Resources */ = {isa = PBXBuildFile; fileRef = DD0EAB732B183F11005DF7A8 /* 747.png */; };
 		DD18ECA22B15A5870017CC9D /* MultiplePriorityRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD18ECA12B15A5870017CC9D /* MultiplePriorityRequest.swift */; };
 		DD18ECA82B15AA750017CC9D /* DemoScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD18ECA72B15AA750017CC9D /* DemoScenario.swift */; };
 		DD18ECAA2B15B29E0017CC9D /* ReponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD18ECA92B15B29E0017CC9D /* ReponseModel.swift */; };
@@ -51,7 +50,6 @@
 		AAC5AA00A22655BE30ADFBEF /* Pods_ExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD0B246C2B0094E10045023F /* ExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleTests.swift; sourceTree = "<group>"; };
 		DD0B26532B087E9B0045023F /* SingleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleRequest.swift; sourceTree = "<group>"; };
-		DD0EAB732B183F11005DF7A8 /* 747.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 747.png; sourceTree = "<group>"; };
 		DD18ECA12B15A5870017CC9D /* MultiplePriorityRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplePriorityRequest.swift; sourceTree = "<group>"; };
 		DD18ECA72B15AA750017CC9D /* DemoScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoScenario.swift; sourceTree = "<group>"; };
 		DD18ECA92B15B29E0017CC9D /* ReponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReponseModel.swift; sourceTree = "<group>"; };
@@ -112,7 +110,6 @@
 				DD5B072A2B12EB21003A77F5 /* Views */,
 				1CE5ABC22AECBB2F006FCFDB /* Main.storyboard */,
 				1CE5ABC52AECBB30006FCFDB /* Assets.xcassets */,
-				DD0EAB732B183F11005DF7A8 /* 747.png */,
 				1CE5ABC72AECBB30006FCFDB /* LaunchScreen.storyboard */,
 				1CE5ABCA2AECBB30006FCFDB /* Info.plist */,
 				DD18ECA72B15AA750017CC9D /* DemoScenario.swift */,
@@ -247,7 +244,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD0EAB742B183F11005DF7A8 /* 747.png in Resources */,
 				1CE5ABC92AECBB30006FCFDB /* LaunchScreen.storyboard in Resources */,
 				1CE5ABC62AECBB30006FCFDB /* Assets.xcassets in Resources */,
 				1CE5ABC42AECBB2F006FCFDB /* Main.storyboard in Resources */,

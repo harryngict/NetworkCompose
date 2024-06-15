@@ -10,10 +10,10 @@ import SwiftUI
 struct MainView: View {
     @State private var selectedType: DemoScenario?
 
-    let types: [DemoScenario] = [.defaultRequest, .reAuthentication,
+    let types: [DemoScenario] = [.defaultRequest,
                                  .enabledSSLPinning, .networkMetricReport,
-                                 .smartRetry, .download,
-                                 .upload, .multipleRequetWithPriority,
+                                 .smartRetry,
+                                 .multipleRequetWithPriority,
                                  .supportAutomationTest]
 
     var body: some View {

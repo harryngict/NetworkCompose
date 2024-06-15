@@ -34,12 +34,6 @@ open class SessionProxyDelegate: NSObject, URLSessionTaskDelegate, URLSessionDat
 
   // MARK: Public
 
-  /// A closure to handle upload progress updates.
-  public var uploadProgressHandler: ((Float) -> Void)?
-
-  /// A closure to handle download progress updates.
-  public var downloadProgressHandler: ((Float) -> Void)?
-
   /// A closure to handle the completion of network tasks.
   public var completionHandler: ((URLResponse?, Error?) -> Void)?
 
@@ -113,9 +107,6 @@ public extension SessionProxyDelegate {
   ///   - error: An error that indicates why the transfer failed.
   func urlSession(_: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
     metricsCollector?.taskDidCompleteWithError(task, error: error)
-
-    downloadProgressHandler?(1.0)
-    uploadProgressHandler?(1.0)
     completionHandler?(task.response, error)
   }
 
@@ -127,81 +118,6 @@ public extension SessionProxyDelegate {
   ///   - metrics: The collected metrics.
   func urlSession(_: URLSession, task: URLSessionTask, didFinishCollecting metrics: URLSessionTaskMetrics) {
     metricsCollector?.taskDidFinishCollecting(task, metrics: metrics)
-
-    downloadProgressHandler?(1.0)
-    uploadProgressHandler?(1.0)
     completionHandler?(task.response, nil)
-  }
-}
-
-// MARK: URLSessionDownloadTask
-
-public extension SessionProxyDelegate {
-  /// Tells the delegate that the download task has written data to the disk.
-  ///
-  /// - Parameters:
-  ///   - session: The session containing the task.
-  ///   - downloadTask: The task that writes data to the disk.
-  ///   - bytesWritten: The number of bytes written to the disk since the last time this delegate method was called.
-  ///   - totalBytesWritten: The total number of bytes written to the disk so far.
-  ///   - totalBytesExpectedToWrite: The expected length of the file, as provided by the Content-Length header.
-  func urlSession(_: URLSession,
-                  downloadTask: URLSessionDownloadTask,
-                  didWriteData _: Int64,
-                  totalBytesWritten: Int64,
-                  totalBytesExpectedToWrite: Int64)
-  {
-    metricsCollector?
-      .taskDidUpdateProgress(
-        downloadTask,
-        progress: (
-          completed: totalBytesWritten,
-          total: totalBytesExpectedToWrite))
-    downloadProgressHandler?(Float(totalBytesWritten) / Float(totalBytesExpectedToWrite))
-  }
-
-  /// Tells the delegate that the download task has finished downloading.
-  ///
-  /// - Parameters:
-  ///   - session: The session containing the task.
-  ///   - downloadTask: The task that finished downloading.
-  ///   - location: A file URL for the temporary file. Move this file to a permanent location within your app's sandbox container directory.
-  func urlSession(_: URLSession,
-                  downloadTask: URLSessionDownloadTask,
-                  didFinishDownloadingTo _: URL)
-  {
-    metricsCollector?.taskDidFinishDownloading(downloadTask)
-
-    downloadProgressHandler?(1.0)
-    completionHandler?(downloadTask.response, nil)
-  }
-}
-
-// MARK: URLSessionUploadTask
-
-public extension SessionProxyDelegate {
-  /// Tells the delegate that the session task sent some body bytes.
-  ///
-  /// - Parameters:
-  ///   - session: The session containing the task.
-  ///   - task: The task that sent some body bytes.
-  ///   - bytesSent: The number of bytes sent since the last time this delegate method was called.
-  ///   - totalBytesSent: The total number of bytes sent so far.
-  ///   - totalBytesExpectedToSend: The total number of bytes expected to be sent during the request.
-  func urlSession(_: URLSession,
-                  task: URLSessionTask,
-                  didSendBodyData _: Int64,
-                  totalBytesSent: Int64,
-                  totalBytesExpectedToSend: Int64)
-  {
-    metricsCollector?
-      .taskDidUpdateProgress(
-        task,
-        progress: (
-          completed: totalBytesSent,
-          total: totalBytesExpectedToSend))
-    if task is URLSessionUploadTask {
-      uploadProgressHandler?(Float(totalBytesSent) / Float(totalBytesExpectedToSend))
-    }
   }
 }

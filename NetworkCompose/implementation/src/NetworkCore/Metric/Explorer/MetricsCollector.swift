@@ -24,16 +24,8 @@ final class MetricsCollector: MetricsCollectorInterface {
     metricsExplorer.trackTaskDidCompleted(task, didCompleteWithError: error)
   }
 
-  func taskDidUpdateProgress(_ task: URLSessionTask, progress: (completed: Int64, total: Int64)) {
-    metricsExplorer.trackTaskDidUpdateProgress(task, didUpdateProgress: progress)
-  }
-
   func taskDidFinishCollecting(_ task: URLSessionTask, metrics: URLSessionTaskMetrics) {
     metricsExplorer.trackTaskDidFinishCollecting(task, metrics: metrics)
-  }
-
-  func taskDidFinishDownloading(_ task: URLSessionDownloadTask) {
-    metricsExplorer.trackTaskDidCompleted(task, didCompleteWithError: nil)
   }
 
   // MARK: Private

@@ -43,21 +43,9 @@ final class MetricsExplorer {
       currentRequest: task.currentRequest.map(RequestMetric.init),
       response: task.response.map(ResponseMetric.init),
       error: error.map(ResponseErrorMetric.init),
-      requestBody: originalRequest.httpBody ?? httpBodyStreamData(originalRequest))
+      requestBody: originalRequest.httpBody)
 
     let event = TaskMetricEvent.completed(metric)
-
-    sendEvent(event)
-  }
-
-  func trackTaskDidUpdateProgress(_ task: URLSessionTask, didUpdateProgress progress: (completed: Int64, total: Int64)) {
-    let metric = TaskProgressUpdatedMetric(
-      taskType: TaskType(task: task),
-      createdAt: Date(),
-      url: task.originalRequest?.url,
-      completedUnitCount: progress.completed,
-      totalUnitCount: progress.total)
-    let event = TaskMetricEvent.progressUpdated(metric)
 
     sendEvent(event)
   }
@@ -76,27 +64,6 @@ final class MetricsExplorer {
     let event = TaskMetricEvent.didFinishCollecting(metric)
 
     sendEvent(event)
-  }
-
-  func httpBodyStreamData(_ request: URLRequest) -> Data? {
-    guard let bodyStream = request.httpBodyStream else {
-      return nil
-    }
-
-    let bufferSize = 1024
-    let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: bufferSize)
-    bodyStream.open()
-    defer {
-      buffer.deallocate()
-      bodyStream.close()
-    }
-
-    var bodyStreamData = Data()
-    while bodyStream.hasBytesAvailable {
-      let readData = bodyStream.read(buffer, maxLength: bufferSize)
-      bodyStreamData.append(buffer, count: readData)
-    }
-    return bodyStreamData
   }
 
   // MARK: Private

@@ -12,8 +12,6 @@ import NetworkCompose
 // MARK: - URLSession + NetworkSession
 
 extension URLSession: NetworkSession {
-  public var cookieStorage: CookieStorage { HTTPCookieStorage.shared }
-
   public func build(_ request: some RequestInterface,
                     withBaseURL baseURL: URL,
                     andHeaders headers: [String: String]) throws
@@ -52,31 +50,6 @@ extension URLSession: NetworkSession {
     task.resume()
     return task
   }
-
-  public func beginUploadTask(_ request: URLRequest,
-                              fromFile: URL,
-                              completion: @escaping ((Result<ResponseInterface, NetworkError>) -> Void))
-    -> NetworkTask
-  {
-    var bodyStreamRequest = request
-    bodyStreamRequest.httpBodyStream = createInputStream(fromFileURL: fromFile)
-    let task = dataTask(with: bodyStreamRequest) { data, response, error in
-      self.handleResponse(data: data, response: response, error: error, completion: completion)
-    }
-    task.resume()
-    return task
-  }
-
-  public func beginDownloadTask(_ request: URLRequest,
-                                completion: @escaping ((Result<ResponseInterface, NetworkError>) -> Void))
-    -> NetworkTask
-  {
-    let task = downloadTask(with: request) { tempURL, response, error in
-      self.handleDownloadResponse(tempURL: tempURL, response: response, error: error, completion: completion)
-    }
-    task.resume()
-    return task
-  }
 }
 
 // MARK: Helper
@@ -89,22 +62,6 @@ private extension URLSession {
   {
     handleNetworkResponse(
       data: data,
-      response: response,
-      error: error,
-      completion: completion)
-  }
-
-  func handleDownloadResponse(tempURL: URL?,
-                              response: URLResponse?,
-                              error: Error?,
-                              completion: @escaping (Result<ResponseInterface, NetworkError>) -> Void)
-  {
-    guard let tempURL else {
-      completion(.failure(NetworkError.downloadResponseTempURLNil))
-      return
-    }
-    handleNetworkResponse(
-      data: try? Data(contentsOf: tempURL),
       response: response,
       error: error,
       completion: completion)
@@ -123,27 +80,6 @@ private extension URLSession {
       completion(.failure(NetworkError.invalidResponse))
       return
     }
-    cookieStorage.addCookies(from: httpResponse)
     completion(.success(Response(statusCode: httpResponse.statusCode, data: data)))
-  }
-
-  func createInputStream(fromFileURL fileURL: URL) -> InputStream? {
-    guard let inputStream = InputStream(url: fileURL) else {
-      return nil
-    }
-    inputStream.open()
-    var buffer = [UInt8](repeating: 0, count: 1024)
-    let data = NSMutableData()
-
-    while inputStream.hasBytesAvailable {
-      let bytesRead = inputStream.read(&buffer, maxLength: buffer.count)
-      if bytesRead > 0 {
-        data.append(buffer, length: bytesRead)
-      } else {
-        break
-      }
-    }
-    inputStream.close()
-    return InputStream(data: data as Data)
   }
 }

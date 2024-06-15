@@ -43,69 +43,6 @@ public final class NetworkPriorityDispatcher<SessionType: NetworkSession>: Netwo
     return self
   }
 
-  /// Adds an upload task to the network composition with the specified priority.
-  ///
-  /// - Parameters:
-  ///   - request: The request for the upload task.
-  ///   - headers: The headers to be included in the request.
-  ///   - fileURL: The URL of the file to be uploaded.
-  ///   - retryPolicy: The retry policy for the upload task.
-  ///   - priority: The priority of the upload task.
-  ///   - completion: A closure to be called upon completion of the upload task.
-  /// - Returns: The instance of `NetworkCompose` to allow method chaining.
-  @discardableResult
-  public func addUpload<RequestType: RequestInterface, ResultType>(_ request: RequestType,
-                                                                   andHeaders headers: [String: String] = [:],
-                                                                   fromFile fileURL: URL,
-                                                                   retryPolicy: RetryPolicy = .disabled,
-                                                                   priority: Priority = .medium,
-                                                                   completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void)
-    -> Self where RequestType.SuccessType == ResultType
-  {
-    addAction(priority: priority) { [weak self] actionCompletion in
-      self?.build().upload(
-        request,
-        andHeaders: headers,
-        fromFile: fileURL,
-        retryPolicy: retryPolicy)
-      { uploadResult in
-        completion(uploadResult.map { $0 as ResultType })
-        actionCompletion(uploadResult.map { $0 as ResultType })
-      }
-    }
-    return self
-  }
-
-  /// Adds a download task to the network composition with the specified priority.
-  ///
-  /// - Parameters:
-  ///   - request: The request for the download task.
-  ///   - headers: The headers to be included in the request.
-  ///   - retryPolicy: The retry policy for the download task.
-  ///   - priority: The priority of the download task.
-  ///   - completion: A closure to be called upon completion of the download task.
-  /// - Returns: The instance of `NetworkCompose` to allow method chaining.
-  @discardableResult
-  public func addDownload<RequestType: RequestInterface, ResultType>(_ request: RequestType,
-                                                                     andHeaders headers: [String: String] = [:],
-                                                                     retryPolicy: RetryPolicy = .disabled,
-                                                                     priority: Priority = .medium,
-                                                                     completion: @escaping (Result<RequestType.SuccessType, NetworkError>) -> Void)
-    -> Self where RequestType.SuccessType == ResultType
-  {
-    addAction(priority: priority) { [weak self] actionCompletion in
-      self?.build().download(
-        request,
-        andHeaders: headers,
-        retryPolicy: retryPolicy)
-      { downloadResult in
-        completion(downloadResult.map { $0 as ResultType })
-        actionCompletion(downloadResult.map { $0 as ResultType })
-      }
-    }
-    return self
-  }
-
   /// Cancels a network request with the specified type asynchronously.
   ///
   /// - Parameters:

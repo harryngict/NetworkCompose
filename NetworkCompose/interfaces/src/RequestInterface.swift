@@ -34,9 +34,6 @@ public protocol RequestInterface {
   /// The response decoder used to decode the response data.
   var responseDecoder: ResponseDecoder { get }
 
-  /// A Boolean value indicating whether the request requires re-authentication.
-  var requiresReAuthentication: Bool { get }
-
   /// The type of the expected success response, conforming to `Decodable`.
   associatedtype SuccessType: Decodable
 }
@@ -48,7 +45,6 @@ public extension RequestInterface {
   var timeoutInterval: TimeInterval { 60.0 }
   var cachePolicy: NetworkCachePolicy { .ignoreCache }
   var responseDecoder: ResponseDecoder { JSONDecoder() }
-  var requiresReAuthentication: Bool { false }
 
   var description: String {
     let parameters = queryParameters?.urlEncodedQueryString() ?? ""
