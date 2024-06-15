@@ -1,0 +1,26 @@
+#!/bin/bash
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+# How to use 'generate_mocks_for_kit_imp_modules':
+# Step 1: add '/// @mockable' to the relevant protocols in Xcode
+# Step 2: comment 'return' below (line 15)
+# Step 3: comment irrelevant TOOL calls below
+# Step 4: (optional) if a TOOL call for your mock is missed below – just add it
+# Step 5: call 'Tools/generate-mocks' in console
+# Step 6: REVERT STEPS 1,2,3 BEFORE 'git commit'
+
+generate_mocks_for_kit_imp_modules() {
+    # return
+
+    local TOOL="$1"
+    local HEADER="$2"
+    local SRC_PATH="$3"
+
+    $TOOL \
+        --header "$HEADER" \
+        --sourcedirs "$SRC_PATH/implementation/src" \
+        --destination "$SRC_PATH/implementation/Tests/Mocks/NetworkComposeImpMocks.swift" \
+        --testable-imports "NetworkComposeImp"
+}

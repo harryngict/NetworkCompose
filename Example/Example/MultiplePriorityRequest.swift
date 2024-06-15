@@ -7,6 +7,7 @@
 
 import Foundation
 import NetworkCompose
+import NetworkComposeImp
 
 final class MultiplePriorityRequest {
     static let shared = MultiplePriorityRequest()

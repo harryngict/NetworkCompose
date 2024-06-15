@@ -1,15 +1,34 @@
 source 'https://cdn.cocoapods.org/'
 install! 'cocoapods', :warn_for_unused_master_specs_repo => false
-platform :ios, '12.0'
+platform :ios, '14.0'
 
 use_frameworks!
 
+def kit_pod
+    pod 'NetworkCompose',  		:path => '../NetworkCompose/interfaces/NetworkCompose.podspec'
+end
+
+def kit_imp_pod
+    pod 'NetworkComposeImp',  		:path => '../NetworkCompose/implementation/NetworkComposeImp.podspec'
+end
+
+def kit_imp_tests_pod
+  pod 'NetworkComposeImp',           	:path => '../NetworkCompose/implementation/NetworkComposeImp.podspec', :testspecs => ['UnitTests']
+end
+
+def kit_mock_pod
+    pod 'NetworkComposeMock',  		:path => '../NetworkCompose/mocks/NetworkComposeMock.podspec'
+end
+
 target 'Example' do
-  pod 'NetworkCompose',  :path => '../'
+  kit_pod
+  kit_imp_pod
 end
 
 target 'ExampleTests' do
   inherit! :search_paths
+  kit_mock_pod
+  kit_imp_tests_pod
 end
 
 post_install do |installer|

@@ -1,16 +1,32 @@
 PODS:
-  - NetworkCompose (0.1.6)
+  - NetworkCompose (0.1.7)
+  - NetworkComposeImp (0.1.7):
+    - NetworkCompose
+  - NetworkComposeImp/UnitTests (0.1.7):
+    - NetworkCompose
+    - NetworkComposeMock
+  - NetworkComposeMock (0.0.1):
+    - NetworkCompose
 
 DEPENDENCIES:
-  - NetworkCompose (from `../`)
+  - NetworkCompose (from `../NetworkCompose/interfaces/NetworkCompose.podspec`)
+  - NetworkComposeImp (from `../NetworkCompose/implementation/NetworkComposeImp.podspec`)
+  - NetworkComposeImp/UnitTests (from `../NetworkCompose/implementation/NetworkComposeImp.podspec`)
+  - NetworkComposeMock (from `../NetworkCompose/mocks/NetworkComposeMock.podspec`)
 
 EXTERNAL SOURCES:
   NetworkCompose:
-    :path: "../"
+    :path: "../NetworkCompose/interfaces/NetworkCompose.podspec"
+  NetworkComposeImp:
+    :path: "../NetworkCompose/implementation/NetworkComposeImp.podspec"
+  NetworkComposeMock:
+    :path: "../NetworkCompose/mocks/NetworkComposeMock.podspec"
 
 SPEC CHECKSUMS:
-  NetworkCompose: d37c77ed27cb5bf9e7430a3a877d4c8b10f8763c
+  NetworkCompose: 911c1afe1cfad84e7d5f65ed05d3198783ce8022
+  NetworkComposeImp: 1808a17c5289780dad74d932e880f5c9a7a7f223
+  NetworkComposeMock: c55e6613888286ddeeff1318e01ab20ecbb947c2
 
-PODFILE CHECKSUM: 50068ea64c6af0a5f32a1128a6adbac48d60f588
+PODFILE CHECKSUM: cd07e0c1842ad8b5566d2d072bd735e1d01c4ac5
 
 COCOAPODS: 1.14.3

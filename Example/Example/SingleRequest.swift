@@ -7,6 +7,7 @@
 
 import Foundation
 import NetworkCompose
+import NetworkComposeImp
 
 final class SingleRequest {
     static let shared = SingleRequest()
@@ -272,8 +273,8 @@ extension SingleRequest: ReAuthenticationService {
 
 extension SingleRequest: EndpointExpectationProvider {
     func expectation(for _: String,
-                     method _: NetworkCompose.NetworkMethod,
-                     queryParameters _: [String: Any]?) -> NetworkCompose.EndpointExpectation
+                     method _: NetworkMethod,
+                     queryParameters _: [String: Any]?) -> EndpointExpectation
     {
         let endpoint = EndpointExpectation(path: "/posts",
                                            method: .GET,

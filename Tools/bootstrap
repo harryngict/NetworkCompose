@@ -1,0 +1,41 @@
+#!/bin/bash
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+source Tools/src-utils/colors
+
+set_up_homebrew() {
+    echo -e "\n*** Setting up Homebrew ***\n"
+    which -s brew
+
+    if (($? != 0)); then
+        echo -e "\n${COLOR_YELLOW}Installing Homebrew${COLOR_RESET}"
+        /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    else
+        echo -e "\n${COLOR_YELLOW}Updating Homebrew${COLOR_RESET}"
+        brew update
+    fi
+
+    # Navigate to the Tools directory
+    if [ -d "Tools" ]; then
+        cd Tools
+    else
+        echo -e "\n${COLOR_RED}Error: Tools directory not found${COLOR_RESET}"
+        exit 1
+    fi
+
+    # Check if Brewfile exists
+    if [ ! -f "Brewfile" ]; then
+        echo -e "\n${COLOR_RED}Error: No Brewfile found in the Tools directory${COLOR_RESET}"
+        exit 1
+    fi
+
+    echo -e "\n${COLOR_GREEN}Installing dependencies via Homebrew${COLOR_RESET}"
+    brew bundle install
+
+    # Navigate back to the original directory
+    cd ..
+}
+
+set_up_homebrew
