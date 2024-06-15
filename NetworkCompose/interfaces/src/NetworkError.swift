@@ -28,9 +28,9 @@ public enum NetworkError: Error, Sendable, Equatable, Hashable {
     case .badURLComponents: return -103
     case .invalidSession: return -104
     case .invalidResponse: return -105
-    case .lostInternetConnection: return -107
-    case .decodingFailed: return -108
-    case let .error(code, _): return code ?? -110
+    case .lostInternetConnection: return -106
+    case .decodingFailed: return -107
+    case let .error(code, _): return code ?? -108
     }
   }
 

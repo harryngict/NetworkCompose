@@ -13,8 +13,7 @@ struct MainView: View {
     let types: [DemoScenario] = [.defaultRequest,
                                  .enabledSSLPinning, .networkMetricReport,
                                  .smartRetry,
-                                 .multipleRequetWithPriority,
-                                 .supportAutomationTest]
+                                 .multipleRequetWithPriority]
 
     var body: some View {
         NavigationView {

@@ -13,5 +13,4 @@ enum DemoScenario: String {
     case networkMetricReport = "Demo collect metric report"
     case smartRetry = "Demo smart retry request"
     case multipleRequetWithPriority = "Demo multiple requests with priority"
-    case supportAutomationTest = "Demo suppport automation testing"
 }

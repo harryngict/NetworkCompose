@@ -34,9 +34,6 @@ final class SingleRequest {
 
         case .smartRetry:
             performRequestWithSmartRetry(completion: completion)
-   
-        case .supportAutomationTest:
-            performRequestDemoAutomation(completion: completion)
 
         default: break
         }
@@ -134,31 +131,6 @@ final class SingleRequest {
                 switch result {
                 case let .failure(error): completion(.failure(error))
                 case let .success(post): completion(.success([post]))
-                }
-            }
-    }
-
-    private func performRequestDemoAutomation(
-        completion: @escaping (Result<[Post], NetworkError>) -> Void
-    ) {
-        let request = RequestBuilder<[Post]>(path: "/posts", method: .GET)
-            .queryParameters(["postId": "1"])
-            .build()
-
-        let concurrentQueue = DispatchQueue(label: "\(LibraryConstant.domain).SingleRequest",
-                                            qos: .userInitiated,
-                                            attributes: .concurrent)
-
-        let network: NetworkBuilder<URLSession> = NetworkBuilder(baseURL: baseURL)
-        network
-            .execute(on: concurrentQueue)
-            .observe(on: concurrentQueue)
-            .logger(.enabled)
-            .build()
-            .request(request) { result in
-                switch result {
-                case let .failure(error): completion(.failure(error))
-                case let .success(posts): completion(.success(posts))
                 }
             }
     }
